@@ -11,16 +11,6 @@ function HeroContent({ heroContent, highlights, styles }) {
         <Title title={heroContent.badge} titleStyle={styles.badge} />  
         <SubTitle subTitle={heroContent.title} subTitleStyle={styles.title} />
         <Paragraph paragraph={heroContent.description} paragraphStyle={styles.description} />
-        {/* <div className={styles.highlightsList}>
-            {highlights.map((description, index) => (
-            <div key={index} className={styles.highlightItem}>
-                <IconComponent className={styles.highlightIcon} />
-                <span>
-                {description}
-                </span>
-            </div>
-            ))}
-        </div> */}
         <Button buttonText={heroContent.button.text} buttonLink={heroContent.button.link} buttonStyle={styles.button} />
     </div>
   )

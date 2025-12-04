@@ -1,10 +1,10 @@
 import InputField from './InputField';
 import TextareaField from './TextareaField';
 
-function FormFields ({ fields = [], formData = {}, handleChange }) {
+function FormFields ({ fields = [], formData = {}, handleChange, styles }) {
   return (
-    <form className="w-full" onSubmit={(e) => e.preventDefault()}>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <form className={styles.formContainer} onSubmit={(e) => e.preventDefault()}>
+      <div className={styles.grid}>
         {fields.map((f) => {
           const isFull = f.type === 'textarea';
           const value = formData[f.id] ?? '';

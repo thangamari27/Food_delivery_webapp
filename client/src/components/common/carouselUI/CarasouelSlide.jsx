@@ -15,7 +15,7 @@ function CarasouelSlide( { slides, currentSlide} ) {
               <h2 className="text-5xl md:text-7xl font-bold mb-2">{slide.title}</h2>
               <p className="text-2xl md:text-3xl font-semibold">{slide.subtitle}</p>
             </div>
-            <div className="absolute right-0 top-0 h-full w-1/2 md:w-2/5 ">
+            <div className="absolute right-0 top-0 h-full w-1/2 md:w-3/6 ">
               <img
                 src={slide.image}
                 alt={slide.title}

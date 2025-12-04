@@ -1,25 +1,18 @@
+// Section: 1
+// Contact page hero section content
 export const heroSection = {
-  title: {
     title: 'Contact Us',  
-    titleStyle: "text-gray-600 text-sm md:text-base mb-2 uppercase tracking-wide",
-  },
-  subTitle: {
     subHeading: 'Get In Touch',
-    subTitleStyle: "text-4xl md:text-5xl font-bold text-gray-900 mb-4",
-  },
-  description:{
     description: 'All orders prepared with strict hygiene protocols and contactless delivery for your safety.',
-    descriptionStyle: "text-gray-600 max-w-3xl mx-auto text-base md:text-lg",
-  },
-  paragraph:{
     paragraph: 'We respond to all messages within 24 hours. Guaranteed.',
-    paragraphStyle: "text-gray-600 max-w-3xl mx-auto text-base md:text-lg",
-  },
 }
 
+// Section: 2
+// Contact page Contact form section content
 export const contactForm = {
   sectionLeft: {
-    src: './images/thing_to_say.svg',
+    src: '',
+    srcFallback: "./images/thing_to_say.svg",
     alt: 'Contact us illustration'
   },
   sectionRight: {
@@ -108,19 +101,12 @@ export const contactForm = {
   }
 };
 
+// Section: 3
+// Contact page FAQ section content
 export const faqSection = {
-    title: {
-      title: 'Frequently Asked Questions',  
-      titleStyle: "text-orange-600 text-sm font-medium",
-    },
-    subTitle: {
-      subTitle: 'Food Delivery FAQs',
-      subTitleStyle: "text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 text-center",
-    },
-    description:{
-      description: 'Find quick answers to your questions about ordering, delivery, payments and more',
-      descriptionStyle: "text-sm text-slate-500 mt-2 pb-8 text-center",
-    },
+    title: 'Frequently Asked Questions',  
+    subTitle: 'Food Delivery FAQs',
+    description: 'Find quick answers to your questions about ordering, delivery, payments and more',
     faqData: [
         {
             question: 'What areas in Tamil Nadu do you deliver to?',

@@ -12,8 +12,7 @@ function AchievementSection() {
         <div className={styles.container}>
             <div className={styles.grid}>
                 {content.items.map((statsItem) => {
-                    const IconCompoent = statsItem.icon;
-                    
+                    const IconCompoent = statsItem.icon;                  
                     return (
                         <div key={statsItem.id} className={styles.item}>
                             <div className={styles.iconContainer}>

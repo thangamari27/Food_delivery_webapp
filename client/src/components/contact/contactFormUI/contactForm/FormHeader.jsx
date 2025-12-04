@@ -1,23 +1,25 @@
 import React from 'react'
 import FormBadge from './FormBadge'
+import Title from "@/components/common/Title"
 
-function FormHeader({ badge, heading, description}) {
+function FormHeader({ badge, heading, description, styles}) {
   return (
-    <div className="text-center mb-10">
+    <div className={styles.container}>
         <FormBadge 
-        text={badge.text}
-        bgColor={badge.bgColor}
-        textColor={badge.textColor}
+          text={badge.text}
+          bgColor={badge.bgColor}
+          textColor={badge.textColor}
+          styles={styles}
         />
-        <h1 className="text-4xl text-left font-bold py-4">{heading}</h1>
-        <p className="max-md:text-sm text-gray-500">
-        {description.text}{' '}
-        <a 
-            href={`mailto:${description.email}`} 
-            className={`${description.linkColor} hover:underline`}
-        >
-            {description.email}
-        </a>
+        <Title title={heading} titleStyle={styles.title} />
+        <p className={styles.description}>
+          {description.text}{' '}
+          <a 
+              href={`mailto:${description.email}`} 
+              className={`${description.linkColor} hover:underline`}
+          >
+              {description.email}
+          </a>
         </p>
     </div>
   )

@@ -1,29 +1,31 @@
-import React from 'react'
 import { heroSection } from '@/utils/constant/admin/ContactConstant'
+import { heroStyle } from '@/utils/styles/ContactStyle'
 import Title from '@/components/common/Title'
 import SubTitle from '@/components/common/SubTitle'
 import Paragraph from '@/components/common/Paragraph'
 
+
 function HeroSection() {
+  const styles = heroStyle;
   return (
-    <section className='py-20 md:py-16 lg:py-32 bg-gradient-to-br from-orange-50 via-white to-orange-50'>
-        <div className='container mx-auto px-4 md:px-16 lg:px-24 xl:px-32'>
-            <div className='text-center'>
+    <section className={styles.section}>
+        <div className={styles.container}>
+            <div className={styles.header.container}>
                <Title 
-                    title={heroSection.title.title} 
-                    titleStyle={heroSection.title.titleStyle} 
+                    title={heroSection.title} 
+                    titleStyle={styles.header.title} 
                /> 
                <SubTitle 
-                    subTitle={heroSection.subTitle.subHeading} 
-                    subTitleStyle={heroSection.subTitle.subTitleStyle} 
+                    subTitle={heroSection.subHeading} 
+                    subTitleStyle={styles.header.subTitle} 
                />
                <Paragraph 
-                    paragraph={heroSection.paragraph.paragraph} 
-                    paragraphStyle={heroSection.paragraph.paragraphStyle} 
+                    paragraph={heroSection.paragraph} 
+                    paragraphStyle={styles.header.paragraph} 
                />
                <Paragraph 
-                    paragraph={heroSection.description.description} 
-                    paragraphStyle={heroSection.description.descriptionStyle} 
+                    paragraph={heroSection.description} 
+                    paragraphStyle={styles.header.description} 
                />
             </div>
         </div>

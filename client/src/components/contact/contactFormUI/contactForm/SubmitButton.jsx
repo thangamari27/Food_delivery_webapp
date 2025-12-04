@@ -1,10 +1,10 @@
 import React from 'react'
 
-function SubmitButton({ text, bgColor, hoverColor, icon, onClick }) {
+function SubmitButton({ text, bgColor, hoverColor, icon, onClick, styles }) {
   return (
     <button
         onClick={onClick}
-        className={`flex items-center justify-center gap-2 ${bgColor} ${hoverColor} text-white py-2.5 w-full rounded-full transition-colors`}
+        className={`${styles.button} ${bgColor} ${hoverColor}`}
       >
         <span>{text}</span>
         {icon}
