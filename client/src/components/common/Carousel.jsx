@@ -3,7 +3,10 @@ import HeroCarousel from './carouselUI/HeroCarousel'
 
 function Carousel({ carouselContent, styles }) {
   return (
-    <HeroCarousel slides={ carouselContent } />
+    <HeroCarousel 
+      slides={ carouselContent } 
+      styles={styles.heroContainer}
+    />
   )
 }
 

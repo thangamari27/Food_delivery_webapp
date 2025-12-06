@@ -3,7 +3,7 @@ import CarasouelArrow from './CarasouelArrow';
 import CarasouelSlide from './CarasouelSlide';
 import ScrollNavigation from './ScrollNavigation';
 
-function HeroCarousel({ slides  }) {
+function HeroCarousel({ slides, styles  }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -16,17 +16,22 @@ function HeroCarousel({ slides  }) {
   const goToSlide = (index) => setCurrentSlide(index);
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-
   return (
-     <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl">
+     <div className={styles.container} >
       {/* Carasouel slide component */}
-      <CarasouelSlide slides={slides} currentSlide={currentSlide} />
+      <CarasouelSlide slides={slides} 
+        currentSlide={currentSlide}
+        styles={styles}
+      />
       
       {/* Carasouel left and right arrow */}
-      <CarasouelArrow prevSlide={prevSlide} nextSlide={nextSlide} />
+      <CarasouelArrow prevSlide={prevSlide} 
+        nextSlide={nextSlide}
+        styles={styles}
+      />
       
       {/* Carasouel scroll navigation */}
-      <ScrollNavigation slides={slides} goToSlide={goToSlide} currentSlide={currentSlide} />
+      <ScrollNavigation slides={slides} goToSlide={goToSlide} currentSlide={currentSlide} styles={styles} />
     </div>
   )
 }

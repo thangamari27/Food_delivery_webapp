@@ -26,8 +26,8 @@ export const heroContent = {
     link: "/contact",
   },
   image: {
-    src: "./images/about_hero.jpg",
-    srcFallback: "./images/about_hero.jpg",
+    src: "./images/about_hero.webp",
+    srcFallback: "./images/jpg/about_hero.jpg",
     alt: "Assortment of popular dishes ready for delivery",
     width: 1200,
     height: 800,

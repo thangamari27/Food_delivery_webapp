@@ -1,25 +1,153 @@
 // comboDealsContent (new)
-import { IndianRupee } from "lucide-react";
+import { IndianRupee, Search } from "lucide-react";
 
 // section: 1
+// hero section content
+export const heroContent = {
+  heroCarousel: [
+    {
+      id: 1,
+      title: '30% Off',
+      subtitle: 'Healthy Fitness Meals',
+      description: "Power-packed meals crafted for your daily fitness routine. Fresh, balanced, and ready to fuel your day.",
+      src: './images/food8.webp',
+      srcFallback: './images/jpg/food8.jpg',
+      alt: 'Healthy fitness meals with fresh vegetables and protein',
+      bgColor: 'bg-gradient-to-r from-orange-500 to-orange-600'
+    },
+    {
+      id: 2,
+      title: '40% Off',
+      subtitle: 'Weekend Specials',
+      description: "Treat yourself this weekend with chef-crafted meals made to satisfy every craving.",
+      src: './images/food9.webp',
+      srcFallback: './images/jpg/food9.jpg',
+      alt: 'Delicious weekend special meal served fresh',
+      bgColor: 'bg-gradient-to-r from-red-500 to-pink-600'
+    },
+    {
+      id: 3,
+      title: 'Free Delivery',
+      subtitle: 'On Orders Above $25',
+      description: "Enjoy doorstep delivery with zero extra fees. Fresh food delivered fast and hot.",
+      src: './images/food6.webp',
+      srcFallback: './images/jpg/food6.jpg',
+      alt: 'Fresh cooked food ready for delivery',
+      bgColor: 'bg-gradient-to-r from-purple-500 to-indigo-600'
+    }
+
+  ],
+}
 
 // section: 2
+// Special menu content
 export const specialMenuContent = {
+  header: {
+    title: "Special Menu",
+  },
+  itemPerPage: 4,
   cuisine: [
-    'All', 'Arabic', 'Thai', 'Pakistani', 'Indian'
+    { id: 'all', name: 'All' },
+    { id: 'arabic', name: 'Arabic' },
+    { id: 'thai', name: 'Thai' },
+    { id: 'pakistani', name: 'Pakistani' },
+    { id: 'indian', name: 'Indian' },
   ],
   specialMenuList: [
-    { id: 1, name: 'Salmon Fry', price: 150, cuisine: 'All', description: '2 Salmon Fry · Chili Sauce · Soft Drinks', image: '🐟', isFeatured: false },
-    { id: 2, name: 'Thai Noodles', price: 130, cuisine: 'Thai', description: '2 Salmon Fry · Chili Sauce · Soft Drinks', image: '🍜', isFeatured: true },
-    { id: 3, name: 'Curry Chicken', price: 180, cuisine: 'Indian', description: '2 Salmon Fry · Chili Sauce · Soft Drinks', image: '🍛', isFeatured: false },
-    { id: 4, name: 'Chicken Biryani', price: 200, cuisine: 'Indian', description: '2 Salmon Fry · Chili Sauce · Soft Drinks', image: '🍚', isFeatured: false },
-    { id: 5, name: 'Pad Thai', price: 140, cuisine: 'Thai', description: 'Rice noodles · Peanuts · Lime', image: '🍝', isFeatured: false },
-    { id: 6, name: 'Shawarma', price: 120, cuisine: 'Arabic', description: 'Grilled meat · Pita · Tahini', image: '🌯', isFeatured: false },
-    { id: 7, name: 'Butter Chicken', price: 190, cuisine: 'Indian', description: 'Creamy tomato · Tender chicken', image: '🍗', isFeatured: false },
-    { id: 8, name: 'Falafel Wrap', price: 110, cuisine: 'Arabic', description: 'Crispy falafel · Fresh veggies', image: '🥙', isFeatured: false },
-    { id: 9, name: 'Hummus Platter', price: 95, cuisine: 'Arabic', description: 'Smooth hummus · Pita bread · Olive oil', image: '🫓', isFeatured: false },
-    { id: 10, name: 'Green Curry', price: 165, cuisine: 'Thai', description: 'Coconut milk · Thai basil · Vegetables', image: '🥥', isFeatured: false }
-  ]
+    { 
+      id: 'sm1', 
+      name: 'Salmon Fry', 
+      cuisine: 'arabic', 
+      price: 150, 
+      description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
+      src: "./images/food1.webp",
+      srcFallback: './images/jpg/food1.jpg' 
+    },
+    { 
+      id: 'sm2', 
+      name: 'Thai Noodles', 
+      cuisine: 'thai', 
+      price: 130, 
+      description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
+      src: "./images/food2.webp",
+      srcFallback: './images/jpg/food2.jpg' 
+    },
+    { 
+      id: 'sm3', 
+      name: 'Curry Chicken', 
+      cuisine: 'indian', 
+      price: 180, 
+      description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
+      src: "./images/food3.webp",
+      srcFallback: './images/jpg/food3.jpg' 
+    },
+    { 
+      id: 'sm4', 
+      name: 'Chicken Biryani', 
+      cuisine: 'indian', 
+      price: 200, 
+      description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
+      src: "./images/food4.webp",
+      srcFallback: './images/jpg/food4.jpg' 
+    },
+    { 
+      id: 'sm5', 
+      name: 'Pakistani Kebabs', 
+      cuisine: 'pakistani', 
+      price: 190, 
+      description: 'Marinated Beef · Fresh Salad · Yogurt Dip', 
+      src: "./images/food5.webp",
+      srcFallback: './images/jpg/food5.jpg' 
+    },
+    { 
+      id: 'sm6', 
+      name: 'Fattoush Salad', 
+      cuisine: 'arabic', 
+      price: 90, description: 'Fresh Lettuce · Tomatoes · Crispy Bread', 
+      src: "./images/food6.webp",
+      srcFallback: './images/jpg/food6.jpg'  
+    },
+    { 
+      id: 'sm7', 
+      name: 'Green Curry', 
+      cuisine: 'thai', 
+      price: 175, description: 'Spicy Coconut Milk · Bamboo Shoots', 
+      src: "./images/food7.webp",
+      srcFallback: './images/jpg/food7.jpg' 
+    },
+    { 
+      id: 'sm8', 
+      name: 'Butter Chicken', 
+      cuisine: 'indian', 
+      price: 210, 
+      description: 'Creamy Tomato Sauce · Tender Chicken', 
+      src: "./images/food8.webp",
+      srcFallback: './images/jpg/food8.jpg' 
+    },
+    { 
+      id: 'sm9', 
+      name: 'Masala Dosa', 
+      cuisine: 'indian', 
+      price: 110, 
+      description: 'Thin Rice Crepe · Potato Filling · Sambar', 
+      src: "./images/food9.webp",
+      srcFallback: './images/jpg/food9.jpg' 
+    },
+  ],
+  specialMenuButton: {
+    text: "Add to Cart",
+    link: "",
+  },
+  notFound: {
+    title: "",
+    description: "",
+    message: "No special dishes found for",
+    icon: Search,
+    iconSize: 48,
+  },
+  pagination: {
+
+  }
 }
 // section: 3
 
@@ -40,8 +168,8 @@ export const comboDealsContent = {
       price: 21.99,
       priceSuffix: "Save 4",
       color: "bg-red-600 text-white",
-      src: "./images/food3.jpg",
-      srcFallback:"https://images.unsplash.com/photo-1601924582970-1d5b2f9b0d30?w=800&q=60&auto=format&fit=crop",
+      src: "./images/food3.webp",
+      srcFallback:"./images/jpg/food3.jpg",
       width: "",
       height: "",
     },
@@ -53,8 +181,8 @@ export const comboDealsContent = {
       price: 22.99,
       priceSuffix: "Save 5",
       color: "bg-yellow-400 text-gray-900",
-      src: "",
-      srcFallback:"./images/food2.jpg",
+      src: "./images/food2.webp",
+      srcFallback:"./images/jpg/food2.jpg",
       width: "",
       height: "",
     },

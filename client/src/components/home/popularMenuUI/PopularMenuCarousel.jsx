@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PopularMenuMarquee from "./PopularMenuMarquee";
 
-function PopularMenuCarousel({ items = [], speed = 20, styles }) {
+function PopularMenuCarousel({ items = [], speed = 25, styles }) {
   const [isPaused, setIsPaused] = useState(false);
   return (
     <PopularMenuMarquee

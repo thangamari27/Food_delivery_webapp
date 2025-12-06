@@ -1,0 +1,47 @@
+import { specialMenuStyle } from "@/utils/styles/MenuStyle"
+import { specialMenuContent } from '@/utils/constant/admin/MenuConstant'
+import Title from '@/components/common/Title'
+import FilterBar from "./specialMenuUI/FilterBar"
+import SpecialMenuGrid from "./specialMenuUI/SpecialMenuGrid"
+import SpecialMenuPagination from "./specialMenuUI/SpecialMenuPagination"
+import useSpecialMenu from "@/hooks/useSpecialMenu"
+
+function SpecialMenuSection() {
+  const styles = specialMenuStyle;
+  const content = specialMenuContent;
+
+  const { activeCuisine, setActiveCuisine, specialMenuPage, totalPages, paginatedSpecialDishes, handlePageChange, likedItems, handleLikeToggle } = useSpecialMenu();
+
+  return (
+    <section className={styles.section}>
+      <div className={styles.container}>
+        <Title title={content.header.title} titleStyle={styles.header.title} />
+
+        <FilterBar 
+          content={content}
+          styles={styles}
+          activeCuisine={activeCuisine}
+          setActiveCuisine={setActiveCuisine}
+        />
+
+        <SpecialMenuGrid
+          paginatedSpecialDishes={paginatedSpecialDishes}
+          content={content}
+          styles={styles}
+          likedItems={likedItems}
+          handleLikeToggle={handleLikeToggle}
+          activeCuisine={activeCuisine}
+        />
+
+        <SpecialMenuPagination
+          currentPage={specialMenuPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          styles={styles.pagination}
+        />
+      </div>
+    </section>
+  )
+}
+
+export default SpecialMenuSection

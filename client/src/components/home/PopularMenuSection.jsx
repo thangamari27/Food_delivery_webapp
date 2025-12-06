@@ -16,7 +16,7 @@ export default function PopularMenuSection() {
         <PopularMenuHeader title={popularMenuContent.title} description={popularMenuContent.description} styles={styles.header} />
 
         {/* Carousel: pass items and speed (seconds per full cycle) */}
-        <PopularMenuCarousel items={popularMenuCard} speed={30} styles={styles.menuCarousel} />
+        <PopularMenuCarousel items={popularMenuCard} speed={20} styles={styles.menuCarousel} />
 
         {/* View all popular food menu */}
         <div className={styles.buttonStyle.buttonContainer}>

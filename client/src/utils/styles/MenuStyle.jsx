@@ -1,66 +1,101 @@
 
 // section: 1
+// hero section style
 export const menuHeroStyle ={
   section: "pt-24 md:pt-24 px-2 sm:px-4 md:px-10 pb-10 bg-gradient-to-br from-orange-50 via-white to-orange-50",
+  carousel: {
+    heroContainer: {
+      container: "relative w-full h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl",
 
+      slidesContainer: "absolute inset-0 transition-opacity duration-700",
+      slideWrapper: "h-full flex items-center justify-between px-8 md:px-16",
+      slideContent: "text-white z-10 max-w-md",
+      slideTitle: "text-5xl md:text-7xl font-bold mb-2",
+      slideSubtitle: "text-2xl md:text-3xl font-semibold",
+      slideDescription: "",
+      
+      slideImageContainer: "absolute right-0 top-0 h-full w-1/2 md:w-3/6",
+      slidePicture: "",
+      slideImage: "h-full w-full object-cover rounded-l-full brightness-70 lg:brightness-100",
+
+      leftArrow: "absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg z-20 transition",
+      leftArrowIcon: "w-6 h-6",
+      rightArrow: "absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg z-20 transition",
+      rightArrowIcon: "w-6 h-6",
+
+      scrollNavContainer: "absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20",
+      scrollButton: "h-2 rounded-full transition-all"
+    },
+  }
 }
 
 // section: 2
+// Special menu style
 export const specialMenuStyle = {
-  container: 'min-h-screen bg-gradient-to-b from-orange-50 to-white',
-  section: 'max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8',
-  heading: 'text-3xl sm:text-4xl font-bold text-gray-900 mb-3',
-  subheading: 'text-gray-600 text-sm sm:text-base max-w-2xl',
-  
-  heroCard: 'bg-gradient-to-br from-amber-400 to-amber-500 rounded-3xl p-6 sm:p-8 flex flex-col items-center text-center text-white shadow-xl hover:shadow-2xl transition-shadow',
-  heroImage: 'text-6xl sm:text-7xl mb-4',
-  heroTitle: 'text-xl sm:text-2xl font-bold mb-2',
-  heroDesc: 'text-xs sm:text-sm opacity-90',
-  
-  filterButton: 'px-4 sm:px-6 py-2 rounded-full text-sm font-medium transition-all',
-  filterActive: 'bg-amber-500 text-white shadow-md',
-  filterInactive: 'bg-white text-gray-700 hover:bg-gray-100',
-  
-  menuCard: 'bg-white rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all relative',
-  menuImage: 'text-5xl sm:text-6xl mb-3',
-  menuTitle: 'text-base sm:text-lg font-bold text-gray-900 mb-2',
-  menuDesc: 'text-xs sm:text-sm text-gray-600 mb-3',
-  menuPrice: 'text-xl sm:text-2xl font-bold text-amber-500',
-  
-  button: 'px-4 sm:px-6 py-2 rounded-full font-medium transition-all',
-  buttonPrimary: 'bg-amber-500 text-white hover:bg-amber-600',
-  buttonSecondary: 'bg-white text-amber-500 border-2 border-amber-500 hover:bg-amber-50',
-  
-  badge: 'absolute top-3 right-3 bg-amber-500 text-white rounded-full p-2',
-  heartButton: 'absolute top-3 right-3 transition-colors cursor-pointer',
-  heartInactive: 'text-gray-300 hover:text-red-500',
-  heartActive: 'text-red-500',
-  
-  categoryButton: 'px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap',
-  categoryActive: 'bg-emerald-700 text-white shadow-md',
-  categoryInactive: 'bg-gray-100 text-gray-400 hover:bg-gray-200',
-  
-  todayCard: 'bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all',
-  todayImage: 'text-7xl sm:text-8xl p-6 sm:p-8 bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center',
-  todayContent: 'p-4 sm:p-6',
-  todayTitle: 'text-sm sm:text-base font-bold text-gray-900 mb-2 uppercase',
-  todayIngredients: 'text-xs text-gray-600 mb-3',
-  todayPrice: 'text-base sm:text-lg font-bold text-emerald-700',
-  todayOriginalPrice: 'text-xs sm:text-sm text-gray-400 line-through ml-1',
-  
-  addButton: 'w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-600 hover:border-emerald-700 hover:text-emerald-700 transition-colors cursor-pointer',
-  
-  pagination: 'flex justify-center items-center gap-2 mt-8',
-  pageButton: 'w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-medium transition-all',
-  pageActive: 'bg-emerald-700 text-white',
-  pageInactive: 'bg-white text-gray-700 hover:bg-gray-100',
-  
-  notFound: 'text-center py-16 px-4',
-  notFoundIcon: 'text-8xl mb-4',
-  notFoundTitle: 'text-2xl font-bold text-gray-900 mb-2',
-  notFoundText: 'text-gray-600',
-  
-  scrollContainer: 'flex gap-2 overflow-x-auto pb-2 w-full sm:w-auto scrollbar-hide'
+  section: "py-10 md:py-12 lg:py-16 bg-amber-100",
+  container: "container mx-auto px-4 md:px-16",
+
+  header: {
+    title: "text-3xl sm:text-4xl font-bold text-gray-900 mb-6"
+  },
+  filterButton: {
+    container: "flex space-x-3 overflow-x-auto pb-4 pt-1 mb-8",
+    wrapper: "px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 shadow-sm",
+    noScrollbarStyle:{
+      msOverflowStyle: 'none',
+      scrollbarWidth: 'none',
+    },
+    activeColorClass: "bg-gray-800 text-white focus:ring-gray-600",
+    defaultColorClass: "bg-white text-gray-600 border border-gray-300 hover:bg-gray-50",
+
+    button: "px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 shadow-sm",
+    buttonHover: "hover:opacity-80 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2",
+    focusRing: "focus:ring-gray-300",
+  },
+  specialMenu:{
+    gridContainer: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6",
+    cardContainer: "p-4 rounded-3xl shadow-lg transition-all duration-300 relative",
+    cardHighlight: "bg-white border-2 border-orange-400 shadow-orange-200",
+    cardHighlightHover: "bg-gray-50 hover:shadow-xl",
+
+    likeButton: "absolute top-6 right-6 p-2 rounded-full bg-white shadow-md hover:scale-105 transition-transform duration-200 z-10",
+    likeIcon: "text-gray-300",
+    islikeIcon: "text-red-500 fill-red-500",
+
+    imageContainer: "h-40 flex justify-center items-center overflow-hidden mb-3",
+    picture: "",
+    image: "w-40 h-40 object-cover rounded-full",
+
+    menuContent: "text-left",
+    menuTitle: "font-bold text-lg text-gray-900 mb-1",
+    menuDescription: "text-gray-500 text-xs mb-4",
+
+    priceContainer: "flex justify-between items-center pt-3 border-t border-gray-100",
+    price: "text-xl font-bold text-gray-900",
+    icon: "inline-block",
+
+    button: "px-4 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 shadow-md",
+    isfeatureButton: "bg-orange-500 text-white hover:bg-orange-600' : 'bg-white text-orange-500 border border-orange-500 hover:bg-orange-50",
+    featureButton: "bg-white text-orange-500 border border-orange-500 hover:bg-orange-50",
+
+  },
+  notFound: {
+    container: "col-span-full py-16 text-center bg-gray-50 rounded-xl m-4 border border-dashed border-gray-300",
+    icon: "mx-auto text-gray-400 mb-4",
+    title: "text-xl font-semibold text-gray-600",
+    description: "text-gray-500",
+  },
+  pagination: {
+    container: "flex justify-center items-center space-x-2 mt-8",
+    leftButton: "p-2 rounded-lg bg-gray-100 text-gray-700 disabled:opacity-50 hover:bg-gray-200 transition-colors",
+    pagebutton: "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+    currentPage: "bg-orange-500 text-white shadow-lg",
+    otherPage: 'bg-white text-gray-700 hover:bg-gray-100',
+    rightButton: "p-2 rounded-lg bg-gray-100 text-gray-700 disabled:opacity-50 hover:bg-gray-200 transition-colors",
+    
+
+  }
+
 }
 
 // section: 4
@@ -76,12 +111,12 @@ export const comboStyles = {
   },
   combo: {
     badge: "inline-block text-sm font-semibold px-3 py-1 rounded-full",
-    grid: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8",
+    grid: "grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8",
     card: "relative rounded-2xl overflow-hidden shadow-2xl",
     cardContent: {
-      container: "p-6 md:p-8 h-full flex flex-col relative z-20",
+      container: "p-6 md:p-8 h-full lg:h-80 flex flex-col relative z-20",
       badgeContainer: "flex items-start justify-between",
-      badge: "inline-block text-xs font-semibold px-3 py-1 rounded-full",
+      badge: "inline-block border-2 border-gray-200 text-xs font-semibold px-3 py-1 rounded-full",
       rightBadgeText: "text-sm text-gray-50/80",
       
       content: "mt-4",
@@ -98,13 +133,13 @@ export const comboStyles = {
       priceWrapper: "flex items-center ",
       currencyIcon: "w-4 h-4 text-white",
       price: "text-xl font-bold",
-      priceSuffix: "text-sm text-white/80"
+      priceSuffix: "text-md text-gray-100 font-bold"
 
     },
 
     cardImage: {
       container: "absolute inset-0 pointer-events-none z-0",
-      wrapper: "absolute -right-10 transform -translate-y-10 md:-translate-y-20 w-40 h-40 md:w-56 md:h-56 lg:w-65 lg:h-65 rounded-full overflow-hidden shadow-2xl",
+      wrapper: "absolute -right-10 transform -translate-y-10 md:-translate-y-20 w-40 h-40 md:w-56 md:h-56 lg:w-75 lg:h-75 rounded-full overflow-hidden shadow-2xl",
       image: "w-full h-full object-cover block",
       picture: ""
     },
