@@ -1,7 +1,8 @@
 import React from 'react'
 import HeroSection from '@/components/menu/HeroSection'
 import ComboDealSection from '@/components/menu/ComboDealSection'
-import SpecialMenuSection from '../components/menu/SpecialMenuSection'
+import SpecialMenuSection from '@/components/menu/SpecialMenuSection'
+import TopCategories from '@/components/menu/TopCategories'
 
 function MenuPage() {
   return (
@@ -9,6 +10,7 @@ function MenuPage() {
         <main>
             <HeroSection />
             <SpecialMenuSection  />
+            <TopCategories />
             <ComboDealSection />
         </main>
     </div>

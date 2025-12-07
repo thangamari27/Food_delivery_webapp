@@ -1,5 +1,5 @@
 // comboDealsContent (new)
-import { IndianRupee, Search } from "lucide-react";
+import { IndianRupee, Search, ForkKnifeCrossed } from "lucide-react";
 
 // section: 1
 // hero section content
@@ -150,6 +150,174 @@ export const specialMenuContent = {
   }
 }
 // section: 3
+export const topCategoryContent = {
+  header: {
+    title: "Top Category",
+  },
+  categoryBar: [
+    'All', 'Noodle Dishes', 'Rice Dishes', 'Rolls and Wraps', 'Seafood Dishes', 'Beverages',
+  ],
+
+  menuItems: [
+    { 
+      id: 1, 
+      name: 'VEGETABLE SPRING ROLLS', 
+      category: 'Rolls and Wraps', 
+      ingredients: 'Ingredients: tomato, lettuce, capsicum', 
+      priceTitle: "Price:",
+      price: 125, 
+      originalPrice: 348, 
+      src: './images/food2.webp',
+      srcFallback: './images/food2.jpg',
+      alt: 'Vegetable spring rolls with tomato, lettuce, and capsicum'
+    },
+    { 
+      id: 2, 
+      name: 'MEXICAN TACOS WITH MEAT', 
+      category: 'Rolls and Wraps', 
+      ingredients: 'Ingredients: Meat, Spices', 
+      priceTitle: "Price:",
+      price: 325, 
+      originalPrice: 348, 
+      src: './images/food3.webp',
+      srcFallback: './images/food3.jpg',
+      alt: 'Mexican tacos with meat and spices'
+    },
+    { 
+      id: 3, 
+      name: 'SANDWICH WITH TOMATOES', 
+      category: 'Rolls and Wraps', 
+      ingredients: 'Ingredients: tomato, bun, cucumber', 
+      priceTitle: "Price:",
+      price: 125, 
+      originalPrice: 348, 
+      src: './images/food4.webp',
+      srcFallback: './images/food4.jpg',
+      alt: 'Sandwich with tomatoes, bun, and cucumber'
+    },
+    { 
+      id: 4, 
+      name: 'POPIAH DEEP FRIED SPRING ROLLS', 
+      category: 'Rolls and Wraps', 
+      ingredients: 'Ingredients: tomato, toffu, capsicum', 
+      priceTitle: "Price:",
+      price: 125, 
+      originalPrice: 348, 
+      src: './images/food5.webp',
+      srcFallback: './images/food5.jpg',
+      alt: 'Popiah deep fried spring rolls with tomato, tofu, and capsicum'
+    },
+    { 
+      id: 5, 
+      name: 'PHO GA, NOODLES, SPRING ROLLS', 
+      category: 'Noodle Dishes', 
+      ingredients: 'Ingredients: noodles, toffu, capsicum', 
+      priceTitle: "Price:",
+      price: 325, 
+      originalPrice: 348, 
+      src: './images/food6.webp',
+      srcFallback: './images/food6.jpg',
+      alt: 'Pho Ga with noodles, spring rolls, tofu, and capsicum'
+    },
+    { 
+      id: 6, 
+      name: 'SPRING ROLLS WITH CHEESE', 
+      category: 'Rolls and Wraps', 
+      ingredients: 'Ingredients: tomato, bun, capsicum', 
+      priceTitle: "Price:",
+      price: 325, 
+      originalPrice: 348, 
+      src: './images/food7.webp',
+      srcFallback: './images/food7.jpg',
+      alt: 'Spring rolls with cheese, tomato, and capsicum'
+    },
+    { 
+      id: 7, 
+      name: 'SHRIMP SPICY SHOUP', 
+      category: 'Seafood Dishes', 
+      ingredients: 'Ingredients: shrimp, toffu, capsicum', 
+      priceTitle: "Price:",
+      price: 325, 
+      originalPrice: 348, 
+      src: './images/food8.webp',
+      srcFallback: './images/food8.jpg',
+      alt: 'Spicy shrimp soup with tofu and capsicum'
+    },
+    { 
+      id: 8, 
+      name: 'NOODLES SPICY WITH SEAFOOD', 
+      category: 'Noodle Dishes', 
+      ingredients: 'Ingredients: noodles, seafood, capsicum', 
+      priceTitle: "Price:",
+      price: 325, 
+      originalPrice: 348, 
+      src: './images/food9.webp',
+      srcFallback: './images/food9.jpg',
+      alt: 'Spicy noodles with seafood and capsicum'
+    },
+    { 
+      id: 9, 
+      name: 'CHICKEN FRIED RICE', 
+      category: 'Rice Dishes', 
+      ingredients: 'Ingredients: rice, chicken, vegetables', 
+      priceTitle: "Price:",
+      price: 280, 
+      originalPrice: 348, 
+      src: './images/food10.webp',
+      srcFallback: './images/food10.jpg',
+      alt: 'Chicken fried rice with vegetables'
+    },
+    { 
+      id: 10, 
+      name: 'SEAFOOD PAELLA', 
+      category: 'Rice Dishes', 
+      ingredients: 'Ingredients: rice, seafood, saffron', 
+      priceTitle: "Price:",
+      price: 380, 
+      originalPrice: 448, 
+      src: './images/food1.webp',
+      srcFallback: './images/food1.jpg',
+      alt: 'Seafood paella with saffron'
+    },
+    { 
+      id: 11, 
+      name: 'GRILLED SALMON', 
+      category: 'Seafood Dishes', 
+      ingredients: 'Ingredients: salmon, lemon, herbs', 
+      priceTitle: "Price:",
+      price: 420, 
+      originalPrice: 548, 
+      src: './images/food2.webp',
+      srcFallback: './images/food2.jpg',
+      alt: 'Grilled salmon with lemon and herbs'
+    },
+    { 
+      id: 12, 
+      name: 'ICED LEMON TEA', 
+      category: '', 
+      ingredients: 'Ingredients: tea, lemon, ice', 
+      priceTitle: "Price:",
+      price: 80, 
+      originalPrice: 120, 
+      src: './images/food3.webp',
+      srcFallback: './images/food3.jpg',
+      alt: 'Iced lemon tea'
+    }
+  ],
+
+  notFound: {
+    icon: ForkKnifeCrossed,
+    title: "Not Found",
+    description: "Try selecting a different category or check back later for new additions.",
+  },
+
+  pagination: {
+    itemsPerPage: 8,
+    initialFilter: 'All',
+    initialPage: 1
+  }
+
+}
 
 // section: 4
 // Combo deals section content

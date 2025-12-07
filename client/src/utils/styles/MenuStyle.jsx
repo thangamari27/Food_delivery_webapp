@@ -98,6 +98,72 @@ export const specialMenuStyle = {
 
 }
 
+// section: 3
+// Top category menu items style
+export const topCategoryStyles = {
+  section: "bg-gradient-to-b from-orange-50 to-white",
+  container: "max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8",
+
+  header: {
+    container: "",
+    title: "text-3xl sm:text-4xl font-bold text-gray-900 mb-7",
+    subTitle: "text-gray-600 text-sm sm:text-base max-w-2xl",
+  },
+
+  scrollContainer: {
+    base: 'flex gap-2 overflow-x-auto mb-7 pb-2 w-full sm:w-auto scrollbar-hide',
+    button: {
+      base: 'px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap',
+      active: 'bg-emerald-700 text-white shadow-md',
+      inactive: 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+    }
+  },
+
+  topCategoryCard: {
+    container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6",
+
+    cardContainer: 'bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all',
+    imageContainer: 'relative w-full overflow-hidden bg-gradient-to-br from-orange-50 to-amber-50',
+    picture: "block w-full h-48 sm:h-56 md:h-60 lg:h-54 xl:h-62",
+    image: "w-full h-full object-cover transition-transform duration-500 hover:scale-105",
+
+    content: 'p-4 sm:p-6',
+    title: 'text-sm sm:text-base font-bold text-gray-900 mb-2 uppercase truncate',
+    ingredients: 'text-xs text-gray-600 mb-3',
+    priceContainer: "flex items-center justify-between",
+    priceWrapper: "",
+    priceTitle: "",
+    price: 'text-base sm:text-lg font-bold text-emerald-700',
+    originalPrice: 'text-xs sm:text-sm text-gray-400 line-through ml-1',
+    
+    addButton: 'w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300 transition-colors duration-200 cursor-pointer active:scale-95',
+    
+    // Icon styles
+    icon: "w-4 h-4 sm:w-5 sm:h-5",
+  },
+
+  pagination: {
+    container: "flex justify-center items-center gap-2 mt-8",
+    button: {
+      base: "w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-medium transition-all",
+      active: "bg-emerald-700 text-white",
+      inactive: "bg-white text-gray-700 hover:bg-gray-100"
+    },
+    icon: {
+      size: 20
+    }
+  },
+
+  notFound: {
+    container: 'text-center py-16 px-4 bg-gray-100 rounded',
+    iconContainer: 'text-center mb-4',
+    icon: "inline-block text-4xl",
+    title: 'text-2xl font-bold text-gray-900 mb-2',
+    text: 'text-gray-600'
+  }
+
+}
+
 // section: 4
 // Combo section styles
 export const comboStyles = {
