@@ -1,4 +1,3 @@
-import React from 'react'
 import ActiveOfferSection from '@/components/common/activeOffer/ActiveOfferSection'
 import OfferGrid from './currentOfferUI/OfferGrid'
 import { currentOfferContent } from '@/utils/constant/admin/OfferConstant'

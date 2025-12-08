@@ -110,51 +110,66 @@ export const userBenefitStyle = {
       subTitle: "text-gray-500 text-xs md:text-sm",
     },
     deliveryCard: {
-      container: "bg-gradient-to-br from-orange-50 via-orange-50 to-orange-100 rounded-2xl lg:rounded-3xl p-6 md:p-8 lg:p-12",
-      wrapper: "flex flex-col lg:flex-row items-center gap-6 md:gap-8 lg:gap-12",
-      deliverPerson: {
-        deliveryContainer: "w-full lg:w-1/2 flex justify-center",
-        imageContainer: "relative",
+      container: "max-w-7xl py-2 lg:py-6",
+      wrapper: "bg-gradient-to-br from-orange-50 via-o-50 to-orange-100 rounded-2xl lg:rounded-3xl p-6 md:p-8 lg:p-12",
+      leftImageContainer: {
+        container: "flex flex-col lg:flex-row items-center gap-8 md:gap-10 lg:gap-12 xl:gap-16",
+        imageContainer: "w-full lg:w-1/2 flex justify-center",
+        imageWrapper: "relative w-full max-w-full sm:max-w-md md:max-w-lg lg:max-w-sm xl:max-w-md", 
         imageShadow: "absolute inset-0 bg-orange-200 rounded-2xl blur-2xl opacity-30",
         picture: "",
-        image: "relative w-full max-w-sm h-64 md:h-80 lg:h-96 object-cover rounded-2xl shadow-xl",
+        image: "relative w-full h-60 sm:h-64 md:h-72 lg:h-80 xl:h-96 object-cover rounded-xl md:rounded-2xl shadow-lg md:shadow-xl",
+        
+        imageResponsive: {
+          mobile: "h-56 sm:h-64", 
+          tablet: "h-60 md:h-72", 
+          desktop: "h-72 lg:h-80 xl:h-96", 
+        }
       },
-      featureHighlight: {
-        container: "w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5",
-        wrapper: "bg-white rounded-xl lg:rounded-2xl p-5 md:p-6 lg:p-8 shadow-sm hover:shadow-lg transition-all duration-300",
-
-      }
-
+      benefitItem: {
+        outerContainer: "w-full lg:w-1/2 space-y-4 md:space-y-5 lg:space-y-6 order-1 lg:order-2",
+        container: "bg-white rounded-xl lg:rounded-2xl p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-md lg:hover:shadow-lg transition-all duration-300",
+        wrapper: "flex items-start gap-3 sm:gap-4",
+        iconContainer: "rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0",
+        icon: "w-5 h-5 sm:w-6 sm:h-6",
+        content: "flex-1",
+        title: "font-bold text-gray-800 text-sm sm:text-base md:text-lg lg:text-xl mb-1",
+        description: "text-xs sm:text-sm text-gray-500",
+      },
     }
   },
 
-  deliveryCard: {
-    container: "max-w-7xl py-2 lg:py-6",
-    wrapper: "bg-gradient-to-br from-orange-50 via-o-50 to-orange-100 rounded-2xl lg:rounded-3xl p-6 md:p-8 lg:p-12",
-    leftImageContainer: {
-      container: "flex flex-col lg:flex-row items-center gap-8 md:gap-10 lg:gap-12 xl:gap-16",
-      imageContainer: "w-full lg:w-1/2 flex justify-center",
-      imageWrapper: "relative w-full max-w-full sm:max-w-md md:max-w-lg lg:max-w-sm xl:max-w-md", 
-      imageShadow: "absolute inset-0 bg-orange-200 rounded-2xl blur-2xl opacity-30",
-      picture: "",
-      image: "relative w-full h-60 sm:h-64 md:h-72 lg:h-80 xl:h-96 object-cover rounded-xl md:rounded-2xl shadow-lg md:shadow-xl",
-      
-      imageResponsive: {
-        mobile: "h-56 sm:h-64", 
-        tablet: "h-60 md:h-72", 
-        desktop: "h-72 lg:h-80 xl:h-96", 
-      }
-    },
-    benefitItem: {
-      outerContainer: "w-full lg:w-1/2 space-y-4 md:space-y-5 lg:space-y-6 order-1 lg:order-2",
-      container: "bg-white rounded-xl lg:rounded-2xl p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-md lg:hover:shadow-lg transition-all duration-300",
-      wrapper: "flex items-start gap-3 sm:gap-4",
-      iconContainer: "rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0",
-      icon: "w-5 h-5 sm:w-6 sm:h-6",
-      content: "flex-1",
-      title: "font-bold text-gray-800 text-sm sm:text-base md:text-lg lg:text-xl mb-1",
-      description: "text-xs sm:text-sm text-gray-500",
-    },
-  }
+  
 
+}
+
+// section: 4
+// Loyalty section styles
+export const loyaltyProgramStyle = {
+  section: "bg-gray-200 p-8 md:p-12",
+  container: "max-w-7xl mx-auto",
+  sectionGrid: "grid lg:grid-cols-2 gap-8 items-center",
+  header: {
+    container: "md:m-4",
+    title: "text-2xl md:text-4xl font-bold text-gray-900 mb-4",
+    description: "text-gray-600 mb-6 leading-relaxed",
+  },
+  buttonStyle: {
+    buttonContainer: "mt-8",
+    button: "px-6 py-2.5 rounded font-medium transition-all duration-300 flex items-center gap-2 bg-teal-700 hover:bg-teal-800 text-white"
+  },
+  featureList: {
+    container: "space-y-4",
+    wrapper: "flex items-center gap-3",
+    iconContainer: "bg-teal-600 rounded-full p-1",
+    icon: "",
+    feature: "text-gray-800 font-medium",
+    
+  },
+  rightImage: {
+    container: "grid grid-cols-2 gap-2",
+    picture: "border-4 border-teal-600 rounded-2xl p-4",
+    image: "relative w-full h-60 sm:h-64 md:h-72 lg:h-80 xl:h-96 object-cover rounded-xl md:rounded-2xl shadow-lg md:shadow-xl",
+  },
+  
 }

@@ -1,6 +1,7 @@
 import OfferHeroSection from '@/components/offer/OfferHeroSection'
 import CurrentOfferSection from '@/components/offer/CurrentOfferSection'
-import UserBenefit from '@/components/offer/UserBenefit'
+import UserBenefitSection from '@/components/offer/UserBenefitSection'
+import LoyaltyProgram from '@/components/offer/LoyaltyProgram'
 
 function OfferPage() {
   return (
@@ -8,7 +9,8 @@ function OfferPage() {
         <main>
             <OfferHeroSection />
             <CurrentOfferSection />
-            <UserBenefit />
+            <UserBenefitSection />
+            <LoyaltyProgram />
         </main>
     </div>
   )

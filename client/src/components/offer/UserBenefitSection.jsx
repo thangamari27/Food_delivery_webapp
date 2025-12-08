@@ -1,26 +1,14 @@
-import { useState } from 'react'
 import { userBenefitContent } from '@/utils/constant/admin/OfferConstant'
 import { userBenefitStyle } from '@/utils/styles/OfferStyle'
 import BenefitHeader from './userBenefitUI/BenefitHeader';
 import BenefitCarousel from './userBenefitUI/BenefitCarousel';
 import DeliveryPersonBenefit from './userBenefitUI/DeliveryPersonBenefit';
+import useUserBenefit from '@/hooks/useUserBenefit';
 
-function UserBenefit() {
-  const [ currentIndex, setCurrentIndex ] = useState(0)
+function UserBenefitSection() {
   const content = userBenefitContent;
   const styles = userBenefitStyle;
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => 
-        prev + 1 >= content.benefits.length - 2 ? 0 : prev + 1
-    )
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => 
-        prev === 0 ? content.benefits.length -3 : prev - 1
-    )
-  };
+  const { currentIndex, prevSlide, nextSlide } = useUserBenefit({content})
 
   return (
     <section className={styles.section}>
@@ -38,10 +26,10 @@ function UserBenefit() {
             />
 
             {/* Delivery person and feature benefit section */}
-            <DeliveryPersonBenefit content={content.deliveryPerson} styles={styles.deliveryCard} />
+            <DeliveryPersonBenefit content={content.deliveryPerson} styles={styles.benefitCarousel.deliveryCard} />
         </div>
     </section>
   )
 }
 
-export default UserBenefit
+export default UserBenefitSection

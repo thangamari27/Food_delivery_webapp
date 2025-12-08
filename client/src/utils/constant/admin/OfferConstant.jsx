@@ -1,5 +1,6 @@
 import { ShoppingCart, Zap, Package,
-  Gift, Home, Clock, Star, Headphones
+  Gift, Home, Clock, Star, Headphones,
+  Check
  } from 'lucide-react'
 
 // section: 1
@@ -325,4 +326,37 @@ export const userBenefitContent = {
     ]
 
   }
+}
+
+// section: 4
+// Loyalty section Content
+export const loyaltyProgramContent = {
+  title: "Join Our Foodie Rewards Program",
+  description: "Earn points with every order, unlock exclusive benefits, and enjoy special treats as our valued customer.",
+  button: {
+    buttonTitle: "More Info",
+
+  },
+  featureIcon: Check,
+  features: [
+    "Earn 1 point per $1 spent",
+    "Unlock Bronze, Silver, Gold & Platinum tiers",
+    "Redeem points for discounts & free items",
+    "Get bonus points for referrals",
+    "Special birthday month rewards"
+  ],
+  images: [
+    {
+      id: 1,
+      src: "./images/food8.webp",
+      srcFallback: "./images/jpg/food5.webp",
+      alt: "Customer enjoying loyalty rewards with food delivery"
+    },
+    {
+      id: 2,
+      src: "./images/food6.webp",
+      srcFallback: "./images/jpg/food6.webp",
+      alt: "Digital loyalty card showing points redemption for food"
+    }
+  ]
 }
