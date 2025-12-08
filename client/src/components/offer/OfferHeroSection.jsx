@@ -1,10 +1,17 @@
-import HeroCarousel from './heroUI/HeroCarousel'
-import { currentOfferSection } from '@/utils/constant/user/OfferConstant'
+import Carousel from '@/components/common/Carousel'
+import { offerHeroContent } from '@/utils/constant/admin/OfferConstant'
+import { offerHeroStyle } from '@/utils/styles/OfferStyle'
 
 function OfferSection() {
+  const content  = offerHeroContent;
+  const styles = offerHeroStyle;
+
   return (
-    <section className='pt-24 md:pt-24 px-2 sm:px-4 md:px-10 pb-10 bg-gradient-to-br from-orange-50 via-white to-orange-50 '>
-        <HeroCarousel slides={ currentOfferSection.heroCarousel } />
+    <section className={styles.section}>
+        <Carousel 
+          carouselContent={content.heroCarousel}
+          styles={styles.carousel}
+        />
     </section>
   )
 }

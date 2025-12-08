@@ -2,7 +2,7 @@
 import { IndianRupee, Search, ForkKnifeCrossed } from "lucide-react";
 
 // section: 1
-// hero section content
+// Menu hero section content
 export const heroContent = {
   heroCarousel: [
     {
@@ -93,7 +93,7 @@ export const specialMenuContent = {
     { 
       id: 'sm5', 
       name: 'Pakistani Kebabs', 
-      cuisine: 'pakistani', 
+      cuisine: '', 
       price: 190, 
       description: 'Marinated Beef · Fresh Salad · Yogurt Dip', 
       src: "./images/food5.webp",
@@ -149,7 +149,9 @@ export const specialMenuContent = {
 
   }
 }
+
 // section: 3
+// Top category section content
 export const topCategoryContent = {
   header: {
     title: "Top Category",

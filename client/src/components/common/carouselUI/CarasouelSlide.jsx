@@ -6,7 +6,7 @@ import Image from '../Image'
 function CarasouelSlide( { slides, currentSlide, styles} ) {
   return (
     <>
-        {slides.map((slide, index) => (
+      {slides.map((slide, index) => (
         <div
           key={slide.id}
           className={`${styles.slidesContainer} ${

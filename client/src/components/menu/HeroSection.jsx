@@ -1,6 +1,6 @@
 import React from 'react'
 import Carousel from '@/components/common/Carousel'
-import { heroContent } from '../../utils/constant/admin/MenuConstant'
+import { heroContent } from '@/utils/constant/admin/MenuConstant'
 import { menuHeroStyle } from '@/utils/styles/MenuStyle'
 
 function HeroSection() {

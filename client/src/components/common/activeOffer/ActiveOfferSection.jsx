@@ -1,6 +1,6 @@
 import React from 'react'
 import CountdownTimer from './ActiveOfferUI/CountdownTimer'
-import { offerContent, offerConfig } from '@/utils/constant/admin/HomeConstant'
+import { offerConfig, offerContent } from '@/utils/constant/admin/CommonConstant';
 import { activeOfferStyles } from '@/utils/styles/Common'
 
 function ActiveOfferSection() {

@@ -1,44 +1,41 @@
-import React from 'react'
+import Title from "@/components/common/Title"
+import SubTitle from '@/components/common/SubTitle'
+import Button from '@/components/common/Button'
 
-function OfferExpandPanel({ expanded, offer, setExpanded }) {
+function OfferExpandPanel({ expanded, offer, setExpanded, panelContent, styles }) {
   return (
      <div
       id={`offer-panel-${offer.id}`}
-      className={`absolute inset-x-0 bottom-0 bg-white/95 text-slate-900 rounded-t-xl shadow-2xl 
-        transition-transform duration-300 ${expanded ? "translate-y-0" : "translate-y-full"}`}
+      className={`${styles.container} ${expanded ? styles.panelClose : styles.panelOpen }`}
       style={{ minHeight: "120px" }}
       role="region"
       aria-hidden={!expanded}
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="p-4 md:p-6">
-        <div className="flex justify-between items-start gap-4">
+      <div className={styles.panelContainer}>
+        <div className={styles.panelWrapper}>
           <div>
-            <h4 className="text-lg font-bold">{offer.title}</h4>
-            <p className="text-sm text-slate-600 mt-1">{offer.subtitle}</p>
+            <Title title={offer.title} titleStyle={styles.title} />
+            <SubTitle subTitle={offer.subtitle} subTitleStyle={styles.subTitle} />
           </div>
 
           <button
             onClick={() => setExpanded(false)}
-            className="p-2 rounded-md hover:bg-slate-100"
+            className={styles.buttonClose}
             aria-label="Close details"
           >
             ✕
           </button>
         </div>
 
-        <div className="mt-3 text-sm text-slate-700 space-y-3">
-          <p><strong>Offer:</strong> {offer.discount}</p>
+        <div className={styles.contentContainer}>
+          <p><strong>{panelContent.offerTitle}</strong> {offer.discount}</p>
 
-          <p><strong>What's included:</strong> Combo deals, fast delivery.</p>
+          <p><strong>{panelContent.includeTitle}</strong> {offer.include}</p>
 
-          <div className="flex gap-3 mt-2">
-            <button className="px-4 py-2 rounded-md bg-red-600 text-white font-semibold">
-              Order Now
-            </button>
-            <button className="px-4 py-2 rounded-md border border-slate-200">
-              View Menu
-            </button>
+          <div className={styles.buttonContainer}>
+            <Button buttonText={panelContent.leftButton} buttonStyle={styles.leftButton} />
+            <Button buttonText={panelContent.rightButton} buttonStyle={styles.rightButton} />
           </div>
         </div>
       </div>

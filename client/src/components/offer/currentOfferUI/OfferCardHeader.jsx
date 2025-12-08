@@ -1,19 +1,24 @@
 import React from 'react'
+import Title from '@/components/common/Title'
+import Paragraph from '@/components/common/Paragraph'
 
-function OfferCardHeader({ offer }) {
+
+function OfferCardHeader({ offer, styles }) {
   return (
-    <div className="flex justify-between items-start gap-4">
-      <div className="max-w-[70%]">
-        <h3 className="text-lg md:text-xl font-extrabold drop-shadow-sm">
-          {offer.title}
-        </h3>
-        <p className="text-sm md:text-base opacity-95 mt-1">
-          {offer.subtitle}
-        </p>
+    <div className={styles.wrapper}>
+      <div className={styles.header}>
+        <Title 
+          title={offer.title} 
+          titleStyle={styles.title} 
+        />
+        <Paragraph 
+          paragraph={offer.subtitle}
+          paragraphStyle={styles.description}
+        />
       </div>
 
-      <div className="ml-auto">
-        <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold text-white shadow-sm">
+      <div className={styles.descriptionContainer}>
+        <div className={styles.discountWrapper}>
           {offer.discount}
         </div>
       </div>

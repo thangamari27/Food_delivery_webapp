@@ -1,14 +1,18 @@
 import React from 'react'
+import Image from '@/components/common/Image'
 
-function OfferBackgroundImage({ offer }) {
+function OfferBackgroundImage({ offer, styles }) {
   return (
-    <div className="absolute inset-0 pointer-events-none">
-      <img
-        src={offer.image}
-        alt={offer.title}
-        className="w-full h-full object-cover scale-[1.03] transition-transform duration-500"
+    <div className={styles.container}>
+      
+      <Image 
+        src={offer.src}
+        srcFallback={offer.srcFallback}
+        alt={offer.alt}
+        pictureStyle={styles.picture}
+        imageStyle={styles.image}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/30 to-transparent" />
+      <div className={styles.imageShadow} />
     </div>
   )
 }

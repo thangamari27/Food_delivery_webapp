@@ -1,11 +1,11 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import OfferCardHeader from "./OfferCardHeader";
 import OfferCardFooter from "./OfferCardFooter";
 import OfferExpandPanel from "./OfferExpandPanel";
 import OfferBackgroundImage from "./OfferBackgroundImage";
 import { useNavigate } from "react-router-dom";
 
-function OfferCard({ offer }) {
+function OfferCard({ offer, styles }) {
   const [expanded, setExpanded] = useState(false);
   const cardRef = useRef(null);
   const navigate = useNavigate();
@@ -13,28 +13,28 @@ function OfferCard({ offer }) {
   // auto-scroll on opening
   useEffect(() => {
     if (expanded && cardRef.current) {
-      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      cardRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [expanded]);
 
   return (
     <div
       ref={cardRef}
-      className={`relative overflow-hidden rounded-xl ${offer.bgColor} shadow-lg transition-transform`}
+      className={`${offer.bgColor} ${styles.card}`}
       aria-live="polite"
       onClick={() => navigate(`/order/${offer.id}`)}
     >
-      <OfferBackgroundImage offer={offer} />
+      <OfferBackgroundImage offer={offer} styles={styles.offerBgImage} />
 
       {/* CONTENT */}
-      <div className="relative p-5 text-white flex flex-col justify-between h-full min-h-[320px]">
-        <OfferCardHeader offer={offer} />
+      <div className={styles.offerCardHeader.container}>
+        <OfferCardHeader offer={offer} styles={styles.offerCardHeader} />
 
-        <OfferCardFooter offer={offer} expanded={expanded} setExpanded={setExpanded} />
+        <OfferCardFooter offer={offer} expanded={expanded} setExpanded={setExpanded} styles={styles.offerCardFooter} />
       </div>
 
       {/* EXPAND PANEL */}
-      <OfferExpandPanel expanded={expanded} offer={offer} setExpanded={setExpanded} />
+      <OfferExpandPanel expanded={expanded} offer={offer} setExpanded={setExpanded} panelContent={offer.panelContent} styles={styles.offerPanel} />
     </div>
   );
 }

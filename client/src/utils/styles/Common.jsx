@@ -77,7 +77,7 @@ export const activeOfferStyles = {
         },
         timeCard: {
             container: "relative z-10 text-center max-w-5xl mx-auto",
-            title: "text-5xl md:text-7xl font-bold text-white mb-3 drop-shadow-lg",
+            title: "text-3xl md:text-5xl font-bold text-white mb-3 drop-shadow-lg",
             description: "text-white/90 text-sm md:text-base tracking-[0.3em] mb-12 font-light",
             offerBadge: {
                 container: "inline-flex items-center gap-2 mb-4",
@@ -92,7 +92,7 @@ export const activeOfferStyles = {
                 timeText: "text-5xl font-bold text-gray-800",
                 label: "text-white text-sm mt-3 font-medium tracking-wide",
             },
-            button: "mt-12 px-8 py-4 bg-white text-red-600 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:bg-red-50"
+            button: "mt-12 mb-6 px-8 py-4 bg-white text-red-600 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:bg-red-50"
         },
     },
 }

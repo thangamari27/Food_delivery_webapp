@@ -1,6 +1,6 @@
 
 // section: 1
-// hero section style
+// Menu hero section style
 export const menuHeroStyle ={
   section: "pt-24 md:pt-24 px-2 sm:px-4 md:px-10 pb-10 bg-gradient-to-br from-orange-50 via-white to-orange-50",
   carousel: {
@@ -9,7 +9,8 @@ export const menuHeroStyle ={
 
       slidesContainer: "absolute inset-0 transition-opacity duration-700",
       slideWrapper: "h-full flex items-center justify-between px-8 md:px-16",
-      slideContent: "text-white z-10 max-w-md",
+      
+      slideContent: "ml-8 md:ml-12 lg:ml-32 text-white z-10 max-w-md",
       slideTitle: "text-5xl md:text-7xl font-bold mb-2",
       slideSubtitle: "text-2xl md:text-3xl font-semibold",
       slideDescription: "",
@@ -167,7 +168,7 @@ export const topCategoryStyles = {
 // section: 4
 // Combo section styles
 export const comboStyles = {
-  section: "py-12 bg-white",
+  section: "py-12 bg-amber-50",
   container: "container mx-auto px-4 md:px-16",
   header: {
     container: "text-center mb-8",

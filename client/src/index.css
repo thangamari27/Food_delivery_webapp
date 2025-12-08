@@ -20,12 +20,13 @@ html {
 
 /* Home/Popular menu section carasouel scroll style*/
 @keyframes marqueeLR {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-        .pm-marquee {
-          will-change: transform;
-          animation-name: marqueeLR;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-        }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+  .pm-marquee {
+    will-change: transform;
+    animation-name: marqueeLR;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }

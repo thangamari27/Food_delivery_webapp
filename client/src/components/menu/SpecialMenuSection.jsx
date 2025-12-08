@@ -16,14 +16,14 @@ function SpecialMenuSection() {
     <section className={styles.section}>
       <div className={styles.container}>
         <Title title={content.header.title} titleStyle={styles.header.title} />
-
+        {/* special menu filter bar */}
         <FilterBar 
           content={content}
           styles={styles}
           activeCuisine={activeCuisine}
           setActiveCuisine={setActiveCuisine}
         />
-
+        {/* Special menu Card */}
         <SpecialMenuGrid
           paginatedSpecialDishes={paginatedSpecialDishes}
           content={content}
@@ -32,7 +32,7 @@ function SpecialMenuSection() {
           handleLikeToggle={handleLikeToggle}
           activeCuisine={activeCuisine}
         />
-
+        {/* special menu pagination container */}
         <SpecialMenuPagination
           currentPage={specialMenuPage}
           totalPages={totalPages}

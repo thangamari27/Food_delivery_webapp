@@ -1,4 +1,3 @@
-import React from 'react'
 import HeroSection from '@/components/menu/HeroSection'
 import ComboDealSection from '@/components/menu/ComboDealSection'
 import SpecialMenuSection from '@/components/menu/SpecialMenuSection'

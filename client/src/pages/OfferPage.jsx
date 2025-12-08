@@ -1,13 +1,14 @@
-import React from 'react'
-import OfferHeroSection from '../components/offer/OfferHeroSection'
-import CurrentOfferSection from '../components/offer/CurrentOfferSection'
+import OfferHeroSection from '@/components/offer/OfferHeroSection'
+import CurrentOfferSection from '@/components/offer/CurrentOfferSection'
+import UserBenefit from '@/components/offer/UserBenefit'
 
 function OfferPage() {
   return (
-    <div className='min-h-screen'>
+    <div className=''>
         <main>
             <OfferHeroSection />
             <CurrentOfferSection />
+            <UserBenefit />
         </main>
     </div>
   )
