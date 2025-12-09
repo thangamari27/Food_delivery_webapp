@@ -1,6 +1,7 @@
 import { ShoppingCart, Zap, Package,
   Gift, Home, Clock, Star, Headphones,
-  Check
+  Check,
+  IndianRupee
  } from 'lucide-react'
 
 // section: 1
@@ -359,4 +360,76 @@ export const loyaltyProgramContent = {
       alt: "Digital loyalty card showing points redemption for food"
     }
   ]
+}
+
+// section: 5
+// Holiday special section Content
+export const holidaySpecialContent = {
+
+  header: {
+    title: "Seasonal Holiday Specials",
+    description: "To explore the events, exciating food dish offers then more over the fun activity",
+  },
+
+  combos: [
+    {
+      id: "c1",
+      badge: "Best Seller",
+      title: "Spicy Duo Deal",
+      items: ["1 Medium Firecracker Inferno", "1 Medium Buffalo Bliss"],
+      price: 21.99,
+      priceSuffix: "Save 4",
+      color: "bg-red-600 text-white",
+      src: "./images/food3.webp",
+      srcFallback:"./images/jpg/food3.jpg",
+      width: "",
+      height: "",
+    },
+    {
+      id: "c2",
+      badge: "Popular",
+      title: "Cheese Lovers Pair",
+      items: ["1 Medium Cheese Avalanche", "1 Medium Truffle Temptation"],
+      price: 22.99,
+      priceSuffix: "Save 5",
+      color: "bg-yellow-400 text-gray-900",
+      src: "./images/food2.webp",
+      srcFallback:"./images/jpg/food2.jpg",
+      width: "",
+      height: "",
+    },
+    // add more combos as needed
+  ],
+  currencyIcon: IndianRupee,
+  cta: {
+    text: "Order Now",
+    link: "/menu?filter=combo",
+  },
+  mainCombo: {
+    leftContent: {
+      title: "SEASONAL/HOLIDAY SPECIALS",
+      discount: "SAVE UP TO 25%",
+      description: "Celebrate the season with our exclusive holiday menu! Enjoy festive flavors, limited-time offers, and special bundles perfect for your celebrations",
+      price: 29.99,
+      savings: "Save 7.50rs",
+      icon: IndianRupee,
+      button: {
+        leftButton: {
+          text: "View Menu",
+          link: "/seasonal-menu"
+        },
+        rightButton: {
+          text: "Order Special",
+          link: "/order-seasonal"
+        }
+      },
+    },
+    mainImage: {
+      title: "Holiday Favorites",
+      src: "./images/food6.webp",
+      srcFallback: "./images/jpg/food6.jpg",
+      alt: "holiday special image",
+      
+    }
+  },
 }

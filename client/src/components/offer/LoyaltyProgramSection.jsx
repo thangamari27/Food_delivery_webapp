@@ -6,7 +6,7 @@ import Paragraph from '@/components/common/Paragraph'
 import Image from '@/components/common/Image'
 import FeaturesList from './loyaltyProgramUI/FeaturesList'
 
-function LoyaltyProgram() {
+function LoyaltyProgramSection() {
   const content = loyaltyProgramContent;
   const styles = loyaltyProgramStyle;
 
@@ -35,4 +35,4 @@ function LoyaltyProgram() {
   )
 }
 
-export default LoyaltyProgram
+export default LoyaltyProgramSection

@@ -173,3 +173,96 @@ export const loyaltyProgramStyle = {
   },
   
 }
+
+// section: 5
+// Holiday special section styles
+export const holidaySpecialStyle = {
+  section: "py-4 md:py-8 lg:py-12 bg-gray-100",
+  container: "px-4 md:px-8 lg:px-12",
+
+  header: {
+    container: "text-center mb-10",
+    title: "text-2xl md:text-4xl font-bold mb-4",
+    description: "text-lg mb-4",
+  },
+
+  combo: {
+    badge: "inline-block text-sm font-semibold px-3 py-1 rounded-full",
+    grid: "grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8",
+    card: "relative rounded-2xl overflow-hidden shadow-2xl",
+    cardContent: {
+      container: "p-6 md:p-8 h-full lg:h-80 flex flex-col relative z-20",
+      badgeContainer: "flex items-start justify-between",
+      badge: "inline-block border-2 border-gray-200 text-xs font-semibold px-3 py-1 rounded-full",
+      rightBadgeText: "text-sm text-gray-50/80",
+      
+      content: "mt-4",
+      title: "text-xl md:text-2xl font-bold text-white",
+      listContainer: "mt-3 text-sm text-white/90 space-y-1",
+      list: "flex items-start gap-2",
+      listIcon: "w-1.5 h-1.5 rounded-full bg-white/90 mt-2",
+      listText: "",
+
+      buttonContainer: "mt-auto flex items-center justify-between pt-6",
+      button: "inline-flex items-center gap-2 bg-white text-orange-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/90 shadow-sm",
+
+      priceContainer: "text-right text-white/90",
+      priceWrapper: "flex items-center ",
+      currencyIcon: "w-4 h-4 text-white",
+      price: "text-xl font-bold",
+      priceSuffix: "text-md text-gray-100 font-bold"
+
+    },
+
+    cardImage: {
+      container: "absolute inset-0 pointer-events-none z-0",
+      wrapper: "absolute -right-10 transform -translate-y-10 md:-translate-y-20 w-40 h-40 md:w-56 md:h-56 lg:w-75 lg:h-75 rounded-full overflow-hidden shadow-2xl",
+      image: "w-full h-full object-cover block",
+      picture: ""
+    },
+
+    imageOverlay: "absolute inset-0 z-10 pointer-events-none  to-transparent",
+
+    cardTop: "space-y-4",
+    cardFooter: "flex items-center justify-between mt-4",
+    itemsList: "text-sm text-gray-700 space-y-1",
+    ctaBtn: "inline-flex items-center gap-2 bg-white/90 hover:bg-white px-4 py-2 rounded-full text-sm font-semibold shadow-sm",
+    imageWrap: "absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-40 h-40 md:w-56 md:h-56 overflow-hidden rounded-full shadow-2xl",
+    image: "w-full h-full object-cover",
+  },
+
+  mainCombo: {
+    container: "bg-gray-800 rounded p-8 relative overflow-hidden shadow-xl mt-4",
+    grid: "grid md:grid-cols-2 gap-6 items-center",
+    
+    leftContent: {
+      badge: "bg-orange-500 text-white px-4 py-2 inline-block rounded-lg shadow-lg mb-4",
+      title: "text-sm font-bold uppercase tracking-wider",
+      discount: "text-2xl font-bold",
+      description: "text-white text-sm opacity-90 mb-8",
+      buttonContainer: "flex gap-3 mb-6",
+      buttonLeft: "bg-white text-red-800 px-8 py-4 rounded flex items-center gap-2  transition-colors cursor-pointer",
+      buttonLeftSize: "text-sm font-medium",
+      buttonRight: "border-2 border-red-500 text-white px-8 py-4 rounded flex items-center gap-2 hover:bg-red-600 transition-colors cursor-pointer font-semibibold",
+      buttonRightSize: "text-sm font-medium",
+      priceContainer: "text-white",
+      icon: "inline-block",
+      price: "text-4xl font-bold",
+      savings: "text-yellow-300 ml-2 font-bold",
+    },
+    
+    rightCard: {
+      cardContainer: "relative",
+      card: "bg-white rounded p-4 shadow-2xl",
+      cardHeader: "bg-yellow-400 h-10 rounded -mx-4 -mt-4 mb-2 flex items-center justify-center",
+      cardHeaderDecoration: "bg-white w-16 h-6 rounded-b-3xl",
+      cardTitle: "text-center mb-2",
+      cardTitleText: "text-sm font-bold text-red-800",
+      picture: "",
+      mainImage: "w-full h-62 object-cover rounded-xl mb-2 border-2 border-green-100",
+      sideImagesContainer: "flex gap-2",
+      sideImage: "w-16 h-16 object-cover rounded-lg border-2 border-green-100"
+    }
+  },
+
+}
