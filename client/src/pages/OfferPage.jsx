@@ -2,7 +2,7 @@ import OfferHeroSection from '@/components/offer/OfferHeroSection'
 import CurrentOfferSection from '@/components/offer/CurrentOfferSection'
 import UserBenefitSection from '@/components/offer/UserBenefitSection'
 import LoyaltyProgramSection from '@/components/offer/LoyaltyProgramSection'
-import HolidaySpecialSection from '../components/offer/HolidaySpecialSection'
+import HolidaySpecialSection from '@/components/offer/HolidaySpecialSection'
 
 function OfferPage() {
   return (

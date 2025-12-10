@@ -4,7 +4,7 @@ import Paragraph from '@/components/common/Paragraph'
 
 function ComboDealHeader({ content, styles }) {
   return (
-    <div>
+    <div className={styles.container}>
         {/* Combo Deal header section badge */}
         <div className={styles.badge}>
             <Title title={content.title} titleStyle={styles.title} />

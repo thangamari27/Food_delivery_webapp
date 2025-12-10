@@ -236,14 +236,15 @@ export const holidaySpecialStyle = {
     grid: "grid md:grid-cols-2 gap-6 items-center",
     
     leftContent: {
+      container: "px-1 md:px-3 lg:px-6",
       badge: "bg-orange-500 text-white px-4 py-2 inline-block rounded-lg shadow-lg mb-4",
       title: "text-sm font-bold uppercase tracking-wider",
       discount: "text-2xl font-bold",
       description: "text-white text-sm opacity-90 mb-8",
       buttonContainer: "flex gap-3 mb-6",
-      buttonLeft: "bg-white text-red-800 px-8 py-4 rounded flex items-center gap-2  transition-colors cursor-pointer",
+      buttonLeft: "bg-white text-red-800 px-4 py-2 lg:px-8 lg:py-4 rounded flex items-center gap-2  transition-colors cursor-pointer",
       buttonLeftSize: "text-sm font-medium",
-      buttonRight: "border-2 border-red-500 text-white px-8 py-4 rounded flex items-center gap-2 hover:bg-red-600 transition-colors cursor-pointer font-semibibold",
+      buttonRight: "border-2 border-red-500 text-white px-5 py-3 lg:px-8 lg:py-4 rounded flex items-center gap-2 hover:bg-red-600 transition-colors cursor-pointer font-semibibold",
       buttonRightSize: "text-sm font-medium",
       priceContainer: "text-white",
       icon: "inline-block",

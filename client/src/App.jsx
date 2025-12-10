@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage'
 import MenuPage from './pages/MenuPage'
 import OfferPage from './pages/OfferPage'
 import ContactPage from './pages/ContactPage'
+import ServicePage from './pages/ServicePage'
 import PageNotFound from './pages/PageNotFound'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path='/about' element={<AboutPage />} />
           <Route path='/menu' element={<MenuPage />} />
           <Route path='/offer' element={<OfferPage />} />
+          <Route path='/service' element={<ServicePage />} />
           {/* 404 page */}
           <Route path='*' element={<PageNotFound />} />
         </Routes>
