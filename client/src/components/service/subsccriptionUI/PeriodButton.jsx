@@ -1,5 +1,4 @@
 
-
 function PeriodButton({ periods, active, onChange, styles}) {
   return (
     <div className={styles.periodToggle}>

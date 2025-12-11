@@ -1,6 +1,6 @@
 import { Percent, Check } from "lucide-react"
-import Title from "../../common/Title"
-import IconComponent from '../../common/IconComponent'
+import Title from "@/components/common/Title"
+import IconComponent from '@/components/common/IconComponent'
 
 function PlanCard({ plan, period, icon,buttonContent, styles}) {
   return (

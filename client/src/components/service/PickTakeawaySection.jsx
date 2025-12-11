@@ -1,6 +1,6 @@
-import { pickTakeawayContent } from '../../utils/constant/admin/ServiceConstant'
-import { pickTakeawayStyles } from "../../utils/styles/ServiceStyle"
-import CardList from '../common/cardWrapper/CardList';
+import { pickTakeawayContent } from '@/utils/constant/admin/ServiceConstant'
+import { pickTakeawayStyles } from "@/utils/styles/ServiceStyle"
+import CardList from '@/components/common/cardWrapper/CardList';
 import StepHeader from './pickupTakeawayUI/StepHeader';
 
 function PickTakeawaySection() {

@@ -1,5 +1,5 @@
-import Title from "../../common/Title"
-import SubTitle from "../../common/SubTitle"
+import Title from "@/components/common/Title"
+import SubTitle from "@/components/common/SubTitle"
 
 function PricingPlanHeader({ heading, subheading, styles }) {
   return (

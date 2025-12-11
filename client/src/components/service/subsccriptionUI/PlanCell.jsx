@@ -1,4 +1,3 @@
-import React from 'react'
 import IconBoolean from './IconBoolean';
 
 function PlanCell({ value, styles }) {

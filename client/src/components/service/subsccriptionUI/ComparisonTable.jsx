@@ -1,4 +1,3 @@
-import React from 'react'
 import ComparisonRow from './ComparisonRow';
 
 function ComparisonTable({ data , styles}) {
