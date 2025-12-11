@@ -1,4 +1,4 @@
-import { MapPinCheck, PackageCheck, Star } from 'lucide-react'
+import { DollarSign, DollarSignIcon, IndianRupee, MapPinCheck, PackageCheck, Star } from 'lucide-react'
 
 // section: 1
 // Hero Service section content
@@ -247,3 +247,193 @@ export const pickTakeawayContent = {
   ],
   cardType: "howItWorks",
 }
+
+// section: 5
+// Pricing plan and table section Content 
+export const pricingContent = {
+  heading: "Choose Your Meal Plan",
+  subheading: "Fresh, delicious meals delivered to your doorstep",
+  periods: ['Weekly', 'Monthly', 'Yearly'],
+  buttonContent: {
+    text: "Get Start",
+    link: "",
+  },
+  plans: {
+    icon: IndianRupee,
+    Weekly: [
+      {
+        id: 'basic',
+        name: 'Basic',
+        price: 129,
+        features: [
+          '3 Meals per week',
+          '2 Servings per meal',
+          'Standard delivery',
+          'Recipe cards included',
+          'Email support',
+          'Basic meal options'
+        ]
+      },
+      {
+        id: 'family',
+        name: 'Family',
+        price: 249,
+        popular: true,
+        badgeText: "Most Popular",
+        features: [
+          '5 Meals per week',
+          '4 Servings per meal',
+          'Priority delivery',
+          'Recipe cards included',
+          'Phone & email support',
+          'Premium meal options',
+          'Dietary customization',
+          'Free dessert weekly'
+        ]
+      },
+      {
+        id: 'premium',
+        name: 'Premium',
+        price: 399,
+        features: [
+          '7 Meals per week',
+          '6 Servings per meal',
+          'Same-day delivery',
+          'Recipe cards & videos',
+          '24/7 Priority support',
+          'Gourmet meal options',
+          'Full dietary customization',
+          'Free desserts & snacks',
+          'Nutrition consultation',
+          'Exclusive chef specials'
+        ]
+      }
+    ],
+    Monthly: [
+      {
+        id: 'basic',
+        name: 'Basic',
+        price: 459,
+        savings: 15,
+        features: [
+          '12 Meals per month',
+          '2 Servings per meal',
+          'Standard delivery',
+          'Recipe cards included',
+          'Email support',
+          'Basic meal options'
+        ]
+      },
+      {
+        id: 'family',
+        name: 'Family',
+        price: 899,
+        popular: true,
+        badgeText: "Most Popular",
+        savings: 20,
+        features: [
+          '20 Meals per month',
+          '4 Servings per meal',
+          'Priority delivery',
+          'Recipe cards included',
+          'Phone & email support',
+          'Premium meal options',
+          'Dietary customization',
+          'Free desserts weekly'
+        ]
+      },
+      {
+        id: 'premium',
+        name: 'Premium',
+        price: 1399,
+        savings: 25,
+        features: [
+          '30 Meals per month',
+          '6 Servings per meal',
+          'Same-day delivery',
+          'Recipe cards & videos',
+          '24/7 Priority support',
+          'Gourmet meal options',
+          'Full dietary customization',
+          'Free desserts & snacks',
+          'Nutrition consultation',
+          'Exclusive chef specials'
+        ]
+      }
+    ],
+    Yearly: [
+      {
+        id: 'basic',
+        name: 'Basic',
+        price: 3999,
+        savings: 30,
+        features: [
+          '12 Meals per month',
+          '2 Servings per meal',
+          'Standard delivery',
+          'Recipe cards included',
+          'Email support',
+          'Basic meal options'
+        ]
+      },
+      {
+        id: 'family',
+        name: 'Family',
+        price: 7499,
+        popular: true,
+        badgeText: "Most Popular",
+        savings: 35,
+        features: [
+          '20 Meals per month',
+          '4 Servings per meal',
+          'Priority delivery',
+          'Recipe cards included',
+          'Phone & email support',
+          'Premium meal options',
+          'Dietary customization',
+          'Free desserts weekly'
+        ]
+      },
+      {
+        id: 'premium',
+        name: 'Premium',
+        price: 10999,
+        savings: 40,
+        features: [
+          '30 Meals per month',
+          '6 Servings per meal',
+          'Same-day delivery',
+          'Recipe cards & videos',
+          '24/7 Priority support',
+          'Gourmet meal options',
+          'Full dietary customization',
+          'Free desserts & snacks',
+          'Nutrition consultation',
+          'Exclusive chef specials'
+        ]
+      }
+    ]
+  },
+  
+  comparison: {
+    title: "Compare Plan",
+    tableTitle: [
+      'Features','Basic','Family','Premium'
+    ],
+    features: [
+      'Meals per delivery',
+      'Servings per meal',
+      'Delivery speed',
+      'Recipe cards',
+      'Support level',
+      'Meal variety',
+      'Dietary options',
+      'Free extras',
+      'Nutrition guidance',
+      'Chef specials'
+    ],
+    basic: ['3-12', '2', 'Standard', true, 'Email', 'Basic', false, false, false, false],
+    family: ['5-20', '4', 'Priority', true, 'Phone & Email', 'Premium', true, true, false, false],
+    premium: ['7-30', '6', 'Same-day', true, '24/7 Priority', 'Gourmet', true, true, true, true]
+  }
+};

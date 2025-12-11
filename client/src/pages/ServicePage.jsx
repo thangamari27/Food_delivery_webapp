@@ -1,7 +1,8 @@
 import HeroSection from "@/components/service/HeroSection"
 import DeliverySection from "@/components/service/DeliverySection"
 import CateringSection from "@/components/service/CateringSection"
-import PickTakeaway from "@/components/service/PickTakeaway"
+import PickTakeawaySection from "@/components/service/PickTakeawaySection"
+import FoodSubscriptionPlanSection from "../components/service/FoodSubscriptionPlanSection"
 
 function ServicePage() {
   return (
@@ -10,7 +11,8 @@ function ServicePage() {
             <HeroSection />
             <DeliverySection />
             <CateringSection />
-            <PickTakeaway />
+            <PickTakeawaySection />
+            <FoodSubscriptionPlanSection />
         </main>
     </div>
   )

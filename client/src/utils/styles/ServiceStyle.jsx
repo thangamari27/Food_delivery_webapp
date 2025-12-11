@@ -24,7 +24,7 @@ export const serviceHeroStyles = {
     rightStyle: {
         container: "",
         picture: "",
-        image: "relative w-full h-60 sm:h-64 md:h-72 lg:h-80 xl:h-96 object-cover rounded-xl md:rounded-2xl shadow-lg md:shadow-xl"
+        image: "relative w-full h-60 sm:h-64 md:h-102 lg:h-80 xl:h-96 sm:oject-cover md:object-fill lg:object-cover rounded-xl md:rounded-2xl shadow-lg md:shadow-xl"
     }
 }
 
@@ -142,6 +142,8 @@ export const serviceCateringStyles = {
     additionalDetails: "mt-3 pt-3 border-t border-gray-100 text-sm text-gray-500 italic"
 }
 
+// section: 4
+// Pickup/Takeaway section styles 
 export const pickTakeawayStyles = {
   section: "py-16 md:py-24 bg-white",
   container: "container mx-auto px-4 md:px-16 lg:px-24 xl:px-32",
@@ -164,4 +166,54 @@ export const pickTakeawayStyles = {
     gridWrapper: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8",
   },
   
+}
+
+// section: 5
+// Pricing plan and table section styles 
+export const pricingStyles = {
+    section: 'bg-gradient-to-br from-orange-50 via-white to-red-50 py-12 px-4 sm:px-6 lg:px-8',
+    container: 'max-w-7xl mx-auto',
+    header: 'text-center mb-12',
+    title: 'text-4xl md:text-5xl font-bold text-gray-900 mb-4',
+    subtitle: 'text-lg md:text-xl text-gray-600',
+    
+    periodToggle: 'flex justify-center gap-2 mb-12 flex-wrap',
+    periodBtn: 'px-6 py-3 rounded-full font-semibold transition-all duration-300',
+    periodBtnActive: 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg scale-105',
+    periodBtnInactive: 'bg-white text-gray-700 hover:bg-gray-50 shadow',
+    
+    plansGrid: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16',
+    planCard: 'bg-white rounded-2xl shadow-xl p-8 transition-all duration-300 hover:shadow-2xl relative',
+    popularBadge: 'absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg',
+    planName: 'text-2xl font-bold text-gray-900 mb-2',
+    priceContainer: 'mb-6',
+    priceWrapper: "",
+    price: 'text-4xl font-bold text-gray-900',
+    period: 'text-gray-600 text-lg',
+    savings: 'inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold mt-2',
+    priceIcon: "inline-block",
+    icon: "inline-block",
+
+    featuresList: 'h-104 space-y-4 my-8',
+    feature: 'flex items-start gap-3',
+    checkIcon: 'text-green-500 flex-shrink-0 mt-1',
+    featureText: 'text-gray-700',
+    
+    btn: 'w-full py-4 rounded-xl font-bold text-lg transition-all duration-300',
+    btnPrimary: 'bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 shadow-lg hover:shadow-xl',
+    btnSecondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200',
+    
+    comparisonSection: 'mt-16',
+    comparisonTitle: 'text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8',
+    table: 'w-full bg-white rounded-2xl shadow-xl overflow-hidden',
+    tableWrapper: 'overflow-x-auto',
+    thead: 'bg-gradient-to-r from-orange-500 to-red-500',
+    th: 'px-6 py-4 text-left text-white font-bold',
+    thFirst: 'px-6 py-4 text-left text-white font-bold text-lg',
+    tr: 'border-b border-gray-200 hover:bg-gray-50 transition-colors',
+    td: 'px-6 py-4 text-gray-700',
+    tdFirst: 'px-6 py-4 font-semibold text-gray-900',
+    iconPositive: "inline-flex items-center justify-center text-green-600",
+    iconNegative: "inline-flex items-center justify-center text-red-500",
+    textMuted: "text-gray-600",
 }

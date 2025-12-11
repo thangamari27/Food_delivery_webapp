@@ -3,7 +3,7 @@ import { pickTakeawayStyles } from "../../utils/styles/ServiceStyle"
 import CardList from '../common/cardWrapper/CardList';
 import StepHeader from './pickupTakeawayUI/StepHeader';
 
-function PickTakeaway() {
+function PickTakeawaySection() {
   const content = pickTakeawayContent;
   const styles = pickTakeawayStyles;
 
@@ -30,4 +30,4 @@ function PickTakeaway() {
   )
 }
 
-export default PickTakeaway
+export default PickTakeawaySection
