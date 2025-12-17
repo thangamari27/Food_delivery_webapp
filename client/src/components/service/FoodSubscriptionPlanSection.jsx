@@ -7,7 +7,7 @@ function FoodSubscriptionPlanSection() {
   const styles = pricingStyles;
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id='plan'>
         {/* Food pricing plan main container */}
         <FoodSubscriptionContainer 
           content={content}

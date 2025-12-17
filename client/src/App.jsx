@@ -6,9 +6,10 @@ import Footer from './components/global/Footer'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import MenuPage from './pages/MenuPage'
+import RestaurantPage from './pages/RestaurantPage'
 import OfferPage from './pages/OfferPage'
-import ContactPage from './pages/ContactPage'
 import ServicePage from './pages/ServicePage'
+import ContactPage from './pages/ContactPage'
 import PageNotFound from './pages/PageNotFound'
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path='/menu' element={<MenuPage />} />
           <Route path='/offer' element={<OfferPage />} />
           <Route path='/service' element={<ServicePage />} />
+          <Route path='/restaurant' element={<RestaurantPage />} />
           {/* 404 page */}
           <Route path='*' element={<PageNotFound />} />
         </Routes>
