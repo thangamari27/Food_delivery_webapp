@@ -156,19 +156,19 @@ export const loyaltyProgramStyle = {
   },
   buttonStyle: {
     buttonContainer: "mt-8",
-    button: "px-6 py-2.5 rounded font-medium transition-all duration-300 flex items-center gap-2 bg-teal-700 hover:bg-teal-800 text-white"
+    button: "px-8 py-2.5 rounded font-medium transition-all duration-300 flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white"
   },
   featureList: {
-    container: "space-y-4",
+    container: "space-y-8",
     wrapper: "flex items-center gap-3",
-    iconContainer: "bg-teal-600 rounded-full p-1",
-    icon: "",
+    iconContainer: "bg-orange-600 rounded-full ",
+    icon: "text-gray-200",
     feature: "text-gray-800 font-medium",
     
   },
   rightImage: {
     container: "grid grid-cols-2 gap-2",
-    picture: "border-4 border-teal-600 rounded-2xl p-4",
+    picture: "border-y-4 border-orange-600 rounded-2xl p-4",
     image: "relative w-full h-60 sm:h-64 md:h-72 lg:h-80 xl:h-96 object-cover rounded-xl md:rounded-2xl shadow-lg md:shadow-xl",
   },
   
@@ -232,7 +232,7 @@ export const holidaySpecialStyle = {
   },
 
   mainCombo: {
-    container: "bg-gray-800 rounded p-8 relative overflow-hidden shadow-xl mt-4",
+    container: "bg-emerald-700 rounded p-8 relative overflow-hidden shadow-xl mt-4",
     grid: "grid md:grid-cols-2 gap-6 items-center",
     
     leftContent: {
@@ -242,7 +242,7 @@ export const holidaySpecialStyle = {
       discount: "text-2xl font-bold",
       description: "text-white text-sm opacity-90 mb-8",
       buttonContainer: "flex gap-3 mb-6",
-      buttonLeft: "bg-white text-red-800 px-4 py-2 lg:px-8 lg:py-4 rounded flex items-center gap-2  transition-colors cursor-pointer",
+      buttonLeft: "bg-white text-red-800 font-medium px-8 py-3 rounded flex items-center gap-2  transition-colors cursor-pointer",
       buttonLeftSize: "text-sm font-medium",
       buttonRight: "border-2 border-red-500 text-white px-5 py-3 lg:px-8 lg:py-4 rounded flex items-center gap-2 hover:bg-red-600 transition-colors cursor-pointer font-semibibold",
       buttonRightSize: "text-sm font-medium",

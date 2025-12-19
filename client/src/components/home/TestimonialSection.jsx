@@ -1,7 +1,5 @@
-import React from 'react'
 import TestimonialHeader from './testimonialUI/TestimonialHeader'
 import TestimonialCardContent from './testimonialUI/TestimonialCardContent'
-import ViewAllButton from './testimonialUI/ViewAllButton'
 import { testimonials, testimonialsSection } from '@/utils/constant/admin/HomeConstant'
 import { testimonialStyles } from '@/utils/styles/HomeStyle'
 

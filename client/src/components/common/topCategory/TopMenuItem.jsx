@@ -2,7 +2,7 @@ import React from 'react'
 import Image from '../Image'
 import { Plus } from 'lucide-react'
 
-function TopMenuItem({ items, styles}) {
+function TopMenuItem({ items, buttonContent, styles}) {
   return (
     <div className={styles.cardContainer}>
       <div className={styles.imageContainer}>
@@ -27,7 +27,8 @@ function TopMenuItem({ items, styles}) {
                 </span>
             </div>
           <button className={styles.addButton}>
-                <Plus className={styles.icon}  />
+                <span className={styles.buttonText}>{buttonContent.text}</span>
+                <Plus className={styles.buttonIcon}  />
           </button>
         </div>
       </div>

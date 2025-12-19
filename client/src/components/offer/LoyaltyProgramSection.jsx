@@ -4,6 +4,7 @@ import { loyaltyProgramStyle } from '@/utils/styles/OfferStyle'
 import Title from '@/components/common/Title'
 import Paragraph from '@/components/common/Paragraph'
 import Image from '@/components/common/Image'
+import Button from '../common/Button'
 import FeaturesList from './loyaltyProgramUI/FeaturesList'
 
 function LoyaltyProgramSection() {
@@ -19,9 +20,14 @@ function LoyaltyProgramSection() {
                     <Paragraph paragraph={content.description} paragraphStyle={styles.header.description} />
                     <FeaturesList features={content.features} icon={content.featureIcon} styles={styles.featureList} />
                     <div className={styles.buttonStyle.buttonContainer}>
-                        <button className={styles.buttonStyle.button}>
+                        {/* <button className={styles.buttonStyle.button}>
                             {content.button.buttonTitle}
-                        </button>
+                        </button> */}
+                        <Button 
+                            buttonText={content.button.buttonTitle}
+                            buttonStyle={styles.buttonStyle.button}
+                            buttonLink={content.button.buttonLink}
+                        />
                     </div>
                 </div>
                 <div className={styles.rightImage.container}>

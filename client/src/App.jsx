@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // Landing Pages
 import Header from './components/global/Header'
@@ -10,13 +9,20 @@ import RestaurantPage from './pages/RestaurantPage'
 import OfferPage from './pages/OfferPage'
 import ServicePage from './pages/ServicePage'
 import ContactPage from './pages/ContactPage'
+import ScrollToTop from './components/common/ScrollToTop'
 import PageNotFound from './pages/PageNotFound'
+
+import AuthPage from './pages/AuthPage'
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
+        <ScrollToTop />
         <Routes>
+          {/* Authentication Page */}
+          <Route path='/login' element={<AuthPage />} />
+          {/* Landing pages */}
           <Route path='/' element={<HomePage />} />
           <Route path='/contact' element={<ContactPage />} />
           <Route path='/about' element={<AboutPage />} />

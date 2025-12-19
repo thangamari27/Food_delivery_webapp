@@ -307,6 +307,11 @@ export const topCategoryContent = {
     }
   ],
 
+  button: {
+    text: "Add Cart",
+    link: "",
+  },
+
   notFound: {
     icon: ForkKnifeCrossed,
     title: "Not Found",

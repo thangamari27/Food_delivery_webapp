@@ -1,4 +1,5 @@
-import { ShoppingCart, Zap, Package,
+import { 
+  ShoppingCart, Zap, Package,
   Gift, Home, Clock, Star, Headphones,
   Check,
   IndianRupee
@@ -332,19 +333,66 @@ export const userBenefitContent = {
 // section: 4
 // Loyalty section Content
 export const loyaltyProgramContent = {
-  title: "Join Our Foodie Rewards Program",
+   title: "Join Our Foodie Rewards Program",
   description: "Earn points with every order, unlock exclusive benefits, and enjoy special treats as our valued customer.",
   button: {
-    buttonTitle: "More Info",
-
+    buttonTitle: "View Plan",
+    buttonLink: "/service"
   },
   featureIcon: Check,
   features: [
-    "Earn 1 point per $1 spent",
+    "Earn 1 point per 50rs spent",
     "Unlock Bronze, Silver, Gold & Platinum tiers",
     "Redeem points for discounts & free items",
     "Get bonus points for referrals",
     "Special birthday month rewards"
+  ],
+
+  tiers: {
+    bronze: {
+      name: "Bronze",
+      minPoints: 0,
+      benefits: ["1x Points Earning", "Basic Rewards"]
+    },
+    silver: {
+      name: "Silver",
+      minPoints: 500,
+      benefits: ["1.25x Points Earning", "Priority Support", "Monthly Surprises"]
+    },
+    gold: {
+      name: "Gold",
+      minPoints: 1500,
+      benefits: ["1.5x Points Earning", "Free Delivery", "Early Access to New Items"]
+    },
+    platinum: {
+      name: "Platinum",
+      minPoints: 3000,
+      benefits: ["2x Points Earning", "VIP Support", "Free Meal Monthly", "Personal Concierge"]
+    }
+  },
+  
+  // Added points calculation examples
+  levelIndicator: [
+    {
+      orderValue: 1000,
+      points: 1000,
+      tier: "Bronze"
+    },
+    {
+      orderValue: 1000,
+      points: 1250,
+      tier: "Silver"
+    },
+    {
+      orderValue: 1000,
+      points: 1500,
+      tier: "Gold"
+    },
+    {
+      orderValue: 1000,
+      points: 2000,
+      tier: "Platinum"
+    }
   ],
   images: [
     {
@@ -416,7 +464,7 @@ export const holidaySpecialContent = {
       button: {
         leftButton: {
           text: "View Menu",
-          link: "/seasonal-menu"
+          link: "/menu"
         },
         rightButton: {
           text: "Order Special",

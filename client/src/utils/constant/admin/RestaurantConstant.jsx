@@ -1,6 +1,14 @@
 import { Leaf, Flame } from 'lucide-react';
 
+
 // section: 1
+// Restaurant hero section
+export const heroContent = {
+    title: "Restaurant",
+    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis cumque reprehenderit mollitia tempore dolorem ab.",
+}
+
+// section: 2
 // Restaurant filter section
 export const restaurantFilterContent = {
     restaurants: [

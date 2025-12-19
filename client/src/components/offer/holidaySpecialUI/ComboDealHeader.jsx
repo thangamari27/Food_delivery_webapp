@@ -1,6 +1,7 @@
 import IconComponent from '@/components/common/IconComponent'
 import Title from '@/components/common/Title'
 import Paragraph from '@/components/common/Paragraph'
+import Button from '../../common/Button'
 
 function ComboDealHeader({ content, styles }) {
   return (
@@ -14,12 +15,11 @@ function ComboDealHeader({ content, styles }) {
         <Paragraph paragraph={content.description} paragraphStyle={styles.description} />
         {/* Combo Deal header section button */}
         <div className={styles.buttonContainer}>
-            <button className={styles.buttonLeft}>
-                <span className={styles.buttonLeftSize}>{content.button.leftButton.text}</span>
-            </button>
-            <button className={styles.buttonRight}>
-                <span className={styles.buttonRightSize}>{content.button.rightButton.text}</span>
-            </button>
+            <Button 
+                buttonText={content.button.leftButton.text} 
+                buttonStyle={styles.buttonLeft}
+                buttonLink={content.button.leftButton.link}
+            />
         </div>
         {/* Combo Deal header section price content */}
         <div className={styles.priceContainer}>

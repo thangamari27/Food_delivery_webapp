@@ -23,7 +23,7 @@ export const offerContent = {
   description: "LIMITED TIME OFFER",
   button: {
     buttonText: "View More",
-    buttonLink: "/popular-menu",
+    buttonLink: "/menu",
   },
   badge: "Offer",
   offerExpire: "Offer Expired!",

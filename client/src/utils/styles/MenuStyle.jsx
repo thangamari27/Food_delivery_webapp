@@ -137,7 +137,9 @@ export const topCategoryStyles = {
     price: 'text-base sm:text-lg font-bold text-emerald-700',
     originalPrice: 'text-xs sm:text-sm text-gray-400 line-through ml-1',
     
-    addButton: 'w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300 transition-colors duration-200 cursor-pointer active:scale-95',
+    addButton: 'px-2 py-2 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300 transition-colors duration-200 cursor-pointer active:scale-95',
+    buttonText: "mr-2",
+    buttonIcon: "w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-emerald-600",
     
     // Icon styles
     icon: "w-4 h-4 sm:w-5 sm:h-5",

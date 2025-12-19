@@ -1,4 +1,3 @@
-import React from 'react'
 import TopCategoriesHeader from './TopCategoriesHeader';
 import CategoryFilter from '@/components/common/topCategory/CategoryFilter';
 import MenuItemsGrid from './MenuItemsGrid';
@@ -37,6 +36,7 @@ function TopCategoriesContent({
         <>
           <MenuItemsGrid 
             items={paginatedItems}
+            buttonContent={content.button}
             styles={styles}
           />
           

@@ -41,7 +41,7 @@ export const brandConfig = {
 export const ctaButtons = {
   primary: {
     text: "Sign in",
-    path: "/",
+    path: "/login",
     variant: "primary",
   },
   secondary: {
@@ -60,7 +60,7 @@ export const heroContent = {
   description: "From local favorites to late-night cravings — we deliver delicious meals at lightning speed. Trackable, reliable and ready when you are.",
   buttonContent: {
     buttonText: "Order Now",
-    buttonLink: "/menu-item",
+    buttonLink: "/menu",
   }, 
   image: [
       {
@@ -166,7 +166,7 @@ export const specialMenuContent = {
   description: "Discover our most loved dishes, carefully prepared with fresh ingredients and authentic flavors that will delight your taste buds.",
   button: {
     buttonText: "View More",
-    buttonLink: "/menu-items",
+    buttonLink: "/menu",
   },
   specialMenuData: [
     {
@@ -253,7 +253,7 @@ export const popularMenuContent = {
     },
     button: {
       buttonText: "See All",
-      buttonLink: "/popular-menu",
+      buttonLink: "/menu",
       buttonStyle: "inline-flex items-center gap-2 hover:bg-gray-200 bg-orange-500 text-amber-50 border-2 border-white hover:border-2 hover:border-orange-500 hover:text-gray-700 px-8 py-3 rounded-full font-medium transition-all duration-300",
     },
     popularMenuCard:  [

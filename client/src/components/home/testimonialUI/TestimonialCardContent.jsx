@@ -1,24 +1,23 @@
-import React from "react";
 import TestimonialCard from "./TestimonialCard";
+import TestimonialSlider from "./TestimonialSlider";
+import TestimonialTrack from "./TestimonialTrack";
 
 function TestimonialCardContent({ testimonials, testimonialsSection, styles }) {
- 
+  if (!Array.isArray(testimonials)) {
+    return <div>{testimonialsSection.notAvailable}</div>;
+  }
+
   return (
-    <div className={styles.content.grid}>
-        {Array.isArray(testimonials) ? (
-        testimonials.map((testimonial, idx) => {
-          return (
-            <TestimonialCard
-              key={testimonial?.id ?? `testimonial-${idx}`}
-              testimonial={testimonial}
-              styles={styles.card}
-            />
-          );
-        })
-      ) : (
-        <div>{testimonialsSection.notAvailable}</div>
-      )}
-    </div>
+    <TestimonialSlider styles={styles.slider}>
+      <TestimonialTrack testimonials={testimonials} styles={styles.slider}>
+        {(testimonial) => (
+          <TestimonialCard
+            testimonial={testimonial}
+            styles={styles.card}
+          />
+        )}
+      </TestimonialTrack>
+    </TestimonialSlider>
   );
 }
 

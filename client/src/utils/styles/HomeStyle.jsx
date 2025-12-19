@@ -156,7 +156,7 @@ export const popularMenuStyles = {
 // Tesimonial section styles
 export const testimonialStyles = {
   section: "py-16 md:py-20 bg-amber-50",
-  container: "container mx-auto px-4 md:px-16 lg:px-24 xl:px-32",
+  container: "container mx-auto px-4 md:px-16 lg:px-20 xl:px-24",
   header: {
     container: "text-center mb-12",
     title: "text-4xl md:text-5xl font-bold text-gray-900 mb-8",
@@ -164,20 +164,36 @@ export const testimonialStyles = {
 
   },
   testimonialCard: {
-    content: {
-      grid: "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+    slider: {
+      track: "flex gap-6 items-stretch",
+
+      slide: "w-[320px] md:w-[360px] flex-shrink-0 flex",
+
+      leftFade:
+        "pointer-events-none absolute left-0 top-0 h-full w-20 z-20 bg-gradient-to-r from-white to-transparent",
+
+      rightFade:
+        "pointer-events-none absolute right-0 top-0 h-full w-20 z-20 bg-gradient-to-l from-white to-transparent",
     },
     card: {
-      container: "bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-orange-300 hover:shadow-lg transition-all duration-300",
-      description: "text-gray-600 mb-6 text-sm md:text-base leading-relaxed",
-      content: "flex items-center gap-4",
-      constentWrapper: "flex-1",
+      container:
+        "bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 flex flex-col h-full",
+
+      description:
+        "text-gray-600 mb-6 flex-grow text-sm md:text-base leading-relaxed",
+
+      content:
+        "flex items-center gap-4 mt-auto",
+
+      contentWrapper: "flex-1",
+
       title: "font-bold text-gray-900",
+
       address: "text-sm text-gray-500",
+
       starContainer: "flex gap-1 mt-4"
-    },
+    }
   },
-  
   buttonStyle: "mt-12 px-8 py-4 bg-white text-red-600 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 hover:bg-red-50",
 
 }

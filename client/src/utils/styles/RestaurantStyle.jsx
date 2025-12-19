@@ -1,8 +1,18 @@
 // section: 1
+// Restaurant Hero section
+export const heroStyles = {
+    section: "px-5  bg-gradient-to-br from-amber-50 via-orange-50 to-pink-50",
+    container: "py-24 md:py-32 flex items-center justify-center",
+    textContainer: "text-center",
+    title: "text-gray-800 text-5xl md:text-6xl font-bold pb-4",
+    description: "font-medium text-gray-500",
+}
+
+// section: 2
 // Restaurant filter section styles
 export const restaurantFilterStyles = {
-    section: "min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-pink-50 rounded-3xl overflow-hidden py-12 pt-20 md:pt-26",
-    container: "p-4 md:px-10 lg:16",
+    section: "min-h-screen bg-amber-100 rounded-3xl border-t-5 border-orange-400 overflow-hidden pt-10",
+    container: "p-4 md:px-10 lg:px-12",
     header: "bg-white shadow-sm sticky top-0 z-40",
     searchSection: "max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8",
     searchWrapper: "flex gap-2 items-center",
