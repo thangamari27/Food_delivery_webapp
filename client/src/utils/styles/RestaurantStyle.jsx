@@ -1,8 +1,8 @@
 // section: 1
 // Restaurant Hero section
 export const heroStyles = {
-    section: "px-5  bg-gradient-to-br from-amber-50 via-orange-50 to-pink-50",
-    container: "py-24 md:py-32 flex items-center justify-center",
+    section: "px-5 bg-gradient-to-br from-amber-50 via-orange-50 to-pink-50",
+    container: "pt-24 md:pt-24 pb-14 flex items-center justify-center",
     textContainer: "text-center",
     title: "text-gray-800 text-5xl md:text-6xl font-bold pb-4",
     description: "font-medium text-gray-500",

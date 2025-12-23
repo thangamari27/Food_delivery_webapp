@@ -9,6 +9,9 @@ import {
   Mail,
   Phone,
   IndianRupee,
+  MenuSquare,
+  Building2,
+  TicketPercent,
   
 } from 'lucide-react';
 
@@ -17,9 +20,9 @@ import {
 export const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
-  { name: 'Menu', path: '/menu' },
-  { name: 'Restaurant', path: '/restaurant' },
-  { name: 'Offers', path: '/offer' },
+  { name: 'Menu', path: '/menu', icon: MenuSquare, },
+  { name: 'Restaurant', path: '/restaurant', icon: Building2, },
+  { name: 'Offers', path: '/offer', icon: TicketPercent, },
   { name: 'Services', path: '/service' },
   { name: 'Contact', path: '/contact' },
 ];

@@ -11,7 +11,7 @@ import ServicePage from './pages/ServicePage'
 import ContactPage from './pages/ContactPage'
 import ScrollToTop from './components/common/ScrollToTop'
 import PageNotFound from './pages/PageNotFound'
-
+// Authentication pages (signup, signin, forgot password)
 import AuthPage from './pages/AuthPage'
 
 function App() {

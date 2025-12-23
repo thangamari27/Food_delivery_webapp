@@ -204,7 +204,7 @@ export const holidaySpecialStyle = {
       listText: "",
 
       buttonContainer: "mt-auto flex items-center justify-between pt-6",
-      button: "inline-flex items-center gap-2 bg-white text-orange-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/90 shadow-sm",
+      button: "inline-flex items-center gap-2 bg-white text-orange-600 px-6 py-3 md:px-8 md:py-4 rounded-full text-sm font-semibold hover:bg-white/90 shadow-sm",
 
       priceContainer: "text-right text-white/90",
       priceWrapper: "flex items-center ",

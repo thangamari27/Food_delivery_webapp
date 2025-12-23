@@ -12,7 +12,9 @@ function TopCategoriesContent({
   paginatedItems,
   totalPages,
   handleFilterChange,
-  handlePageChange
+  handlePageChange,
+  likedItems, 
+  handleLikeToggle
 }) {
   const hasItems = paginatedItems.length > 0;
 
@@ -38,6 +40,8 @@ function TopCategoriesContent({
             items={paginatedItems}
             buttonContent={content.button}
             styles={styles}
+            likedItems={likedItems}
+            handleLikeToggle={handleLikeToggle}
           />
           
           <Pagination

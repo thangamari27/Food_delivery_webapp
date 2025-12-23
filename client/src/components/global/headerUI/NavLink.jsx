@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 
-const NavLink = ({ link, isActive }) => {
+function NavLink({ link, onClick, styles }) {
   return (
-    <a 
-      href={link.path} 
-      className={`group flex flex-col gap-0.5 font-medium hover:text-orange-500 transition-colors ${
-        isActive ? 'text-orange-500 border-b-2 border-orange-500 pb-1' : ''
-      }`}
+    <a
+        href={link.path}
+        onClick={onClick}
+        className={styles.link}
     >
-      {link.name}
+        {link.name}
+        <span className={styles.text} />
     </a>
-  );
-};
+  )
+}
 
-export default NavLink;
+export default NavLink

@@ -135,8 +135,10 @@ export const specialMenuContent = {
     },
   ],
   specialMenuButton: {
-    text: "Add to Cart",
-    link: "",
+    btntext1: "View Menu",
+    btnlink1: "",
+    btntext2: "Add to Cart",
+    btnlink2: "",
   },
   notFound: {
     title: "",
@@ -308,8 +310,10 @@ export const topCategoryContent = {
   ],
 
   button: {
-    text: "Add Cart",
-    link: "",
+    btnText1: "View",
+    btnLink1: "",
+    btnText2: "Add Cart",
+    btnLink2: "",
   },
 
   notFound: {

@@ -1,47 +1,41 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 
 export const useTopCategories = (menuItems, itemsPerPage = 8) => {
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
+  const [likedItems, setLikedItems] = useState(new Set());
 
-  // Filter items based on category
   const filteredItems = useMemo(() => {
-    if (categoryFilter === 'All') {
-      return menuItems;
-    }
+    if (categoryFilter === 'All') return menuItems;
     return menuItems.filter(item => item.category === categoryFilter);
   }, [categoryFilter, menuItems]);
 
-  // Calculate pagination
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-  
+
   const paginatedItems = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = currentPage * itemsPerPage;
-    return filteredItems.slice(startIndex, endIndex);
+    return filteredItems.slice(startIndex, startIndex + itemsPerPage);
   }, [filteredItems, currentPage, itemsPerPage]);
 
-  // Handle filter change
-  const handleFilterChange = (category) => {
-    setCategoryFilter(category);
-    setCurrentPage(1); // Reset to first page when filter changes
-  };
-
-  // Handle page change
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  const handleLikeToggle = useCallback((itemId) => {
+    setLikedItems(prev => {
+      const updated = new Set(prev);
+      updated.has(itemId) ? updated.delete(itemId) : updated.add(itemId);
+      return updated;
+    });
+  }, []);
 
   return {
     categoryFilter,
     currentPage,
-    filteredItems,
     paginatedItems,
     totalPages,
-    itemsPerPage,
-    handleFilterChange,
-    handlePageChange,
-    setCategoryFilter,
-    setCurrentPage
+    likedItems,
+    handleLikeToggle,
+    handleFilterChange: (category) => {
+      setCategoryFilter(category);
+      setCurrentPage(1);
+    },
+    handlePageChange: setCurrentPage
   };
 };

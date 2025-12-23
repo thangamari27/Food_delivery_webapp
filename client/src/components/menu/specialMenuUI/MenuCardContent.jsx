@@ -10,17 +10,25 @@ function MenuCardContent({ dish, isFeatured, buttonText, styles}) {
       <Title title={dish.name} titleStyle={styles.menuTitle} />
       <Paragraph paragraph={dish.description} paragraphStyle={styles.menuDescription} />
       
-      <div className={styles.priceContainer}>
         <span className={styles.price}>
             <IndianRupee className={styles.icon} />
             {dish.price}
         </span>
+      <div className={styles.priceContainer}>
         <Button
-            buttonText={buttonText.text}
-            buttonLink={buttonText.link}
-            buttonStyle={` ${styles.button}
-            ${isFeatured ? styles.isfeatureButton : styles.featureButton }    
-            `}
+          buttonText={buttonText.btntext1}
+          buttonLink={buttonText.btnlink1}
+          buttonStyle={` ${styles.button1}
+          
+          `}
+        />
+
+        <Button
+          buttonText={buttonText.btntext2}
+          buttonLink={buttonText.btnlink2}
+          buttonStyle={` ${styles.button2}
+          
+          `}
         />
       </div>
     </div>

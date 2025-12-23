@@ -8,7 +8,16 @@ function TopCategories() {
   const content = topCategoryContent;
   const styles = topCategoryStyles;
 
-  const { categoryFilter, currentPage, paginatedItems, totalPages, handleFilterChange, handlePageChange } = useTopCategories(content.menuItems, content.pagination.itemsPerPage);
+  const {
+      categoryFilter,
+      currentPage,
+      paginatedItems,
+      totalPages,
+      likedItems,
+      handleLikeToggle,
+      handleFilterChange,
+      handlePageChange
+  } = useTopCategories(content.menuItems, content.pagination.itemsPerPage);
 
   return (
     <TopCategoriesContainer styles={styles}>
@@ -21,6 +30,8 @@ function TopCategories() {
         totalPages={totalPages}
         handleFilterChange={handleFilterChange}
         handlePageChange={handlePageChange}
+        likedItems={likedItems}
+        handleLikeToggle={handleLikeToggle}
       />
     </TopCategoriesContainer>
   )

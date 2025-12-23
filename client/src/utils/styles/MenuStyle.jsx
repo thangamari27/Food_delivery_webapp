@@ -41,17 +41,17 @@ export const specialMenuStyle = {
   },
   filterButton: {
     container: "flex space-x-3 overflow-x-auto pb-4 pt-1 mb-8",
-    wrapper: "px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 shadow-sm",
+    wrapper: "px-5 py-2 text-sm font-medium  transition-all duration-200 shadow-sm",
     noScrollbarStyle:{
       msOverflowStyle: 'none',
       scrollbarWidth: 'none',
     },
-    activeColorClass: "bg-gray-800 text-white focus:ring-gray-600",
-    defaultColorClass: "bg-white text-gray-600 border border-gray-300 hover:bg-gray-50",
+    activeColorClass: "rounded-tl-xl rounded-br-xl bg-amber-500 text-white",
+    defaultColorClass: "rounded-tl-xl rounded-br-xl border-2 border-amber-400 bg-white text-gray-800",
 
-    button: "px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 shadow-sm",
-    buttonHover: "hover:opacity-80 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2",
-    focusRing: "focus:ring-gray-300",
+    button: " px-4 py-2 text-sm font-medium transition-all duration-200 shadow-sm",
+    buttonHover: "cursor-pointer hover:opacity-90 active:scale-[0.98] ",
+    focusRing: "",
   },
   specialMenu:{
     gridContainer: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6",
@@ -59,7 +59,7 @@ export const specialMenuStyle = {
     cardHighlight: "bg-white border-2 border-orange-400 shadow-orange-200",
     cardHighlightHover: "bg-gray-50 hover:shadow-xl",
 
-    likeButton: "absolute top-6 right-6 p-2 rounded-full bg-white shadow-md hover:scale-105 transition-transform duration-200 z-10",
+    likeButton: "cursor-pointer absolute top-6 right-6 p-2 rounded-full bg-white shadow-md hover:scale-105 transition-transform duration-200 z-10",
     likeIcon: "text-gray-300",
     islikeIcon: "text-red-500 fill-red-500",
 
@@ -71,12 +71,13 @@ export const specialMenuStyle = {
     menuTitle: "font-bold text-lg text-gray-900 mb-1",
     menuDescription: "text-gray-500 text-xs mb-4",
 
-    priceContainer: "flex justify-between items-center pt-3 border-t border-gray-100",
+    priceContainer: "mb-4 flex justify-between items-center gap-2 pt-4 border-t border-gray-100",
     price: "text-xl font-bold text-gray-900",
     icon: "inline-block",
 
-    button: "px-4 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 shadow-md",
-    isfeatureButton: "bg-orange-500 text-white hover:bg-orange-600' : 'bg-white text-orange-500 border border-orange-500 hover:bg-orange-50",
+    button1: "flex-1 px-4 py-3 border-2 border-amber-400  text-sm font-semibold rounded transition-scale delay-150 duration-300 ease-in-out hover:-translate-y-1 shadow-md",
+    button2: "flex-1 px-4 py-3 bg-amber-400 border-2 border-amber-400 hover: text-gray-50 text-sm font-semibold rounded transition-scale delay-150 duration-300 ease-in-out hover:-translate-y-1 shadow-md",
+    isfeatureButton: "text-white hover:bg-orange-600' : 'bg-white text-orange-500 border border-orange-500 hover:bg-orange-50",
     featureButton: "bg-white text-orange-500 border border-orange-500 hover:bg-orange-50",
 
   },
@@ -88,11 +89,11 @@ export const specialMenuStyle = {
   },
   pagination: {
     container: "flex justify-center items-center space-x-2 mt-8",
-    leftButton: "p-2 rounded-lg bg-gray-100 text-gray-700 disabled:opacity-50 hover:bg-gray-200 transition-colors",
-    pagebutton: "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-    currentPage: "bg-orange-500 text-white shadow-lg",
+    leftButton: "cursor-pointer p-2 rounded-lg bg-gray-100 text-gray-700 disabled:opacity-50 hover:bg-gray-200 transition-colors",
+    pagebutton: "cursor-pointer px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+    currentPage: "bg-amber-500 text-white shadow-lg",
     otherPage: 'bg-white text-gray-700 hover:bg-gray-100',
-    rightButton: "p-2 rounded-lg bg-gray-100 text-gray-700 disabled:opacity-50 hover:bg-gray-200 transition-colors",
+    rightButton: "cursor-pointer p-2 rounded-lg bg-gray-100 text-gray-700 disabled:opacity-50 hover:bg-gray-200 transition-colors",
     
 
   }
@@ -114,14 +115,14 @@ export const topCategoryStyles = {
   scrollContainer: {
     base: 'flex gap-2 overflow-x-auto mb-7 pb-2 w-full sm:w-auto scrollbar-hide',
     button: {
-      base: 'px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap',
+      base: 'cursor-pointer px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm font-semibold transition-all whitespace-nowrap',
       active: 'bg-emerald-700 text-white shadow-md',
-      inactive: 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+      inactive: 'border-2 border-emerald-600 bg-amber-50 text-gray-800 hover:bg-amber-100'
     }
   },
 
   topCategoryCard: {
-    container: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6",
+    container: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6",
 
     cardContainer: 'bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all',
     imageContainer: 'relative w-full overflow-hidden bg-gradient-to-br from-orange-50 to-amber-50',
@@ -135,20 +136,26 @@ export const topCategoryStyles = {
     priceWrapper: "",
     priceTitle: "",
     price: 'text-base sm:text-lg font-bold text-emerald-700',
+    priceIcon: "inline-block",
     originalPrice: 'text-xs sm:text-sm text-gray-400 line-through ml-1',
-    
-    addButton: 'px-2 py-2 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300 transition-colors duration-200 cursor-pointer active:scale-95',
-    buttonText: "mr-2",
-    buttonIcon: "w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-emerald-600",
-    
-    // Icon styles
-    icon: "w-4 h-4 sm:w-5 sm:h-5",
+    originalPriceIcon: "h-4 w-4",
+
+    buttonContainer: "w-full mt-4 flex items-center gap-1",
+    addButton1: 'cursor-pointer flex-1 px-2 py-2 rounded bg-emerald-50 border-2 border-emerald-700 flex items-center justify-center text-emerald-700  transition-colors duration-200 cursor-pointer active:scale-95',
+    addButton2: 'cursor-pointer flex-1 px-2 py-2 rounded bg-emerald-50 border-2 border-emerald-700 flex items-center justify-center bg-emerald-700 text-gray-100  transition-colors duration-200 cursor-pointer active:scale-95',
+    buttonText: "ml-2",
+    buttonIcon1: "w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-emerald-800",
+    buttonIcon2: "w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-gray-50",
+
+    likeButton: "bg-gray-50 p-2 rounded-full absolute top-6 right-8 z-10",
+    likeActive: "fill-amber-500 text-amber-500",
+    likeInactive: "text-gray-400"
   },
 
   pagination: {
     container: "flex justify-center items-center gap-2 mt-8",
     button: {
-      base: "w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-medium transition-all",
+      base: "cursor-pointer w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-medium transition-all",
       active: "bg-emerald-700 text-white",
       inactive: "bg-white text-gray-700 hover:bg-gray-100"
     },
@@ -196,7 +203,7 @@ export const comboStyles = {
       listText: "",
 
       buttonContainer: "mt-auto flex items-center justify-between pt-6",
-      button: "inline-flex items-center gap-2 bg-white text-orange-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/90 shadow-sm",
+      button: "inline-flex items-center gap-2 bg-white text-orange-600 px-6 py-3 md:px-8 md:py-4 rounded-full text-sm font-semibold hover:bg-white/90 shadow-sm",
 
       priceContainer: "text-right text-white/90",
       priceWrapper: "flex items-center ",
@@ -218,7 +225,7 @@ export const comboStyles = {
     cardTop: "space-y-4",
     cardFooter: "flex items-center justify-between mt-4",
     itemsList: "text-sm text-gray-700 space-y-1",
-    ctaBtn: "inline-flex items-center gap-2 bg-white/90 hover:bg-white px-4 py-2 rounded-full text-sm font-semibold shadow-sm",
+    ctaBtn: "inline-flex items-center gap-2 bg-white/90 hover:bg-white px-6 py-3 rounded-full text-sm font-semibold shadow-sm",
     imageWrap: "absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-40 h-40 md:w-56 md:h-56 overflow-hidden rounded-full shadow-2xl",
     image: "w-full h-full object-cover",
   },
