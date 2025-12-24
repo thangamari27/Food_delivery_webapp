@@ -1,4 +1,3 @@
-import React from 'react'
 import TopMenuItem from '@/components/common/topCategory/TopMenuItem';
 
 function MenuItemsGrid({ items, buttonContent, styles, likedItems, handleLikeToggle }) {

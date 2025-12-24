@@ -1,4 +1,3 @@
-
 // section: 1
 // Menu hero section style
 export const menuHeroStyle ={
@@ -80,6 +79,28 @@ export const specialMenuStyle = {
     isfeatureButton: "text-white hover:bg-orange-600' : 'bg-white text-orange-500 border border-orange-500 hover:bg-orange-50",
     featureButton: "bg-white text-orange-500 border border-orange-500 hover:bg-orange-50",
 
+    viewModal:{
+      container: "fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-slideDown",
+      wrapper: "mx-4 bg-white rounded-2xl max-w-md w-full relative",
+      btnClose: "absolute top-4 right-4 p-2 rounded-full bg-yellow-400",
+      iconClose: "cursor-pointer w-6 h-6",
+      imageContainer: "mb-6",
+      image: "w-full h-50 lg:h-75 object-cover rounded-xl",
+      picture: "",
+
+      contentContainer: "space-y-4 p-6",
+      title: "text-2xl font-bold text-gray-900",
+      badge: "text-gray-600 font-semibold text-sm mt-2 border-1 border-orange-400 rounded-full inline-block px-4 py-1",
+      description: "text-gray-600 ",
+      priceContainer: "flex items-center justify-between",
+      priceWrapper: "flex items-center",
+      priceIcon: "w-6 h-6 text-gray-900",
+      price: "text-2xl font-bold text-gray-900 ",
+
+      btnContainer: "flex space-x-3",
+      btn: "px-6 py-3 bg-amber-400 text-gray-900 font-semibold rounded-lg hover:bg-amber-500",
+
+    },
   },
   notFound: {
     container: "col-span-full py-16 text-center bg-gray-50 rounded-xl m-4 border border-dashed border-gray-300",
@@ -93,10 +114,8 @@ export const specialMenuStyle = {
     pagebutton: "cursor-pointer px-4 py-2 rounded-lg text-sm font-medium transition-colors",
     currentPage: "bg-amber-500 text-white shadow-lg",
     otherPage: 'bg-white text-gray-700 hover:bg-gray-100',
-    rightButton: "cursor-pointer p-2 rounded-lg bg-gray-100 text-gray-700 disabled:opacity-50 hover:bg-gray-200 transition-colors",
-    
-
-  }
+    rightButton: "cursor-pointer p-2 rounded-lg bg-gray-100 text-gray-700 disabled:opacity-50 hover:bg-gray-200 transition-colors",   
+  },
 
 }
 
@@ -149,7 +168,20 @@ export const topCategoryStyles = {
 
     likeButton: "bg-gray-50 p-2 rounded-full absolute top-6 right-8 z-10",
     likeActive: "fill-amber-500 text-amber-500",
-    likeInactive: "text-gray-400"
+    likeInactive: "text-gray-400",
+
+    modal: {
+      backdrop: "fixed inset-0 z-[9999] bg-black/40 backdrop-blur-sm transition-all duration-300",
+      container: "bg-white rounded-2xl max-w-4xl w-full mx-auto overflow-hidden",
+      closeButton: "absolute top-4 right-4 z-20 p-2 rounded-full bg-white/90 hover:bg-white shadow-lg",
+      imageSection: "lg:w-1/2 p-8 bg-gray-50 flex items-center justify-center",
+      contentSection: "lg:w-1/2 p-8 overflow-y-auto",
+      title: "text-3xl font-bold text-gray-900 mb-2",
+      price: "text-3xl font-bold text-gray-900",
+      originalPrice: "text-lg text-gray-400 line-through",
+      discountBadge: "bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold",
+      actionButton: "px-8 py-3 bg-amber-400 text-gray-900 font-bold rounded-lg hover:bg-amber-500",
+    }
   },
 
   pagination: {

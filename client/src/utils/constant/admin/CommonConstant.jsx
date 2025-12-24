@@ -39,3 +39,37 @@ export const offerContent = {
     btnLink: "/menu-item"
   }
 };
+
+export const viewItemModalContent = {
+  topCategory: {
+    descriptionTitle: "Description",
+    prepTimeLabel: "Prep Time",
+    servesLabel: "Serves",
+    reviewsText: "reviews",
+    defaultDescription: "Delicious and freshly prepared with the finest ingredients.",
+    addToCartText: "Add to Cart",
+    buttonText1: "View Details",
+    buttonText2: "Quick Add"
+  },
+
+  specialMenu: {
+    descriptionTitle: "About this dish",
+    prepTimeLabel: "Preparation",
+    servesLabel: "Best for",
+    reviewsText: "ratings",
+    defaultDescription: "Chef's special dish crafted with premium ingredients.",
+    addToCartText: "Add to Cart",
+  },
+  
+  // Common content
+  common: {
+    closeButton: "Close",
+    quantityLabel: "Quantity",
+    discountText: "OFF",
+    saveText: "Save",
+    currencySymbol: "₹",
+    ratingStars: 5,
+    defaultRating: 4,
+    defaultReviews: 120
+  }
+};

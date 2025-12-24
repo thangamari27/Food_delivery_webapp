@@ -96,3 +96,86 @@ export const activeOfferStyles = {
         },
     },
 }
+
+export const viewItemModalStyles = {
+  // Overlay styles
+  overlay: "fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition-all duration-200",
+  
+  // Modal container
+  modal: "bg-white rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl",
+  
+  // Header & Image
+  headerImage: "relative h-56",
+  closeButton: "absolute top-3 right-3 p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors",
+  
+  // Typography
+  title: "text-xl font-bold text-gray-900 mb-2",
+  ratingWrapper: "flex items-center space-x-2",
+  
+  // Description section
+  descriptionWrapper: "mb-4",
+  sectionTitle: "text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wide",
+  descriptionText: "text-gray-600 text-sm",
+  
+  // Info grid
+  infoGrid: "grid grid-cols-2 gap-3 mb-6",
+  infoItem: "flex items-center space-x-2",
+  infoIcon: "text-gray-500",
+  infoLabel: "text-xs text-gray-500",
+  infoValue: "text-sm font-semibold",
+  
+  // Price section
+  priceWrapper: "flex items-center justify-between mb-6",
+  priceContainer: "flex items-center",
+  priceIcon: "text-gray-900",
+  priceValue: "text-2xl font-bold text-gray-900 ml-1",
+  originalPrice: "text-sm text-gray-400 line-through",
+  discountBadge: "absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg",
+  saveText: "ml-2 text-red-600 font-semibold",
+  
+  // Quantity selector
+  quantityWrapper: "flex items-center border rounded-lg overflow-hidden shadow-sm",
+  quantityBtn: "px-3 py-2 hover:bg-gray-100 transition-colors",
+  quantityValue: "px-4 py-2 border-x font-semibold min-w-[40px] text-center",
+  
+  // Action buttons
+  actionButton: {
+    topCategory: "w-full py-3 font-bold rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white shadow-md hover:shadow-lg transition-colors",
+    specialMenu: "w-full py-3 font-bold rounded-lg bg-amber-400 hover:bg-amber-500 text-gray-900 shadow-md hover:shadow-lg transition-colors"
+  },
+  
+  // Badge styles
+  badge: {
+    cuisine: "absolute bottom-3 left-3 px-3 py-1 rounded-full text-sm font-semibold",
+    category: "absolute bottom-3 left-3 px-3 py-1 rounded-full text-sm font-semibold"
+  },
+  
+  // Additional button styles
+  secondaryButton: "flex-1 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors",
+  tertiaryButton: "flex-1 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors"
+};
+
+export const specialMenuViewModalStyles = {
+  ...viewItemModalStyles,
+  actionButton: {
+    ...viewItemModalStyles.actionButton,
+    specialMenu: "w-full py-3 font-bold rounded-lg bg-orange-500 hover:bg-orange-600 text-white shadow-md hover:shadow-lg transition-colors"
+  },
+  badge: {
+    ...viewItemModalStyles.badge,
+    cuisine: "absolute bottom-3 left-3 px-3 py-1 rounded-full text-sm font-semibold bg-gradient-to-r from-orange-100 to-amber-100 text-orange-800"
+  }
+};
+
+// utils/styles/TopCategoryStyles.js
+export const topCategoryViewModalStyles = {
+  ...viewItemModalStyles,
+  actionButton: {
+    ...viewItemModalStyles.actionButton,
+    topCategory: "w-full py-3 font-bold rounded-lg bg-green-600 hover:bg-green-700 text-white shadow-md hover:shadow-lg transition-colors"
+  },
+  badge: {
+    ...viewItemModalStyles.badge,
+    category: "absolute bottom-3 left-3 px-3 py-1 rounded-full text-sm font-semibold bg-gradient-to-r from-green-100 to-emerald-100 text-green-800"
+  }
+};
