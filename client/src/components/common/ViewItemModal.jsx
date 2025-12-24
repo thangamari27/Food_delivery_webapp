@@ -1,8 +1,8 @@
 import { X, IndianRupee, Star, Clock, Users, Globe, Plus, Minus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Image from './Image';
-import { viewItemModalContent } from '../../utils/constant/admin/CommonConstant';
-import { viewItemModalStyles } from '../../utils/styles/Common';
+import { viewItemModalContent } from '@/utils/constant/admin/CommonConstant';
+import { viewItemModalStyles } from '@/utils/styles/Common';
 
 function ViewItemModal({ 
   isOpen, 
