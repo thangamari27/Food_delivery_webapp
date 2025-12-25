@@ -1,4 +1,3 @@
-import React from 'react'
 import { behindScenseContent } from '@/utils/constant/admin/AboutConstant'
 import { behindScenseStyle } from '@/utils/styles/AboutStyle'
 import BehindScenseHeader from './behindScenseUI/BehindScenseHeader';

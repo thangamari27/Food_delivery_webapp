@@ -89,7 +89,7 @@ export const behindScenseStyle = {
   description: "text-gray-600 text-lg",
   content: "grid md:grid-cols-1 lg:grid-cols-2 gap-6",
   imageContainer: "rounded-2xl overflow-hidden shadow-2xl",
-  mainImage: "w-full h-full object-cover",
+  mainImage: "w-full h-110 object-fill",
   behindScenseList: "space-y-4",
   behindScenseItem: "flex items-start gap-4 bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100",
   iconContainer: "w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl",

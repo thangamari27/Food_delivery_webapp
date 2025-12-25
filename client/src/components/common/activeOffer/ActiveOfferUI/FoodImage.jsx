@@ -1,14 +1,17 @@
-import React from 'react'
+import Image from "@/components/common/Image"
 
-function FoodImage({ src, alt, className, position, styles }) {
+function FoodImage({ src, srcFallback, alt, height, width, className, position, styles }) {
   return (
     <div className={`${position} ${styles.container}`}>
         <div className={styles.wrapper}>
           <div className={styles.circleContainer}></div>
-            <img
-                src={src}
-                alt={alt}
-                className={`${className} ${styles.imageStyle}`}
+            <Image 
+               src={src}
+               srcFallback={srcFallback}
+               alt={alt}
+               height={height}
+               width={width}
+               imageStyle={`${className} ${styles.imageStyle}`}
             />
         </div>
     </div>

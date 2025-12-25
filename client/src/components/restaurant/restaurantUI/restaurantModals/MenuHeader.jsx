@@ -1,11 +1,12 @@
+import Image from "@/components/common/Image";
 
 const MenuHeader = ({ restaurant, styles }) => ( 
   <div className={styles.menuHeroImage}>
-    <img 
-      src={restaurant.image} 
-      alt={restaurant.name}
-      className={styles.menuImage}
-    />
+     <Image 
+        src={restaurant.src}
+        srcFallback={restaurant.srcFallback}
+        imageStyle={styles.image}
+      />
     <div className={styles.menuImageOverlay}></div>
 
     <div className={styles.menuImageContent}>

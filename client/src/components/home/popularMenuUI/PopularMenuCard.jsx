@@ -1,4 +1,4 @@
-import React from "react";
+import Image from "@/components/common/Image";
 import PopularMenuContent from "./PopularMenuContent";
 
 export default function PopularMenuCard({ item, styles }) {
@@ -9,18 +9,15 @@ export default function PopularMenuCard({ item, styles }) {
     <article className={styles.menuCard.container}>
       <div className={styles.menuCard.wrapper}>
         <div className={styles.menuCard.imageContainer}>
-          <picture className={styles.menuCard.picture}>
-            <source type="image/webp" srcSet={it.src || it.srcFallback} />
-            <img
-              src={it.srcFallback}
-              alt={it.alt ?? it.name}
-              className={it.imageStyle}
-              loading="lazy"
-              width={it.width ?? 800}
-              height={it.height ?? 600}
-              decoding="async"
-            />
-          </picture>
+          <Image 
+            src={it.src}
+            srcFallback={it.srcFallback}
+            alt={it.alt ?? it.name}
+            width={it.width ?? 800}
+            height={it.height ?? 600}
+            imageStyle={it.imageStyle}
+            pictureStyle={styles.menuCard.picture}
+          />
         </div>
       </div>
 

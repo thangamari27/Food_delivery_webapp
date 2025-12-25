@@ -1,13 +1,14 @@
 import { Leaf, Award, Flame, Clock, MapPin, Star, IndianRupee } from "lucide-react";
+import Image from "@/components/common/Image";
 
 function RestaurantCard({ restaurant, styles, onViewMenu, onBookNow }) {
   return (
     <div className={styles.card}>
       <div className={styles.cardImage}>
-        <img 
-          src={restaurant.image}
-          alt={restaurant.name}
-          className={styles.image}
+        <Image 
+          src={restaurant.src}
+          srcFallback={restaurant.srcFallback}
+          pictureStyle={styles.image}
         />
         <div className={styles.badge}>
           {restaurant.badges.map((badge) => (

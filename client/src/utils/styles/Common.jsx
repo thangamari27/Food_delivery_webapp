@@ -135,9 +135,13 @@ export const viewItemModalStyles = {
   
   // Quantity selector
   quantityWrapper: "flex items-center border rounded-lg overflow-hidden shadow-sm",
-  quantityBtn: "px-3 py-2 hover:bg-gray-100 transition-colors",
+  quantityBtn: {
+    specialMenu: "m-2 px-2 py-2 rounded-full bg-amber-400 hover:bg-amber-500 transition-colors",
+    topCategory: "m-2 px-2 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white transition-colors"
+  },
   quantityValue: "px-4 py-2 border-x font-semibold min-w-[40px] text-center",
-  
+  incrementIcon: "w-4 h-4 md:w-5 md:h-5",
+  decrementIcon: "w-4 h-4 md:w-5 md:h-5",
   // Action buttons
   actionButton: {
     topCategory: "w-full py-3 font-bold rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white shadow-md hover:shadow-lg transition-colors",

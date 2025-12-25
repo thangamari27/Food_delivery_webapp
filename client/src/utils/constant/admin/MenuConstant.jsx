@@ -10,8 +10,14 @@ export const heroContent = {
       title: '30% Off',
       subtitle: 'Healthy Fitness Meals',
       description: "Power-packed meals crafted for your daily fitness routine. Fresh, balanced, and ready to fuel your day.",
-      src: './images/food8.webp',
-      srcFallback: './images/jpg/food8.jpg',
+      src: {
+        publicId: "food6_ivbt39",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food6_ivbt39",
+        format: "jpb"
+      },
       alt: 'Healthy fitness meals with fresh vegetables and protein',
       bgColor: 'bg-gradient-to-r from-orange-500 to-orange-600'
     },
@@ -20,8 +26,14 @@ export const heroContent = {
       title: '40% Off',
       subtitle: 'Weekend Specials',
       description: "Treat yourself this weekend with chef-crafted meals made to satisfy every craving.",
-      src: './images/food9.webp',
-      srcFallback: './images/jpg/food9.jpg',
+      src: {
+        publicId: "food8_rln5kp",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food8_rln5kp",
+        format: "jpb"
+      },
       alt: 'Delicious weekend special meal served fresh',
       bgColor: 'bg-gradient-to-r from-red-500 to-pink-600'
     },
@@ -30,8 +42,14 @@ export const heroContent = {
       title: 'Free Delivery',
       subtitle: 'On Orders Above $25',
       description: "Enjoy doorstep delivery with zero extra fees. Fresh food delivered fast and hot.",
-      src: './images/food6.webp',
-      srcFallback: './images/jpg/food6.jpg',
+      src: {
+        publicId: "food7_cumxvv",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food7_cumxvv",
+        format: "jpb"
+      },
       alt: 'Fresh cooked food ready for delivery',
       bgColor: 'bg-gradient-to-r from-purple-500 to-indigo-600'
     }
@@ -60,8 +78,14 @@ export const specialMenuContent = {
       cuisine: 'arabic', 
       price: 150, 
       description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
-      src: "./images/food1.webp",
-      srcFallback: './images/jpg/food1.jpg' 
+      src: {
+        publicId: "food1_zqr8ts",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food1_zqr8ts",
+        format: "jpg",
+      }, 
     },
     { 
       id: 'sm2', 
@@ -69,8 +93,14 @@ export const specialMenuContent = {
       cuisine: 'thai', 
       price: 130, 
       description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
-      src: "./images/food2.webp",
-      srcFallback: './images/jpg/food2.jpg' 
+      src: {
+        publicId: "food2_zmpm3c",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food2_zmpm3c",
+        format: "jpg",
+      },
     },
     { 
       id: 'sm3', 
@@ -78,8 +108,14 @@ export const specialMenuContent = {
       cuisine: 'indian', 
       price: 180, 
       description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
-      src: "./images/food3.webp",
-      srcFallback: './images/jpg/food3.jpg' 
+      src: {
+        publicId: "food3_ifrs58",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food3_ifrs58",
+        format: "jpg",
+      },
     },
     { 
       id: 'sm4', 
@@ -87,8 +123,14 @@ export const specialMenuContent = {
       cuisine: 'indian', 
       price: 200, 
       description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
-      src: "./images/food4.webp",
-      srcFallback: './images/jpg/food4.jpg' 
+      src: {
+        publicId: "food4_wzokhp",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food4_wzokhp",
+        format: "jpg",
+      },
     },
     { 
       id: 'sm5', 
@@ -96,24 +138,42 @@ export const specialMenuContent = {
       cuisine: '', 
       price: 190, 
       description: 'Marinated Beef · Fresh Salad · Yogurt Dip', 
-      src: "./images/food5.webp",
-      srcFallback: './images/jpg/food5.jpg' 
+      src: {
+        publicId: "food5_ykzpnu",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food5_ykzpnu",
+        format: "jpg",
+      },
     },
     { 
       id: 'sm6', 
       name: 'Fattoush Salad', 
       cuisine: 'arabic', 
       price: 90, description: 'Fresh Lettuce · Tomatoes · Crispy Bread', 
-      src: "./images/food6.webp",
-      srcFallback: './images/jpg/food6.jpg'  
+      src: {
+        publicId: "food6_ivbt39",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food6_ivbt39",
+        format: "jpg",
+      },
     },
     { 
       id: 'sm7', 
       name: 'Green Curry', 
       cuisine: 'thai', 
       price: 175, description: 'Spicy Coconut Milk · Bamboo Shoots', 
-      src: "./images/food7.webp",
-      srcFallback: './images/jpg/food7.jpg' 
+      src: {
+        publicId: "food7_cumxvv",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food7_cumxvv",
+        format: "jpg",
+      },
     },
     { 
       id: 'sm8', 
@@ -121,8 +181,14 @@ export const specialMenuContent = {
       cuisine: 'indian', 
       price: 210, 
       description: 'Creamy Tomato Sauce · Tender Chicken', 
-      src: "./images/food8.webp",
-      srcFallback: './images/jpg/food8.jpg' 
+      src: {
+        publicId: "food8_rln5kp",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food8_rln5kp",
+        format: "jpg",
+      },
     },
     { 
       id: 'sm9', 
@@ -130,8 +196,14 @@ export const specialMenuContent = {
       cuisine: 'indian', 
       price: 110, 
       description: 'Thin Rice Crepe · Potato Filling · Sambar', 
-      src: "./images/food9.webp",
-      srcFallback: './images/jpg/food9.jpg' 
+      src: {
+        publicId: "food9_glom4a",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food9_glom4a",
+        format: "jpg",
+      },
     },
   ],
   specialMenuButton: {
@@ -171,8 +243,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 125, 
       originalPrice: 348, 
-      src: './images/food2.webp',
-      srcFallback: './images/food2.jpg',
+      src: {
+        publicId: "food1_zqr8ts",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food1_zqr8ts",
+        format: "jpg",
+      },
       alt: 'Vegetable spring rolls with tomato, lettuce, and capsicum'
     },
     { 
@@ -183,8 +261,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 325, 
       originalPrice: 348, 
-      src: './images/food3.webp',
-      srcFallback: './images/food3.jpg',
+      src: {
+        publicId: "food2_zmpm3c",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food2_zmpm3c",
+        format: "jpg",
+      },
       alt: 'Mexican tacos with meat and spices'
     },
     { 
@@ -195,8 +279,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 125, 
       originalPrice: 348, 
-      src: './images/food4.webp',
-      srcFallback: './images/food4.jpg',
+      src: {
+        publicId: "food3_ifrs58",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food3_ifrs58",
+        format: "jpg",
+      },
       alt: 'Sandwich with tomatoes, bun, and cucumber'
     },
     { 
@@ -207,8 +297,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 125, 
       originalPrice: 348, 
-      src: './images/food5.webp',
-      srcFallback: './images/food5.jpg',
+      src: {
+        publicId: "food4_wzokhp",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food4_wzokhp",
+        format: "jpg",
+      },
       alt: 'Popiah deep fried spring rolls with tomato, tofu, and capsicum'
     },
     { 
@@ -219,8 +315,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 325, 
       originalPrice: 348, 
-      src: './images/food6.webp',
-      srcFallback: './images/food6.jpg',
+      src: {
+        publicId: "food5_ykzpnu",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food5_ykzpnu",
+        format: "jpg",
+      },
       alt: 'Pho Ga with noodles, spring rolls, tofu, and capsicum'
     },
     { 
@@ -231,8 +333,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 325, 
       originalPrice: 348, 
-      src: './images/food7.webp',
-      srcFallback: './images/food7.jpg',
+      src: {
+        publicId: "food6_ivbt39",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food6_ivbt39",
+        format: "jpg",
+      },
       alt: 'Spring rolls with cheese, tomato, and capsicum'
     },
     { 
@@ -243,8 +351,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 325, 
       originalPrice: 348, 
-      src: './images/food8.webp',
-      srcFallback: './images/food8.jpg',
+      src: {
+        publicId: "food7_cumxvv",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food7_cumxvv",
+        format: "jpg",
+      },
       alt: 'Spicy shrimp soup with tofu and capsicum'
     },
     { 
@@ -255,8 +369,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 325, 
       originalPrice: 348, 
-      src: './images/food9.webp',
-      srcFallback: './images/food9.jpg',
+      src: {
+        publicId: "food8_rln5kp",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food8_rln5kp",
+        format: "jpg",
+      },
       alt: 'Spicy noodles with seafood and capsicum'
     },
     { 
@@ -267,8 +387,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 280, 
       originalPrice: 348, 
-      src: './images/food10.webp',
-      srcFallback: './images/food10.jpg',
+      src: {
+        publicId: "food9_glom4a",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food9_glom4a",
+        format: "jpg",
+      },
       alt: 'Chicken fried rice with vegetables'
     },
     { 
@@ -279,8 +405,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 380, 
       originalPrice: 448, 
-      src: './images/food1.webp',
-      srcFallback: './images/food1.jpg',
+      src: {
+        publicId: "food10_mifnur",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food10_mifnur",
+        format: "jpg",
+      },
       alt: 'Seafood paella with saffron'
     },
     { 
@@ -291,8 +423,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 420, 
       originalPrice: 548, 
-      src: './images/food2.webp',
-      srcFallback: './images/food2.jpg',
+      src: {
+        publicId: "food1_zqr8ts",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food1_zqr8ts",
+        format: "jpg",
+      },
       alt: 'Grilled salmon with lemon and herbs'
     },
     { 
@@ -303,8 +441,14 @@ export const topCategoryContent = {
       priceTitle: "Price:",
       price: 80, 
       originalPrice: 120, 
-      src: './images/food3.webp',
-      srcFallback: './images/food3.jpg',
+      src: {
+        publicId: "food2_zmpm3c",
+        format: "webp",
+      },
+      srcFallback: {
+        publicId: "food2_zmpm3c",
+        format: "jpg",
+      },
       alt: 'Iced lemon tea'
     }
   ],
@@ -347,8 +491,14 @@ export const comboDealsContent = {
       price: 21.99,
       priceSuffix: "Save 4",
       color: "bg-red-600 text-white",
-      src: "./images/food3.webp",
-      srcFallback:"./images/jpg/food3.jpg",
+      src: {
+        publicId: "food4_wzokhp",
+        format: "webp",
+      },
+      srcFallback:{
+        publicId: "food4_wzokhp",
+        format: "jpg",
+      },
       width: "",
       height: "",
     },
@@ -360,8 +510,14 @@ export const comboDealsContent = {
       price: 22.99,
       priceSuffix: "Save 5",
       color: "bg-yellow-400 text-gray-900",
-      src: "./images/food2.webp",
-      srcFallback:"./images/jpg/food2.jpg",
+      src: {
+        publicId: "food10_mifnur",
+        format: "webp",
+      },
+      srcFallback:{
+        publicId: "food10_mifnur",
+        format: "jpg",
+      },
       width: "",
       height: "",
     },

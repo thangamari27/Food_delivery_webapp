@@ -27,8 +27,11 @@ function CountdownTimer({ offerContent, offerConfig, styles}) {
       {/* Left Food Image */}
       <FoodImage
         src={offerConfig.images.left.src}
+        srcFallback={offerConfig.images.left.srcFallback}
         alt={offerConfig.images.left.alt}
         className={offerConfig.images.left.className}
+        height={offerConfig.images.left.height}
+        width={offerConfig.images.left.width}
         position={styles.foodImage.leftPosition}
         styles={styles.foodImage}
       />
@@ -36,8 +39,11 @@ function CountdownTimer({ offerContent, offerConfig, styles}) {
       {/* Right Food Image */}
       <FoodImage
         src={offerConfig.images.right.src}
+        srcFallback={offerConfig.images.right.srcFallback}
         alt={offerConfig.images.right.alt}
         className={offerConfig.images.right.className}
+        height={offerConfig.images.right.height}
+        width={offerConfig.images.right.width}
         position={styles.foodImage.rightPosition}
         styles={styles.foodImage}
       />

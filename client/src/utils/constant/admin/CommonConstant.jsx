@@ -6,14 +6,32 @@ export const offerConfig = {
   endDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000 + 6 * 60 * 60 * 1000 + 16 * 60 * 1000 + 33 * 1000).toISOString(),
   images: {
     left: { 
-      src: './images/food8.webp',
-      alt: 'Seafood pasta',
-      className: "w-64 h-64 object-cover"
+      src: {
+        publicId: "food8_rln5kp",
+        format: "webp"
+      },
+      srcFallback: {
+        publicId: "food8_rln5kp",
+        format: "jpg"
+      },
+      alt: 'paw buaji',
+      className: "w-64 h-64 object-cover",
+      height: 600,
+      width: 600,
     },
     right: { 
-      src: './images/food7.webp',
-      alt: 'Burgers and fries',
-      className: "w-72 h-64 object-cover"
+      src: {
+        publicId: "food4_wzokhp",
+        format: "webp"
+      },
+      srcFallback: {
+        publicId: "food4_wzokhp",
+        format: "jpg"
+      },
+      alt: 'fried chicken and fries',
+      className: "w-72 h-64 object-cover",
+      height: 600,
+      width: 600,
     }
   }
 };

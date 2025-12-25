@@ -212,21 +212,21 @@ function ViewItemModal({
             
             <div className={styles.quantityWrapper}>
               <button 
-                className={styles.quantityBtn}
+                className={type === 'specialMenu' ? styles.quantityBtn.specialMenu : styles.quantityBtn.topCategory}
                 onClick={decreaseQuantity}
                 aria-label="Decrease quantity"
               >
-                <Minus size={16} />
+                <Minus className={styles.decrementIcon} />
               </button>
               <span className="px-4 py-2 border-x font-semibold min-w-[40px] text-center">
                 {quantity}
               </span>
               <button 
-                className={styles.quantityBtn}
+                className={type === 'specialMenu' ? styles.quantityBtn.specialMenu : styles.quantityBtn.topCategory}
                 onClick={increaseQuantity}
                 aria-label="Increase quantity"
               >
-                <Plus size={16} />
+                <Plus className={styles.incrementIcon} />
               </button>
             </div>
           </div>

@@ -11,8 +11,14 @@ export const heroSection = {
 // Contact page Contact form section content
 export const contactForm = {
   sectionLeft: {
-    src: '',
-    srcFallback: "./images/thing_to_say.svg",
+    src: {
+        publicId: "thing_to_say_j9bqqh",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "thing_to_say_j9bqqh",
+        format: "jpg"
+      },
     alt: 'Contact us illustration'
   },
   sectionRight: {

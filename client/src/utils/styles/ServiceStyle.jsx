@@ -23,7 +23,7 @@ export const serviceHeroStyles = {
     },
     rightStyle: {
         container: "",
-        picture: "",
+        picture: "h-full w-full",
         image: "relative w-full h-60 sm:h-64 md:h-102 lg:h-80 xl:h-96 sm:oject-cover md:object-fill lg:object-cover rounded-xl md:rounded-2xl shadow-lg md:shadow-xl"
     }
 }
@@ -45,7 +45,8 @@ export const serviceDeliveryStyles = {
     carouselContainer: "flex flex-col items-center h-full lg:col-span-2 lg:h-[600px] ",
     carouselWrapper: "w-full h-full overflow-hidden relative rounded-xl shadow-lg",
     carouselSlider: "flex transition-transform duration-500 ease-in-out h-full",
-    carouselSlide: "w-full flex-shrink-0 h-full object-cover",
+    carouselSlide: "flex-shrink-0 w-full h-full block",
+    imageStye: "w-full h-full object-cover",
     carouselDots: "flex items-center mt-5 space-x-2",
     carouselDot: "w-3 h-3 bg-black/20 rounded-full transition-all duration-300 cursor-pointer",
     carouselDotActive: "w-4 h-4 bg-black",
@@ -102,7 +103,8 @@ export const serviceCateringStyles = {
     carouselContainer: "flex flex-col items-center h-full lg:col-span-2 lg:h-[600px] ",
     carouselWrapper: "w-full h-full overflow-hidden relative rounded-xl shadow-lg",
     carouselSlider: "flex transition-transform duration-500 ease-in-out h-full",
-    carouselSlide: "w-full flex-shrink-0 h-full object-cover",
+    carouselSlide: "flex-shrink-0 w-full h-full block",
+    imageStye: "w-full h-full object-cover",
     carouselDots: "flex items-center mt-5 space-x-2",
     carouselDot: "w-3 h-3 bg-black/20 rounded-full transition-all duration-300 cursor-pointer",
     carouselDotActive: "w-4 h-4 bg-black",

@@ -67,27 +67,45 @@ export const heroContent = {
   }, 
   image: [
       {
-        src: './images/food1.webp',
-        srcFallback: './images/jpg/food1.jpg',
+        src: {
+          publicId: 'food1_zqr8ts',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food1_zqr8ts',
+          format: 'jpg'
+        },
         alt: 'Assortment of delicious dishes ready for delivery',
-        width: 1400,
-        height: 840,
+        width: 600,
+        height: 600,
         imageStyle: "w-full h-full object-cover",
       },
       {
-        src: './images/food2.webp',
-        srcFallback: './images/jpg/food2.jpg',
+        src: {
+          publicId: 'food2_zmpm3c',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food2_zmpm3c',
+          format: 'jpg'
+        },
         alt: 'Assortment of delicious dishes ready for delivery',
-        width: 1400,
-        height: 840,
+        width: 600,
+        height: 600,
         imageStyle: "w-full h-full object-cover",
       },
       {
-        src: './images/food3.webp',
-        srcFallback: './images/jpg/food3.jpg',
+        src: {
+          publicId: 'food3_ifrs58',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food3_ifrs58',
+          format: 'jpg'
+        },
         alt: 'Assortment of delicious dishes ready for delivery',
-        width: 1400,
-        height: 840,
+        width: 600,
+        height: 600,
         imageStyle: "w-full h-full object-cover",
       },
     ],
@@ -103,8 +121,14 @@ export const howItWorkContent = {
     {
       id: 1,
       image: {
-        src: "",
-        srcFallback: "./images/choose_restaurant.svg",
+        src: {
+          publicId: 'choose_restaurant_atk7va',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'choose_restaurant_atk7va',
+          format: 'svg'
+        },
         alt: "Browse restaurants",
         width: 96,
         height: 96,
@@ -122,8 +146,14 @@ export const howItWorkContent = {
     {
       id: 2,
       image: {
-        src: "",
-        srcFallback: "./images/place_order.svg",
+        src: {
+          publicId: 'place_order_rm820h',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'place_order_rm820h',
+          format: 'svg'
+        },
         alt: "Place order",
         width: 96,
         height: 96,
@@ -141,8 +171,14 @@ export const howItWorkContent = {
     {
       id: 3,
       image: {
-        src: "",
-        srcFallback: "./images/fast_delivery.svg",
+        src: {
+          publicId: 'fast_delivery_zwcycv',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'fast_delivery_zwcycv',
+          format: 'svg'
+        },
         alt: "Fast delivery",
         width: 96,
         height: 96,
@@ -180,8 +216,14 @@ export const specialMenuContent = {
       category: "main-course",
       badge: "Popular",
       image: {
-        src: "./images/food1.webp",
-        srcFallback: "./images/jpg/food1.jpg",
+        src: {
+          publicId: 'food1_zqr8ts',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food1_zqr8ts',
+          format: 'jpg'
+        },
         alt: "Crispy Salmon Fry with chili sauce",
         width: 800,
         height: 600,
@@ -197,8 +239,14 @@ export const specialMenuContent = {
       category: "main-course",
       badge: "New",
       image: {
-        src: "./images/food2.webp",
-        srcFallback: "./images/jpg/food2.jpg",
+        src: {
+          publicId: 'food2_zmpm3c',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food2_zmpm3c',
+          format: 'jpg'
+        },
         alt: "Authentic Thai Noodles",
         width: 800,
         height: 600,
@@ -213,8 +261,14 @@ export const specialMenuContent = {
       price: 180,
       category: "main-course",
       image: {
-        src: "./images/food3.webp",
-        srcFallback: "./images/jpg/food3.jpg",
+        src: {
+          publicId: 'food3_ifrs58',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food3_ifrs58',
+          format: 'jpg'
+        },
         alt: "Spicy Chicken Curry",
         width: 800,
         height: 600,
@@ -230,8 +284,14 @@ export const specialMenuContent = {
       category: "main-course",
       badge: "Chef's Special",
       image: {
-        src: "./images/food4.webp",
-        srcFallback: "./images/jpg/food4.jpg",
+        src: {
+          publicId: 'food4_wzokhp',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food4_wzokhp',
+          format: 'jpg'
+        },
         alt: "Chicken Biryani",
         width: 800,
         height: 600,
@@ -265,8 +325,14 @@ export const popularMenuContent = {
         name: "Salmon Fry",
         description: "2 Salmon Fry, Chili Sauce, Soft Drinks",
         price: 150,
-        src: "./images/food1.webp",
-        srcFallback: "./images/jpg/food1.jpg",
+        src: {
+          publicId: 'food1_zqr8ts',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food1_zqr8ts',
+          format: 'jpg'
+        },
         width: 800,
         height: 600,
         category: "main-course",
@@ -279,8 +345,14 @@ export const popularMenuContent = {
         name: "Thai Noodles",
         description: "2 Salmon Fry, Chili Sauce, Soft Drinks",
         price: 130,
-        src: "./images/food2.webp",
-        srcFallback: "./images/jpg/food2.jpg",
+        src: {
+          publicId: 'food6_ivbt39',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food6_ivbt39',
+          format: 'jpg'
+        },
         width: 800,
         height: 600,
         category: "main-course",
@@ -294,8 +366,14 @@ export const popularMenuContent = {
         name: "Curry Chicken",
         description: "2 Salmon Fry, Chili Sauce, Soft Drinks",
         price: 180,
-        src: "./images/food3.webp",
-        srcFallback: "./images/jpg/food3.jpg",
+        src: {
+          publicId: 'food10_mifnur',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food10_mifnur',
+          format: 'jpg'
+        },
         width: 800,
         height: 600,
         category: "main-course",
@@ -309,8 +387,14 @@ export const popularMenuContent = {
         name: "Chicken Biryani",
         description: "2 Salmon Fry, Chili Sauce, Soft Drinks",
         price: 200,
-        src: "./images/food4.webp",
-        srcFallback: "./images/jpg/food4.jpg",
+        src: {
+          publicId: 'food2_zmpm3c',
+          format: 'webp'
+        },
+        srcFallback: {
+          publicId: 'food2_zmpm3c',
+          format: 'jpg'
+        },
         width: 800,
         height: 600,
         category: "main-course",

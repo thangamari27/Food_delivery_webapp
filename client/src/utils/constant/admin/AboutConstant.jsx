@@ -26,11 +26,17 @@ export const heroContent = {
     link: "/contact",
   },
   image: {
-    src: "./images/about_hero.webp",
-    srcFallback: "./images/jpg/about_hero.jpg",
+    src: {
+      publicId: "about_hero_qbwhrh",
+      format: "webp",
+    },
+    srcFallback: {
+      publicId: "about_hero_qbwhrh",
+      format: "svg",
+    },
     alt: "Assortment of popular dishes ready for delivery",
-    width: 1200,
-    height: 800,
+    width: 400,
+    height: 400,
   },
   highlights: [
     "Started with 5 local restaurant partners",
@@ -83,13 +89,19 @@ export const qualityCommitmentContent = {
     {
       id: 1,
       image: {
-        src: "",
-        srcFallback: "./images/choose_restaurant.svg",
+        src: {
+          publicId: "choose_restaurant_atk7va",
+          format: "webp",
+        },
+        srcFallback: {
+          publicId: "choose_restaurant_atk7va",
+          format: "jpg",
+        },
         alt: "Choose restaurant - curated partner kitchens",
         width: 96,
         height: 96,
         imageStyle: "w-full h-full object-contain",
-        pictureStyle: "w-24 h-24 rounded-full overflow-hidden",
+        pictureStyle: "w-24 h-24 overflow-hidden",
       },
       title: {
         title: "Trusted Restaurants",
@@ -103,13 +115,19 @@ export const qualityCommitmentContent = {
     {
       id: 2,
       image: {
-        src: "",
-        srcFallback: "./images/place_order.svg",
+        src: {
+          publicId: "place_order_rm820h",
+          format: "webp",
+        },
+        srcFallback: {
+          publicId: "place_order_rm820h",
+          format: "jpg",
+        },
         alt: "Place order - simple ordering experience",
         width: 96,
         height: 96,
         imageStyle: "w-full h-full object-contain",
-        pictureStyle: "w-24 h-24 rounded-full overflow-hidden",
+        pictureStyle: "w-24 h-24 overflow-hidden",
       },
       title: {
         title: "Easy Ordering",
@@ -123,13 +141,19 @@ export const qualityCommitmentContent = {
     {
       id: 3,
       image: {
-        src: "",
-        srcFallback: "./images/fast_delivery.svg",
+        src: {
+          publicId: "fast_delivery_zwcycv",
+          format: "webp",
+        },
+        srcFallback: {
+          publicId: "fast_delivery_zwcycv",
+          format: "jpg",
+        },
         alt: "Fast delivery - tracked and punctual",
         width: 96,
         height: 96,
         imageStyle: "w-full h-full object-contain",
-        pictureStyle: "w-24 h-24 rounded-full overflow-hidden",
+        pictureStyle: "w-24 h-24 overflow-hidden",
       },
       title: {
         title: "Fast, Safe Delivery",
@@ -184,16 +208,30 @@ export const behindScenseContent = {
   subTitle: "How your food reaches you fresh and hot",
   description: "See how we work with kitchens and riders to bring your favorite meals from the stove to your door.",
   videoContent: {
-    src: "./videos/food_promo_video.mp4",
-    srcFallback: "",
+    src: {
+      publicId: "food_promo_video_uujljn",
+      format: "mp4"
+    },
+    srcFallback: {
+      publicId: "food_promo_video_uujljn",
+      format: "",
+    },
     alt: "How your food is prepared and delivered",
     width: "",
     height: "",
   },
   imageContent: {
-    src: "",
-    srcFallback: "./images/place_order.svg",
-    alt: "How your food is prepared and delivered"
+    src: {
+      publicId: "video_not_found_jyphvv",
+      format: "webp",
+    },
+    srcFallback: {
+      publicId: "video_not_found_jyphvv",
+      format: "jpg",
+    },
+    alt: "How your food is prepared and delivered",
+    height: 600,
+    width: 600
   },
   deliveryProcess: [
     

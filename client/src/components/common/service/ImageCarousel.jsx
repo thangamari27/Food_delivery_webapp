@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import Image from "../Image";
 
 function ImageCarousel({ images, styles }) {
    const [currentSlide, setCurrentSlide] = useState(0);
@@ -24,11 +25,19 @@ function ImageCarousel({ images, styles }) {
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
                     {images.map((image, index) => (
-                        <img 
+                        // <img 
+                        //     key={index}
+                        //     src={image}
+                        //     alt={`Slide ${index + 1}`}
+                        //     className={styles.carouselSlide}
+                        // />
+                        <Image 
                             key={index}
-                            src={image}
-                            alt={`Slide ${index + 1}`}
-                            className={styles.carouselSlide}
+                            src={image.src}
+                            srcFallback={image.srcFallback}
+                            alt={image.alt}
+                            pictureStyle={styles.carouselSlide}
+                            imageStyle={styles.imageStye}
                         />
                     ))}
                 </div>

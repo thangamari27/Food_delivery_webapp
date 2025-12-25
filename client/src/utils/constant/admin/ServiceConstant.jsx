@@ -34,8 +34,14 @@ export const serviceHeroContent = {
         
     },
     rightContent: {
-        src: "./images/delivery_person2.webp",
-        srcFallback: "./images/jpg/delivery_person2.jpg",
+      src: {
+        publicId: "delivery_person2_iaz4rl",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "delivery_person2_iaz4rl",
+        format: "jpg"
+      },
         alt: "delivery person",
 
     }
@@ -48,11 +54,61 @@ export const serviceDeliveryContent = {
     description: "We follow a structured approach to ensure quality and efficiency in every project we undertake.",
     
     carouselImages: [
-        "./images/delivery_person1.webp",
-        "./images/delivery_person2.webp",
-        "./images/choose_restaurant.svg",
-        "./images/place_order.svg",
-        "./images/thing_to_say.svg"
+        {
+          src: {
+            publicId: "delivery_person2_iaz4rl",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "delivery_person2_iaz4rl",
+            format: "jpg"
+          }, 
+          alt: "slide1"
+        },
+        {
+          src: {
+            publicId: "delivery_person1_qcw2nm",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "delivery_person1_qcw2nm",
+            format: "jpg"
+          },
+          alt: "slide2"
+        },
+        {
+          src: {
+            publicId: "choose_restaurant_atk7va",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "choose_restaurant_atk7va",
+            format: "jpg"
+          },
+          alt: "slide2"
+        },
+        {
+          src: {
+            publicId: "active_support_r9wihv",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "active_support_r9wihv",
+            format: "jpg"
+          },
+          alt: "slide2"
+        },
+        {
+          src: {
+            publicId: "thing_to_say_j9bqqh",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "thing_to_say_j9bqqh",
+            format: "jpg"
+          },
+          alt: "slide2"
+        }
     ],
     
     processList: [
@@ -108,11 +164,61 @@ export const serviceCateringContent = {
     description: "Quality food, delivered on time, with zero stress for your special events.",
     
     carouselImages: [
-        "./images/delivery_person1.webp",
-        "./images/delivery_person2.webp",
-        "./images/choose_restaurant.svg",
-        "./images/place_order.svg",
-        "./images/thing_to_say.svg"
+        {
+          src: {
+            publicId: "delivery_person2_iaz4rl",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "delivery_person2_iaz4rl",
+            format: "jpg"
+          }, 
+          alt: "slide1"
+        },
+        {
+          src: {
+            publicId: "delivery_person1_qcw2nm",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "delivery_person1_qcw2nm",
+            format: "jpg"
+          },
+          alt: "slide2"
+        },
+        {
+          src: {
+            publicId: "choose_restaurant_atk7va",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "choose_restaurant_atk7va",
+            format: "jpg"
+          },
+          alt: "slide3"
+        },
+        {
+          src: {
+            publicId: "active_support_r9wihv",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "active_support_r9wihv",
+            format: "jpg"
+          },
+          alt: "slide4"
+        },
+        {
+          src: {
+            publicId: "thing_to_say_j9bqqh",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "thing_to_say_j9bqqh",
+            format: "jpg"
+          },
+          alt: "slide5"
+        }
     ],
     
     processList: [
@@ -171,8 +277,14 @@ export const pickTakeawayContent = {
     {
       id: 1,
       image: {
-        src: "",
-        srcFallback: "./images/location_service.svg",
+        src: {
+            publicId: "choose_restaurant_atk7va",
+            format: 'webp',
+          },
+          srcFallback: {
+            publicId: "choose_restaurant_atk7va",
+            format: "jpg"
+          },
         alt: "Browse restaurants",
         width: 96,
         height: 96,
@@ -190,8 +302,14 @@ export const pickTakeawayContent = {
     {
       id: 2,
       image: {
-        src: "",
-        srcFallback: "./images/customization_service.svg",
+        src: {
+          publicId: "customization_service_luthoo",
+          format: 'webp',
+        },
+        srcFallback: {
+          publicId: "customization_service_luthoo",
+          format: "jpg"
+        },
         alt: "Customize order",
         width: 96,
         height: 96,
@@ -209,8 +327,14 @@ export const pickTakeawayContent = {
     {
       id: 3,
       image: {
-        src: "",
-        srcFallback: "./images/live_tracking.svg",
+        src: {
+          publicId: "live_tracking_voeptc",
+          format: 'webp',
+        },
+        srcFallback: {
+          publicId: "live_tracking_voeptc",
+          format: "jpg"
+        },
         alt: "Live tracking",
         width: 96,
         height: 96,
@@ -228,8 +352,14 @@ export const pickTakeawayContent = {
     {
       id: 4,
       image: {
-        src: "",
-        srcFallback: "./images/take_out_boxes.svg",
+        src: {
+          publicId: "fast_delivery_zwcycv",
+          format: 'webp',
+        },
+        srcFallback: {
+          publicId: "fast_delivery_zwcycv",
+          format: "jpg"
+        },
         alt: "Contactless delivery",
         width: 96,
         height: 96,

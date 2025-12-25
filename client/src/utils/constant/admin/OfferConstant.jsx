@@ -14,8 +14,14 @@ export const offerHeroContent = {
       title: '30% Off',
       subtitle: 'Healthy Fitness Meals',
       description: "Power-packed meals crafted for your daily fitness routine. Fresh, balanced, and ready to fuel your day.",
-      src: './images/food8.webp',
-      srcFallback: './images/jpg/food8.jpg',
+      src: {
+        publicId: "food6_ivbt39",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food6_ivbt39",
+        format: "jpb"
+      },
       alt: 'Healthy fitness meals with fresh vegetables and protein',
       bgColor: 'bg-gradient-to-r from-orange-500 to-orange-600'
     },
@@ -24,8 +30,14 @@ export const offerHeroContent = {
       title: '40% Off',
       subtitle: 'Weekend Specials',
       description: "Treat yourself this weekend with chef-crafted meals made to satisfy every craving.",
-      src: './images/food9.webp',
-      srcFallback: './images/jpg/food9.jpg',
+      src: {
+        publicId: "food8_rln5kp",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food8_rln5kp",
+        format: "jpb"
+      },
       alt: 'Delicious weekend special meal served fresh',
       bgColor: 'bg-gradient-to-r from-red-500 to-pink-600'
     },
@@ -34,8 +46,14 @@ export const offerHeroContent = {
       title: 'Free Delivery',
       subtitle: 'On Orders Above $25',
       description: "Enjoy doorstep delivery with zero extra fees. Fresh food delivered fast and hot.",
-      src: './images/food6.webp',
-      srcFallback: './images/jpg/food6.jpg',
+      src: {
+        publicId: "food7_cumxvv",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food7_cumxvv",
+        format: "jpb"
+      },
       alt: 'Fresh cooked food ready for delivery',
       bgColor: 'bg-gradient-to-r from-purple-500 to-indigo-600'
     }
@@ -296,8 +314,14 @@ export const userBenefitContent = {
     }
   ],
   deliveryPerson: {
-    src: "./images/delivery_person1.webp",
-    srcFallback: "./images/jpg/delivery_person1.jpg",
+    src: {
+        publicId: "delivery_person1_qcw2nm",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "delivery_person1_qcw2nm",
+        format: "jpb"
+      },
     alt: "Friendly delivery person in green uniform",
 
     benefits: [
@@ -397,14 +421,26 @@ export const loyaltyProgramContent = {
   images: [
     {
       id: 1,
-      src: "./images/food8.webp",
-      srcFallback: "./images/jpg/food5.webp",
+      src: {
+        publicId: "about_herosection_roasff",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "about_herosection_roasff",
+        format: "jpb"
+      },
       alt: "Customer enjoying loyalty rewards with food delivery"
     },
     {
       id: 2,
-      src: "./images/food6.webp",
-      srcFallback: "./images/jpg/food6.webp",
+      src: {
+        publicId: "food10_mifnur",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food10_mifnur",
+        format: "jpb"
+      },
       alt: "Digital loyalty card showing points redemption for food"
     }
   ]
@@ -428,8 +464,14 @@ export const holidaySpecialContent = {
       price: 21.99,
       priceSuffix: "Save 4",
       color: "bg-red-600 text-white",
-      src: "./images/food3.webp",
-      srcFallback:"./images/jpg/food3.jpg",
+      src: {
+        publicId: "food8_rln5kp",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food8_rln5kp",
+        format: "jpb"
+      },
       width: "",
       height: "",
     },
@@ -441,8 +483,14 @@ export const holidaySpecialContent = {
       price: 22.99,
       priceSuffix: "Save 5",
       color: "bg-yellow-400 text-gray-900",
-      src: "./images/food2.webp",
-      srcFallback:"./images/jpg/food2.jpg",
+      src: {
+        publicId: "food2_zmpm3c",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food2_zmpm3c",
+        format: "jpb"
+      },
       width: "",
       height: "",
     },
@@ -474,8 +522,14 @@ export const holidaySpecialContent = {
     },
     mainImage: {
       title: "Holiday Favorites",
-      src: "./images/food6.webp",
-      srcFallback: "./images/jpg/food6.jpg",
+      src: {
+        publicId: "food6_ivbt39",
+        format: 'webp',
+      },
+      srcFallback: {
+        publicId: "food6_ivbt39",
+        format: "jpb"
+      },
       alt: "holiday special image",
       
     }

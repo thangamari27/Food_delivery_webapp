@@ -15,7 +15,14 @@ export const restaurantFilterContent = {
         {
             id: 1,
             name: "Spice Garden",
-            image: "./images/food4.webp",
+            src: {
+              publicId: "food9_glom4a",
+              format: 'webp',
+            },
+            srcFallback: {
+              publicId: "food9_glom4a",
+              format: "jpg"
+            },
             rating: 4.5,
             cuisine: "North Indian, Mughlai",
             address: "MG Road, Bangalore",
@@ -28,7 +35,14 @@ export const restaurantFilterContent = {
         {
             id: 2,
             name: "Masala Darbar",
-            image: "./images/food5.webp",
+            src: {
+              publicId: "food8_rln5kp",
+              format: 'webp',
+            },
+            srcFallback: {
+              publicId: "food8_rln5kp",
+              format: "jpg"
+            },
             rating: 4.2,
             cuisine: "South Indian, Chinese",
             address: "Indiranagar, Bangalore",
@@ -41,7 +55,14 @@ export const restaurantFilterContent = {
         {
             id: 3,
             name: "Royal Biryani House",
-            image: "./images/food6.webp",
+            src: {
+              publicId: "food7_cumxvv",
+              format: 'webp',
+            },
+            srcFallback: {
+              publicId: "food7_cumxvv",
+              format: "jpg"
+            },
             rating: 4.7,
             cuisine: "Biryani, Hyderabadi",
             address: "Koramangala, Bangalore",
@@ -54,7 +75,14 @@ export const restaurantFilterContent = {
         {
             id: 4,
             name: "Curry Leaf Express",
-            image: "./images/food7.webp",
+            src: {
+              publicId: "food6_ivbt39",
+              format: 'webp',
+            },
+            srcFallback: {
+              publicId: "food6_ivbt39",
+              format: "jpg"
+            },
             rating: 4.0,
             cuisine: "Kerala, Seafood",
             address: "HSR Layout, Bangalore",
@@ -67,7 +95,14 @@ export const restaurantFilterContent = {
         {
             id: 5,
             name: "Tandoor Junction",
-            image: "./images/food8.webp",
+            src: {
+              publicId: "food4_wzokhp",
+              format: 'webp',
+            },
+            srcFallback: {
+              publicId: "food4_wzokhp",
+              format: "jpg"
+            },
             rating: 4.4,
             cuisine: "Punjabi, Tandoor",
             address: "Whitefield, Bangalore",
@@ -80,7 +115,14 @@ export const restaurantFilterContent = {
         {
             id: 6,
             name: "Dosa Palace",
-            image: "./images/food9.webp",
+            src: {
+              publicId: "food2_zmpm3c",
+              format: 'webp',
+            },
+            srcFallback: {
+              publicId: "food2_zmpm3c",
+              format: "jpg"
+            },
             rating: 4.3,
             cuisine: "South Indian, Breakfast",
             address: "Jayanagar, Bangalore",

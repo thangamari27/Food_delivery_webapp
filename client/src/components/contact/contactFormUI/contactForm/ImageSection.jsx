@@ -1,4 +1,3 @@
-import React from 'react'
 import Image from '@/components/common/Image'
 
 function ImageSection({ src, srcFallback, alt, styles }) {
