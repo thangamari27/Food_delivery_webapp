@@ -1,12 +1,13 @@
 import AuthSection from "@/components/auth/AuthSection"
+import PageLoaderWrapper from "@/components/common/PageLoaderWrapper"
 
 function AuthPage() {
   return (
-    <div>
-        <main>
-            <AuthSection />
-        </main>
-    </div>
+    <PageLoaderWrapper>
+      <main>
+          <AuthSection />
+      </main>
+    </PageLoaderWrapper>
   )
 }
 

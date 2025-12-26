@@ -17,6 +17,23 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Page smooth render transition */
+.fade-in {
+  animation: fadeIn 400ms ease-out ;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 /* Home/Popular menu section carasouel scroll style*/
 @keyframes marqueeLR {

@@ -2,7 +2,7 @@
 // about page hero section styles
 export const heroSectionStyle = {
   hero: {
-    section: "relative bg-gradient-to-br from-amber-50 via-orange-50 to-pink-50 rounded-3xl overflow-hidden py-12 md:pt-16",
+    section: "relative bg-gradient-to-br from-amber-50 via-orange-50 to-pink-50 overflow-hidden py-12 md:pt-16",
     container: "relative z-10 px-6 sm:px-8 md:px-16 py-12 md:py-16 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 rounded",
     left: "w-full lg:w-1/2",
     right: "w-full  lg:w-1/2 flex items-center justify-center hidden lg:flex",

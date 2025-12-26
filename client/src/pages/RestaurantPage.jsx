@@ -1,14 +1,16 @@
-import RestaurantFilterSection from "../components/restaurant/RestaurantFilterSection"
-import HeroSection from "../components/restaurant/HeroSection"
+import RestaurantFilterSection from "@/components/restaurant/RestaurantFilterSection"
+import HeroSection from "@/components/restaurant/HeroSection"
+import PageLoaderWrapper from "@/components/common/PageLoaderWrapper";
 
 function RestaurantPage() {
+
   return (
-    <div className=''>
-        <main>
-            <HeroSection />
-            <RestaurantFilterSection />
-        </main>
-    </div>
+    <PageLoaderWrapper>
+      <main>
+          <HeroSection />
+          <RestaurantFilterSection />
+      </main>
+    </PageLoaderWrapper>
   )
 }
 

@@ -15,7 +15,7 @@ function SocialButtons({ authSocialProvider, onSocialLogin, styles }) {
           <Image 
             src={provider.src}
             srcFallback={provider.srcFallback}
-            alt={provider.label}
+            alt={provider.alt}
             pictureStyle={styles.picture}
             imageStyle={styles.image}
           />

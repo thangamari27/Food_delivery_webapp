@@ -26,7 +26,19 @@ export const authContent = {
 };
 
 export const authSocialProvider = [
-  { id: 'google', src: '', srcFallback: './images/google.svg', label: 'Continue with Google' },
+  { 
+    id: 'google', 
+    src: {
+      publicId: "google_orpyxx",
+      format: "webp",
+    },
+    srcFallback: {
+      publicId: "google_orpyxx",
+      format: "jpg"
+    },
+    label: 'Continue with Google',
+    alt: "Google" 
+  },
 ];
 
 export const inputFields = {

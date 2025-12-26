@@ -13,7 +13,7 @@ export const heroStyles = {
 export const restaurantFilterStyles = {
     section: "min-h-screen bg-amber-100 rounded-3xl border-t-5 border-orange-400 overflow-hidden pt-10",
     container: "p-4 md:px-10 lg:px-12",
-    header: "bg-white shadow-sm sticky top-0 z-40",
+    header: "bg-white shadow-sm sticky top-0 z-20",
     searchSection: "max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8",
     searchWrapper: "flex gap-2 items-center",
     searchInput: "flex-1 relative",
@@ -73,7 +73,7 @@ export const restaurantFilterStyles = {
     modalOverlay: "fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 animate-fadeIn",
     modalContent: "bg-white rounded-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl animate-slideUp",
     modalContentSmall: "max-w-2xl",
-    modalContentLarge: "max-w-4xl",
+    modalContentLarge: "max-w-xl",
     modalHeader: "sticky top-0 bg-white border-b p-6 sm:p-4 border-gray-200 - flex justify-between items-start z-10",
     modalTitle: "text-xl sm:text-2xl font-bold text-gray-900",
     modalSubtitle: "text-sm text-gray-600 mt-1",
