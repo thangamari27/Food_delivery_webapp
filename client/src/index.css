@@ -19,7 +19,7 @@ html {
 
 /* Page smooth render transition */
 .fade-in {
-  animation: fadeIn 400ms ease-out ;
+  animation: fadeIn 300ms ease-out ;
 }
 
 @keyframes fadeIn {
