@@ -5,7 +5,7 @@ function TestimonialSlider({ children, speed = 0.4, styles }) {
 
   return (
     <div
-      className="relative overflow-hidden"
+      className={styles.container}
       onMouseEnter={pause}
       onMouseLeave={resume}
     >
@@ -16,7 +16,7 @@ function TestimonialSlider({ children, speed = 0.4, styles }) {
       <div className={styles.rightFade} />
 
       {/* Sliding Track */}
-      <div ref={trackRef} className="flex w-max">
+      <div ref={trackRef} className={styles.trackContainer}>
         {children}
       </div>
     </div>

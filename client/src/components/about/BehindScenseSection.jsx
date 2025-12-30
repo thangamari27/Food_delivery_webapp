@@ -9,23 +9,22 @@ function BehindScenseSection() {
 
   return (
     <section className={styles.section}>
-        <div className={styles.container}>
-            
-            {/* Behind Scense Header section */}
-            <BehindScenseHeader 
-                title={HeaderContent.title}
-                subTitle={HeaderContent.subTitle}
-                description={HeaderContent.description}
-                styles={styles}
-            />
+        <div className={styles.container}>   
+          {/* Behind Scense Header section */}
+          <BehindScenseHeader 
+              title={HeaderContent.title}
+              subTitle={HeaderContent.subTitle}
+              description={HeaderContent.description}
+              styles={styles}
+          />
 
-            {/* Behind the scense container */}
-            <BehindScenseContent 
-                videoContent={behindScenseContent.videoContent} 
-                imageContent={behindScenseContent.imageContent}
-                deliveryProcess={behindScenseContent.deliveryProcess}
-                styles={styles}
-            />
+          {/* Behind the scense container */}
+          <BehindScenseContent 
+              videoContent={behindScenseContent.videoContent} 
+              imageContent={behindScenseContent.imageContent}
+              deliveryProcess={behindScenseContent.deliveryProcess}
+              styles={styles}
+          />
         </div>
     </section>
   )

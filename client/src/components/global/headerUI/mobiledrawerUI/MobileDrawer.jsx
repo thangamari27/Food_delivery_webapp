@@ -49,7 +49,7 @@ function MobileDrawer({
               styles={styles.content}
             />
             <div className={styles.content.divider} />
-            <DrawerQuickLinks content={drawerNavLink.quickLinks} styles={styles.content} />
+            <DrawerQuickLinks content={drawerNavLink.quickLinks} onClose={onClose} styles={styles.content} />
           </>
         )}
       </div>

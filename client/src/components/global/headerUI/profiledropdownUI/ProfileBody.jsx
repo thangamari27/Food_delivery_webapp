@@ -1,6 +1,6 @@
+import { Link } from "react-router-dom";
 
-
-function ProfileBody({ title, items, actionHandlers, isLink = false, styles }) {
+function ProfileBody({ title, items, isClose, actionHandlers, isOpen, isLink = false, styles }) {
   return (
     <div className={styles.container}>
         <h3 className={styles.title}>{title}</h3>
@@ -8,6 +8,7 @@ function ProfileBody({ title, items, actionHandlers, isLink = false, styles }) {
         <ProfileItem
             key={index}
             item={item}
+            isClose={isClose}
             actionHandlers={actionHandlers}
             isLink={isLink}
             styles={styles}
@@ -17,15 +18,15 @@ function ProfileBody({ title, items, actionHandlers, isLink = false, styles }) {
   )
 }
 
-const ProfileItem = ({ item, actionHandlers, isLink, styles }) => {
+const ProfileItem = ({ item, isClose, actionHandlers, isLink, styles }) => {
   const Icon = item.icon;
   
   if (isLink) {
     return (
-      <a href={item.href} className={styles.link}>
+      <Link to={item.href} onClick={isClose} className={styles.link}>
         <Icon className={styles.icon} />
         <span className={styles.text}>{item.text}</span>
-      </a>
+      </Link>
     );
   }
   

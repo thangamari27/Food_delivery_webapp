@@ -1,4 +1,3 @@
-import React from 'react'
 import { qualityCommitmentStyle } from '@/utils/styles/AboutStyle'
 import { qualityCommitmentContent } from '@/utils/constant/admin/AboutConstant'
 import Title from '@/components/common/Title'

@@ -1,4 +1,3 @@
-import React from 'react'
 import HeroBowl from './HeroBowl';
 
 function RightSection({ heroContent, styles }) {

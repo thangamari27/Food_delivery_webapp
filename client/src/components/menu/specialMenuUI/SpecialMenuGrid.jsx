@@ -1,4 +1,3 @@
-import React from 'react'
 import NotFound from '@/components/common/foodMenu/NotFound';
 import DishCardSpecial from './DishCardSpecial'
 

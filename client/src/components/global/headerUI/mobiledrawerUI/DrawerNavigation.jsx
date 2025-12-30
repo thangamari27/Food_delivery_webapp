@@ -1,4 +1,5 @@
-import IconComponent from '../../../common/IconComponent'
+import IconComponent from '@/components/common/IconComponent'
+import { Link } from 'react-router-dom';
 
 function DrawerNavigation({ navLinks, onClose, styles }) {
   return (
@@ -12,14 +13,14 @@ function DrawerNavigation({ navLinks, onClose, styles }) {
 }
 
 const NavLinkItem = ({ link, onClose, styles }) => (
-  <a
-    href={link.path}
+  <Link
+    to={link.path}
     onClick={onClose}
     className={styles.navLink}
   >
     <IconComponent Icon={link.icon} className="w-4 h-4 inline-block mr-2" />
     <span>{link.name}</span>
-  </a>
+  </Link>
 );
 
 export default DrawerNavigation

@@ -1,15 +1,15 @@
-import React from 'react'
+import { Link } from "react-router-dom"
 
 function NavLink({ link, onClick, styles }) {
   return (
-    <a
-        href={link.path}
-        onClick={onClick}
-        className={styles.link}
+    <Link
+      to={link.path}
+      onClick={onClick}
+      className={styles.link}
     >
-        {link.name}
-        <span className={styles.text} />
-    </a>
+      {link.name}
+      <span className={styles.text} />
+    </Link>
   )
 }
 

@@ -165,13 +165,12 @@ export const testimonialStyles = {
   },
   testimonialCard: {
     slider: {
+      container: "relative overflow-hidden",
+      trackContainer: "flex w-max",
       track: "flex gap-6 items-stretch",
-
       slide: "w-[320px] md:w-[360px] flex-shrink-0 flex",
-
       leftFade:
         "pointer-events-none absolute left-0 top-0 h-full w-20 z-20 bg-gradient-to-r from-white to-transparent",
-
       rightFade:
         "pointer-events-none absolute right-0 top-0 h-full w-20 z-20 bg-gradient-to-l from-white to-transparent",
     },

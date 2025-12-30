@@ -1,4 +1,3 @@
-import React from 'react'
 import { achievementContent } from '@/utils/constant/admin/AboutConstant';
 import { achievementStyle } from '@/utils/styles/AboutStyle';
 import Title from '@/components/common/Title';

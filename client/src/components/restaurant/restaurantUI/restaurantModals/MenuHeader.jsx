@@ -1,4 +1,6 @@
 import Image from "@/components/common/Image";
+import Title from '@/components/common/Title'
+import Paragraph from '@/components/common/Paragraph'
 
 const MenuHeader = ({ restaurant, styles }) => ( 
   <div className={styles.menuHeroImage}>
@@ -10,8 +12,14 @@ const MenuHeader = ({ restaurant, styles }) => (
     <div className={styles.menuImageOverlay}></div>
 
     <div className={styles.menuImageContent}>
-      <h2 className={styles.menuRestaurantName}>{restaurant.name}</h2>
-      <p className={styles.menuCuisineType}>{restaurant.cuisine}</p>
+      <Title 
+        title={restaurant.name}
+        titleStyle={styles.menuRestaurantName}
+      />
+      <Paragraph 
+        paragraph={restaurant.cuisine}
+        paragraphStyle={styles.menuCuisineType}
+      />
     </div>
   </div>
 );

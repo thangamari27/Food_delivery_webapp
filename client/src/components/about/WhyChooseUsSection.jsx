@@ -1,4 +1,3 @@
-import React from 'react'
 import { whyChooseUsContent } from '@/utils/constant/admin/AboutConstant'
 import { whyChooseUsStyle } from '@/utils/styles/AboutStyle'
 import WhyChooseHeader from './whyChooseUI/WhyChooseHeader';

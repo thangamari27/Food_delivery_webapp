@@ -5,6 +5,7 @@ import ProfileFooter from "./ProfileFooter"
 function ProfileDropdown({
   content,
   isOpen,
+  isClose,
   userData,
   onOpenProfile,
   onOpenOrders,
@@ -35,6 +36,7 @@ function ProfileDropdown({
         title="Quick Links"
         items={content.quickLinks}
         isLink={true}
+        isClose={isClose}
         styles={styles.sections}
       />
       

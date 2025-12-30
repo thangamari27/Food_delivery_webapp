@@ -43,6 +43,7 @@ function DesktopActions({
         content={userData.profiledropDown}
         isOpen={isProfileOpen}
         userData={userData}
+        isClose={() => setIsProfileOpen(false)}
         styles={styles.profileDropdownStyles}
         onOpenProfile={() => {
           setIsProfileModalOpen(true);

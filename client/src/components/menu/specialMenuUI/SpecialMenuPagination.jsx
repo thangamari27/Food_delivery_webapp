@@ -1,4 +1,3 @@
-import React from 'react'
 import Pagination from '@/components/common/foodMenu/Pagination'
 
 function SpecialMenuPagination({ currentPage, totalPages, onPageChange, styles }) {

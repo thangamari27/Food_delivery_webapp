@@ -1,4 +1,3 @@
-import React from 'react'
 import { heroContent } from '@/utils/constant/admin/RestaurantConstant'
 import { heroStyles } from '@/utils/styles/RestaurantStyle';
 import Title from '@/components/common/Title'

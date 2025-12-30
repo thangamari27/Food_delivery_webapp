@@ -1,4 +1,3 @@
-import React from 'react'
 import SpecialMenuCard from "./SpecialMenuCard";
 
 function SpecialMenuItems({specialMenuContent, styles}) {

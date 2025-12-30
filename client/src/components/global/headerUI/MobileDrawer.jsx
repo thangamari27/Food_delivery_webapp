@@ -12,6 +12,7 @@ import {
   TicketPercent 
 } from "lucide-react";
 import IconComponent from '@/components/common/IconComponent'
+import { Link } from "react-router-dom"
 
 const MobileDrawer = ({
   isOpen,
@@ -79,9 +80,9 @@ const MobileDrawer = ({
             </h3>
 
             {navLinks.map(link => (
-              <a
+              <Link
                 key={link.id}
-                href={link.path}
+                to={link.path}
                 onClick={onClose}
                 className={styles.content.navLink}
               >
@@ -89,7 +90,7 @@ const MobileDrawer = ({
                 <span>
                   {link.name}
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -151,35 +152,38 @@ const MobileDrawer = ({
                   Quick Links
                 </h3>
 
-                <a
-                  href="/about"
+                <Link
+                  to="/about"
+                  onClick={onClose}
                   className={styles.content.actionButton}
                 >
                   <Info
                     className={styles.content.actionIcon}
                   />
                   About Us
-                </a>
+                </Link>
 
-                <a
-                  href="/services"
+                <Link
+                  to="/services"
+                  onClick={onClose}
                   className={styles.content.actionButton}
                 >
                   <Briefcase
                     className={styles.content.actionIcon}
                   />
                   Services
-                </a>
+                </Link>
 
-                <a
-                  href="/contact"
+                <Link
+                  to="/contact"
+                  onClick={onClose}
                   className={styles.content.actionButton}
                 >
                   <Phone
                     className={styles.content.actionIcon}
                   />
                   Contact Us
-                </a>
+                </Link>
               </div>
             </>
           )}

@@ -77,6 +77,7 @@ export const restaurantFilterStyles = {
     modalHeader: "sticky top-0 bg-white border-b p-6 sm:p-4 border-gray-200 - flex justify-between items-start z-10",
     modalTitle: "text-xl sm:text-2xl font-bold text-gray-900",
     modalSubtitle: "text-sm text-gray-600 mt-1",
+    modalOpen: "absolute top-4 right-4 sm:top-5 sm:right-5 md:top-6 md:right-6 bg-white/90 backdrop-blur-sm p-2 sm:p-2.5 rounded-full hover:bg-white transition-colors z-10 shadow-sm",
     modalCloseButton: "p-2 hover:bg-gray-100 rounded-full transition-colors flex-shrink-0 ml-4",
     modalBody: "overflow-y-auto",
     modalBodyScrolling: "max-h-[calc(90vh-80px)]", 
@@ -122,4 +123,5 @@ export const restaurantFilterStyles = {
     menuItemName: "font-semibold text-gray-900 text-xs sm:text-sm md:text-base",
     menuItemDescription: "text-xs sm:text-sm text-gray-600",
     menuItemPrice: "font-semibold text-orange-600 whitespace-nowrap text-xs sm:text-sm md:text-base mt-1 sm:mt-0",
+    
 }

@@ -1,4 +1,3 @@
-import React from 'react'
 import { IndianRupee } from "lucide-react";
 import Title from '@/components/common/Title';
 import Paragraph from '@/components/common/Paragraph';

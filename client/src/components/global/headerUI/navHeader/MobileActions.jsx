@@ -42,6 +42,7 @@ function MobileActions({
         <ProfileDropdown
             content={userData.profiledropDown}
             isOpen={isProfileOpen}
+            isClose={() => setIsProfileOpen(false)}
             userData={userData}
             styles={{
             ...styles.profileDropdownStyles,

@@ -1,6 +1,6 @@
 
 export const authStyles = {
-  section: "px-5 bg-gradient-to-br from-orange-50 via-white to-red-50",
+  section: "min-h-screen px-5 bg-gradient-to-br from-orange-50 via-white to-red-50",
   container: "py-24 md:py-32 flex items-center justify-center",
   
   card: "bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 space-y-6",

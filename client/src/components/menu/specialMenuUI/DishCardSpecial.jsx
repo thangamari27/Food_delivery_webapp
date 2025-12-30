@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Heart } from 'lucide-react'
 import MenuCardImage from './MenuCardImage'
 import MenuCardContent from './MenuCardContent'
-import ViewItemModal from '../../common/ViewItemModal'
+import ViewItemModal from '@/components/common/ViewItemModal'
 
 function DishCardSpecial({ dish, buttonText, isLiked, onLikeToggle, isFeatured = false, styles }) {
   const [isModalOpen, setIsModalOpen] = useState(false)

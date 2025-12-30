@@ -1,4 +1,3 @@
-import React from "react";
 
 function Avatar({ name, size = 48 }) {
   const initial = name ? name.charAt(0).toUpperCase() : "?";

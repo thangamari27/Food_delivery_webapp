@@ -1,4 +1,3 @@
-import React from 'react'
 import SpecialMenuHeader from './specialMenuUI/SpecialMenuHeader'
 import SpecialMenuItems from './specialMenuUI/SpecialMenuItems'
 import Button from '@/components/common/Button'

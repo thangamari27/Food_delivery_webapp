@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Video from "../../common/Video";
-import Image from "../../common/Image";
+import Video from "@/components/common/Video";
+import Image from "@/components/common/Image";
 
 function VideoContainer({ videoContent, imageContent, styles }) {
   const [videoError, setVideoError] = useState(false);

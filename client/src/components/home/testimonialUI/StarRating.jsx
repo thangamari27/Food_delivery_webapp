@@ -1,4 +1,3 @@
-import React from "react";
 import StarIcon from "./StarIcon";
 import HalfStar from "./HalfStar";
 

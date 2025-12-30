@@ -1,4 +1,3 @@
-import React from 'react'
 import Title from '@/components/common/Title';
 import Paragraph from '@/components/common/Paragraph';
 

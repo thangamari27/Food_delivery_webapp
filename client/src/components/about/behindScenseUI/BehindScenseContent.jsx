@@ -1,4 +1,3 @@
-import React from 'react'
 import VideoContainer from './VideoContainer';
 import BehindScenseList from './BehindScenseList';
 function BehindScenseContent({ videoContent, imageContent, deliveryProcess, styles }) {

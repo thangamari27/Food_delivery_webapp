@@ -1,4 +1,3 @@
-import React from "react";
 import MenuContent from "./MenuContent";
 import Image from "@/components/common/Image";
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import FilterButton from './FilterButton'
 
 function FilterBar({ content, styles, activeCuisine, setActiveCuisine }) {

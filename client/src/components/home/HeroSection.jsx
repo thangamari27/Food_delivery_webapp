@@ -1,4 +1,3 @@
-import React from 'react';
 import OrangeCircles from './heroUI/OrangeCircles';
 import Wave from './heroUI/Wave';
 import LeftSection from './heroUI/LeftSection';

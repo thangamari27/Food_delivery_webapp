@@ -1,4 +1,3 @@
-import React from "react";
 import PopularMenuCarousel from "./popularMenuUI/PopularMenuCarousel";
 import PopularMenuHeader from "./popularMenuUI/PopularMenuHeader";
 import Button from '@/components/common/Button'

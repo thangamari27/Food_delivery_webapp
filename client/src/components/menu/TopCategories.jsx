@@ -1,9 +1,9 @@
-import React from 'react'
 import { topCategoryContent } from '@/utils/constant/admin/MenuConstant'
 import { topCategoryStyles } from '@/utils/styles/MenuStyle'
 import TopCategoriesContainer from './topMenuUI/TopCategoriesContainer'
 import TopCategoriesContent from './topMenuUI/TopCategoriesContent'
 import { useTopCategories } from '@/hooks/useTopCategories'
+
 function TopCategories() {
   const content = topCategoryContent;
   const styles = topCategoryStyles;
