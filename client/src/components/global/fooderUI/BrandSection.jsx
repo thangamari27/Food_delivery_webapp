@@ -4,7 +4,7 @@ function BrandSection({ brand, social, }) {
   return (
     <div className="space-y-4">
         <div className="flex items-center gap-2 mb-4">
-            <span className="text-3xl">{brand.logo}</span>
+            <span className="text-3xl rounded-lg bg-orange-300 p-1">{brand.logo}</span>
             <h3 className="text-2xl font-bold text-gray-900">
             {brand.name}
             </h3>

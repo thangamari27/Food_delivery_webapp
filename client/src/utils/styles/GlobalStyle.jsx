@@ -24,7 +24,7 @@ export const navbarStyles = {
     },
     brand: {
         container: "flex items-center gap-2",
-        logo: "text-2xl transition-all duration-300",
+        logo: "text-2xl transition-all duration-300 rounded-lg bg-orange-300 p-1",
         title: "text-xl font-bold text-gray-800",
     },
     navLinks: {

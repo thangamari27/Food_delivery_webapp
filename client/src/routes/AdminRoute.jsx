@@ -1,7 +1,8 @@
 import { Route } from "react-router-dom"
 import ProtectedRoute from "./ProtectedRoute"
 import Admin from "@/layouts/Admin"
-import AdminDashboard from '@/pages/admin/AdminDashboard'
+import AdminDashboardPage from '@/pages/admin/AdminDashboardPage'
+import AdminOrdersPage from "@/pages/admin/AdminOrdersPage"
 
 const AdminRoute = (
     <Route
@@ -12,7 +13,8 @@ const AdminRoute = (
             </ProtectedRoute>
         }
     >
-        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="dashboard" element={<AdminDashboardPage />} />
+        <Route path="orders" element={<AdminOrdersPage />} />
     </Route>
   )
 

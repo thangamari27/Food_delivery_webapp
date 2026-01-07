@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 function ProtectedRoute({ children, role }) {
   const currentUser = {
     login: true,
-    role: "user" 
+    role: "admin" 
   }
 
   // const { user } = useAuth()
