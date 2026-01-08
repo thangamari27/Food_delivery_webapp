@@ -1,6 +1,6 @@
-import { ordersContent } from '../../../utils/constant/admin/AdminDashboard';
-import { ordersStyles } from '../../../utils/styles/AdminStyle';
-import OrdersManagement from './features/header/OrdersManagement';
+import { ordersContent } from '@/utils/constant/admin/AdminDashboard';
+import { ordersStyles } from '@/utils/styles/AdminStyle';
+import OrdersManagement from './features/orders/OrdersManagement';
 
 const generateSampleOrders = () => {
   const customers = ['John Doe', 'Sarah Smith', 'Mike Johnson', 'Emily Brown', 'David Lee', 'Emma Wilson', 'James Taylor', 'Olivia Davis'];

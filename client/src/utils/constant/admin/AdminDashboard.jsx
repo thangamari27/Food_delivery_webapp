@@ -1,4 +1,4 @@
-import { ShoppingBag, Coffee, Home, Bell, LogOut, Key, UserCircle, UtensilsCrossed, IndianRupee, ShoppingCart, Users, CheckCircle, Clock, AlertCircle, XCircle, Package, ForkKnifeCrossedIcon, Building2 } from 'lucide-react';
+import { ShoppingBag, Coffee, Home, Bell, LogOut, Key, UserCircle, UtensilsCrossed, IndianRupee, ShoppingCart, Users, CheckCircle, Clock, AlertCircle, XCircle, Package, ForkKnifeCrossedIcon, Building2, Search } from 'lucide-react';
 
 // Top navbar content
 export const headerContent = {
@@ -414,4 +414,255 @@ export const ordersContent = {
       notes: ''
     }
   ]
+};
+
+// Restaurant content
+export const restaurantContent = {
+  titles: {
+    main: "Restaurant Management",
+    subtitle: "Manage your restaurant listings",
+    addRestaurant: "Add Restaurant",
+    newRestaurant: "Add New Restaurant",
+    editRestaurant: "Edit Restaurant",
+    restaurantDetails: "Restaurant Details",
+    noRestaurants: "No restaurants found",
+    noRestaurantsDesc: "Try adjusting your search or filter criteria",
+    searchPlaceholder: "Search by restaurant name or city...",
+    showingRestaurants: "Showing {current} to {end} of {total} restaurants",
+    filters: "Filters",
+    icons: { search: Search }
+  },
+  
+  labels: {
+    basicInfo: "Basic Information",
+    restaurantName: "Restaurant Name",
+    contactPerson: "Contact Person",
+    phoneNumber: "Phone Number",
+    email: "Email",
+    location: "Location",
+    address: "Address",
+    city: "City",
+    cuisineTypes: "Cuisine Types",
+    operatingHours: "Operating Hours",
+    openingTime: "Opening Time",
+    closingTime: "Closing Time",
+    pricingDelivery: "Pricing & Delivery",
+    priceRange: "Price Range",
+    deliveryTime: "Delivery Time",
+    deliveryAvailable: "Delivery Available",
+    additionalInfo: "Additional Information",
+    status: "Status",
+    rating: "Rating",
+    offers: "Offers",
+    badges: "Badges",
+    features: "Features",
+    description: "Description",
+    restaurantImage: "Restaurant Image",
+    uploadImage: "Upload Image",
+    imageRequirements: "PNG, JPG up to 5MB",
+    phonePlaceholder: "+91 00000 00000",
+    pricePlaceholder: "₹300 for two",
+    deliveryTimePlaceholder: "30-35 mins",
+    offersPlaceholder: "50% off up to ₹100"
+  },
+  
+  buttons: {
+    cancel: "Cancel",
+    add: "Add Restaurant",
+    update: "Update Restaurant",
+    close: "Close",
+    edit: "Edit",
+    view: "View",
+    delete: "Delete",
+    upload: "Upload Image",
+    applyFilters: "Apply Filters",
+    resetFilters: "Reset Filters"
+  },
+  
+  filters: {
+    allStatus: "All Status",
+    allCuisines: "All Cuisines",
+    allPrices: "All Prices",
+    deliveryStatus: "Delivery Status",
+    available: "Available",
+    notAvailable: "Not Available",
+    under300: "Under ₹300",
+    moderate: "₹300 - ₹500",
+    premium: "Above ₹500"
+  },
+  
+  status: {
+    active: "Active",
+    inactive: "Inactive",
+    closed: "Closed"
+  },
+  
+  validation: {
+    required: "is required",
+    invalidPhone: "Invalid phone format",
+    invalidEmail: "Invalid email format",
+    selectCuisine: "Select at least one cuisine",
+    fileSize: "File size should be less than 5MB",
+    imageType: "Please upload an image file"
+  },
+  
+  confirmations: {
+    delete: "Are you sure you want to delete this restaurant?"
+  },
+
+  options: {
+    cuisine: [
+        "North Indian", "South Indian", "Chinese", "Biryani", "Punjabi", 
+        "Mughlai", "Seafood", "Kerala", "Italian", "Continental", 
+        "Japanese", "Sushi", "American", "Fast Food", "Cafe", 
+        "Healthy", "Street Food", "Asian"
+    ],
+    features: [
+        "Home Delivery", "Takeaway", "Outdoor Seating", "AC", "WiFi", 
+        "Parking", "Late Night", "Bar Available", "Valet", "Live Music", 
+        "Eco-Friendly", "Contactless Delivery", "Catering", "Family Dining", 
+        "Breakfast Specials"
+    ],
+    badges: [
+        "Pure Veg", "Bestseller", "Fast Delivery", "Trending", "Award Winner"
+    ]
+  },
+  restaurantData: [
+    {
+      id: 1, name: "Spice Garden", contactPerson: "Rajesh Kumar", phone: "+91 98765 43210",
+      email: "contact@spicegarden.com", rating: 4.5, cuisine: ["North Indian", "Mughlai"],
+      address: "MG Road, Bangalore", city: "Bangalore", deliveryTime: "30-35 mins",
+      priceRange: "₹300 for two", offers: "50% off up to ₹100", badges: ["Pure Veg", "Bestseller"],
+      features: ["Outdoor Seating", "Home Delivery", "Takeaway"], openingTime: "11:00",
+      closingTime: "23:00", deliveryAvailable: true, status: "Active",
+      description: "Authentic North Indian cuisine with traditional recipes", image: null
+    },
+    {
+      id: 2, name: "Masala Darbar", contactPerson: "Priya Sharma", phone: "+91 98765 43211",
+      email: "info@masaladarbar.com", rating: 4.2, cuisine: ["South Indian", "Chinese"],
+      address: "Indiranagar, Bangalore", city: "Bangalore", deliveryTime: "25-30 mins",
+      priceRange: "₹250 for two", offers: "Free delivery on orders above ₹199",
+      badges: ["Fast Delivery"], features: ["AC", "WiFi", "Parking"], openingTime: "09:00",
+      closingTime: "22:00", deliveryAvailable: true, status: "Active",
+      description: "Multi-cuisine restaurant with fast service", image: null
+    },
+    {
+      id: 3, name: "Royal Biryani House", contactPerson: "Mohammed Ali", phone: "+91 98765 43212",
+      email: "royal@biryani.com", rating: 4.7, cuisine: ["Biryani", "Hyderabadi"],
+      address: "Koramangala, Bangalore", city: "Bangalore", deliveryTime: "35-40 mins",
+      priceRange: "₹400 for two", offers: "₹125 off on orders above ₹499",
+      badges: ["Bestseller", "Trending"], features: ["Family Dining", "Late Night", "Catering"],
+      openingTime: "12:00", closingTime: "01:00", deliveryAvailable: true, status: "Active",
+      description: "Famous for authentic Hyderabadi Biryani", image: null
+    },
+    {
+      id: 4, name: "Curry Leaf Express", contactPerson: "Suresh Nair", phone: "+91 98765 43213",
+      email: "curry@leaf.com", rating: 4.0, cuisine: ["Kerala", "Seafood"],
+      address: "HSR Layout, Bangalore", city: "Bangalore", deliveryTime: "40-45 mins",
+      priceRange: "₹350 for two", offers: "10% off on all orders", badges: [],
+      features: ["Contactless Delivery", "Eco-Friendly"], openingTime: "11:30",
+      closingTime: "22:30", deliveryAvailable: true, status: "Active",
+      description: "Traditional Kerala cuisine and fresh seafood", image: null
+    },
+    {
+      id: 5, name: "Tandoor Junction", contactPerson: "Harpreet Singh", phone: "+91 98765 43214",
+      email: "tandoor@junction.com", rating: 4.4, cuisine: ["Punjabi", "Tandoor"],
+      address: "Whitefield, Bangalore", city: "Bangalore", deliveryTime: "30-35 mins",
+      priceRange: "₹450 for two", offers: "Buy 1 Get 1 on selected items",
+      badges: ["Award Winner"], features: ["Live Music", "Bar Available", "Valet"],
+      openingTime: "12:00", closingTime: "23:30", deliveryAvailable: true, status: "Active",
+      description: "Premium Punjabi dining experience", image: null
+    },
+    {
+      id: 6, name: "Dosa Palace", contactPerson: "Venkatesh Iyer", phone: "+91 98765 43215",
+      email: "dosa@palace.com", rating: 4.3, cuisine: ["South Indian", "Breakfast"],
+      address: "Jayanagar, Bangalore", city: "Bangalore", deliveryTime: "20-25 mins",
+      priceRange: "₹200 for two", offers: "Free dessert on orders above ₹299",
+      badges: ["Pure Veg", "Fast Delivery"], features: ["Breakfast Specials", "Filter Coffee"],
+      openingTime: "07:00", closingTime: "22:00", deliveryAvailable: true, status: "Active",
+      description: "Best South Indian breakfast in town", image: null
+    },
+    {
+      id: 7, name: "Dragon Wok", contactPerson: "Chen Wei", phone: "+91 98765 43216",
+      email: "dragon@wok.com", rating: 4.1, cuisine: ["Chinese", "Asian"],
+      address: "MG Road, Bangalore", city: "Bangalore", deliveryTime: "35-40 mins",
+      priceRange: "₹380 for two", offers: "20% off on weekdays", badges: ["Trending"],
+      features: ["AC", "Home Delivery", "Takeaway"], openingTime: "11:00",
+      closingTime: "23:00", deliveryAvailable: true, status: "Active",
+      description: "Authentic Chinese and Asian cuisine", image: null
+    },
+    {
+      id: 8, name: "Pizza Fiesta", contactPerson: "Marco Rossi", phone: "+91 98765 43217",
+      email: "pizza@fiesta.com", rating: 4.5, cuisine: ["Italian", "Continental"],
+      address: "Koramangala, Bangalore", city: "Bangalore", deliveryTime: "25-30 mins",
+      priceRange: "₹420 for two", offers: "Free garlic bread on orders above ₹399",
+      badges: ["Bestseller"], features: ["Home Delivery", "Parking", "WiFi"],
+      openingTime: "11:00", closingTime: "23:30", deliveryAvailable: true, status: "Active",
+      description: "Wood-fired pizzas and Italian delicacies", image: null
+    },
+    {
+      id: 9, name: "Bombay Streets", contactPerson: "Ashok Patil", phone: "+91 98765 43218",
+      email: "bombay@streets.com", rating: 4.6, cuisine: ["Street Food", "North Indian"],
+      address: "Indiranagar, Bangalore", city: "Bangalore", deliveryTime: "20-25 mins",
+      priceRange: "₹180 for two", offers: "Combo meals starting at ₹99",
+      badges: ["Pure Veg", "Fast Delivery"], features: ["Takeaway", "Late Night"],
+      openingTime: "10:00", closingTime: "02:00", deliveryAvailable: true, status: "Active",
+      description: "Mumbai street food in Bangalore", image: null
+    },
+    {
+      id: 10, name: "Green Salad Bar", contactPerson: "Kavita Reddy", phone: "+91 98765 43219",
+      email: "green@salad.com", rating: 4.2, cuisine: ["Healthy", "Continental"],
+      address: "HSR Layout, Bangalore", city: "Bangalore", deliveryTime: "15-20 mins",
+      priceRange: "₹320 for two", offers: "Free juice with salad bowls", badges: ["Pure Veg"],
+      features: ["Eco-Friendly", "Contactless Delivery"], openingTime: "08:00",
+      closingTime: "21:00", deliveryAvailable: true, status: "Active",
+      description: "Fresh and healthy salad options", image: null
+    },
+    {
+      id: 11, name: "Sushi World", contactPerson: "Kenji Tanaka", phone: "+91 98765 43220",
+      email: "sushi@world.com", rating: 4.8, cuisine: ["Japanese", "Sushi"],
+      address: "Whitefield, Bangalore", city: "Bangalore", deliveryTime: "40-45 mins",
+      priceRange: "₹650 for two", offers: "Premium sushi platter deals",
+      badges: ["Award Winner", "Trending"], features: ["Bar Available", "Valet", "AC"],
+      openingTime: "12:00", closingTime: "23:00", deliveryAvailable: true, status: "Active",
+      description: "Authentic Japanese sushi experience", image: null
+    },
+    {
+      id: 12, name: "The Burger Lab", contactPerson: "Rahul Mehra", phone: "+91 98765 43221",
+      email: "burger@lab.com", rating: 4.4, cuisine: ["American", "Fast Food"],
+      address: "Koramangala, Bangalore", city: "Bangalore", deliveryTime: "20-25 mins",
+      priceRange: "₹280 for two", offers: "Buy 2 Get 1 Free on burgers",
+      badges: ["Fast Delivery", "Bestseller"], features: ["Home Delivery", "Takeaway"],
+      openingTime: "11:00", closingTime: "23:00", deliveryAvailable: true, status: "Active",
+      description: "Gourmet burgers and loaded fries", image: null
+    },
+    {
+      id: 13, name: "Cafe Mocha", contactPerson: "Nisha Kapoor", phone: "+91 98765 43222",
+      email: "cafe@mocha.com", rating: 4.3, cuisine: ["Cafe", "Continental"],
+      address: "MG Road, Bangalore", city: "Bangalore", deliveryTime: "25-30 mins",
+      priceRange: "₹350 for two", offers: "Happy hours 3-6 PM", badges: [],
+      features: ["WiFi", "Outdoor Seating", "Parking"], openingTime: "09:00",
+      closingTime: "23:00", deliveryAvailable: false, status: "Active",
+      description: "Cozy cafe with great ambiance", image: null
+    },
+    {
+      id: 14, name: "Spice Route", contactPerson: "Deepak Sharma", phone: "+91 98765 43223",
+      email: "spice@route.com", rating: 3.9, cuisine: ["Mughlai", "North Indian"],
+      address: "Jayanagar, Bangalore", city: "Bangalore", deliveryTime: "35-40 mins",
+      priceRange: "₹380 for two", offers: "Weekend family specials", badges: [],
+      features: ["Family Dining", "Parking", "AC"], openingTime: "11:30",
+      closingTime: "22:30", deliveryAvailable: true, status: "Inactive",
+      description: "Royal Mughlai dining experience", image: null
+    },
+    {
+      id: 15, name: "Coastal Kitchen", contactPerson: "Ramesh Shetty", phone: "+91 98765 43224",
+      email: "coastal@kitchen.com", rating: 4.6, cuisine: ["Seafood", "Kerala"],
+      address: "Indiranagar, Bangalore", city: "Bangalore", deliveryTime: "30-35 mins",
+      priceRange: "₹480 for two", offers: "Fresh catch of the day specials",
+      badges: ["Award Winner"], features: ["Home Delivery", "Catering"], openingTime: "12:00",
+      closingTime: "22:00", deliveryAvailable: true, status: "Active",
+      description: "Coastal delicacies and fresh seafood", image: null
+    }
+  ],
+  
 };

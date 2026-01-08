@@ -247,3 +247,53 @@ export const ordersStyles = {
   spinner:
     'w-8 h-8 border-4 border-gray-200 border-t-orange-400 rounded-full animate-spin',
 };
+
+// Restaurant styles
+export const restaurantStyles = {
+  status: {
+    active: 'bg-green-100 text-green-800',
+    inactive: 'bg-yellow-100 text-yellow-800',
+    closed: 'bg-red-100 text-red-800',
+    default: 'bg-gray-100 text-gray-800'
+  },
+  buttons: {
+    primary: 'bg-orange-500 hover:bg-orange-600 text-white outline-none',
+    secondary: 'border border-gray-300 hover:bg-gray-100 outline-none',
+    danger: 'bg-red-500 hover:bg-red-600 text-white outline-none',
+    success: 'bg-green-500 hover:bg-green-600 text-white outline-none',
+    outline: 'border border-gray-300 bg-white hover:bg-gray-50'
+  },
+  inputs: {
+    base: 'w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 outline-none',
+    valid: 'border-gray-300',
+    invalid: 'border-red-500',
+    textarea: 'w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 resize-none'
+  },
+  tags: {
+    selected: 'bg-orange-500 text-white border-orange-500',
+    unselected: 'bg-white text-gray-700 border-gray-300 hover:border-orange-500',
+    base: 'px-4 py-2 rounded-lg border transition-colors'
+  },
+  table: {
+    header: 'px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase',
+    cell: 'px-6 py-4 text-sm',
+    rowHover: 'hover:bg-gray-50'
+  },
+  modals: {
+    overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto',
+    content: 'bg-white rounded-lg w-full max-w-3xl my-8',
+    header: 'flex items-center justify-between p-6 border-b border-gray-300',
+    headerTitle: "text-2xl font-bold",
+    closeBtn: "text-gray-400 hover:text-gray-600",
+    closeIcon: "w-4 h-4",
+    body: 'max-h-[70vh] overflow-y-auto',
+    footer: 'border-t border-t-gray-300 bg-gray-50'
+  },
+  emptyState: {
+    container: "bg-white rounded-lg shadow-sm p-12 text-center",
+    searchContainer: "w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4",
+    searchIcon: "text-gray-400",
+    title: "text-xl font-semibold text-gray-900 mb-2",
+    description: "text-gray-600",
+  }
+};

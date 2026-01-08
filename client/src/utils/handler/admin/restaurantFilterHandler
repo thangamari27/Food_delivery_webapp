@@ -1,0 +1,176 @@
+// Status color mapping
+const statusColor = {
+  Active: 'bg-green-100 text-green-800',
+  Inactive: 'bg-yellow-100 text-yellow-800',
+  Closed: 'bg-red-100 text-red-800'
+};
+
+export const getStatusColor = (status) => {
+  return statusColor[status] || 'bg-gray-100 text-gray-800';
+};
+
+// Validation rules
+const validationRules = {
+  name: {
+    required: true,
+    message: 'Restaurant name is required'
+  },
+  contactPerson: {
+    required: true,
+    message: 'Contact person is required'
+  },
+  phone: {
+    required: true,
+    pattern: /^\+?[\d\s-]{10,}$/,
+    messages: {
+      required: 'Phone number is required',
+      invalid: 'Invalid phone format'
+    }
+  },
+  email: {
+    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    message: 'Invalid email format'
+  },
+  address: {
+    required: true,
+    message: 'Address is required'
+  },
+  city: {
+    required: true,
+    message: 'City is required'
+  },
+  cuisine: {
+    required: true,
+    minLength: 1,
+    message: 'Select at least one cuisine'
+  },
+  priceRange: {
+    required: true,
+    message: 'Price range is required'
+  }
+};
+
+export const validateForm = (formData) => {
+  const errors = {};
+
+  Object.entries(validationRules).forEach(([field, rules]) => {
+    const value = formData[field];
+
+    // Check required fields
+    if (rules.required) {
+      if (Array.isArray(value)) {
+        if (!value.length || (rules.minLength && value.length < rules.minLength)) {
+          errors[field] = rules.message;
+        }
+      } else if (!value?.trim()) {
+        errors[field] = rules.messages?.required || rules.message;
+      }
+    }
+
+    // Check pattern validation
+    if (value && rules.pattern && !rules.pattern.test(value)) {
+      errors[field] = rules.messages?.invalid || rules.message;
+    }
+  });
+
+  return errors;
+};
+
+// Filter helpers
+const matchesSearchTerm = (restaurant, term) => {
+  const searchLower = term.toLowerCase();
+  return (
+    restaurant.name.toLowerCase().includes(searchLower) ||
+    restaurant.city.toLowerCase().includes(searchLower) ||
+    restaurant.cuisine.some(c => c.toLowerCase().includes(searchLower))
+  );
+};
+
+const matchesStatus = (restaurant, status) => {
+  return status === 'all' || restaurant.status === status;
+};
+
+const matchesCuisine = (restaurant, cuisine) => {
+  return cuisine === 'all' || restaurant.cuisine.includes(cuisine);
+};
+
+const matchesDelivery = (restaurant, delivery) => {
+  if (delivery === 'all') return true;
+  return restaurant.deliveryAvailable === (delivery === 'yes');
+};
+
+const extractPriceFromRange = (priceRange) => {
+  const match = priceRange.match(/\d+/);
+  return match ? parseInt(match[0]) : 0;
+};
+
+const matchesPriceRange = (restaurant, priceRange) => {
+  if (priceRange === 'all') return true;
+  
+  const price = extractPriceFromRange(restaurant.priceRange);
+  
+  switch (priceRange) {
+    case 'budget':
+      return price < 300;
+    case 'moderate':
+      return price >= 300 && price <= 500;
+    case 'premium':
+      return price > 500;
+    default:
+      return true;
+  }
+};
+
+export const applyFilters = (restaurants, searchTerm, filters) => {
+  return restaurants.filter(restaurant => {
+    if (searchTerm && !matchesSearchTerm(restaurant, searchTerm)) {
+      return false;
+    }
+    
+    if (!matchesStatus(restaurant, filters.status)) {
+      return false;
+    }
+    
+    if (!matchesCuisine(restaurant, filters.cuisine)) {
+      return false;
+    }
+    
+    if (!matchesDelivery(restaurant, filters.delivery)) {
+      return false;
+    }
+    
+    if (!matchesPriceRange(restaurant, filters.priceRange)) {
+      return false;
+    }
+    
+    return true;
+  });
+};
+
+// Sort comparators
+const compareByRating = (a, b, direction) => {
+  return direction === 'asc' 
+    ? a.rating - b.rating 
+    : b.rating - a.rating;
+};
+
+const compareByName = (a, b, direction) => {
+  return direction === 'asc' 
+    ? a.name.localeCompare(b.name)
+    : b.name.localeCompare(a.name);
+};
+
+const sortComparators = {
+  rating: compareByRating,
+  name: compareByName
+};
+
+export const sortRestaurants = (restaurants, sortConfig) => {
+  if (!sortConfig.key || !sortComparators[sortConfig.key]) {
+    return restaurants;
+  }
+  
+  return [...restaurants].sort((a, b) => 
+    sortComparators[sortConfig.key](a, b, sortConfig.direction)
+  );
+};
