@@ -1,4 +1,4 @@
-import { ShoppingBag, Coffee, Home, Bell, LogOut, Key, UserCircle, UtensilsCrossed, IndianRupee, ShoppingCart, Users, CheckCircle, Clock, AlertCircle, XCircle, Package, ForkKnifeCrossedIcon, Building2, Search } from 'lucide-react';
+import { MessageCircle, Utensils, AlertTriangle, Handshake, FileText, Mail, AlertCircle, Clock, CheckCircle, XCircle, ShoppingBag, UserCheck, UserX, UserPlus, Home, Bell, LogOut, Key, UserCircle, UtensilsCrossed, IndianRupee, ShoppingCart, Users, Package, ForkKnifeCrossedIcon, Building2, Search, CreditCard, Tag } from 'lucide-react';
 
 // Top navbar content
 export const headerContent = {
@@ -8,8 +8,8 @@ export const headerContent = {
     navLinks: [
         { label: "Dashboard", href: "/admin/dashboard" },
         { label: "Orders", href: "/admin/orders" },
-        { label: "Tools", href: "#"},
-        { label: "Help", href: "#" }
+        { label: "Foods", href: "/admin/foods"},
+        { label: "Customer", href: "/admin/customers" },
     ],
     notifications: [
         { icon: Bell, badge: "12", color: "amber", isAlert: false },
@@ -54,51 +54,67 @@ export const sidebarContent = {
         label: "Dashboard",
         href: "/admin/dashboard",
         icon: Home,
-    },
-    {
-        id: 2,
-        label: "Orders",
-        href: "/admin/orders",
-        icon: ShoppingBag,
-        badge: "25",
+      },
+      {
+          id: 2,
+          label: "Foods",
+          icon: ForkKnifeCrossedIcon,
+          href:"/admin/foods",
+          hasSubmenu: false,
+          submenu: [
+          { label: "All Menus", href: "/admin/menus" },
+          { label: "Add Menu", href: "/admin/menus/add" },
+          ],
     },
     {
         id: 3,
-        label: "Add Foods",
-        icon: ForkKnifeCrossedIcon,
-        href:"/admin/add_foods",
-        // hasSubmenu: false,
-        submenu: [
-        { label: "All Menus", href: "/admin/menus" },
-        { label: "Add Menu", href: "/admin/menus/add" },
-        ],
+        label: "Orders",
+        href: "/admin/orders",
+        icon: ShoppingBag,
+        // badge: "25",
     },
     {
         id: 4,
-        label: "Add Restaurants",
-        icon: Building2,
-        href: "/admin/add_restaurant",
-        // hasSubmenu: false,
-        submenu: [
-        { label: "Add New", href: "/admin/customers/add" },
-        { label: "Members", href: "/admin/customers/members" },
-        { label: "General", href: "/admin/customers/general" },
-        ],
+        label: "Offers",
+        href: "/admin/offers",
+        icon: Tag,
     },
     {
         id: 5,
-        label: "Customers",
-        icon: Users,
-        href:"customers",
-        // hasSubmenu: false,
+        label: "Restaurants",
+        icon: Building2,
+        href: "/admin/restaurant",
+        hasSubmenu: true,
         submenu: [
-        { label: "Add New", href: "/admin/customers/add" },
-        { label: "Members", href: "/admin/customers/members" },
-        { label: "General", href: "/admin/customers/general" },
+        { label: "Add Restaurant", href: "/admin/restaurant/add_restaurant" },
+        { label: "Bookings", href: "/admin/restaurant/booking" },
         ],
     },
+    {
+      id: 6,
+      label: "Customers",
+      href: '/admin/customers',
+      icon: Users,
+      // hasSubmenu: false,
+      submenu: [
+      { label: "Add New", href: "/admin/customers/add" },
+      { label: "Members", href: "/admin/customers/members" },
+      { label: "General", href: "/admin/customers/general" },
+      ],
+    },
+    {
+      id: 7,
+      label: "Subscription",
+      href: "/admin/subscription",
+      icon: CreditCard,
+    },
+    {
+      id: 8,
+      label: "Enquiry",
+      href: "/admin/enquiry",
+      icon: Mail,
+    },
     ],
-
 }
 
 // Dashboard page content
@@ -416,7 +432,7 @@ export const ordersContent = {
   ]
 };
 
-// Restaurant content
+// Restaurant page content
 export const restaurantContent = {
   titles: {
     main: "Restaurant Management",
@@ -666,3 +682,851 @@ export const restaurantContent = {
   ],
   
 };
+
+// Food page content
+export const foodContent = {
+  header: {
+    title: "Food Management",
+    subtitle: "Manage all food items and special menus",
+    addButtonText: "Add New Food",
+  },
+
+  tableHeaders: [
+    { id: 'image', label: 'Image', width: 'w-20' },
+    { id: 'name', label: 'Food Name', sortable: true },
+    { id: 'category', label: 'Category', sortable: true },
+    { id: 'cuisine', label: 'Cuisine', sortable: true },
+    { id: 'price', label: 'Price', sortable: true },
+    { id: 'status', label: 'Status', sortable: true },
+    { id: 'type', label: 'Type', sortable: true },
+    { id: 'actions', label: 'Actions', width: 'w-32' }
+  ],
+
+  categories: [
+    'Rolls & Wraps',
+    'Rice Dishes',
+    'Seafood',
+    'Appetizers',
+    'Desserts',
+    'Beverages'
+  ],
+
+  cuisines: [
+    'Indian',
+    'Arabic',
+    'Chinese',
+    'Thai',
+    'Italian',
+    'Mexican'
+  ],
+
+  foodTypes: [
+    { value: 'Regular Menu Item', label: 'Regular Menu' },
+    { value: 'Special Menu Item', label: 'Special Menu' }
+  ],
+
+  statuses: [
+    { value: 'Active', label: 'Active', color: 'bg-green-100 text-green-700' },
+    { value: 'Inactive', label: 'Inactive', color: 'bg-gray-100 text-gray-700' }
+  ],
+
+  restaurants: [
+    { id: 1, name: 'Spice Garden' },
+    { id: 2, name: 'Masala Darbar' },
+    { id: 3, name: 'Royal Biryani House' },
+    { id: 4, name: 'Curry Leaf Express' },
+    { id: 5, name: 'Tandoor Junction' },
+    { id: 6, name: 'Dosa Palace' },
+    { id: 7, name: 'Dragon Wok' },
+    { id: 8, name: 'Pizza Fiesta' },
+    { id: 9, name: 'Bombay Streets' },
+    { id: 10, name: 'Green Salad Bar' }
+  ],
+
+  filters: {
+    searchPlaceholder: 'Search by food name, category, cuisine or restaurant',
+    sortOptions: [
+      { value: '', label: 'Sort By' },
+      { value: 'recent', label: 'Recently Added' },
+      { value: 'name-asc', label: 'Name (A–Z)' },
+      { value: 'name-desc', label: 'Name (Z–A)' },
+      { value: 'price-asc', label: 'Price (Low → High)' },
+      { value: 'price-desc', label: 'Price (High → Low)' }
+    ]
+  },
+
+  modal: {
+    add: {
+      title: 'Add New Food Item',
+      submitButton: 'Add Food',
+      cancelButton: 'Cancel'
+    },
+    edit: {
+      title: 'Edit Food Item',
+      submitButton: 'Update Food',
+      cancelButton: 'Cancel'
+    },
+    view: {
+      title: 'Food Details',
+      editButton: 'Edit Food'
+    },
+    delete: {
+      title: 'Delete Food Item?',
+      message: 'This action cannot be undone.',
+      confirmButton: 'Delete',
+      cancelButton: 'Cancel'
+    }
+  },
+
+  form: {
+    name: {
+      label: 'Food Name',
+      placeholder: 'e.g. Chicken Shawarma Roll',
+      required: true
+    },
+    category: {
+      label: 'Category',
+      required: true
+    },
+    cuisine: {
+      label: 'Cuisine',
+      required: true
+    },
+    restaurant: {
+      label: 'Restaurant',
+      required: true
+    },
+    price: {
+      label: 'Price',
+      placeholder: '0.00',
+      required: true
+    },
+    originalPrice: {
+      label: 'Original Price',
+      placeholder: '0.00',
+      required: false
+    },
+    description: {
+      label: 'Description',
+      placeholder: 'Describe ingredients or special features...',
+      maxLength: 500
+    },
+    image: {
+      label: 'Food Image',
+      helper: 'JPG or WebP (Max 5MB)'
+    },
+    status: {
+      label: 'Status',
+      activeLabel: 'Active (Item will be visible to customers)'
+    },
+    type: {
+      label: 'Food Type'
+    }
+  },
+
+  emptyState: {
+    title: 'No Food Items Found',
+    message: 'Try adjusting your search or filters.',
+    buttonText: 'Clear filters'
+  },
+
+  pagination: {
+    rowsPerPageLabel: 'Rows per page',
+    options: [10, 25, 50]
+  },
+
+  messages: {
+    deleteConfirm: 'Are you sure you want to delete',
+    deleteWarning: 'This action cannot be undone.'
+  },
+
+  sampleData: [
+    { id: 1, name: 'Chicken Shawarma Roll', category: 'Rolls & Wraps', cuisine: 'Arabic', restaurant: 'Spice Garden', description: 'Grilled chicken with garlic sauce, pickles, and fresh vegetables wrapped in pita', price: 12.99, originalPrice: 15.99, image: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400', type: 'Special Menu Item', status: 'Active', createdDate: '2025-01-10' },
+    { id: 2, name: 'Vegetable Biryani', category: 'Rice Dishes', cuisine: 'Indian', restaurant: 'Masala Darbar', description: 'Aromatic basmati rice cooked with mixed vegetables and traditional spices', price: 10.99, originalPrice: null, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400', type: 'Regular Menu Item', status: 'Active', createdDate: '2025-01-08' },
+    { id: 3, name: 'Grilled Salmon', category: 'Seafood', cuisine: 'Thai', restaurant: 'Dragon Wok', description: 'Fresh Atlantic salmon with lemon butter sauce and seasonal vegetables', price: 24.99, originalPrice: 29.99, image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400', type: 'Special Menu Item', status: 'Active', createdDate: '2025-01-12' },
+    { id: 4, name: 'Pad Thai Noodles', category: 'Rice Dishes', cuisine: 'Thai', restaurant: 'Dragon Wok', description: 'Stir-fried rice noodles with shrimp, peanuts, and tamarind sauce', price: 13.99, originalPrice: null, image: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400', type: 'Regular Menu Item', status: 'Inactive', createdDate: '2025-01-05' },
+    { id: 5, name: 'Falafel Wrap', category: 'Rolls & Wraps', cuisine: 'Arabic', restaurant: 'Spice Garden', description: 'Crispy falafel with hummus, tahini, and fresh salad in pita bread', price: 9.99, originalPrice: null, image: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400', type: 'Regular Menu Item', status: 'Active', createdDate: '2025-01-11' }
+  ]
+};
+
+// Customer page content
+export const customerContent = {
+  header: {
+    title: 'Customer Management',
+    subtitle: 'Manage all registered users and their activity',
+    addButton: 'Add Customer',
+    refreshButton: 'Refresh'
+  },
+  stats: {
+    total: { label: 'Total Customers', icon: Users, color: 'orange' },
+    active: { label: 'Active Customers', icon: UserCheck, color: 'green' },
+    blocked: { label: 'Blocked / Inactive', icon: UserX, color: 'red' },
+    new: { label: 'New This Week', icon: UserPlus, color: 'purple' }
+  },
+  filters: {
+    searchPlaceholder: 'Search by name, phone, email, or customer ID...',
+    filterButton: 'Filters',
+    resetButton: 'Reset Filters',
+    statusLabel: 'Account Status',
+    statusOptions: [
+      { value: 'all', label: 'All Status' },
+      { value: 'active', label: 'Active', color: 'green' },
+      { value: 'blocked', label: 'Blocked', color: 'red' },
+      { value: 'inactive', label: 'Inactive', color: 'gray' }
+    ],
+    sortLabel: 'Sort By',
+    sortOptions: [
+      { value: 'newest', label: 'Recently Registered' },
+      { value: 'name-asc', label: 'Name (A-Z)' },
+      { value: 'name-desc', label: 'Name (Z-A)' },
+      { value: 'orders', label: 'Most Orders' },
+      { value: 'recent', label: 'Last Active' }
+    ]
+  },
+  table: {
+    columns: ['Customer Name', 'Email', 'Phone', 'Orders', 'Status', 'Registered', 'Actions'],
+    actions: { view: 'View', edit: 'Edit', block: 'Block', unblock: 'Unblock', delete: 'Delete' }
+  },
+  pagination: {
+    rowsPerPage: 'Rows per page:',
+    showing: 'Showing',
+    of: 'of',
+    customers: 'customers'
+  },
+  form: {
+    createTitle: 'Add New Customer',
+    editTitle: 'Edit Customer',
+    sections: {
+      basic: 'Basic Information',
+      address: 'Address Information',
+      account: 'Account Settings'
+    },
+    fields: {
+      name: { label: 'Full Name', placeholder: 'Enter full name', required: true },
+      email: { label: 'Email Address', placeholder: 'customer@example.com', required: true },
+      phone: { label: 'Phone Number', placeholder: '+91 XXXXX XXXXX', required: true },
+      address: { label: 'Address Line', placeholder: 'Street address' },
+      city: { label: 'City', placeholder: 'City name' },
+      state: { label: 'State', placeholder: 'State name' },
+      postal: { label: 'Postal Code', placeholder: '600001' },
+      status: { label: 'Account Status' },
+      notes: { label: 'Internal Notes', placeholder: 'Add notes visible only to admin...' }
+    },
+    buttons: { save: 'Save Customer', cancel: 'Cancel' }
+  },
+  viewModal: {
+    title: 'Customer Details',
+    editButton: 'Edit Customer',
+    sections: {
+      profile: 'Profile Information',
+      address: 'Address Details',
+      account: 'Account Information',
+      activity: 'Order Summary'
+    }
+  },
+  confirmModal: {
+    block: {
+      title: 'Block Customer Account',
+      message: 'Are you sure you want to block this customer? They will not be able to place orders.',
+      confirm: 'Block Account',
+      cancel: 'Cancel'
+    },
+    unblock: {
+      title: 'Unblock Customer Account',
+      message: 'This customer will be able to place orders again.',
+      confirm: 'Unblock Account',
+      cancel: 'Cancel'
+    },
+    delete: {
+      title: 'Delete Customer',
+      message: 'This action cannot be undone. Customer data will be permanently removed.',
+      warning: 'Customers with existing orders cannot be deleted.',
+      confirm: 'Delete Customer',
+      cancel: 'Cancel'
+    }
+  },
+  empty: {
+    title: 'No customers found',
+    noResults: 'No customers match your filters',
+    description: 'Get started by adding your first customer',
+    addButton: 'Add Customer',
+    resetButton: 'Reset Filters'
+  },
+  toast: {
+    customerAdded: 'Customer added successfully',
+    customerUpdated: 'Customer updated successfully',
+    customerDeleted: 'Customer deleted successfully',
+    statusChanged: 'Customer status updated',
+    error: 'Something went wrong. Please try again.'
+  }
+};
+
+// Subscription page content
+export const subscriptionContent = {
+  heading: "Choose Your Meal Plan",
+  subheading: "Fresh, delicious meals delivered to your doorstep",
+  periods: ['weekly', 'monthly', 'yearly'],
+  button_content: {
+    text: "Get Started",
+    link: "",
+  },
+  management: {
+    title: "Subscription Plans Management",
+    description: "Manage meal plans, pricing, and subscription features",
+    actions: {
+      refresh: "Refresh",
+      create_plan: "Create Plan",
+      total_plans: "total plans"
+    }
+  },
+  comparison: {
+    title: "Compare Plans",
+    description: "Compare features across all plan tiers",
+    table_title: ['Features', 'Basic', 'Family', 'Premium'],
+    features: [
+      'Meals per delivery',
+      'Servings per meal',
+      'Delivery speed',
+      'Recipe cards',
+      'Support level',
+      'Meal variety',
+      'Dietary options',
+      'Free extras',
+      'Nutrition guidance',
+      'Chef specials'
+    ],
+    basic: ['3-12', '2', 'Standard', true, 'Email', 'Basic', false, false, false, false],
+    family: ['5-20', '4', 'Priority', true, 'Phone & Email', 'Premium', true, true, false, false],
+    premium: ['7-30', '6', 'Same-day', true, '24/7 Priority', 'Gourmet', true, true, true, true]
+  },
+  plans: {
+    weekly: [
+      {
+        id: 'basic-weekly',
+        name: 'Basic',
+        price: 129,
+        savings: null,
+        status: 'active',
+        popular: false,
+        badge_text: "Most Popular",
+        features: [
+          '3 Meals per week',
+          '2 Servings per meal',
+          'Standard delivery',
+          'Recipe cards included',
+          'Email support',
+          'Basic meal options'
+        ]
+      },
+      {
+        id: 'family-weekly',
+        name: 'Family',
+        price: 249,
+        savings: null,
+        status: 'active',
+        popular: true,
+        badge_text: "Most Popular",
+        features: [
+          '5 Meals per week',
+          '4 Servings per meal',
+          'Priority delivery',
+          'Recipe cards included',
+          'Phone & email support',
+          'Premium meal options',
+          'Dietary customization',
+          'Free dessert weekly'
+        ]
+      },
+      {
+        id: 'premium-weekly',
+        name: 'Premium',
+        price: 399,
+        savings: null,
+        status: 'active',
+        popular: false,
+        badge_text: "Most Popular",
+        features: [
+          '7 Meals per week',
+          '6 Servings per meal',
+          'Same-day delivery',
+          'Recipe cards & videos',
+          '24/7 Priority support',
+          'Gourmet meal options',
+          'Full dietary customization',
+          'Free desserts & snacks',
+          'Nutrition consultation',
+          'Exclusive chef specials'
+        ]
+      }
+    ],
+    monthly: [
+      {
+        id: 'basic-monthly',
+        name: 'Basic',
+        price: 459,
+        savings: 15,
+        status: 'active',
+        popular: false,
+        badge_text: "Most Popular",
+        features: [
+          '12 Meals per month',
+          '2 Servings per meal',
+          'Standard delivery',
+          'Recipe cards included',
+          'Email support',
+          'Basic meal options'
+        ]
+      },
+      {
+        id: 'family-monthly',
+        name: 'Family',
+        price: 899,
+        savings: 20,
+        status: 'active',
+        popular: true,
+        badge_text: "Most Popular",
+        features: [
+          '20 Meals per month',
+          '4 Servings per meal',
+          'Priority delivery',
+          'Recipe cards included',
+          'Phone & email support',
+          'Premium meal options',
+          'Dietary customization',
+          'Free desserts weekly'
+        ]
+      },
+      {
+        id: 'premium-monthly',
+        name: 'Premium',
+        price: 1399,
+        savings: 25,
+        status: 'active',
+        popular: false,
+        badge_text: "Most Popular",
+        features: [
+          '30 Meals per month',
+          '6 Servings per meal',
+          'Same-day delivery',
+          'Recipe cards & videos',
+          '24/7 Priority support',
+          'Gourmet meal options',
+          'Full dietary customization',
+          'Free desserts & snacks',
+          'Nutrition consultation',
+          'Exclusive chef specials'
+        ]
+      }
+    ],
+    yearly: [
+      {
+        id: 'basic-yearly',
+        name: 'Basic',
+        price: 3999,
+        savings: 30,
+        status: 'active',
+        popular: false,
+        badge_text: "Most Popular",
+        features: [
+          '12 Meals per month',
+          '2 Servings per meal',
+          'Standard delivery',
+          'Recipe cards included',
+          'Email support',
+          'Basic meal options'
+        ]
+      },
+      {
+        id: 'family-yearly',
+        name: 'Family',
+        price: 7499,
+        savings: 35,
+        status: 'active',
+        popular: true,
+        badge_text: "Most Popular",
+        features: [
+          '20 Meals per month',
+          '4 Servings per meal',
+          'Priority delivery',
+          'Recipe cards included',
+          'Phone & email support',
+          'Premium meal options',
+          'Dietary customization',
+          'Free desserts weekly'
+        ]
+      },
+      {
+        id: 'premium-yearly',
+        name: 'Premium',
+        price: 10999,
+        savings: 40,
+        status: 'active',
+        popular: false,
+        badge_text: "Most Popular",
+        features: [
+          '30 Meals per month',
+          '6 Servings per meal',
+          'Same-day delivery',
+          'Recipe cards & videos',
+          '24/7 Priority support',
+          'Gourmet meal options',
+          'Full dietary customization',
+          'Free desserts & snacks',
+          'Nutrition consultation',
+          'Exclusive chef specials'
+        ]
+      }
+    ]
+  },
+  plan_form: {
+    labels: {
+      plan_name: "Plan Name *",
+      price: "Price (₹) *",
+      savings: "Savings (%) - Optional",
+      popular_plan: "Mark as Popular Plan",
+      badge_text: "Badge Text",
+      plan_status: "Plan Status",
+      plan_features: "Plan Features (one per line) *",
+      feature_preview: "Feature Preview:",
+      features_added: "features added"
+    },
+    placeholders: {
+      plan_name: "e.g., Basic, Family, Premium",
+      price: "129",
+      savings: "15",
+      badge_text: "Most Popular",
+      features: `3 Meals per week
+2 Servings per meal
+Standard delivery
+Recipe cards included`
+    },
+    status_options: {
+      active: "Active",
+      inactive: "Inactive"
+    },
+    buttons: {
+      view: "View",
+      cancel: "Cancel",
+      close: "Close",
+      create_plan: "Create Plan",
+      update_plan: "Update Plan"
+    } 
+  },
+  confirmation: {
+    delete_title: "Delete Plan",
+    delete_message: "Are you sure you want to delete the {plan_name} plan? This action cannot be undone.",
+    toggle_title: "{action} Plan",
+    toggle_message: "Are you sure you want to {action} the {plan_name} plan?",
+    buttons: {
+      cancel: "Cancel",
+      confirm: "Confirm"
+    }
+  },
+  empty_state: {
+    title: "No subscription plans found",
+    description: "No subscription plans found for this billing period"
+  },
+  features_display: {
+    show_more: "Show {count} more",
+    show_less: "Show less"
+  }
+};
+
+export const modalTypes = {
+  CREATE: 'create',
+  EDIT: 'edit',
+  VIEW: 'view'
+};
+
+export const planStatus = {
+  ACTIVE: 'active',
+  INACTIVE: 'inactive'
+};
+
+// Enquiry page content
+export const enquiryContent = {
+  header: {
+    title: "Contact Enquiry Management",
+    subtitle: "Manage customer messages and support requests",
+    add_button_text: "New Enquiry",
+  },
+
+  stats: [
+    { 
+      label: 'Total Enquiries', 
+      key: 'total', 
+      gradient: 'bg-blue-400', 
+      icon: 'Mail' 
+    },
+    { 
+      label: 'New Enquiries', 
+      key: 'new', 
+      gradient: 'bg-orange-400', 
+      icon: 'AlertCircle' 
+    },
+    { 
+      label: 'In Progress', 
+      key: 'in_progress', 
+      gradient: 'bg-yellow-400', 
+      icon: 'Clock' 
+    },
+    { 
+      label: 'Resolved', 
+      key: 'resolved', 
+      gradient: 'bg-green-400', 
+      icon: 'CheckCircle' 
+    },
+    { 
+      label: 'High Priority', 
+      key: 'high_priority', 
+      gradient: 'bg-red-400', 
+      icon: 'AlertCircle' 
+    }
+  ],
+
+  table_headers: [
+    { id: 'user', label: 'User', sortable: true },
+    { id: 'subject', label: 'Subject', sortable: true },
+    { id: 'purpose', label: 'Purpose', sortable: true },
+    { id: 'priority', label: 'Priority', sortable: true },
+    { id: 'status', label: 'Status', sortable: true },
+    { id: 'date', label: 'Date', sortable: true },
+    { id: 'actions', label: 'Actions', width: 'w-32' }
+  ],
+
+  statuses: [
+    { 
+      value: 'New', 
+      label: 'New', 
+      color: 'bg-blue-100 text-blue-700', 
+      dot_color: 'bg-blue-500', 
+      icon: AlertCircle 
+    },
+    { 
+      value: 'In Progress', 
+      label: 'In Progress', 
+      color: 'bg-yellow-100 text-yellow-700', 
+      dot_color: 'bg-yellow-500', 
+      icon: Clock 
+    },
+    { 
+      value: 'Resolved', 
+      label: 'Resolved', 
+      color: 'bg-green-100 text-green-700', 
+      dot_color: 'bg-green-500', 
+      icon: CheckCircle 
+    },
+    { 
+      value: 'Closed', 
+      label: 'Closed', 
+      color: 'bg-gray-100 text-gray-700', 
+      dot_color: 'bg-gray-500', 
+      icon: XCircle 
+    }
+  ],
+
+  priorities: [
+    { 
+      value: 'Low', 
+      label: 'Low', 
+      color: 'bg-gray-100 text-gray-700', 
+      dot_color: 'bg-gray-400' 
+    },
+    { 
+      value: 'Medium', 
+      label: 'Medium', 
+      color: 'bg-blue-100 text-blue-700', 
+      dot_color: 'bg-blue-400' 
+    },
+    { 
+      value: 'High', 
+      label: 'High', 
+      color: 'bg-red-100 text-red-700', 
+      dot_color: 'bg-red-500' 
+    }
+  ],
+
+  purposes: [
+    { 
+      value: 'general', 
+      label: 'General Inquiry', 
+      icon: MessageCircle,
+      icon_color: 'text-blue-500',
+      icon_size: 'w-4 h-4'
+    },
+    { 
+      value: 'catering', 
+      label: 'Catering', 
+      icon: Utensils,
+      icon_color: 'text-green-500',
+      icon_size: 'w-4 h-4'
+    },
+    { 
+      value: 'complaint', 
+      label: 'Complaint', 
+      icon: AlertTriangle,
+      icon_color: 'text-red-500',
+      icon_size: 'w-4 h-4'
+    },
+    { 
+      value: 'partnership', 
+      label: 'Partnership', 
+      icon: Handshake,
+      icon_color: 'text-purple-500',
+      icon_size: 'w-4 h-4'
+    },
+    { 
+      value: 'other', 
+      label: 'Other', 
+      icon: FileText,
+      icon_color: 'text-gray-500',
+      icon_size: 'w-4 h-4'
+    }
+  ],
+
+  filter_options: {
+    status: {
+      label: 'Status',
+      options: [
+        { value: 'all', label: 'All Statuses' },
+        { value: 'New', label: 'New' },
+        { value: 'In Progress', label: 'In Progress' },
+        { value: 'Resolved', label: 'Resolved' },
+        { value: 'Closed', label: 'Closed' }
+      ]
+    },
+    priority: {
+      label: 'Priority',
+      options: [
+        { value: 'all', label: 'All Priorities' },
+        { value: 'Low', label: 'Low' },
+        { value: 'Medium', label: 'Medium' },
+        { value: 'High', label: 'High' }
+      ]
+    },
+    purpose: {
+      label: 'Purpose',
+      options: [
+        { value: 'all', label: 'All Purposes' },
+        { value: 'general', label: 'General Inquiry' },
+        { value: 'catering', label: 'Catering' },
+        { value: 'complaint', label: 'Complaint' },
+        { value: 'partnership', label: 'Partnership' },
+        { value: 'other', label: 'Other' }
+      ]
+    }
+  },
+
+  modal_content: {
+    view: { 
+      title: 'Enquiry Details', 
+      close_button: 'Close' 
+    },
+    reply: { 
+      title: 'Reply to Enquiry', 
+      submit_button: 'Send Reply', 
+      cancel_button: 'Cancel' 
+    },
+    delete: { 
+      title: 'Delete Enquiry', 
+      message: 'Are you sure you want to delete this enquiry? This action cannot be undone.',
+      confirm_button: 'Delete', 
+      cancel_button: 'Cancel' 
+    },
+    create: { 
+      title: 'Create Manual Enquiry', 
+      submit_button: 'Create Enquiry', 
+      cancel_button: 'Cancel' 
+    }
+  },
+
+  form_fields: {
+    name: { 
+      label: 'Name', 
+      placeholder: 'Customer name', 
+      required: true 
+    },
+    email: { 
+      label: 'Email', 
+      placeholder: 'customer@email.com', 
+      required: true 
+    },
+    subject: { 
+      label: 'Subject', 
+      placeholder: 'Brief subject line', 
+      required: true 
+    },
+    purpose: { 
+      label: 'Purpose', 
+      required: true 
+    },
+    priority: { 
+      label: 'Priority', 
+      required: true 
+    },
+    message: { 
+      label: 'Message', 
+      placeholder: 'Enquiry details...', 
+      required: true 
+    },
+    reply: { 
+      label: 'Reply Message', 
+      placeholder: 'Type your reply here...', 
+      required: true 
+    },
+    internal_note: { 
+      label: 'Internal Note (Optional)', 
+      placeholder: 'Add internal notes...', 
+      required: false 
+    }
+  },
+
+  empty_state: {
+    title: 'No Enquiries Found',
+    message: 'There are no enquiries matching your filters. Try adjusting your search criteria.',
+    icon: 'Search'
+  },
+
+  pagination: {
+    rows_per_page_label: 'Rows per page:',
+    rows_per_page_options: [10, 25, 50, 100],
+    of_label: 'of'
+  },
+
+  search: {
+    placeholder: 'Search by name, email, subject, or ID...'
+  },
+
+  action_labels: {
+    view: 'View',
+    reply: 'Reply',
+    resolve: 'Mark as Resolved',
+    delete: 'Delete'
+  },
+
+  customer_info_labels: {
+    name: 'Name',
+    email: 'Email',
+    enquiry_id: 'Enquiry ID',
+    created: 'Created',
+    last_updated: 'Last Updated',
+    purpose: 'Purpose'
+  },
+
+  metadata_labels: {
+    status: 'Status',
+    priority: 'Priority'
+  }
+};
+
+export const enquiryConstants = {
+  initial_filters: {
+    status: 'all',
+    priority: 'all',
+    purpose: 'all'
+  },
+  default_page_size: 10,
+  initial_page: 1
+};
+
+

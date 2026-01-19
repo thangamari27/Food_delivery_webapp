@@ -1,4 +1,4 @@
-import RestaurantSection from "@/components/dashboard/admin/features/RestaurantSection"
+import RestaurantSection from "@/components/dashboard/admin/RestaurantSection"
 
 function AdminRestaurantPage() {
   return (

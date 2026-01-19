@@ -1,4 +1,4 @@
-import { Eye, Edit2, Trash2, Check, Star, MapPin, Clock } from 'lucide-react';
+import { Eye, Edit2, Trash2, Check, Star, MapPin, Clock, X } from 'lucide-react';
 import { getStatusColor } from '../../../../../utils/handler/admin/restaurantFilterHandler';
 
 const RestaurantImage = ({ image, name, size = "md" }) => {

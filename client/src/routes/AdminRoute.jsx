@@ -4,6 +4,11 @@ import Admin from "@/layouts/Admin"
 import AdminDashboardPage from '@/pages/admin/AdminDashboardPage'
 import AdminOrdersPage from "@/pages/admin/AdminOrdersPage"
 import AdminRestaurantPage from "@/pages/admin/AdminRestaurantPage"
+import AdminAddFoodPage from "@/pages/admin/AdminAddFoodPage"
+import AdminCustomerPage from "@/pages/admin/AdminCustomerPage"
+import AdminSubscriptionPage from "@/pages/admin/AdminSubscriptionPage"
+import AdminEnquiryPage from "@/pages/admin/AdminEnquiryPage"
+import AdminOfferPage from "@/pages/admin/AdminOfferPage"
 
 const AdminRoute = (
     <Route
@@ -16,7 +21,12 @@ const AdminRoute = (
     >
         <Route path="dashboard" element={<AdminDashboardPage />} />
         <Route path="orders" element={<AdminOrdersPage />} />
-        <Route path="add_restaurant" element={<AdminRestaurantPage />} />
+        <Route path="offers" element={<AdminOfferPage />} />
+        <Route path="restaurant/add_restaurant" element={<AdminRestaurantPage />} />
+        <Route path="foods" element={<AdminAddFoodPage />} />
+        <Route path="customers" element={<AdminCustomerPage />} />
+        <Route path="subscription" element={<AdminSubscriptionPage />} />
+        <Route path="enquiry" element={<AdminEnquiryPage />} />
     </Route>
   )
 

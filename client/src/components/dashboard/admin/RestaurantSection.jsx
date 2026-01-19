@@ -1,4 +1,4 @@
-import RestaurantManagement from "./restaurant/RestaurantManagement"
+import RestaurantManagement from "./features/restaurant/RestaurantManagement"
 
 function RestaurantSection() {
   return (
