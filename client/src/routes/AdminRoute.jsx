@@ -9,6 +9,7 @@ import AdminCustomerPage from "@/pages/admin/AdminCustomerPage"
 import AdminSubscriptionPage from "@/pages/admin/AdminSubscriptionPage"
 import AdminEnquiryPage from "@/pages/admin/AdminEnquiryPage"
 import AdminOfferPage from "@/pages/admin/AdminOfferPage"
+import AdminBookingPage from "../pages/admin/AdminBookingPage"
 
 const AdminRoute = (
     <Route
@@ -23,8 +24,9 @@ const AdminRoute = (
         <Route path="orders" element={<AdminOrdersPage />} />
         <Route path="offers" element={<AdminOfferPage />} />
         <Route path="restaurant/add_restaurant" element={<AdminRestaurantPage />} />
+        <Route path="restaurant/bookings" element={<AdminBookingPage />} />
         <Route path="foods" element={<AdminAddFoodPage />} />
-        <Route path="customers" element={<AdminCustomerPage />} />
+        <Route path="users" element={<AdminCustomerPage />} />
         <Route path="subscription" element={<AdminSubscriptionPage />} />
         <Route path="enquiry" element={<AdminEnquiryPage />} />
     </Route>

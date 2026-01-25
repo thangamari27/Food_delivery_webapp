@@ -87,6 +87,121 @@ export const dashboardStyles = {
   },
 }
 
+// Food page styles
+export const foodStyles = {
+  // Theme
+  theme: {
+    primary: 'bg-orange-600 hover:bg-orange-700 text-white',
+    primaryText: 'text-orange-600',
+    primaryBorder: 'border-orange-600',
+    primaryRing: 'focus:ring-orange-500 focus:ring-2',
+  },
+
+  // Layout
+  container: 'mt-20 min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8',
+  maxWidth: 'max-w-7xl mx-auto',
+
+  // Header
+  header: {
+    section: 'mb-6',
+    wrapper: 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4',
+    title: 'text-2xl sm:text-3xl font-bold text-gray-900',
+    subtitle: 'text-gray-600 mt-1 text-sm sm:text-base'
+  },
+
+  // Buttons
+  buttons: {
+    primary: 'bg-orange-600 hover:bg-orange-700 text-white px-5 py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50',
+    secondary: 'flex items-center gap-2 h-11 bg-white border border-gray-300 hover:bg-gray-50 px-4 rounded-lg transition-colors',
+    danger: 'bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2',
+    ghost: 'hover:bg-gray-100 p-2 rounded-lg transition-colors'
+  },
+
+  // Inputs
+  inputs: {
+    base: 'w-full h-11 pl-10 pr-4 border border-gray-400 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none',
+    error: 'border-red-500',
+    normal: 'border-gray-300',
+    search: 'w-full pl-10 pr-6 h-11 border border-gray-400 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none'
+  },
+
+  // Badges
+  badges: {
+    status: {
+      Active: 'bg-green-100 text-green-800',
+      Inactive: 'bg-gray-100 text-gray-800'
+    },
+    type: {
+      'Special Menu Item': 'bg-orange-100 text-orange-800',
+      'Regular Menu Item': 'bg-blue-100 text-blue-800'
+    },
+    base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium'
+  },
+
+  // Filter Panel
+  filterPanel: {
+    container: 'bg-white rounded-lg shadow-sm p-4 mb-6',
+    row: 'flex flex-col gap-4 lg:flex-row lg:items-center',
+    expanded: 'mt-4 pt-4 border-t border-gray-400 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4',
+    group: 'space-y-2'
+  },
+
+  // Table
+  table: {
+    container: 'bg-white rounded-lg shadow-sm overflow-hidden hidden xl:block',
+    wrapper: 'overflow-x-auto',
+    base: 'w-full',
+    header: 'bg-gray-50 border-b border-gray-300',
+    headerCell: 'px-4 sm:px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase',
+    row: 'hover:bg-gray-50 transition-colors',
+    cell: 'px-4 sm:px-6 py-4 text-sm text-gray-700'
+  },
+
+  // Mobile Cards
+  mobile: {
+    container: 'max-w-7xl mx-auto xl:hidden space-y-4',
+    card: 'bg-white rounded-lg shadow-sm overflow-hidden',
+    cardContent: 'p-4',
+    cardGrid: 'grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-gray-300 '
+  },
+
+  // Pagination
+  pagination: {
+    container: 'max-w-7xl mx-auto mt-6 bg-white rounded-lg shadow-sm p-4',
+    wrapper: 'flex flex-col sm:flex-row items-center justify-between gap-4',
+    select: 'px-3 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none'
+  },
+
+  // Modal
+  modal: {
+    overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto',
+    container: 'bg-white rounded-lg max-w-2xl w-full my-8 max-h-[90vh] overflow-y-auto',
+    header: 'sticky top-0 bg-white border-b border-gray-300 px-4 sm:px-6 py-4 flex items-center justify-between z-10',
+    title: 'text-lg sm:text-xl font-bold text-gray-900',
+    body: 'p-4 sm:p-6',
+    footer: 'sticky bottom-0 bg-gray-50 border-t border-gray-400 px-4 sm:px-6 py-4 flex justify-end gap-3'
+  },
+
+  // Form
+  form: {
+    section: 'space-y-6',
+    sectionTitle: 'text-base sm:text-lg font-semibold text-gray-900 mb-4',
+    grid: 'grid grid-cols-1 md:grid-cols-2 gap-4',
+    group: 'space-y-4',
+    label: 'block text-sm font-medium text-gray-700 mb-1',
+    required: 'text-red-500',
+    error: 'mt-1 text-sm text-red-500'
+  },
+
+  // Empty State
+  emptyState: {
+    container: 'bg-white rounded-lg shadow-sm p-8 sm:p-12 text-center',
+    icon: 'text-gray-400 mx-auto mb-3',
+    message: 'text-gray-500 mb-4',
+    button: 'text-orange-600 hover:underline font-medium'
+  }
+};
+
 // Order page styles
 export const ordersStyles = {
   /* ================= Main Container ================= */
@@ -250,6 +365,59 @@ export const ordersStyles = {
     'w-8 h-8 border-4 border-gray-200 border-t-orange-400 rounded-full animate-spin',
 };
 
+// Offer page styles
+export const offerStyles = {
+   buttons: { 
+    primary: 'bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-all flex items-center gap-1.5 md:gap-2 disabled:opacity-50 disabled:cursor-not-allowed outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 text-sm md:text-base font-medium active:scale-95', 
+    secondary: 'bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-all flex items-center gap-1.5 md:gap-2 outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 text-sm md:text-base font-medium active:scale-95',
+    danger: 'bg-red-500 hover:bg-red-600 text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-all outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 text-sm md:text-base font-medium active:scale-95',
+    success: 'bg-green-500 hover:bg-green-600 text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-all flex items-center gap-1.5 md:gap-2 outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 text-sm md:text-base font-medium active:scale-95',
+    ghost: 'text-gray-600 hover:text-orange-600 transition-all p-1.5 rounded-lg hover:bg-orange-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 text-sm active:scale-95'
+  },
+  
+  badges: { 
+    active: 'bg-green-100 text-green-800 px-2.5 py-1 rounded-full text-xs font-medium', 
+    draft: 'bg-gray-100 text-gray-800 px-2.5 py-1 rounded-full text-xs font-medium',
+    scheduled: 'bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full text-xs font-medium',
+    expired: 'bg-red-100 text-red-800 px-2.5 py-1 rounded-full text-xs font-medium',
+    visible: 'bg-green-100 text-green-800 px-2.5 py-1 rounded-full text-xs font-medium',
+    hidden: 'bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full text-xs font-medium'
+  },
+  
+  inputs: 'w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all text-sm md:text-base placeholder-gray-400',
+  cards: 'bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-5 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5',
+  
+  modals: {
+    overlay: 'fixed inset-0 bg-black/50 flex items-center justify-center p-2 md:p-4 lg:p-6 z-50 backdrop-blur-sm',
+    content: 'bg-white rounded-2xl max-w-full md:max-w-2xl lg:max-w-3xl xl:max-w-4xl w-full max-h-[90vh] md:max-h-[85vh] overflow-y-auto mx-2 md:mx-4 shadow-2xl',
+    header: 'flex justify-between items-center p-4 md:p-6 border-b border-gray-200 sticky top-0 bg-white z-10 rounded-t-2xl',
+    body: 'p-4 md:p-6 lg:p-8',
+    footer: 'flex flex-col sm:flex-row justify-end gap-3 md:gap-4 p-4 md:p-6 border-t border-gray-200 sticky bottom-0 bg-white rounded-b-2xl'
+  },
+  
+  tables: {
+    container: 'overflow-x-auto rounded-lg border border-gray-200',
+    header: 'bg-gray-50 px-3 py-3 md:px-4 md:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider',
+    cell: 'px-3 py-3 md:px-4 md:py-4 border-b border-gray-100 text-sm md:text-base whitespace-nowrap',
+    row: 'hover:bg-gray-50 transition-all even:bg-gray-50/50',
+    empty: 'px-4 py-12 text-center text-gray-500 text-base'
+  },
+  
+  layouts: {
+    grid_cols_2: 'grid grid-cols-2 gap-3 md:gap-4',
+    grid_cols_1_md_2: 'grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6',
+    grid_cols_2_md_4: 'grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 lg:gap-6',
+    flex_col_md_row: 'flex flex-col md:flex-row',
+    flex_center: 'flex items-center justify-center',
+    container: 'max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8'
+  },
+  
+  spacing: {
+    section: 'mb-6 md:mb-8 lg:mb-10',
+    element: 'mb-4 md:mb-5'
+  }
+}
+
 // Restaurant page styles
 export const restaurantStyles = {
   status: {
@@ -300,126 +468,163 @@ export const restaurantStyles = {
   }
 };
 
-// Food page styles
-export const foodStyles = {
-  // Theme
-  theme: {
-    primary: 'bg-orange-600 hover:bg-orange-700 text-white',
-    primaryText: 'text-orange-600',
-    primaryBorder: 'border-orange-600',
-    primaryRing: 'focus:ring-orange-500 focus:ring-2',
-  },
-
-  // Layout
-  container: 'mt-20 min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8',
-  maxWidth: 'max-w-7xl mx-auto',
-
-  // Header
-  header: {
-    section: 'mb-6',
-    wrapper: 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4',
-    title: 'text-2xl sm:text-3xl font-bold text-gray-900',
-    subtitle: 'text-gray-600 mt-1 text-sm sm:text-base'
-  },
-
-  // Buttons
+// Restaurant booking page styles
+export const bookingStyles = {
+  // Button styles
   buttons: {
-    primary: 'bg-orange-600 hover:bg-orange-700 text-white px-5 py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50',
-    secondary: 'flex items-center gap-2 h-11 bg-white border border-gray-300 hover:bg-gray-50 px-4 rounded-lg transition-colors',
-    danger: 'bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2',
-    ghost: 'hover:bg-gray-100 p-2 rounded-lg transition-colors'
+    primary: 'px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium flex items-center gap-2',
+    secondary: 'px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium flex items-center gap-2',
+    danger: 'px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center gap-2',
+    success: 'px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium flex items-center gap-2',
+    ghost: 'px-3 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors flex items-center gap-1.5',
+    icon: 'p-2 hover:bg-gray-100 rounded-lg transition-colors',
+    
+    // Pagination button variants
+    pagination_default: 'p-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50',
+    pagination_disabled: 'p-2 rounded-lg border border-gray-200 text-gray-400 cursor-not-allowed',
+    pagination_active: 'px-3 py-1.5 rounded-lg border bg-orange-500 text-white border-orange-500 text-sm font-medium',
+    pagination_inactive: 'px-3 py-1.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium'
   },
 
-  // Inputs
-  inputs: {
-    base: 'w-full h-11 pl-10 pr-4 border border-gray-400 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none',
-    error: 'border-red-500',
-    normal: 'border-gray-300',
-    search: 'w-full pl-10 pr-6 h-11 border border-gray-400 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none'
-  },
-
-  // Badges
+  // Badge styles
   badges: {
-    status: {
-      Active: 'bg-green-100 text-green-800',
-      Inactive: 'bg-gray-100 text-gray-800'
+    pending: 'px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium',
+    confirmed: 'px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium',
+    completed: 'px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium',
+    cancelled: 'px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium'
+  },
+
+  // Card styles
+  cards: {
+    base: 'bg-white rounded-lg shadow-sm border border-gray-200 p-4',
+    hover: 'bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer',
+    stat: 'bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:border-orange-300 transition-colors cursor-pointer',
+    stat_active: 'border-orange-500 ring-2 ring-orange-200'
+  },
+
+  // Stat card colors
+  stat_colors: {
+    total: { color: 'text-gray-900', bgColor: 'bg-gray-50' },
+    pending: { color: 'text-yellow-700', bgColor: 'bg-yellow-50' },
+    confirmed: { color: 'text-orange-700', bgColor: 'bg-orange-50' },
+    completed: { color: 'text-green-700', bgColor: 'bg-green-50' },
+    cancelled: { color: 'text-red-700', bgColor: 'bg-red-50' }
+  },
+
+  // Modal action colors
+  modal_colors: {
+    confirm: { bg: 'bg-orange-500', hover: 'hover:bg-orange-600' },
+    complete: { bg: 'bg-green-600', hover: 'hover:bg-green-700' },
+    cancel: { bg: 'bg-red-600', hover: 'hover:bg-red-700' }
+  },
+
+  // Input styles
+  inputs: {
+    base: 'w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent',
+    search: 'w-full pl-9 sm:pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent',
+    select: 'px-3 sm:px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent',
+    textarea: 'w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none'
+  },
+
+  // Layout styles
+  layout: {
+    page: 'mt-20 min-h-screen bg-gray-50',
+    header: 'bg-white border-b border-gray-200 px-4 sm:px-6 py-4',
+    stats_grid: 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-6',
+    filters_container: 'm-5 bg-white border rounded border-gray-200 px-4 sm:px-6 py-4',
+    content_container: 'px-4 sm:px-6 pb-6',
+    
+    // Drawer styles
+    drawer_overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm bg-opacity-50 z-40 xl:hidden',
+    drawer_container: 'fixed top-0 right-0 h-full bg-white shadow-xl z-50 overflow-y-auto w-full sm:w-96 xl:w-1/3 transform transition-transform duration-300',
+    drawer_header: 'sticky top-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-4 flex items-center justify-between z-10',
+    drawer_content: 'p-4 sm:p-6 space-y-6',
+    
+    // Modal styles
+    modal_overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm bg-opacity-50 z-50 flex items-center justify-center p-4',
+    modal_container: 'bg-white rounded-lg shadow-xl max-w-md w-full p-4 sm:p-6',
+    
+    // Empty state styles
+    empty_state_container: 'flex flex-col items-center justify-center py-12 sm:py-16 px-4',
+    empty_state_icon: 'w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4',
+    
+    // Table styles
+    table_container: 'hidden xl:block overflow-x-auto',
+    table_header: 'px-2 py-5 bg-gray-50 border-b border-gray-200',
+    table_row: ' px-2 py-3 hover:bg-gray-50 transition-colors',
+    table_cell: 'px-4 py-3 whitespace-nowrap',
+    
+    // Mobile cards grid
+    mobile_cards: 'xl:hidden space-y-3 sm:space-y-4 p-4',
+    
+    // Pagination container
+    pagination_container: 'flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t border-gray-200 bg-white',
+    pagination_text: 'text-sm text-gray-600',
+    pagination_controls: 'flex items-center gap-2'
+  },
+
+  // Text styles
+  text: {
+    heading: {
+      h1: 'text-xl sm:text-2xl font-bold text-gray-900',
+      h2: 'text-lg sm:text-xl font-bold text-gray-900',
+      h3: 'text-base sm:text-lg font-semibold text-gray-900',
+      h4: 'text-sm font-semibold text-gray-900'
     },
-    type: {
-      'Special Menu Item': 'bg-orange-100 text-orange-800',
-      'Regular Menu Item': 'bg-blue-100 text-blue-800'
+    body: {
+      subtitle: 'text-sm sm:text-base text-gray-600 mt-1',
+      regular: 'text-sm text-gray-900',
+      muted: 'text-sm text-gray-500',
+      small: 'text-xs sm:text-sm',
+      small_muted: 'text-xs text-gray-500'
     },
-    base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium'
+    label: {
+      regular: 'block text-sm font-medium text-gray-700 mb-1',
+      table_header: 'px-2 py-5 text-xs font-medium text-gray-500 uppercase tracking-wider'
+    }
   },
 
-  // Filter Panel
-  filterPanel: {
-    container: 'bg-white rounded-lg shadow-sm p-4 mb-6',
-    row: 'flex flex-col gap-4 lg:flex-row lg:items-center',
-    expanded: 'mt-4 pt-4 border-t border-gray-400 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4',
-    group: 'space-y-2'
+  // Special request styles
+  special_requests: {
+    container: 'mb-3 p-2 bg-orange-50 rounded text-sm text-gray-700',
+    tooltip: 'hidden group-hover:block absolute left-0 top-6 bg-gray-900 text-white text-xs rounded p-2 w-64 z-10'
   },
 
-  // Table
-  table: {
-    container: 'bg-white rounded-lg shadow-sm overflow-hidden hidden xl:block',
-    wrapper: 'overflow-x-auto',
-    base: 'w-full',
-    header: 'bg-gray-50 border-b border-gray-300',
-    headerCell: 'px-4 sm:px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase',
-    row: 'hover:bg-gray-50 transition-colors',
-    cell: 'px-4 sm:px-6 py-4 text-sm text-gray-700'
+  // Feature/badge styles
+  features: {
+    feature_badge: 'px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs',
+    restaurant_badge: 'px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-medium'
   },
 
-  // Mobile Cards
-  mobile: {
-    container: 'max-w-7xl mx-auto xl:hidden space-y-4',
-    card: 'bg-white rounded-lg shadow-sm overflow-hidden',
-    cardContent: 'p-4',
-    cardGrid: 'grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-gray-300 '
+  // Icon colors
+  icon_colors: {
+    special_request: 'text-orange-600',
+    check_circle: 'text-green-600 hover:text-green-700',
+    x_circle: 'text-red-600 hover:text-red-700',
+    orange: 'text-orange-600 hover:text-orange-700',
+    yellow: 'text-yellow-500 fill-yellow-500',
+    gray: 'text-gray-400'
   },
 
-  // Pagination
-  pagination: {
-    container: 'max-w-7xl mx-auto mt-6 bg-white rounded-lg shadow-sm p-4',
-    wrapper: 'flex flex-col sm:flex-row items-center justify-between gap-4',
-    select: 'px-3 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none'
+  // Border/divider styles
+  borders: {
+    section: 'border-t border-gray-200',
+    card_divider: 'pt-3 border-t border-gray-200',
+    filter_divider: 'mt-4 pt-4 border-t border-gray-200'
   },
 
-  // Modal
-  modal: {
-    overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto',
-    container: 'bg-white rounded-lg max-w-2xl w-full my-8 max-h-[90vh] overflow-y-auto',
-    header: 'sticky top-0 bg-white border-b border-gray-300 px-4 sm:px-6 py-4 flex items-center justify-between z-10',
-    title: 'text-lg sm:text-xl font-bold text-gray-900',
-    body: 'p-4 sm:p-6',
-    footer: 'sticky bottom-0 bg-gray-50 border-t border-gray-400 px-4 sm:px-6 py-4 flex justify-end gap-3'
-  },
-
-  // Form
-  form: {
-    section: 'space-y-6',
-    sectionTitle: 'text-base sm:text-lg font-semibold text-gray-900 mb-4',
-    grid: 'grid grid-cols-1 md:grid-cols-2 gap-4',
-    group: 'space-y-4',
-    label: 'block text-sm font-medium text-gray-700 mb-1',
-    required: 'text-red-500',
-    error: 'mt-1 text-sm text-red-500'
-  },
-
-  // Empty State
-  emptyState: {
-    container: 'bg-white rounded-lg shadow-sm p-8 sm:p-12 text-center',
-    icon: 'text-gray-400 mx-auto mb-3',
-    message: 'text-gray-500 mb-4',
-    button: 'text-orange-600 hover:underline font-medium'
+  // Image styles
+  images: {
+    restaurant: 'w-full h-48 object-cover rounded-lg',
+    stat_icon: 'w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-2 sm:mb-3'
   }
 };
 
 // Customer page styles
 export const customerStyles = {
   layout: {
-    container: 'mt-28 min-h-screen bg-gray-50',
-    main: 'max-w-7xl mx-auto'
+    container: 'mt-21 min-h-screen bg-gray-50',
+    main: ' max-w-7xl mx-auto'
   },
   header: {
     container: 'mx-6 border-1 bg-white border-b border-gray-200 shadow-sm',

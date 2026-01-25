@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { 
   Plus, RefreshCw, Upload, Edit2, Trash2, Eye, EyeOff, Clock, 
   X, Check, AlertCircle, ChevronRight, ChevronLeft, Tag, Users, 
@@ -57,40 +57,27 @@ export const OFFER_CONTENT = {
 // ==================== STYLES OBJECTS ====================
 export const OFFER_STYLES = {
   buttons: { 
-    primary: 'bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2', 
-    secondary: 'bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition flex items-center gap-2 outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
-    danger: 'bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2',
-    success: 'bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2',
-    ghost: 'text-gray-600 hover:text-orange-600 transition p-1 rounded hover:bg-orange-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-1'
+    primary: 'bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-all flex items-center gap-1.5 md:gap-2 disabled:opacity-50 disabled:cursor-not-allowed outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 text-sm md:text-base font-medium active:scale-95', 
+    secondary: 'bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-all flex items-center gap-1.5 md:gap-2 outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 text-sm md:text-base font-medium active:scale-95',
+    danger: 'bg-red-500 hover:bg-red-600 text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-all outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 text-sm md:text-base font-medium active:scale-95',
+    success: 'bg-green-500 hover:bg-green-600 text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-all flex items-center gap-1.5 md:gap-2 outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 text-sm md:text-base font-medium active:scale-95',
+    ghost: 'text-gray-600 hover:text-orange-600 transition-all p-1.5 rounded-lg hover:bg-orange-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-1 text-sm active:scale-95'
   },
   badges: { 
-    active: 'bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium', 
-    draft: 'bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-medium',
-    scheduled: 'bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium',
-    expired: 'bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium',
-    visible: 'bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium',
-    hidden: 'bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-medium'
+    active: 'bg-green-100 text-green-800 px-2.5 py-1 rounded-full text-xs font-medium', 
+    draft: 'bg-gray-100 text-gray-800 px-2.5 py-1 rounded-full text-xs font-medium',
+    scheduled: 'bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full text-xs font-medium',
+    expired: 'bg-red-100 text-red-800 px-2.5 py-1 rounded-full text-xs font-medium',
+    visible: 'bg-green-100 text-green-800 px-2.5 py-1 rounded-full text-xs font-medium',
+    hidden: 'bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full text-xs font-medium'
   },
-  inputs: 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition',
-  cards: 'bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200',
-  modals: {
-    overlay: 'fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50',
-    content: 'bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto',
-    header: 'flex justify-between items-center p-6 border-b border-gray-300 sticky top-0 bg-white z-10',
-    body: 'p-6',
-    footer: 'flex justify-between p-6 border-t border-gray-300 sticky bottom-0 bg-white'
-  },
+  inputs: 'w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all text-sm md:text-base placeholder-gray-400',
+  cards: 'bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-5 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5',
   tables: {
-    header: 'bg-gray-100 px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase',
-    cell: 'px-4 py-3 border-b border-gray-200',
-    row: 'hover:bg-gray-50 transition'
-  },
-  layouts: {
-    grid_cols_2: 'grid grid-cols-2 gap-3',
-    grid_cols_1_md_2: 'grid grid-cols-1 md:grid-cols-2 gap-3',
-    grid_cols_2_md_4: 'grid grid-cols-2 md:grid-cols-4 gap-3',
-    flex_col_md_row: 'flex flex-col md:flex-row',
-    flex_center: 'flex items-center justify-center'
+    header: 'bg-gray-50 px-3 py-3 md:px-4 md:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider',
+    cell: 'px-3 py-3 md:px-4 md:py-4 border-b border-gray-100 text-sm md:text-base',
+    row: 'hover:bg-gray-50 transition-all',
+    empty: 'px-4 py-12 text-center text-gray-500 text-base'
   }
 };
 
@@ -137,6 +124,7 @@ export const INITIAL_OFFER_DATA = {
     { 
       id: 4, 
       tier: 'Gold', 
+      title: 'Gold Tier',
       min_points: 2000, 
       benefits: ['15% cashback', 'Free delivery'], 
       multiplier: 2, 
@@ -310,14 +298,12 @@ export const useModalState = () => {
 export const validate_offer_form = (form_data, current_step) => {
   const validation_errors = [];
 
-  // Step 2 validation
   if (current_step >= 2) {
     if (!form_data.title || form_data.title.trim() === '') {
       validation_errors.push('Title is required');
     }
   }
 
-  // Step 3 validation
   if (current_step >= 3) {
     const is_food_related = ['food', 'combo', 'holiday'].includes(form_data.type);
     
@@ -340,7 +326,6 @@ export const validate_offer_form = (form_data, current_step) => {
     }
   }
 
-  // Step 6 validation
   if (current_step >= 6 && form_data.end_time) {
     const end_date = new Date(form_data.end_time);
     const start_date = form_data.start_time ? new Date(form_data.start_time) : new Date();
@@ -358,55 +343,54 @@ export const validate_offer_form = (form_data, current_step) => {
 
 // ==================== UI COMPONENTS ====================
 export const Header = ({ on_create, on_refresh, on_publish }) => (
-  <div className="bg-white p-4 md:p-6">
-    <div className={OFFER_STYLES.layouts.flex_col_md_row + " justify-between gap-4"}>
-      <div>
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Offer Management</h1>
-        <p className="text-gray-600 text-sm mt-1">Manage offers, rewards & landing page content</p>
-      </div>
-      <div className="flex gap-2">
-        <button 
-          onClick={on_create} 
-          className={OFFER_STYLES.buttons.primary}
-        >
-          <Plus size={20}/> Create
-        </button>
-        <button 
-          onClick={on_refresh} 
-          className={OFFER_STYLES.buttons.secondary}
-        >
-          <RefreshCw size={20}/>
-        </button>
-        <button 
-          onClick={on_publish} 
-          className={OFFER_STYLES.buttons.secondary + " hidden"}
-        >
-          <Upload size={20}/>
-        </button>
+  <div className="bg-white border-b border-gray-200">
+    <div className="px-4 py-5 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 truncate">
+            Offer Management
+          </h1>
+          <p className="mt-1 text-sm text-gray-600">
+            Manage offers, rewards & landing page content
+          </p>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <button 
+            onClick={on_create} 
+            className={OFFER_STYLES.buttons.primary}
+          >
+            <Plus size={18} className="sm:size-5"/>
+            <span className="hidden sm:inline">Create</span>
+          </button>
+          <button 
+            onClick={on_refresh} 
+            className={OFFER_STYLES.buttons.secondary}
+          >
+            <RefreshCw size={18} className="sm:size-5"/>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 );
 
 export const Tabs = ({ tabs, active_tab, on_tab_change }) => (
-  <div className="bg-white overflow-x-auto">
-    <div className="flex px-4">
+  <div className="bg-white border-b border-gray-200 overflow-x-auto scrollbar-hide">
+    <div className="flex px-4 sm:px-6 lg:px-8 min-w-max">
       {tabs.map(tab => {
         const Icon = tab.icon;
         return (
           <button 
             key={tab.id} 
             onClick={() => on_tab_change(tab.id)} 
-            className={`px-4 py-3 border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3 sm:px-4 py-3 border-b-2 transition-all whitespace-nowrap ${
               active_tab === tab.id 
                 ? 'border-orange-500 text-orange-600 font-medium' 
-                : 'border-transparent text-gray-600 hover:text-orange-500'
+                : 'border-transparent text-gray-600 hover:text-orange-500 hover:border-gray-300'
             }`}
           >
-            <div className="flex items-center gap-2">
-              <Icon size={16}/>
-              <span className="hidden md:inline">{tab.label}</span>
-            </div>
+            <Icon size={16} className="sm:size-[18px]"/>
+            <span className="hidden xl:block text-sm sm:text-base">{tab.label}</span>
           </button>
         );
       })}
@@ -415,23 +399,23 @@ export const Tabs = ({ tabs, active_tab, on_tab_change }) => (
 );
 
 export const SearchFilter = ({ search_term, on_search_change, filter_status, on_filter_change }) => (
-  <div className="bg-white p-4">
-    <div className={OFFER_STYLES.layouts.flex_col_md_row + " gap-3"}>
-      <div className="flex-1 relative">
-        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"/>
-        <input
-          type="text"
-          placeholder="Search Offers..."
-          value={search_term}
-          onChange={(e) => on_search_change(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 md:py-3 border border-gray-400 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
-        />
-      </div>
-      <div className="flex gap-2">
+  <div className="bg-white border-b border-gray-200">
+    <div className="px-4 py-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex-1 relative">
+          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 sm:size-5"/>
+          <input
+            type="text"
+            placeholder="Search offers..."
+            value={search_term}
+            onChange={(e) => on_search_change(e.target.value)}
+            className="w-full pl-10 sm:pl-11 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-sm sm:text-base placeholder-gray-400"
+          />
+        </div>
         <select 
           value={filter_status} 
           onChange={(e) => on_filter_change(e.target.value)}
-          className="px-4 py-2 md:py-3 border border-gray-400 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+          className="w-full sm:w-auto px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-sm sm:text-base bg-white"
         >
           <option value="all">All Status</option>
           <option value="active">Active</option>
@@ -470,11 +454,13 @@ export const Stats = ({ data, active_tab }) => {
   };
   
   return (
-    <div className={OFFER_STYLES.layouts.grid_cols_2_md_4 + " p-4"}>
-      <StatsCard label="Total" value={stats.total} color="gray"/>
-      <StatsCard label="Active" value={stats.active} color="green"/>
-      <StatsCard label="Scheduled" value={stats.scheduled} color="blue"/>
-      <StatsCard label="Draft" value={stats.draft} color="yellow"/>
+    <div className="bg-gray-50 px-4 py-5 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+        <StatsCard label="Total" value={stats.total} color="gray"/>
+        <StatsCard label="Active" value={stats.active} color="green"/>
+        <StatsCard label="Scheduled" value={stats.scheduled} color="blue"/>
+        <StatsCard label="Draft" value={stats.draft} color="yellow"/>
+      </div>
     </div>
   );
 };
@@ -570,38 +556,45 @@ export const TableRow = ({ item, item_type, on_edit, on_delete, on_toggle }) => 
 );
 
 export const OfferTable = ({ items, item_type, on_edit, on_delete, on_toggle }) => (
-  <div className="hidden md:block overflow-x-auto p-4">
-    <table className="w-full">
-      <thead className="bg-gray-100">
-        <tr>
-          <th className={OFFER_STYLES.tables.header}>Title</th>
-          <th className={OFFER_STYLES.tables.header}>Details</th>
-          {item_type === 'countdown' && <th className={OFFER_STYLES.tables.header}>Timer</th>}
-          <th className={OFFER_STYLES.tables.header}>Status</th>
-          <th className={`${OFFER_STYLES.tables.header} text-right`}>Actions</th>
-        </tr>
-      </thead>
-      <tbody className="bg-white">
-        {items.length === 0 ? (
-          <tr>
-            <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
-              No offers found
-            </td>
-          </tr>
-        ) : (
-          items.map(item => (
-            <TableRow 
-              key={item.id} 
-              item={item} 
-              item_type={item_type} 
-              on_edit={on_edit} 
-              on_delete={on_delete} 
-              on_toggle={on_toggle} 
-            />
-          ))
-        )}
-      </tbody>
-    </table>
+  <div className="hidden xl:block px-4 py-5 sm:px-6 lg:px-8">
+    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className={OFFER_STYLES.tables.header}>Title</th>
+              <th className={OFFER_STYLES.tables.header}>Details</th>
+              {item_type === 'countdown' && <th className={OFFER_STYLES.tables.header}>Timer</th>}
+              <th className={OFFER_STYLES.tables.header}>Status</th>
+              <th className={`${OFFER_STYLES.tables.header} text-right`}>Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-100">
+            {items.length === 0 ? (
+              <tr>
+                <td colSpan="5" className={OFFER_STYLES.tables.empty}>
+                  <div className="flex flex-col items-center justify-center py-8">
+                    <Package size={48} className="mb-3 text-gray-300"/>
+                    <p className="text-gray-500">No offers found</p>
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              items.map(item => (
+                <TableRow 
+                  key={item.id} 
+                  item={item} 
+                  item_type={item_type} 
+                  on_edit={on_edit} 
+                  on_delete={on_delete} 
+                  on_toggle={on_toggle} 
+                />
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 );
 
@@ -657,24 +650,26 @@ export const OfferCard = ({ item, item_type, on_edit, on_delete, on_toggle }) =>
 );
 
 export const OfferCards = ({ items, item_type, on_edit, on_delete, on_toggle }) => (
-  <div className="md:hidden grid gap-3 p-3">
-    {items.length === 0 ? (
-      <div className={OFFER_STYLES.layouts.flex_center + " py-12 text-gray-500 flex-col"}>
-        <Package size={48} className="mb-3 text-gray-300"/>
-        <p>No offers found</p>
-      </div>
-    ) : (
-      items.map(item => (
-        <OfferCard 
-          key={item.id} 
-          item={item} 
-          item_type={item_type} 
-          on_edit={on_edit} 
-          on_delete={on_delete} 
-          on_toggle={on_toggle} 
-        />
-      ))
-    )}
+  <div className="xl:hidden px-4 py-5 sm:px-6">
+    <div className="grid gap-4">
+      {items.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-16 text-gray-500">
+          <Package size={56} className="mb-4 text-gray-300"/>
+          <p className="text-lg">No offers found</p>
+        </div>
+      ) : (
+        items.map(item => (
+          <OfferCard 
+            key={item.id} 
+            item={item} 
+            item_type={item_type} 
+            on_edit={on_edit} 
+            on_delete={on_delete} 
+            on_toggle={on_toggle} 
+          />
+        ))
+      )}
+    </div>
   </div>
 );
 
@@ -729,7 +724,7 @@ export const ErrorDisplay = ({ errors }) => {
 export const StepTypeSelection = ({ form_data, on_form_change }) => (
   <div>
     <h3 className="text-lg font-semibold mb-4">Select Promotion Type</h3>
-    <div className={OFFER_STYLES.layouts.grid_cols_1_md_2 + " gap-3"}>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
       {OFFER_CONTENT.tabs.map(tab => {
         const Icon = tab.icon;
         return (
@@ -777,7 +772,7 @@ export const StepConfiguration = ({ form_data, on_form_change, active_tab }) => 
     <h3 className="text-lg font-semibold">Configuration</h3>
 
     {(active_tab === 'food' || active_tab === 'combo' || active_tab === 'holiday') && (
-      <div className={OFFER_STYLES.layouts.grid_cols_2 + " gap-3"}>
+      <div className="grid grid-cols-2 gap-3">
         <input
           type="number"
           placeholder="Price"
@@ -828,7 +823,7 @@ export const StepConfiguration = ({ form_data, on_form_change, active_tab }) => 
           min="0"
         />
         
-        <div className={OFFER_STYLES.layouts.grid_cols_2 + " gap-3"}>
+        <div className="grid grid-cols-2 gap-3">
           <input
             type="number"
             placeholder="Trial Days"
@@ -1061,7 +1056,7 @@ export const OfferModal = ({ is_open, on_close, on_save, active_tab, modal_data 
 
   return (
     <div 
-      className={OFFER_STYLES.modals.overlay}
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
       onClick={(event) => {
         if (event.target === event.currentTarget) {
           on_close();
@@ -1069,23 +1064,23 @@ export const OfferModal = ({ is_open, on_close, on_save, active_tab, modal_data 
       }}
     >
       <div 
-        className={OFFER_STYLES.modals.content}
+        className="bg-white rounded-2xl w-full max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl max-h-[90vh] flex flex-col shadow-2xl"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className={OFFER_STYLES.modals.header}>
-          <h2 className="text-xl font-bold">
+        <div className="flex justify-between items-center p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900">
             {modal_data ? 'Edit' : 'Create'} Offer
           </h2>
           <button 
             onClick={on_close} 
-            className="text-gray-400 hover:text-gray-600 transition focus:outline-none focus:ring-2 focus:ring-gray-500 rounded"
+            className="text-gray-400 hover:text-gray-600 transition p-1 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500"
             aria-label="Close modal"
           >
-            <X size={24}/>
+            <X size={20} className="sm:size-6"/>
           </button>
         </div>
         
-        <div className={OFFER_STYLES.modals.body}>
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1">
           <FormSteps 
             current_step={current_step} 
             total_steps={7} 
@@ -1099,28 +1094,31 @@ export const OfferModal = ({ is_open, on_close, on_save, active_tab, modal_data 
           </div>
         </div>
         
-        <div className={OFFER_STYLES.modals.footer}>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 p-4 sm:p-6 border-t border-gray-200 flex-shrink-0">
           <button 
             onClick={() => {
               setCurrentStep(step => Math.max(1, step - 1));
               setValidationErrors([]);
             }} 
             disabled={current_step === 1} 
-            className={`${current_step === 1 ? 'opacity-50 cursor-not-allowed' : ''} ${OFFER_STYLES.buttons.secondary}`}
+            className={`${current_step === 1 ? 'opacity-50 cursor-not-allowed' : ''} ${OFFER_STYLES.buttons.secondary} justify-center`}
           >
-            <ChevronLeft size={20}/> Back
+            <ChevronLeft size={18} className="sm:size-5"/> 
+            <span>Back</span>
           </button>
-          <div className="flex gap-2">
-            <button onClick={on_close} className={OFFER_STYLES.buttons.secondary}>
+          <div className="flex gap-3">
+            <button onClick={on_close} className={`${OFFER_STYLES.buttons.secondary} flex-1 sm:flex-none justify-center`}>
               Cancel
             </button>
             {current_step < 7 ? (
-              <button onClick={handle_next_step} className={OFFER_STYLES.buttons.primary}>
-                Next <ChevronRight size={20}/>
+              <button onClick={handle_next_step} className={`${OFFER_STYLES.buttons.primary} flex-1 sm:flex-none justify-center`}>
+                <span>Next</span>
+                <ChevronRight size={18} className="sm:size-5"/>
               </button>
             ) : (
-              <button onClick={handle_save} className={OFFER_STYLES.buttons.primary}>
-                <Check size={20}/> {modal_data ? 'Update' : 'Create'}
+              <button onClick={handle_save} className={`${OFFER_STYLES.buttons.primary} flex-1 sm:flex-none justify-center`}>
+                <Check size={18} className="sm:size-5"/> 
+                <span>{modal_data ? 'Update' : 'Create'}</span>
               </button>
             )}
           </div>
@@ -1140,46 +1138,54 @@ export const OfferManagement = () => {
   };
 
   return (
-    <div className="mt-25 min-h-screen bg-gray-50">
-      <Header
-        on_create={() => modal_state.show_modal(null)}
-        on_refresh={() => window.location.reload()}
-        on_publish={handle_publish}
-      />
+    <div className="bg-gray-50">
+      {/* Page Container - Handles sidebar offset on laptop+ */}
+      <div className="mt-24 transition-all duration-300">
+        {/* Content Wrapper - Max-width container for large screens */}
+        <div className="max-w-[1400px] mx-auto">
+          
+          <Header
+            on_create={() => modal_state.show_modal(null)}
+            on_refresh={() => window.location.reload()}
+            on_publish={handle_publish}
+          />
 
-      <Tabs 
-        tabs={OFFER_CONTENT.tabs} 
-        active_tab={offer_data.active_tab} 
-        on_tab_change={offer_data.setActiveTab} 
-      />
+          <Tabs 
+            tabs={OFFER_CONTENT.tabs} 
+            active_tab={offer_data.active_tab} 
+            on_tab_change={offer_data.setActiveTab} 
+          />
 
-      <SearchFilter
-        search_term={offer_data.search_term}
-        on_search_change={offer_data.setSearchTerm}
-        filter_status={offer_data.filter_status}
-        on_filter_change={offer_data.setFilterStatus}
-      />
+          <SearchFilter
+            search_term={offer_data.search_term}
+            on_search_change={offer_data.setSearchTerm}
+            filter_status={offer_data.filter_status}
+            on_filter_change={offer_data.setFilterStatus}
+          />
 
-      <Stats 
-        data={offer_data.data} 
-        active_tab={offer_data.active_tab} 
-      />
+          <Stats 
+            data={offer_data.data} 
+            active_tab={offer_data.active_tab} 
+          />
 
-      <OfferTable
-        items={offer_data.filtered_offers}
-        item_type={offer_data.active_tab}
-        on_edit={modal_state.show_modal}
-        on_delete={(id) => offer_data.removeOffer(offer_data.active_tab, id)}
-        on_toggle={(id) => offer_data.toggleVisibility(offer_data.active_tab, id)}
-      />
+          <OfferTable
+            items={offer_data.filtered_offers}
+            item_type={offer_data.active_tab}
+            on_edit={modal_state.show_modal}
+            on_delete={(id) => offer_data.removeOffer(offer_data.active_tab, id)}
+            on_toggle={(id) => offer_data.toggleVisibility(offer_data.active_tab, id)}
+          />
 
-      <OfferCards
-        items={offer_data.filtered_offers}
-        item_type={offer_data.active_tab}
-        on_edit={modal_state.show_modal}
-        on_delete={(id) => offer_data.removeOffer(offer_data.active_tab, id)}
-        on_toggle={(id) => offer_data.toggleVisibility(offer_data.active_tab, id)}
-      />
+          <OfferCards
+            items={offer_data.filtered_offers}
+            item_type={offer_data.active_tab}
+            on_edit={modal_state.show_modal}
+            on_delete={(id) => offer_data.removeOffer(offer_data.active_tab, id)}
+            on_toggle={(id) => offer_data.toggleVisibility(offer_data.active_tab, id)}
+          />
+
+        </div>
+      </div>
 
       <OfferModal
         is_open={modal_state.is_open}

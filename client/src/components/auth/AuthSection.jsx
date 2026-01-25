@@ -4,7 +4,6 @@ import { authStyles } from "@/utils/styles/AuthStyle"
 import Login from "./Login"
 import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
-import PageNotFound from "../../pages/PageNotFound";
 
 function AuthSection() {
   const [page, setPage] = useState('login');

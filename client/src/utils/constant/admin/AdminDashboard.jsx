@@ -9,7 +9,7 @@ export const headerContent = {
         { label: "Dashboard", href: "/admin/dashboard" },
         { label: "Orders", href: "/admin/orders" },
         { label: "Foods", href: "/admin/foods"},
-        { label: "Customer", href: "/admin/customers" },
+        { label: "Users", href: "/admin/users" },
     ],
     notifications: [
         { icon: Bell, badge: "12", color: "amber", isAlert: false },
@@ -87,13 +87,13 @@ export const sidebarContent = {
         hasSubmenu: true,
         submenu: [
         { label: "Add Restaurant", href: "/admin/restaurant/add_restaurant" },
-        { label: "Bookings", href: "/admin/restaurant/booking" },
+        { label: "Bookings", href: "/admin/restaurant/bookings" },
         ],
     },
     {
       id: 6,
-      label: "Customers",
-      href: '/admin/customers',
+      label: "Users",
+      href: '/admin/users',
       icon: Users,
       // hasSubmenu: false,
       submenu: [
@@ -236,6 +236,172 @@ export const dashboardContent = {
     ]
   }
 }
+
+// Food page content
+export const foodContent = {
+  header: {
+    title: "Food Management",
+    subtitle: "Manage all food items and special menus",
+    addButtonText: "Add New Food",
+  },
+
+  tableHeaders: [
+    { id: 'image', label: 'Image', width: 'w-20' },
+    { id: 'name', label: 'Food Name', sortable: true },
+    { id: 'category', label: 'Category', sortable: true },
+    { id: 'cuisine', label: 'Cuisine', sortable: true },
+    { id: 'price', label: 'Price', sortable: true },
+    { id: 'status', label: 'Status', sortable: true },
+    { id: 'type', label: 'Type', sortable: true },
+    { id: 'actions', label: 'Actions', width: 'w-32' }
+  ],
+
+  categories: [
+    'Rolls & Wraps',
+    'Rice Dishes',
+    'Seafood',
+    'Appetizers',
+    'Desserts',
+    'Beverages'
+  ],
+
+  cuisines: [
+    'Indian',
+    'Arabic',
+    'Chinese',
+    'Thai',
+    'Italian',
+    'Mexican'
+  ],
+
+  foodTypes: [
+    { value: 'Regular Menu Item', label: 'Regular Menu' },
+    { value: 'Special Menu Item', label: 'Special Menu' }
+  ],
+
+  statuses: [
+    { value: 'Active', label: 'Active', color: 'bg-green-100 text-green-700' },
+    { value: 'Inactive', label: 'Inactive', color: 'bg-gray-100 text-gray-700' }
+  ],
+
+  restaurants: [
+    { id: 1, name: 'Spice Garden' },
+    { id: 2, name: 'Masala Darbar' },
+    { id: 3, name: 'Royal Biryani House' },
+    { id: 4, name: 'Curry Leaf Express' },
+    { id: 5, name: 'Tandoor Junction' },
+    { id: 6, name: 'Dosa Palace' },
+    { id: 7, name: 'Dragon Wok' },
+    { id: 8, name: 'Pizza Fiesta' },
+    { id: 9, name: 'Bombay Streets' },
+    { id: 10, name: 'Green Salad Bar' }
+  ],
+
+  filters: {
+    searchPlaceholder: 'Search by food name, category, cuisine or restaurant',
+    sortOptions: [
+      { value: '', label: 'Sort By' },
+      { value: 'recent', label: 'Recently Added' },
+      { value: 'name-asc', label: 'Name (A–Z)' },
+      { value: 'name-desc', label: 'Name (Z–A)' },
+      { value: 'price-asc', label: 'Price (Low → High)' },
+      { value: 'price-desc', label: 'Price (High → Low)' }
+    ]
+  },
+
+  modal: {
+    add: {
+      title: 'Add New Food Item',
+      submitButton: 'Add Food',
+      cancelButton: 'Cancel'
+    },
+    edit: {
+      title: 'Edit Food Item',
+      submitButton: 'Update Food',
+      cancelButton: 'Cancel'
+    },
+    view: {
+      title: 'Food Details',
+      editButton: 'Edit Food'
+    },
+    delete: {
+      title: 'Delete Food Item?',
+      message: 'This action cannot be undone.',
+      confirmButton: 'Delete',
+      cancelButton: 'Cancel'
+    }
+  },
+
+  form: {
+    name: {
+      label: 'Food Name',
+      placeholder: 'e.g. Chicken Shawarma Roll',
+      required: true
+    },
+    category: {
+      label: 'Category',
+      required: true
+    },
+    cuisine: {
+      label: 'Cuisine',
+      required: true
+    },
+    restaurant: {
+      label: 'Restaurant',
+      required: true
+    },
+    price: {
+      label: 'Price',
+      placeholder: '0.00',
+      required: true
+    },
+    originalPrice: {
+      label: 'Original Price',
+      placeholder: '0.00',
+      required: false
+    },
+    description: {
+      label: 'Description',
+      placeholder: 'Describe ingredients or special features...',
+      maxLength: 500
+    },
+    image: {
+      label: 'Food Image',
+      helper: 'JPG or WebP (Max 5MB)'
+    },
+    status: {
+      label: 'Status',
+      activeLabel: 'Active (Item will be visible to customers)'
+    },
+    type: {
+      label: 'Food Type'
+    }
+  },
+
+  emptyState: {
+    title: 'No Food Items Found',
+    message: 'Try adjusting your search or filters.',
+    buttonText: 'Clear filters'
+  },
+
+  pagination: {
+    rowsPerPageLabel: 'Rows per page',
+    options: [10, 25, 50]
+  },
+
+  messages: {
+    deleteConfirm: 'Are you sure you want to delete',
+    deleteWarning: 'This action cannot be undone.'
+  },
+
+  sampleData: [
+    { id: 1, name: 'Chicken Shawarma Roll', category: 'Rolls & Wraps', cuisine: 'Arabic', restaurant: 'Spice Garden', description: 'Grilled chicken with garlic sauce, pickles, and fresh vegetables wrapped in pita', price: 12.99, originalPrice: 15.99, image: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400', type: 'Special Menu Item', status: 'Active', createdDate: '2025-01-10' },
+    { id: 2, name: 'Vegetable Biryani', category: 'Rice Dishes', cuisine: 'Indian', restaurant: 'Masala Darbar', description: 'Aromatic basmati rice cooked with mixed vegetables and traditional spices', price: 10.99, originalPrice: null, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400', type: 'Regular Menu Item', status: 'Active', createdDate: '2025-01-08' },
+    { id: 3, name: 'Grilled Salmon', category: 'Seafood', cuisine: 'Thai', restaurant: 'Dragon Wok', description: 'Fresh Atlantic salmon with lemon butter sauce and seasonal vegetables', price: 24.99, originalPrice: 29.99, image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400', type: 'Special Menu Item', status: 'Active', createdDate: '2025-01-12' },
+    { id: 4, name: 'Pad Thai Noodles', category: 'Rice Dishes', cuisine: 'Thai', restaurant: 'Dragon Wok', description: 'Stir-fried rice noodles with shrimp, peanuts, and tamarind sauce', price: 13.99, originalPrice: null, image: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400', type: 'Regular Menu Item', status: 'Inactive', createdDate: '2025-01-05' },
+    { id: 5, name: 'Falafel Wrap', category: 'Rolls & Wraps', cuisine: 'Arabic', restaurant: 'Spice Garden', description: 'Crispy falafel with hummus, tahini, and fresh salad in pita bread', price: 9.99, originalPrice: null, image: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400', type: 'Regular Menu Item', status: 'Active', createdDate: '2025-01-11' }
+  ]
+};
 
 // Order page content 
 export const ordersContent = {
@@ -431,6 +597,179 @@ export const ordersContent = {
     }
   ]
 };
+
+// Offer page content
+export const offerContent = {
+  tabs: [
+    { id: 'countdown', label: 'Countdown', icon: 'Clock' },
+    { id: 'food', label: 'Food Offers', icon: 'Tag' },
+    { id: 'benefits', label: 'Benefits', icon: 'Users' },
+    { id: 'loyalty', label: 'Loyalty', icon: 'Gift' },
+    { id: 'holiday', label: 'Holiday', icon: 'Calendar' },
+    { id: 'combo', label: 'Combos', icon: 'Package' },
+    { id: 'subscription', label: 'Subscriptions', icon: 'Shield' }
+  ],
+  
+  status_labels: { 
+    draft: 'Draft', 
+    active: 'Active', 
+    scheduled: 'Scheduled', 
+    expired: 'Expired', 
+    visible: 'Visible', 
+    hidden: 'Hidden' 
+  },
+  
+  form_steps: ['Type', 'Basic Info', 'Config', 'Media & UI', 'Rules', 'Validity', 'Status'],
+  
+  gradients: [
+    { id: 'orange', label: 'Orange Sunset', value: 'from-orange-400 to-red-500' },
+    { id: 'blue', label: 'Ocean Blue', value: 'from-blue-400 to-cyan-500' },
+    { id: 'purple', label: 'Purple Dream', value: 'from-purple-400 to-pink-500' },
+    { id: 'green', label: 'Fresh Green', value: 'from-green-400 to-emerald-500' },
+    { id: 'yellow', label: 'Sunny Yellow', value: 'from-yellow-400 to-orange-500' }
+  ],
+  
+  icons: [
+    { id: 'zap', icon_component: 'Zap', label: 'Lightning' },
+    { id: 'heart', icon_component: 'Heart', label: 'Heart' },
+    { id: 'star', icon_component: 'Star', label: 'Star' },
+    { id: 'gift', icon_component: 'Gift', label: 'Gift' },
+    { id: 'award', icon_component: 'Award', label: 'Award' },
+    { id: 'shield', icon_component: 'Shield', label: 'Shield' },
+    { id: 'truck', icon_component: 'Truck', label: 'Delivery' },
+    { id: 'mappin', icon_component: 'MapPin', label: 'Location' },
+    { id: 'dollar', icon_component: 'DollarSign', label: 'Money' },
+    { id: 'percent', icon_component: 'Percent', label: 'Discount' },
+    { id: 'sparkles', icon_component: 'Sparkles', label: 'Sparkles' },
+    { id: 'trending', icon_component: 'TrendingUp', label: 'Trending' }
+  ],
+  
+  customer_types: ['All Users', 'First-Time Users', 'Returning Users', 'Premium Users'],
+  sections: ['top', 'delivery', 'restaurant', 'customer'],
+  subscription_plans: ['Basic', 'Pro', 'Premium', 'Enterprise'],
+  billing_cycles: ['Weekly', 'Monthly', 'Quarterly', 'Yearly'],
+  
+  subscription_features: [
+    'Free Delivery', 
+    'Priority Support', 
+    'Exclusive Offers', 
+    'Early Access', 
+    'Cashback', 
+    'Discounts'
+  ],
+  initialOfferData: {
+    countdown: [
+      { 
+        id: 1, 
+        title: 'Flash Weekend Sale', 
+        end_time: new Date(Date.now() + 172800000).toISOString(), 
+        status: 'active', 
+        visible: true, 
+        cta_text: 'Shop Now', 
+        cta_link: '/menu', 
+        gradient: 'from-orange-400 to-red-500' 
+      }
+    ],
+    
+    food: [
+      { 
+        id: 2, 
+        title: '50% Off Pizza', 
+        food_item: 'Margherita Pizza', 
+        discount: 50, 
+        discount_type: '%', 
+        price: 299, 
+        end_time: new Date(Date.now() + 7200000).toISOString(), 
+        status: 'active', 
+        visible: true, 
+        gradient: 'from-orange-400 to-red-500', 
+        customer_type: 'All Users' 
+      }
+    ],
+    
+    benefits: [
+      { 
+        id: 3, 
+        title: 'Fast Delivery', 
+        subtitle: 'Get food in 30 mins', 
+        icon_id: 'zap', 
+        section: 'top', 
+        status: 'visible' 
+      }
+    ],
+    
+    loyalty: [
+      { 
+        id: 4, 
+        tier: 'Gold', 
+        min_points: 2000, 
+        benefits: ['15% cashback', 'Free delivery'], 
+        multiplier: 2, 
+        status: 'active', 
+        icon_id: 'award' 
+      }
+    ],
+    
+    holiday: [
+      { 
+        id: 5, 
+        title: 'Diwali Feast', 
+        price: 799, 
+        savings: 300, 
+        items: ['Paneer Tikka', 'Naan', 'Biryani'], 
+        season: 'Diwali', 
+        status: 'active', 
+        gradient: 'from-purple-400 to-pink-500' 
+      }
+    ],
+    
+    combo: [
+      { 
+        id: 6, 
+        title: 'Movie Night Combo', 
+        items: ['Large Pizza', 'Garlic Bread', '2 Cokes'], 
+        price: 599, 
+        savings: 150, 
+        status: 'active', 
+        gradient: 'from-yellow-400 to-orange-500' 
+      }
+    ],
+    
+    subscription: [
+      { 
+        id: 7, 
+        title: 'Pro Monthly Plan', 
+        plan_type: 'Pro', 
+        billing_cycle: 'Monthly', 
+        price: 299, 
+        features: ['Free Delivery', '10% Cashback'], 
+        status: 'active', 
+        trial_days: 7, 
+        max_users: 5, 
+        icon_id: 'shield' 
+      }
+    ]
+  },
+  defaultFormData: {
+    type: '',
+    title: '',
+    subtitle: '',
+    discount: '',
+    discount_type: '%',
+    status: 'draft',
+    visible: false,
+    gradient: 'from-orange-400 to-red-500',
+    icon_id: 'zap',
+    customer_type: 'All Users',
+    stackable: false,
+    image_preview: null,
+    trial_days: 0,
+    max_users: 1,
+    plan_type: 'Basic',
+    billing_cycle: 'Monthly',
+    features: []
+  }
+}
 
 // Restaurant page content
 export const restaurantContent = {
@@ -683,176 +1022,373 @@ export const restaurantContent = {
   
 };
 
-// Food page content
-export const foodContent = {
-  header: {
-    title: "Food Management",
-    subtitle: "Manage all food items and special menus",
-    addButtonText: "Add New Food",
+// Restaurant booking page content
+export const bookingContent = {
+  // Mock bookings data
+  mock_bookings: [
+    {
+      id: 'BK001',
+      restaurantId: 'R001',
+      restaurantName: 'The Golden Spoon',
+      cuisine: 'Italian',
+      date: '2026-01-25',
+      time: '19:00',
+      guests: 4,
+      status: 'pending',
+      canCancel: true,
+      specialRequests: 'Window seat preferred, birthday celebration',
+      customerName: 'Sarah Johnson',
+      customerEmail: 'sarah.j@email.com',
+      customerPhone: '+1 234 567 8900',
+      adminNotes: '',
+      createdAt: '2026-01-20T10:30:00Z'
+    },
+    {
+      id: 'BK002',
+      restaurantId: 'R002',
+      restaurantName: 'Sushi Paradise',
+      cuisine: 'Japanese',
+      date: '2026-01-22',
+      time: '18:30',
+      guests: 2,
+      status: 'confirmed',
+      canCancel: true,
+      specialRequests: 'Vegetarian options needed',
+      customerName: 'Michael Chen',
+      customerEmail: 'mchen@email.com',
+      customerPhone: '+1 234 567 8901',
+      adminNotes: 'VIP customer - priority seating',
+      createdAt: '2026-01-18T14:20:00Z'
+    },
+    {
+      id: 'BK003',
+      restaurantId: 'R003',
+      restaurantName: 'Burger Haven',
+      cuisine: 'American',
+      date: '2026-01-21',
+      time: '20:00',
+      guests: 6,
+      status: 'completed',
+      canCancel: false,
+      specialRequests: '',
+      customerName: 'Emily Rodriguez',
+      customerEmail: 'emily.r@email.com',
+      customerPhone: '+1 234 567 8902',
+      adminNotes: 'Table extended by 30 minutes',
+      createdAt: '2026-01-15T09:15:00Z'
+    },
+    {
+      id: 'BK004',
+      restaurantId: 'R001',
+      restaurantName: 'The Golden Spoon',
+      cuisine: 'Italian',
+      date: '2026-01-24',
+      time: '19:30',
+      guests: 3,
+      status: 'cancelled',
+      canCancel: false,
+      specialRequests: 'Allergic to nuts',
+      customerName: 'David Kim',
+      customerEmail: 'dkim@email.com',
+      customerPhone: '+1 234 567 8903',
+      adminNotes: 'Cancelled by customer - refund processed',
+      createdAt: '2026-01-19T16:45:00Z'
+    },
+    {
+      id: 'BK005',
+      restaurantId: 'R004',
+      restaurantName: 'Taj Mahal Restaurant',
+      cuisine: 'Indian',
+      date: '2026-01-26',
+      time: '18:00',
+      guests: 5,
+      status: 'pending',
+      canCancel: true,
+      specialRequests: 'High chair needed for toddler',
+      customerName: 'Amanda Lee',
+      customerEmail: 'alee@email.com',
+      customerPhone: '+1 234 567 8904',
+      adminNotes: '',
+      createdAt: '2026-01-20T11:00:00Z'
+    },
+    {
+      id: 'BK006',
+      restaurantId: 'R002',
+      restaurantName: 'Sushi Paradise',
+      cuisine: 'Japanese',
+      date: '2026-01-23',
+      time: '17:30',
+      guests: 8,
+      status: 'confirmed',
+      canCancel: true,
+      specialRequests: 'Corporate dinner - separate bill required',
+      customerName: 'Robert Taylor',
+      customerEmail: 'rtaylor@email.com',
+      customerPhone: '+1 234 567 8905',
+      adminNotes: 'Reserved private dining area',
+      createdAt: '2026-01-17T13:30:00Z'
+    },
+    {
+      id: 'BK007',
+      restaurantId: 'R003',
+      restaurantName: 'Burger Haven',
+      cuisine: 'American',
+      date: '2026-01-27',
+      time: '12:30',
+      guests: 4,
+      status: 'pending',
+      canCancel: true,
+      specialRequests: 'Outdoor seating if available',
+      customerName: 'James Wilson',
+      customerEmail: 'jwilson@email.com',
+      customerPhone: '+1 234 567 8906',
+      adminNotes: '',
+      createdAt: '2026-01-20T15:00:00Z'
+    },
+    {
+      id: 'BK008',
+      restaurantId: 'R001',
+      restaurantName: 'The Golden Spoon',
+      cuisine: 'Italian',
+      date: '2026-01-28',
+      time: '20:00',
+      guests: 2,
+      status: 'confirmed',
+      canCancel: true,
+      specialRequests: 'Anniversary dinner - romantic setting',
+      customerName: 'Lisa Anderson',
+      customerEmail: 'landerson@email.com',
+      customerPhone: '+1 234 567 8907',
+      adminNotes: 'Arrange flowers on table',
+      createdAt: '2026-01-19T10:30:00Z'
+    }
+  ],
+
+  // Mock restaurants data
+  mock_restaurants: {
+    'R001': {
+      id: 'R001',
+      name: 'The Golden Spoon',
+      cuisine: 'Italian',
+      address: '123 Main Street, Downtown',
+      rating: 4.8,
+      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop',
+      features: ['Fine Dining', 'Wine Bar', 'Private Events'],
+      badges: ['Popular', 'Premium']
+    },
+    'R002': {
+      id: 'R002',
+      name: 'Sushi Paradise',
+      cuisine: 'Japanese',
+      address: '456 Ocean Avenue, Beachside',
+      rating: 4.9,
+      image: 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&h=300&fit=crop',
+      features: ['Omakase', 'Sake Selection', 'Sushi Bar'],
+      badges: ['Top Rated', 'Chef Special']
+    },
+    'R003': {
+      id: 'R003',
+      name: 'Burger Haven',
+      cuisine: 'American',
+      address: '789 Park Lane, Uptown',
+      rating: 4.5,
+      image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
+      features: ['Craft Burgers', 'Local Beer', 'Outdoor Seating'],
+      badges: ['Family Friendly']
+    },
+    'R004': {
+      id: 'R004',
+      name: 'Taj Mahal Restaurant',
+      cuisine: 'Indian',
+      address: '321 Spice Road, Cultural District',
+      rating: 4.7,
+      image: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop',
+      features: ['Authentic Cuisine', 'Vegetarian Options', 'Tandoor Grill'],
+      badges: ['Award Winner']
+    }
   },
 
-  tableHeaders: [
-    { id: 'image', label: 'Image', width: 'w-20' },
-    { id: 'name', label: 'Food Name', sortable: true },
-    { id: 'category', label: 'Category', sortable: true },
-    { id: 'cuisine', label: 'Cuisine', sortable: true },
-    { id: 'price', label: 'Price', sortable: true },
-    { id: 'status', label: 'Status', sortable: true },
-    { id: 'type', label: 'Type', sortable: true },
-    { id: 'actions', label: 'Actions', width: 'w-32' }
+  // Page header content
+  header: {
+    title: 'Restaurant Bookings',
+    subtitle: 'Manage table reservations across all restaurants'
+  },
+
+  // Stat cards content
+  stat_cards: [
+    { label: 'Total Bookings', filter: null },
+    { label: 'Pending', filter: 'pending' },
+    { label: 'Confirmed', filter: 'confirmed' },
+    { label: 'Completed', filter: 'completed' },
+    { label: 'Cancelled', filter: 'cancelled' }
   ],
 
-  categories: [
-    'Rolls & Wraps',
-    'Rice Dishes',
-    'Seafood',
-    'Appetizers',
-    'Desserts',
-    'Beverages'
+  // Table headers
+  table_headers: [
+    'Booking ID',
+    'Restaurant',
+    'Date',
+    'Time',
+    'Guests',
+    'Status',
+    'Special Requests',
+    'Can Cancel',
+    'Actions'
   ],
 
-  cuisines: [
-    'Indian',
-    'Arabic',
-    'Chinese',
-    'Thai',
-    'Italian',
-    'Mexican'
-  ],
-
-  foodTypes: [
-    { value: 'Regular Menu Item', label: 'Regular Menu' },
-    { value: 'Special Menu Item', label: 'Special Menu' }
-  ],
-
-  statuses: [
-    { value: 'Active', label: 'Active', color: 'bg-green-100 text-green-700' },
-    { value: 'Inactive', label: 'Inactive', color: 'bg-gray-100 text-gray-700' }
-  ],
-
-  restaurants: [
-    { id: 1, name: 'Spice Garden' },
-    { id: 2, name: 'Masala Darbar' },
-    { id: 3, name: 'Royal Biryani House' },
-    { id: 4, name: 'Curry Leaf Express' },
-    { id: 5, name: 'Tandoor Junction' },
-    { id: 6, name: 'Dosa Palace' },
-    { id: 7, name: 'Dragon Wok' },
-    { id: 8, name: 'Pizza Fiesta' },
-    { id: 9, name: 'Bombay Streets' },
-    { id: 10, name: 'Green Salad Bar' }
-  ],
-
+  // Filter content
   filters: {
-    searchPlaceholder: 'Search by food name, category, cuisine or restaurant',
-    sortOptions: [
-      { value: '', label: 'Sort By' },
-      { value: 'recent', label: 'Recently Added' },
-      { value: 'name-asc', label: 'Name (A–Z)' },
-      { value: 'name-desc', label: 'Name (Z–A)' },
-      { value: 'price-asc', label: 'Price (Low → High)' },
-      { value: 'price-desc', label: 'Price (High → Low)' }
+    search_placeholder: 'Search by restaurant name or booking ID...',
+    filter_button: 'Filters',
+    clear_button: 'Clear',
+    date_from_label: 'Date From',
+    date_to_label: 'Date To',
+    min_guests_label: 'Min Guests',
+    min_guests_placeholder: 'Any',
+    can_cancel_label: 'Can Cancel',
+    
+    // Filter options
+    status_options: [
+      { value: '', label: 'All Statuses' },
+      { value: 'pending', label: 'Pending' },
+      { value: 'confirmed', label: 'Confirmed' },
+      { value: 'completed', label: 'Completed' },
+      { value: 'cancelled', label: 'Cancelled' }
+    ],
+    
+    can_cancel_options: [
+      { value: '', label: 'All' },
+      { value: 'true', label: 'Yes' },
+      { value: 'false', label: 'No' }
     ]
   },
 
-  modal: {
-    add: {
-      title: 'Add New Food Item',
-      submitButton: 'Add Food',
-      cancelButton: 'Cancel'
+  // Booking details drawer content
+  drawer: {
+    title: 'Booking Details',
+    booking_summary: 'Booking Summary',
+    customer_information: 'Customer Information',
+    restaurant_information: 'Restaurant Information',
+    special_requests: 'Special Requests',
+    admin_notes: 'Admin Notes',
+    admin_notes_placeholder: 'Add internal notes about this booking...',
+    save_note: 'Save Note',
+    actions: 'Actions',
+    
+    // Field labels
+    summary_labels: {
+      status: 'Status',
+      date: 'Date',
+      time: 'Time',
+      guests: 'Guests',
+      can_cancel: 'Can Cancel',
+      created: 'Created'
     },
-    edit: {
-      title: 'Edit Food Item',
-      submitButton: 'Update Food',
-      cancelButton: 'Cancel'
-    },
-    view: {
-      title: 'Food Details',
-      editButton: 'Edit Food'
-    },
-    delete: {
-      title: 'Delete Food Item?',
-      message: 'This action cannot be undone.',
-      confirmButton: 'Delete',
-      cancelButton: 'Cancel'
+    
+    // Customer info labels
+    customer_labels: {
+      name: 'Name',
+      email: 'Email',
+      phone: 'Phone'
     }
   },
 
-  form: {
-    name: {
-      label: 'Food Name',
-      placeholder: 'e.g. Chicken Shawarma Roll',
-      required: true
+  // Modal content
+  modal_content: {
+    confirm: {
+      title: 'Confirm Booking',
+      message: 'Are you sure you want to confirm this booking?'
     },
-    category: {
-      label: 'Category',
-      required: true
+    complete: {
+      title: 'Mark as Completed',
+      message: 'Mark this booking as completed? This action cannot be undone.'
     },
-    cuisine: {
-      label: 'Cuisine',
-      required: true
+    cancel: {
+      title: 'Cancel Booking',
+      message: 'Are you sure you want to cancel this booking? The customer will be notified.'
     },
-    restaurant: {
-      label: 'Restaurant',
-      required: true
+    cancel_button: 'Cancel',
+    confirm_button: 'Confirm'
+  },
+
+  // Empty state content
+  empty_states: {
+    no_results: {
+      icon: 'Search',
+      title: 'No bookings found',
+      message: 'Try adjusting your filters or search criteria',
+      action: null
     },
-    price: {
-      label: 'Price',
-      placeholder: '0.00',
-      required: true
+    permission_denied: {
+      icon: 'Ban',
+      title: 'Access Denied',
+      message: 'You do not have permission to view bookings',
+      action: 'Contact Administrator'
     },
-    originalPrice: {
-      label: 'Original Price',
-      placeholder: '0.00',
-      required: false
-    },
-    description: {
-      label: 'Description',
-      placeholder: 'Describe ingredients or special features...',
-      maxLength: 500
-    },
-    image: {
-      label: 'Food Image',
-      helper: 'JPG or WebP (Max 5MB)'
-    },
-    status: {
-      label: 'Status',
-      activeLabel: 'Active (Item will be visible to customers)'
-    },
-    type: {
-      label: 'Food Type'
+    network_error: {
+      icon: 'AlertCircle',
+      title: 'Connection Error',
+      message: 'Unable to load bookings. Please check your connection.',
+      action: 'Retry'
     }
   },
 
-  emptyState: {
-    title: 'No Food Items Found',
-    message: 'Try adjusting your search or filters.',
-    buttonText: 'Clear filters'
+  // Status display names
+  status_names: {
+    pending: 'Pending',
+    confirmed: 'Confirmed',
+    completed: 'Completed',
+    cancelled: 'Cancelled'
   },
 
-  pagination: {
-    rowsPerPageLabel: 'Rows per page',
-    options: [10, 25, 50]
+  // Button labels
+  button_labels: {
+    refresh: 'Refresh',
+    export: 'Export',
+    confirm_booking: 'Confirm Booking',
+    mark_completed: 'Mark Completed',
+    cancel_booking: 'Cancel Booking',
+    no_actions: 'No actions available'
   },
 
-  messages: {
-    deleteConfirm: 'Are you sure you want to delete',
-    deleteWarning: 'This action cannot be undone.'
+  // Restaurant info labels
+  restaurant_labels: {
+    rating: 'Rating',
+    features: 'Features',
+    restaurant_badges: 'Badges'
   },
 
-  sampleData: [
-    { id: 1, name: 'Chicken Shawarma Roll', category: 'Rolls & Wraps', cuisine: 'Arabic', restaurant: 'Spice Garden', description: 'Grilled chicken with garlic sauce, pickles, and fresh vegetables wrapped in pita', price: 12.99, originalPrice: 15.99, image: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400', type: 'Special Menu Item', status: 'Active', createdDate: '2025-01-10' },
-    { id: 2, name: 'Vegetable Biryani', category: 'Rice Dishes', cuisine: 'Indian', restaurant: 'Masala Darbar', description: 'Aromatic basmati rice cooked with mixed vegetables and traditional spices', price: 10.99, originalPrice: null, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400', type: 'Regular Menu Item', status: 'Active', createdDate: '2025-01-08' },
-    { id: 3, name: 'Grilled Salmon', category: 'Seafood', cuisine: 'Thai', restaurant: 'Dragon Wok', description: 'Fresh Atlantic salmon with lemon butter sauce and seasonal vegetables', price: 24.99, originalPrice: 29.99, image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400', type: 'Special Menu Item', status: 'Active', createdDate: '2025-01-12' },
-    { id: 4, name: 'Pad Thai Noodles', category: 'Rice Dishes', cuisine: 'Thai', restaurant: 'Dragon Wok', description: 'Stir-fried rice noodles with shrimp, peanuts, and tamarind sauce', price: 13.99, originalPrice: null, image: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400', type: 'Regular Menu Item', status: 'Inactive', createdDate: '2025-01-05' },
-    { id: 5, name: 'Falafel Wrap', category: 'Rolls & Wraps', cuisine: 'Arabic', restaurant: 'Spice Garden', description: 'Crispy falafel with hummus, tahini, and fresh salad in pita bread', price: 9.99, originalPrice: null, image: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400', type: 'Regular Menu Item', status: 'Active', createdDate: '2025-01-11' }
-  ]
+  // Initial filters state
+  initial_filters: {
+    search: '',
+    status: null,
+    dateFrom: '',
+    dateTo: '',
+    minGuests: null,
+    canCancel: null
+  },
+
+  // Pagination text
+  pagination_text: {
+    showing: 'Showing',
+    to: 'to',
+    of: 'of',
+    results: 'results'
+  },
+
+  // Tooltip text
+  tooltips: {
+    view_details: 'View Details',
+    confirm: 'Confirm',
+    complete: 'Complete',
+    cancel: 'Cancel'
+  }
 };
 
 // Customer page content
 export const customerContent = {
   header: {
-    title: 'Customer Management',
+    title: 'User Management',
     subtitle: 'Manage all registered users and their activity',
     addButton: 'Add Customer',
     refreshButton: 'Refresh'
@@ -1246,7 +1782,7 @@ export const planStatus = {
 // Enquiry page content
 export const enquiryContent = {
   header: {
-    title: "Contact Enquiry Management",
+    title: "Enquiry Management",
     subtitle: "Manage customer messages and support requests",
     add_button_text: "New Enquiry",
   },
@@ -1528,5 +2064,3 @@ export const enquiryConstants = {
   default_page_size: 10,
   initial_page: 1
 };
-
-
