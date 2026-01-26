@@ -1,81 +1,63 @@
-import { createContext, useState, useEffect, useContext } from 'react';
-import { authService } from '../services/authService';
-import { toast } from 'react-hot-toast';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { authService } from '@/services/authService';
 
-export const AuthContext = createContext();
+const AuthContext = createContext({});
 
-export function AuthProvider({ children }) {
+export const useAuthContext = () => useContext(AuthContext);
+
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   const checkAuth = async () => {
+    const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
+    
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
     try {
+      authService.setAuthHeader(token);
       const response = await authService.getProfile();
-      if (response.data.success) {
-        setUser(response.data.data);
-        setIsAuthenticated(true);
-      }
+      setUser(response.data.data);
     } catch (error) {
       console.error('Auth check failed:', error);
-      // Clear invalid/stale auth data
-      localStorage.removeItem('user');
       localStorage.removeItem('accessToken');
-      sessionStorage.removeItem('user');
       sessionStorage.removeItem('accessToken');
-      setUser(null);
-      setIsAuthenticated(false);
+      authService.clearAuthHeader();
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    // Initial auth check
-    checkAuth();
-  }, []);
-
-  const login = async (userData, token, rememberMe = false) => {
+  const login = async (loginData) => {
     try {
+      const response = await authService.login(loginData);
+      
+      // Backend returns: { success, data: { user, accessToken }, message }
+      const { accessToken, user: userData } = response.data.data;
+      
       // Store token based on rememberMe choice
-      if (rememberMe) {
-        localStorage.setItem('accessToken', token);
+      if (loginData.rememberMe) {
+        localStorage.setItem('accessToken', accessToken);
       } else {
-        sessionStorage.setItem('accessToken', token);
+        sessionStorage.setItem('accessToken', accessToken);
       }
       
-      // Set axios default header
-      authService.setAuthHeader(token);
+      authService.setAuthHeader(accessToken);
+      setUser(userData);
       
-      // Get fresh user data from backend
-      const response = await authService.getProfile();
-      const freshUser = response.data.data;
-      
-      setUser(freshUser);
-      setIsAuthenticated(true);
-      
-      // Store user data (without sensitive info)
-      const userToStore = {
-        id: freshUser.id,
-        email: freshUser.email,
-        username: freshUser.username,
-        role: freshUser.role,
-        email_verified: freshUser.email_verified,
-        fullname: freshUser.fullname
-      };
-      
-      if (rememberMe) {
-        localStorage.setItem('user', JSON.stringify(userToStore));
-      } else {
-        sessionStorage.setItem('user', JSON.stringify(userToStore));
-      }
-      
-      toast.success('Login successful!');
-      return true;
+      return { success: true, user: userData };
     } catch (error) {
-      console.error('Login error:', error);
-      toast.error('Login failed');
-      return false;
+      return { 
+        success: false, 
+        error: error.response?.data?.message || 'Login failed' 
+      };
     }
   };
 
@@ -85,63 +67,63 @@ export function AuthProvider({ children }) {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      // Clear all storage
-      localStorage.removeItem('user');
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('rememberMe');
-      sessionStorage.removeItem('user');
       sessionStorage.removeItem('accessToken');
-      
-      // Clear axios header
       authService.clearAuthHeader();
-      
-      // Reset state
       setUser(null);
-      setIsAuthenticated(false);
-      
-      toast.success('Logged out successfully');
     }
   };
 
-  const updateUser = async (updatedData) => {
+  const updateUser = async () => {
     try {
       const response = await authService.getProfile();
-      const freshUser = response.data.data;
-      
-      setUser(freshUser);
-      
-      // Update storage
-      const storage = localStorage.getItem('rememberMe') ? localStorage : sessionStorage;
-      const userToStore = {
-        id: freshUser.id,
-        email: freshUser.email,
-        username: freshUser.username,
-        role: freshUser.role,
-        email_verified: freshUser.email_verified,
-        fullname: freshUser.fullname
-      };
-      storage.setItem('user', JSON.stringify(userToStore));
-      
-      return true;
+      setUser(response.data.data);
+      return response.data.data;
     } catch (error) {
-      console.error('Update user error:', error);
-      return false;
+      console.error('Failed to update user:', error);
+      throw error;
     }
+  };
+
+  const register = async (userData) => {
+    try {
+      const response = await authService.register(userData);
+      return { success: true, data: response.data };
+    } catch (error) {
+      return { 
+        success: false, 
+        error: error.response?.data?.message || 'Registration failed' 
+      };
+    }
+  };
+
+  const socialLogin = async (provider) => {
+    try {
+      // This will redirect to backend OAuth endpoint
+      window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/${provider}`;
+      return { success: true };
+    } catch (error) {
+      return { 
+        success: false, 
+        error: 'Social login failed' 
+      };
+    }
+  };
+
+  const value = {
+    user,
+    loading,
+    login,
+    logout,
+    register,
+    socialLogin,
+    updateUser,
+    isAuthenticated: !!user
   };
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      isAuthenticated,
-      loading,
-      login,
-      logout,
-      updateUser,
-      checkAuth
-    }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
-}
-
-export const useAuthContext = () => useContext(AuthContext);
+};

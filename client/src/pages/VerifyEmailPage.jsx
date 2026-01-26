@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuthContext } from '@/context/AuthContext';
 import { authService } from '@/services/authService';
 import { toast } from 'react-hot-toast';
 import Loader from '@/components/common/PageLoader';
@@ -8,7 +8,7 @@ import Loader from '@/components/common/PageLoader';
 function VerifyEmailPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { updateUser } = useAuth();
+  const { updateUser } = useAuthContext();
   const token = searchParams.get('token');
 
   useEffect(() => {
@@ -23,20 +23,27 @@ function VerifyEmailPage() {
         const response = await authService.verifyEmail(token);
         
         if (response.data.success) {
-          toast.success('Email verified successfully!');
+          toast.success(response.data.message || 'Email verified successfully!');
           
-          // Update user context
-          await updateUser();
+          // Try to update user context if logged in
+          try {
+            await updateUser();
+          } catch (err) {
+            console.log('User not logged in yet');
+          }
           
           // Redirect after delay
           setTimeout(() => {
-            navigate('/user');
+            navigate('/login');
           }, 2000);
         }
       } catch (error) {
         console.error('Verification error:', error);
         toast.error(error.response?.data?.message || 'Verification failed');
-        navigate('/login');
+        
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
       }
     };
 

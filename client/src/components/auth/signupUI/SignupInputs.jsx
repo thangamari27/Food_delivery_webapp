@@ -7,6 +7,7 @@ function SignupInputs({ fields, formData, errors, handleChange, styles }) {
         <AuthInput
           key={field.name}
           {...field}
+          
           value={formData[field.name]}
           onChange={handleChange}
           error={errors[field.name]}

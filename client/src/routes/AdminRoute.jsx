@@ -9,7 +9,7 @@ import AdminCustomerPage from "@/pages/admin/AdminCustomerPage"
 import AdminSubscriptionPage from "@/pages/admin/AdminSubscriptionPage"
 import AdminEnquiryPage from "@/pages/admin/AdminEnquiryPage"
 import AdminOfferPage from "@/pages/admin/AdminOfferPage"
-import AdminBookingPage from "../pages/admin/AdminBookingPage"
+import AdminBookingPage from "@/pages/admin/AdminBookingPage"
 
 const AdminRoute = (
     <Route

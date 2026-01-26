@@ -47,7 +47,7 @@ export const inputFields = {
     { name: 'password', type: 'password', placeholder: 'Password', required: true }
   ],
   signup: [
-    { name: 'name', type: 'text', placeholder: 'Full name', required: true },
+    { name: 'fullname', type: 'text', placeholder: 'Full name', required: true },
     { name: 'email', type: 'email', placeholder: 'Email address', required: true },
     { name: 'password', type: 'password', placeholder: 'Password', required: true },
     { name: 'confirmPassword', type: 'password', placeholder: 'Confirm password', required: true }

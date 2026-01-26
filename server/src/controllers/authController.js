@@ -150,7 +150,7 @@ class AuthController {
 
   async resendVerification(req, res, next) {
     try {
-      const User = require('../models/User');
+      const User = require('../models/auth.model');
       const emailService = require('../services/emailService');
     
       const user = await User.findById(req.user.userId);
@@ -231,7 +231,7 @@ class AuthController {
 
   async getProfile(req, res, next) {
     try {
-      const User = require('../models/User');
+      const User = require('../models/auth.model');
       const user = await User.findById(req.user.userId).select('-password -refresh_tokens');
 
       if (!user) {

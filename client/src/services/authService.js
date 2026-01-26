@@ -18,33 +18,48 @@ export const authService = {
   },
   
   // Auth endpoints
-  register: (data) => api.post('/auth/register', data),
-  login: (data) => api.post('/auth/login', data),
-  logout: () => api.post('/auth/logout', {}, {
+  register: (data) => api.post('/api/auth/register', data),
+  
+  login: (data) => api.post('/api/auth/login', data),
+  
+  logout: () => api.post('/api/auth/logout', {}, {
     headers: getAuthHeader()
   }),
   
-  getProfile: () => api.get('/auth/profile', {
+  getProfile: () => api.get('/api/auth/profile', {
     headers: getAuthHeader()
   }),
   
-  verifyEmail: (token) => api.post(`/auth/verify-email/${token}`),
+  // Fixed: Changed from POST to GET and removed token from body
+  verifyEmail: (token) => api.get(`/api/auth/verify-email?token=${token}`),
   
-  resendVerification: () => api.post('/auth/resend-verification', {}, {
+  resendVerification: () => api.post('/api/auth/resend-verification', {}, {
     headers: getAuthHeader()
   }),
   
-  forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
+  forgotPassword: (email) => api.post('/api/auth/forgot-password', { email }),
   
-  resetPassword: (token, password) => api.post(`/auth/reset-password/${token}`, { password }),
+  // Fixed: Changed route structure to match backend
+  resetPassword: (token, newPassword) => api.post('/auth/reset-password', { 
+    token, 
+    newPassword 
+  }),
+  
+  // Fixed: Added change password
+  changePassword: (currentPassword, newPassword) => api.post('/auth/change-password', {
+    currentPassword,
+    newPassword
+  }, {
+    headers: getAuthHeader()
+  }),
   
   // Add refresh token if your backend supports it
-  refreshToken: () => api.post('/auth/refresh-token', {}, {
+  refreshToken: () => api.post('/api/auth/refresh-token', {}, {
     headers: getAuthHeader()
   }),
   
   // Update profile
-  updateProfile: (data) => api.patch('/auth/profile', data, {
+  updateProfile: (data) => api.patch('/api/auth/profile', data, {
     headers: getAuthHeader()
   })
 };

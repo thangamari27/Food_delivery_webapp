@@ -1,10 +1,13 @@
-import VerifyEmailNoticeSection from "../components/emailverification/VerifyEmailNoticeSection"
+import VerifyEmailNoticeSection from "@/components/emailverification/VerifyEmailNoticeSection"
+import PageLoaderWrapper from "@/components/common/PageLoaderWrapper"
 
 function VerifyEmailNoticePage() {
   return (
-    <main>
-        <VerifyEmailNoticePage />
-    </main>
+    <PageLoaderWrapper>
+      <main>
+        <VerifyEmailNoticeSection />
+      </main>
+    </PageLoaderWrapper>
   )
 }
 

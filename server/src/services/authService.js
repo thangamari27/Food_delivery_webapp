@@ -136,8 +136,12 @@ class AuthService {
       user.is_verified = true;
       user.last_login = new Date();
     } else {
-      // Create new user
-      const username = email.split('@')[0] + Math.floor(Math.random() * 1000);
+
+      // Generate unique username
+      const baseUsername = email.split('@')[0].toLowerCase();
+      const username = `${baseUsername}${Math.floor(Math.random() * 1000)}`;
+      
+      // Create new user with 'customer' role
       user = new User({
         username,
         email,
@@ -145,9 +149,9 @@ class AuthService {
         social_auth_provider: provider,
         social_auth_id: id,
         profile_image: picture,
-        email_verified: true,
-        is_verified: true,
-        role: 'customer'
+        email_verified: true,  
+        is_verified: true,     
+        role: 'customer'       
       });
     }
 

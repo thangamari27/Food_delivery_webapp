@@ -9,15 +9,15 @@ import ServicePage from "@/pages/ServicePage"
 import ContactPage from "@/pages/ContactPage"
 
 const LandingRoute = (
-    <Route element={<Landing />}>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/about' element={<AboutPage />} />
-        <Route path='/menu' element={<MenuPage />} />
-        <Route path='/restaurant' element={<RestaurantPage />} />
-        <Route path='/offer' element={<OfferPage />} />
-        <Route path='/service' element={<ServicePage />} />
-        <Route path='/contact' element={<ContactPage />} />
-    </Route>
-  )
+  <Route element={<Landing />}>
+      <Route path='/' element={<HomePage />} />
+      <Route path='/about' element={<AboutPage />} />
+      <Route path='/menu' element={<MenuPage />} />
+      <Route path='/restaurant' element={<RestaurantPage />} />
+      <Route path='/offer' element={<OfferPage />} />
+      <Route path='/service' element={<ServicePage />} />
+      <Route path='/contact' element={<ContactPage />} />
+  </Route>
+)
 
 export default LandingRoute

@@ -4,36 +4,43 @@ const cors = require('cors');
 const helmet = require('helmet');
 const cookieParser = require("cookie-parser");
 const morgan = require('morgan');
+const passport = require('passport');
 
 const authRoutes = require('./src/routes/authRoutes');
 const errorHandler = require('./src/middleware/errorHandler');
 const { apiLimiter } = require('./src/middleware/rateLimiter');
-const ApiError = require('./src/utils/ApiError');
 
 // config and db import
 const { PORT, NODE_ENV } = require('./src/config/env');
 const { connectDB } = require('./src/config/db');
+
+// Load passport strategies
+require('./src/config/passport');
 
 // initial app setup
 const app = express();
 
 // use app
 app.use(express.json());
-
-app.use(express.urlencoded({ extended: true, limit: '10mb' }))
-app.use(cors());
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(helmet());
-
-// Cookie parser
 app.use(cookieParser());
 
 if (NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-
 // Rate limiting
 app.use('/api/', apiLimiter);
+
+// Initialize passport WITHOUT sessions (for JWT)
+app.use(passport.initialize());
 
 // Health check
 app.get('/health', (req, res) => {
@@ -50,16 +57,18 @@ app.use('/api/auth', authRoutes);
 // Global error handler
 app.use(errorHandler);
 
+console.log(require('./src/config/env').GOOGLE_CALLBACK_URL)
+
 // app start
 const startServer = async () => {
   try {
-    // Connect to database
     await connectDB();
-
-    // Start server
+    
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT} in ${NODE_ENV} mode`);
       console.log(`API URL: http://localhost:${PORT}/api`);
+      console.log(`Google OAuth: ${process.env.GOOGLE_CLIENT_ID ? 'Configured' : 'Not configured'}`);
+      console.log(`Authentication: JWT (Stateless)`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);

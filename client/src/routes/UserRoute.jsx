@@ -17,8 +17,8 @@ const UserRoute = (
         </ProtectedRoute>
        } 
     >
-        <Route path='about' element={<AboutPage />} />
         <Route path='' element={<MenuPage />} />
+        <Route path='about' element={<AboutPage />} />
         <Route path='restaurant' element={<RestaurantPage />} />
         <Route path='offer' element={<OfferPage />} />
         <Route path='service' element={<ServicePage />} />
