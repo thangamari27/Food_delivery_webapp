@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useAuthContext } from '@/context/AuthContext';
 
 export const useNavbarState = () => {
+  const { user, isAuthenticated } = useAuthContext();
+  
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -12,10 +14,13 @@ export const useNavbarState = () => {
   const [isBookingsOpen, setIsBookingsOpen] = useState(false);
 
   return {
+    // Auth state from context
+    user,
+    isLoggedIn: isAuthenticated,
+    
+    // UI states
     isScrolled,
     setIsScrolled,
-    isLoggedIn,
-    setIsLoggedIn,
     isMobileOpen,
     setIsMobileOpen,
     isProfileOpen,

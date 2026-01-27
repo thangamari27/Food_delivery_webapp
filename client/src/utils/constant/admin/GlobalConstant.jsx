@@ -1,20 +1,16 @@
 import { 
-  Building2, 
   MenuSquare, 
+  Building2, 
   TicketPercent, 
+  Home, 
+  Info, 
+  Briefcase, 
+  Phone, 
   User,
-  Heart,
-  ShoppingCart,
-  Home,
   Package,
   Calendar,
-  Info,
-  Briefcase,
-  Phone,
-  LogOut,
-  X,
-  Menu
-} from "lucide-react";
+
+} from 'lucide-react';
 
 // Navigation icons mapping
 export const NAVIGATION_ICONS = {
@@ -39,9 +35,12 @@ export const headerNavLinks = {
     { name: 'Contact', path: '/contact', id: 'contact', icon: NAVIGATION_ICONS.contact }
   ],
   loggedIn: [
-    { name: 'Menu', path: '/menu', id: 'menu', icon: NAVIGATION_ICONS.menu },
-    { name: 'Restaurant', path: '/restaurant', id: 'restaurant', icon: NAVIGATION_ICONS.restaurant },
-    { name: 'Offers', path: '/offer', id: 'offers', icon: NAVIGATION_ICONS.offers }
+    { name: 'Menu', path: '/user', id: 'menu', icon: NAVIGATION_ICONS.menu },
+    { name: 'Restaurant', path: '/user/restaurant', id: 'restaurant', icon: NAVIGATION_ICONS.restaurant },
+    { name: 'Offers', path: '/user/offer', id: 'offers', icon: NAVIGATION_ICONS.offers },
+    { name: 'About', path: '/user/about', id: 'about', icon: NAVIGATION_ICONS.about },
+    { name: 'Services', path: '/user/service', id: 'services', icon: NAVIGATION_ICONS.services },
+    { name: 'Contact', path: '/user/contact', id: 'contact', icon: NAVIGATION_ICONS.contact }
   ],
   ctaButtons: {
     primary: {
@@ -56,6 +55,19 @@ export const headerNavLinks = {
     },
   }
 };
+
+export const profiledropDown = {
+  userActions: [
+    { text: 'My Profile', icon: User, onClickKey: 'onOpenProfile' },
+    { text: 'My Orders', icon: Package, onClickKey: 'onOpenOrders' },
+    { text: 'Restaurant Bookings', icon: Calendar, onClickKey: 'onOpenBookings' }
+  ],
+  quickLinks: [
+    { text: 'Change Password', icon: Info, href: '/user/change-password' },
+    { text: 'Services', icon: Briefcase, href: '/user/service' },
+    { text: 'Contact Us', icon: Phone, href: '/user/contact' }
+  ]
+}
 
 // Business logo and title
 export const headerBrandConfig = {
@@ -87,35 +99,14 @@ export const headerBrandConfig = {
   tagline: "Fast & Delicious Food Delivery"
 };
 
-// sample user data 
-export const initialUserData = {
-  name: "Tmjk",
-  email: "tmjk2710@gmail.com",
-  phone: "+91 8248225449",
-  address: "123 Main Street, tirunelveli",
-  avatar: null,
-  profiledropDown: {
-    userActions: [
-      { text: 'My Profile', icon: User, onClickKey: 'onOpenProfile' },
-      { text: 'My Orders', icon: Package, onClickKey: 'onOpenOrders' },
-      { text: 'Restaurant Bookings', icon: Calendar, onClickKey: 'onOpenBookings' }
-    ],
-    quickLinks: [
-      { text: 'About Us', icon: Info, href: '/about' },
-      { text: 'Services', icon: Briefcase, href: '/service' },
-      { text: 'Contact Us', icon: Phone, href: '/contact' }
-    ]
-  },
-};
-
-// sample cart items data
+// Sample cart items data (these would come from backend/state management)
 export const initialCartItems = [
   { id: 1, name: 'Spicy Ramen Bowl', price: 12.99, quantity: 2, category: 'Asian', rating: 4.5 },
   { id: 2, name: 'Chicken Wings', price: 8.99, quantity: 1, category: 'American', rating: 4.8 },
   { id: 3, name: 'Caesar Salad', price: 7.50, quantity: 1, category: 'Healthy', rating: 4.3 }
 ];
 
-// sample liked data items
+// Sample liked data items (these would come from backend/state management)
 export const initialLikedItems = [
   { id: 1, name: 'Margherita Pizza', price: 14.99, category: 'Italian', rating: 4.7, likes: 1234 },
   { id: 2, name: 'Beef Burger', price: 11.99, category: 'American', rating: 4.6, likes: 987 },
@@ -125,7 +116,7 @@ export const initialLikedItems = [
   { id: 6, name: 'Fish Tacos', price: 9.99, category: 'Mexican', rating: 4.6, likes: 543 }
 ];
 
-// Sample orders data 
+// Sample orders data (these would come from backend/state management)
 export const initialOrders = [
   { 
     id: 1, 
@@ -159,7 +150,7 @@ export const initialOrders = [
   }
 ];
 
-// sample restaurant booking data
+// Sample restaurant booking data (these would come from backend/state management)
 export const initialBookings = [
   { 
     id: 1, 

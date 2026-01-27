@@ -22,43 +22,49 @@ function MobileDrawer({
 }) {
   return (
     <>
-    <DrawerOverlay isOpen={isOpen} onClose={onClose} styles={styles} />
-    
-    <DrawerContainer isOpen={isOpen} styles={styles}>
-      <DrawerHeader onClose={onClose} styles={styles.header} />
+      <DrawerOverlay isOpen={isOpen} onClose={onClose} styles={styles} />
       
-      {isLoggedIn && (
-        <DrawerUserBody userData={userData} styles={styles.userSection} />
-      )}
-      
-      <div className={styles.content.container}>
-        <DrawerNavigation 
-          navLinks={navLinks} 
-          onClose={onClose} 
-          styles={styles.content}
-        />
+      <DrawerContainer isOpen={isOpen} styles={styles}>
+        <DrawerHeader onClose={onClose} styles={styles.header} />
+        
+        {isLoggedIn && userData && (
+          <DrawerUserBody userData={userData} styles={styles.userSection} />
+        )}
+        
+        <div className={styles.content.container}>
+          <DrawerNavigation 
+            navLinks={navLinks} 
+            onClose={onClose} 
+            styles={styles.content}
+          />
+          
+          {isLoggedIn && userData && (
+            <>
+              <div className={styles.content.divider} />
+              <DrawerUserActions
+                onOpenProfile={onOpenProfile}
+                onOpenOrders={onOpenOrders}
+                onOpenBookings={onOpenBookings}
+                onClose={onClose}
+                styles={styles.content}
+              />
+              <div className={styles.content.divider} />
+              {drawerNavLink?.quickLinks && (
+                <DrawerQuickLinks 
+                  content={drawerNavLink.quickLinks} 
+                  onClose={onClose} 
+                  styles={styles.content} 
+                />
+              )}
+            </>
+          )}
+        </div>
         
         {isLoggedIn && (
-          <>
-            <div className={styles.content.divider} />
-            <DrawerUserActions
-              onOpenProfile={onOpenProfile}
-              onOpenOrders={onOpenOrders}
-              onOpenBookings={onOpenBookings}
-              onClose={onClose}
-              styles={styles.content}
-            />
-            <div className={styles.content.divider} />
-            <DrawerQuickLinks content={drawerNavLink.quickLinks} onClose={onClose} styles={styles.content} />
-          </>
+          <DrawerFooter onLogout={onLogout} styles={styles.footer} />
         )}
-      </div>
-      
-      {isLoggedIn && (
-        <DrawerFooter onLogout={onLogout} styles={styles.footer} />
-      )}
-    </DrawerContainer>
-  </>
+      </DrawerContainer>
+    </>
   )
 }
 

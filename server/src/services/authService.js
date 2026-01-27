@@ -309,10 +309,14 @@ class AuthService {
       username: user.username,
       email: user.email,
       fullname: user.fullname,
+      phone: user.phone || '',
+      address: user.address || '',
       role: user.role,
       profile_image: user.profile_image,
       is_verified: user.is_verified,
       email_verified: user.email_verified,
+      social_auth_provider: user.social_auth_provider,
+      social_auth_id: user.social_auth_id,
       created_at: user.created_at
     };
   }

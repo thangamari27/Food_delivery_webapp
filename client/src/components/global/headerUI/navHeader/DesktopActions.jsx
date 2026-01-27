@@ -40,7 +40,7 @@ function DesktopActions({
         styles={styles.iconbutton}
       />
       <ProfileDropdown
-        content={userData.profiledropDown}
+        content={userData?.profiledropDown}
         isOpen={isProfileOpen}
         userData={userData}
         isClose={() => setIsProfileOpen(false)}

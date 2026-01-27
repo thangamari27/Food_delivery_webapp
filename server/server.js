@@ -57,8 +57,6 @@ app.use('/api/auth', authRoutes);
 // Global error handler
 app.use(errorHandler);
 
-console.log(require('./src/config/env').GOOGLE_CALLBACK_URL)
-
 // app start
 const startServer = async () => {
   try {

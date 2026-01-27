@@ -35,11 +35,15 @@ const userSchema = new mongoose.Schema({
     trim: true,
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email']
   },
-  fullname: { type: String, required: true }, // ✅ FIXED: Changed from fullname
+  fullname: { type: String, required: true },
   phone: {
     type: String,
+    trim: true
+  },
+  address: {
+    type: String,
     trim: true,
-    match: [/^[0-9]{10}$/, 'Please enter a valid 10-digit phone number']
+    default: ''
   },
   role: { 
     type: String, 
@@ -103,12 +107,10 @@ userSchema.virtual('isLocked').get(function() {
   return !!(this.lock_until && this.lock_until > Date.now());
 });
 
-// ✅ FIXED: Hash password before saving - Proper async/await
+// Hash password before saving
 userSchema.pre('save', async function() {
-  // Only hash if password is modified
   if (!this.isModified('password')) return;
   
-  // Hash the password
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
@@ -119,9 +121,8 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-// ✅ FIXED: Increment login attempts with await
+// Increment login attempts
 userSchema.methods.incrementLoginAttempts = async function() {
-  // If we have a previous lock that has expired, restart at 1
   if (this.lock_until && this.lock_until < Date.now()) {
     return await this.updateOne({
       $set: { login_attempts: 1 },
@@ -133,7 +134,6 @@ userSchema.methods.incrementLoginAttempts = async function() {
   const maxAttempts = 5;
   const lockTime = 2 * 60 * 60 * 1000; // 2 hours
   
-  // Lock the account if max attempts reached
   if (this.login_attempts + 1 >= maxAttempts && !this.isLocked) {
     updates.$set = { lock_until: Date.now() + lockTime };
   }
@@ -141,7 +141,7 @@ userSchema.methods.incrementLoginAttempts = async function() {
   return await this.updateOne(updates);
 };
 
-// ✅ FIXED: Reset login attempts with await
+// Reset login attempts
 userSchema.methods.resetLoginAttempts = async function() {
   return await this.updateOne({
     $set: { login_attempts: 0 },

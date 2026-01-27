@@ -13,7 +13,7 @@ function ProfileDropdown({
   onLogout,
   styles
 }) {
-  if (!isOpen) return null;
+  if (!isOpen || !userData) return null;
 
   const actionHandlers = {
     onOpenProfile,
@@ -25,22 +25,26 @@ function ProfileDropdown({
     <div className={styles.container}>
       <ProfileHeader userData={userData} styles={styles.header} />
       
-      <ProfileBody
-        title="User Actions"
-        items={content.userActions}
-        actionHandlers={actionHandlers}
-        styles={styles.sections}
-      />
+      {content?.userActions && (
+        <ProfileBody
+          title="User Actions"
+          items={content.userActions}
+          actionHandlers={actionHandlers}
+          styles={styles.sections}
+        />
+      )}
 
-      <ProfileBody
-        title="Quick Links"
-        items={content.quickLinks}
-        isLink={true}
-        isClose={isClose}
-        styles={styles.sections}
-      />
+      {content?.quickLinks && (
+        <ProfileBody
+          title="Quick Links"
+          items={content.quickLinks}
+          isLink={true}
+          isClose={isClose}
+          styles={styles.sections}
+        />
+      )}
       
-      <ProfileFooter content={content} onLogout={onLogout} styles={styles.footer} />
+      <ProfileFooter onLogout={onLogout} styles={styles.footer} />
     </div>
   )
 }

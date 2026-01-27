@@ -77,8 +77,9 @@ export const AuthProvider = ({ children }) => {
   const updateUser = async () => {
     try {
       const response = await authService.getProfile();
-      setUser(response.data.data);
-      return response.data.data;
+      const userData = response.data.data;
+      setUser(userData);
+      return userData;
     } catch (error) {
       console.error('Failed to update user:', error);
       throw error;
@@ -88,6 +89,14 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const response = await authService.register(userData);
+      
+      // After successful registration, set user and token
+      const { accessToken, user: newUser } = response.data.data;
+      
+      // Set user in context immediately
+      authService.setAuthHeader(accessToken);
+      setUser(newUser);
+      
       return { success: true, data: response.data };
     } catch (error) {
       return { 
@@ -99,8 +108,7 @@ export const AuthProvider = ({ children }) => {
 
   const socialLogin = async (provider) => {
     try {
-      // This will redirect to backend OAuth endpoint
-      window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/${provider}`;
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/${provider}`;
       return { success: true };
     } catch (error) {
       return { 

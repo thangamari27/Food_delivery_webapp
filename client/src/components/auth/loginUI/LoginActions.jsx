@@ -7,32 +7,43 @@ function LoginActions({
   onNavigate, 
   handleSubmit, 
   loading, 
-  styles 
+  styles,
+  isSubmitting 
 }) {
   return (
     <>
       <div className="flex items-center justify-between">
-        <label className={styles.form.checkbox}>          
-          <span className={styles.form.rememberMeText}>
+        <div>
+          <label className={styles.form.checkbox}>
             <input
               type="checkbox"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
+              disabled={isSubmitting}
               className={styles.form.checkboxInput}
             />
-            {content.rememberMe}
-          </span>
-          <button
-            type="button"
-            onClick={() => onNavigate('forgotPassword')}
-            className={styles.link}
-          >
-            {content.forgotPassword}
-          </button>
-        </label>
+            <span className={styles.form.rememberMeText}>
+              {content.rememberMe}
+            </span>
+          </label>
+        </div>
+        <button
+          type="button"
+          onClick={() => onNavigate('forgotPassword')}
+          disabled={isSubmitting}
+          className={`${styles.link} ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          {content.forgotPassword}
+        </button>
       </div>
       
-      <AuthButton onClick={handleSubmit} disabled={loading} styles={styles.button}>
+      <AuthButton 
+        type="submit"
+        onClick={handleSubmit} 
+        disabled={loading} 
+        isLoading={loading}
+        styles={styles.button}
+      >
         {loading ? 'Signing in...' : content.submitText}
       </AuthButton>
     </>

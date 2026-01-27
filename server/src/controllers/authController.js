@@ -245,6 +245,60 @@ class AuthController {
       next(error);
     }
   }
+
+  async updateProfile(req, res, next) {
+    try {
+      const User = require('../models/auth.model');
+      const userId = req.user.userId;
+      const { fullname, phone, address } = req.body;
+
+      // Find user
+      const user = await User.findById(userId);
+      if (!user) {
+        throw new ApiError(404, 'User not found');
+      }
+
+      // Validate and update fields
+      if (fullname !== undefined && fullname !== null) {
+        if (typeof fullname !== 'string' || fullname.trim().length === 0) {
+          throw new ApiError(400, 'Full name cannot be empty');
+        }
+        if (fullname.trim().length < 2 || fullname.trim().length > 50) {
+          throw new ApiError(400, 'Full name must be between 2 and 50 characters');
+        }
+        user.fullname = fullname.trim();
+      }
+
+      if (phone !== undefined && phone !== null && phone !== '') {
+        const phoneStr = phone.toString().trim();
+        // Allow optional phone - but validate if provided
+        if (phoneStr.length > 0) {
+          // Remove common phone formatting characters
+          const cleanPhone = phoneStr.replace(/[\s\-\(\)]/g, '');
+          // Validate it's numeric and reasonable length
+          if (!/^\+?[0-9]{10,15}$/.test(cleanPhone)) {
+            throw new ApiError(400, 'Please enter a valid phone number (10-15 digits)');
+          }
+          user.phone = phoneStr;
+        } else {
+          user.phone = '';
+        }
+      }
+
+      if (address !== undefined && address !== null) {
+        user.address = address.trim();
+      }
+
+      // Save with validation disabled for non-changed fields
+      await user.save({ validateBeforeSave: false });
+
+      res.status(200).json(
+        new ApiResponse(200, authService.sanitizeUser(user), 'Profile updated successfully')
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new AuthController();

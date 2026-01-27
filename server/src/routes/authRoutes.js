@@ -123,9 +123,12 @@ router.get('/google/callback',
 // PROTECTED ROUTES
 router.post('/logout', authenticate, authController.logout);
 router.post('/change-password', authenticate, changePasswordValidation, authController.changePassword);
-router.get('/profile', authenticate, authController.getProfile);
 
-// Additional protected route for OAuth account linking (optional)
+// Profile route
+router.get('/profile', authenticate, authController.getProfile);
+router.patch('/profile', authenticate, authController.updateProfile);
+
+// Additional protected route for OAuth account linking
 router.post('/link-social-account', authenticate, (req, res) => {
   res.status(200).json({
     success: true,

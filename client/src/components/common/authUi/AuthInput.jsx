@@ -1,4 +1,3 @@
-
 function AuthInput({ 
   name, 
   type, 
@@ -6,7 +5,8 @@ function AuthInput({
   value, 
   onChange, 
   error,
-  styles 
+  styles,
+  disabled = false 
 }) {
   return (
     <div className={styles.inputWrapper}>
@@ -18,6 +18,7 @@ function AuthInput({
         onChange={onChange}
         className={styles.input}
         aria-label={placeholder}
+        disabled={disabled}
       />
       {error && (
         <span className={styles.error}>{error}</span>

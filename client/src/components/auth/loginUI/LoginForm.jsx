@@ -1,7 +1,7 @@
+import { useState } from "react";
 import LoginInputs from "./LoginInputs";
 import LoginActions from "./LoginActions";
 import { useAuth } from "@/hooks/useAuth";
-
 function LoginForm({
   content,
   inputFields,
@@ -14,31 +14,44 @@ function LoginForm({
   const {
     formData,
     errors,
-    loading,
-    setLoading,
     handleChange,
     validate,
   } = useAuth({ email: "", password: "" });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const submitForm = async () => {
-    if (!validate(inputFields.login)) return;
+  const submitForm = async (e) => {
+    e?.preventDefault?.();
+    
+    // Prevent double submission
+    if (isSubmitting) return;
 
-    setLoading(true);
+    // Validate form
+    if (!validate(inputFields.login)) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
       await onSubmit(formData, rememberMe);
     } catch (error) {
       console.error("Login error:", error);
     } finally {
-      setLoading(false);
+      // Reset after a short delay to prevent rapid re-clicks
+      setTimeout(() => {
+        setIsSubmitting(false);
+      }, 1000);
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") submitForm();
+    if (e.key === "Enter") submitForm(e);
   };
 
   return (
-    <div
+    <form 
+      onSubmit={submitForm}
       className={styles.form.container}
       onKeyDown={handleKeyPress}
     >
@@ -48,6 +61,7 @@ function LoginForm({
         errors={errors}
         handleChange={handleChange}
         styles={styles.form}
+        isSubmitting={isSubmitting}
       />
 
       <LoginActions
@@ -56,10 +70,11 @@ function LoginForm({
         setRememberMe={setRememberMe}
         onNavigate={onNavigate}
         handleSubmit={submitForm}
-        loading={loading}
+        loading={isSubmitting}
         styles={styles}
+        isSubmitting={isSubmitting}
       />
-    </div>
+    </form>
   );
 }
 

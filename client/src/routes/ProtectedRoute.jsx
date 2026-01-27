@@ -1,30 +1,31 @@
 import { useAuthContext } from '@/context/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import Loader from '@/components/common/PageLoader';
 
 function ProtectedRoute({ children, role }) {
   const { user, loading } = useAuthContext();
-  
+  const location = useLocation();
+
+  // Show loader while checking authentication
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader />
-      </div>
-    );
+    return <Loader />
   }
 
+  // Not authenticated - redirect to login and save the attempted location
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Check both fields and handle social login users differently
+  // Check email verification status
   const isSocialUser = user.social_auth_provider || user.social_auth_id;
-  const needsVerification = !user.email_verified && !user.is_verified && !isSocialUser;
+  // Social auth users are auto-verified
+  const isVerified = user.email_verified || user.is_verified || isSocialUser;
   
-  if (needsVerification) {
+  if (!isVerified) {
     return <Navigate to="/verify-email-notice" replace />;
   }
 
+  // Role-based access control
   if (role) {
     // Map frontend role names to backend role names
     const roleMap = {
@@ -34,10 +35,10 @@ function ProtectedRoute({ children, role }) {
     };
     
     const requiredRole = roleMap[role] || role;
-    const userRole = user.role || 'customer'; // Default for new users
+    const userRole = user.role || 'customer';
     
     if (userRole !== requiredRole) {
-      // Redirect based on user's actual role
+      // Redirect to appropriate dashboard
       if (userRole === 'admin') {
         return <Navigate to="/admin" replace />;
       } else if (userRole === 'customer') {

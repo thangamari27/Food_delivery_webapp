@@ -4,7 +4,7 @@ function DrawerUserBody({ userData, styles }) {
      <div className={styles.container}>
         <div className={styles.innerContainer}>
         <div className={styles.avatar}>
-            {userData.avatar || userData.name.charAt(0).toUpperCase()}
+            {userData.profile_image || userData.name.charAt(0).toUpperCase()}
         </div>
         <div className={styles.userInfo}>
             <p className={styles.name}>{userData.name}</p>

@@ -4,7 +4,7 @@ function ProfileHeader({ userData, styles }) {
      <div className={styles.container}>
         <div className={styles.innerContainer}>
         <div className={styles.avatar}>
-            {userData.avatar || userData.name.charAt(0).toUpperCase()}
+            { userData.name.charAt(0).toUpperCase() || 'CU'}
         </div>
         <div className={styles.userInfo}>
             <p className={styles.name}>{userData.name}</p>

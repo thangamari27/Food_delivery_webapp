@@ -29,8 +29,11 @@ export const authService = {
   getProfile: () => api.get('/api/auth/profile', {
     headers: getAuthHeader()
   }),
+
+  updateProfile: (data) => api.patch('/api/auth/profile', data, {
+    headers: getAuthHeader()
+  }),
   
-  // Fixed: Changed from POST to GET and removed token from body
   verifyEmail: (token) => api.get(`/api/auth/verify-email?token=${token}`),
   
   resendVerification: () => api.post('/api/auth/resend-verification', {}, {
@@ -39,14 +42,12 @@ export const authService = {
   
   forgotPassword: (email) => api.post('/api/auth/forgot-password', { email }),
   
-  // Fixed: Changed route structure to match backend
-  resetPassword: (token, newPassword) => api.post('/auth/reset-password', { 
+  resetPassword: (token, newPassword) => api.post('/api/auth/reset-password', { 
     token, 
     newPassword 
   }),
   
-  // Fixed: Added change password
-  changePassword: (currentPassword, newPassword) => api.post('/auth/change-password', {
+  changePassword: (currentPassword, newPassword) => api.post('/api/auth/change-password', {
     currentPassword,
     newPassword
   }, {

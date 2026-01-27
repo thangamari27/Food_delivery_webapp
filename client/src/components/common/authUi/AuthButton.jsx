@@ -1,11 +1,11 @@
-
 function AuthButton({ 
   children, 
   type = "button", 
   variant = "primary", 
   onClick, 
   disabled,
-  styles 
+  styles,
+  isLoading = false
 }) {
   const buttonClass = variant === "primary" 
     ? styles?.primary 
@@ -15,8 +15,8 @@ function AuthButton({
     <button
       type={type}
       onClick={onClick}
-      disabled={disabled}
-      className={`${buttonClass} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      disabled={disabled || isLoading}
+      className={`${buttonClass} ${disabled || isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
     >
       {children}
     </button>

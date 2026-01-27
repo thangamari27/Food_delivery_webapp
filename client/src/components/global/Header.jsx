@@ -1,26 +1,25 @@
 import {
   headerNavLinks,
   headerBrandConfig,
-  initialUserData,
   initialCartItems,
   initialOrders,
   initialLikedItems,
   initialBookings,
+  profiledropDown
 } from '@/utils/constant/admin/GlobalConstant'
 import { navbarStyles } from "@/utils/styles/GlobalStyle"
 import { useNavbarState, useNavbarEffects } from '@/hooks/useNavbarState'
 import Navbar from './headerUI/Navbar'
 
 function Header() {
-  
   const content = {
     headerNavLinks,
     headerBrandConfig,
-    initialUserData,
     initialCartItems,
     initialOrders,
     initialLikedItems,
     initialBookings,
+    profiledropDown
   }
 
   const styles = navbarStyles
