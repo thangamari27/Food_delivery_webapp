@@ -421,29 +421,26 @@ export const testimonialsSection = {
 };
 // Testimonials
 export const testimonials = [
-    {
+  {
     id: 1,
     name: "Balaganesh",
-    location: "Mumbai, India",
+    location: "Alangulam, India",
     rating: 5,
     text: "Amazing service! Booking my Kerala trip was super smooth. The itinerary was well-planned and the support team was very helpful.",
-    avatar: "/images/avatar1.jpg"
   },
   {
     id: 2,
     name: "Power",
-    location: "Ahmedabad, India",
+    location: "Junction, India",
     rating: 4.5,
     text: "I had a great experience booking a family vacation to Goa. Everything from hotel suggestions to activities was perfectly managed.",
-    avatar: "/images/avatar2.jpg"
   },
   {
     id: 3,
     name: "Rakesh",
-    location: "Bangalore, India",
+    location: "Pettai, India",
     rating: 5,
     text: "Excellent platform! The flight + hotel combo saved me a lot of money. Totally trustable for last-minute plans as well.",
-    avatar: "/images/avatar3.jpg"
   },
 
 ];

@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 
 const authRoutes = require('./src/routes/authRoutes');
+const testimonialRoute = require('./src/routes/testimonialRoute');
 const errorHandler = require('./src/middleware/errorHandler');
 const { apiLimiter } = require('./src/middleware/rateLimiter');
 
@@ -32,15 +33,15 @@ app.use(cors({
 app.use(helmet());
 app.use(cookieParser());
 
+// Initialize passport WITHOUT sessions (for JWT)
+app.use(passport.initialize());
+
 if (NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
 // Rate limiting
 app.use('/api/', apiLimiter);
-
-// Initialize passport WITHOUT sessions (for JWT)
-app.use(passport.initialize());
 
 // Health check
 app.get('/health', (req, res) => {
@@ -53,6 +54,7 @@ app.get('/health', (req, res) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/testimonials', testimonialRoute)
 
 // Global error handler
 app.use(errorHandler);

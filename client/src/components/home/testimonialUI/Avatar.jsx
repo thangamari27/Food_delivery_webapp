@@ -1,6 +1,6 @@
 
 function Avatar({ name, size = 48 }) {
-  const initial = name ? name.charAt(0).toUpperCase() : "?";
+  const initial = name ? name.charAt(0).toUpperCase() : "C";
   const sizeClass = size === 48 ? "w-12 h-12 text-lg" : `${size}px`;
 
   return (
