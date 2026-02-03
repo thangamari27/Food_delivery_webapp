@@ -20,7 +20,7 @@ const AdminRoute = (
             </ProtectedRoute>
         }
     >
-        <Route path="dashboard" element={<AdminDashboardPage />} />
+        <Route path="" element={<AdminDashboardPage />} />
         <Route path="orders" element={<AdminOrdersPage />} />
         <Route path="offers" element={<AdminOfferPage />} />
         <Route path="restaurant/add_restaurant" element={<AdminRestaurantPage />} />

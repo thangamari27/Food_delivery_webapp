@@ -57,7 +57,7 @@ export const ctaButtons = {
 // HeroSection contents
 export const heroContent = {
   title: {
-    title: "Fast. Fresh. Delivered",  
+    title: "Speed. Fresh. Delivered",  
     highlightedText: "Food",
   },
   description: "From local favorites to late-night cravings — we deliver delicious meals at lightning speed. Trackable, reliable and ready when you are.",

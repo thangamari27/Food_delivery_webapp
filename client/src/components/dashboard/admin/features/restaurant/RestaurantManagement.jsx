@@ -14,6 +14,7 @@ import SearchBar from './SearchBar';
 import FilterPanel from './FilterPanel';
 import RestaurantStats from './RestaurantStats';
 
+// Separate component for PageHeader
 const PageHeader = ({ content, onAddClick }) => (
   <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -37,6 +38,7 @@ const PageHeader = ({ content, onAddClick }) => (
   </div>
 );
 
+// Separate component for SearchAndFilter
 const SearchAndFilter = ({ 
   searchTerm, 
   onSearchChange, 
@@ -76,10 +78,83 @@ const SearchAndFilter = ({
   </div>
 );
 
+// Separate component for DesktopView
+const DesktopView = ({
+  paginatedData,
+  sortConfig,
+  handleSort,
+  viewDetails,
+  openModal,
+  handleDelete,
+  content,
+  styles,
+  filteredRestaurants,
+  currentPage,
+  totalPages,
+  setCurrentPage,
+  itemsPerPage
+}) => (
+  <div className="hidden xl:block bg-white rounded-lg shadow-sm overflow-hidden">
+    <RestaurantTable
+      restaurants={paginatedData}
+      sortConfig={sortConfig}
+      onSort={handleSort}
+      onView={viewDetails}
+      onEdit={openModal}
+      onDelete={handleDelete}
+      content={content}
+      styles={styles}
+    />
+    <Pagination
+      content={content}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={setCurrentPage}
+      totalItems={filteredRestaurants.length}
+      itemsPerPage={itemsPerPage}
+    />
+  </div>
+);
+
+// Separate component for MobileView
+const MobileView = ({
+  paginatedData,
+  viewDetails,
+  openModal,
+  handleDelete,
+  content,
+  filteredRestaurants,
+  currentPage,
+  totalPages,
+  setCurrentPage,
+  itemsPerPage
+}) => (
+  <div className="xl:hidden">
+    <RestaurantCards
+      restaurants={paginatedData}
+      onView={viewDetails}
+      onEdit={openModal}
+      onDelete={handleDelete}
+      content={content}
+    />
+    <Pagination
+      content={content}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={setCurrentPage}
+      totalItems={filteredRestaurants.length}
+      itemsPerPage={itemsPerPage}
+    />
+  </div>
+);
+
+// Main component
 function RestaurantManagement() {
+  // ALL HOOKS MUST BE AT THE TOP - UNCONDITIONAL
   const content = restaurantContent;
   const styles = restaurantStyles;
   
+  // This hook MUST be called unconditionally on every render
   const {
     restaurants,
     filteredRestaurants,
@@ -112,17 +187,33 @@ function RestaurantManagement() {
     setCurrentPage
   } = useRestaurantManagement(content);
 
-  // Extract unique cuisines for filter options
+  // This hook MUST be called unconditionally on every render
   const cuisineOptions = useMemo(() => {
     const cuisines = new Set();
-    restaurants.forEach(r => r.cuisine.forEach(c => cuisines.add(c)));
+    restaurants.forEach(r => {
+      if (r.cuisine && Array.isArray(r.cuisine)) {
+        r.cuisine.forEach(c => cuisines.add(c));
+      }
+    });
     return Array.from(cuisines).sort();
-  }, [restaurants]);
+  }, [restaurants]); // Dependency must be stable
 
+  // Handler functions - NO HOOKS inside these
   const handleEditFromDetails = () => {
     closeDetailsModal();
     openModal('edit', selectedRestaurant);
   };
+
+  const handleOpenEditModal = (restaurant) => {
+    openModal('edit', restaurant);
+  };
+
+  const handleToggleFilters = () => {
+    setShowFilters(prev => !prev);
+  };
+
+  // NO EARLY RETURNS BEFORE THIS POINT
+  // All hooks have been called unconditionally
 
   return (
     <div className="mt-20 min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8 max-w-[1440px] mx-auto">
@@ -136,7 +227,7 @@ function RestaurantManagement() {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           showFilters={showFilters}
-          onToggleFilters={() => setShowFilters(!showFilters)}
+          onToggleFilters={handleToggleFilters}
           filters={filters}
           onFilterChange={setFilters}
           content={content}
@@ -148,54 +239,43 @@ function RestaurantManagement() {
           filteredCount={filteredRestaurants.length}
         />
 
+        {/* Conditional rendering of content - NO HOOKS inside */}
         {filteredRestaurants.length === 0 ? (
           <EmptyState content={content.titles} styles={styles.emptyState} />
         ) : (
           <>
-            {/* Desktop Table View */}
-            <div className="hidden xl:block bg-white rounded-lg shadow-sm overflow-hidden">
-              <RestaurantTable
-                restaurants={paginatedData}
-                sortConfig={sortConfig}
-                onSort={handleSort}
-                onView={viewDetails}
-                onEdit={(restaurant) => openModal('edit', restaurant)}
-                onDelete={handleDelete}
-                content={content}
-                styles={styles}
-              />
-              <Pagination
-                content={content}
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-                totalItems={filteredRestaurants.length}
-                itemsPerPage={itemsPerPage}             
-              />
-            </div>
+            <DesktopView
+              paginatedData={paginatedData}
+              sortConfig={sortConfig}
+              handleSort={handleSort}
+              viewDetails={viewDetails}
+              openModal={handleOpenEditModal}
+              handleDelete={handleDelete}
+              content={content}
+              styles={styles}
+              filteredRestaurants={filteredRestaurants}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+            />
 
-            {/* Mobile Card View */}
-            <div className="xl:hidden">
-              <RestaurantCards
-                restaurants={paginatedData}
-                onView={viewDetails}
-                onEdit={(restaurant) => openModal('edit', restaurant)}
-                onDelete={handleDelete}
-                content={content}
-              />
-              <Pagination
-                content={content}
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-                totalItems={filteredRestaurants.length}
-                itemsPerPage={itemsPerPage}
-              />
-            </div>
+            <MobileView
+              paginatedData={paginatedData}
+              viewDetails={viewDetails}
+              openModal={handleOpenEditModal}
+              handleDelete={handleDelete}
+              content={content}
+              filteredRestaurants={filteredRestaurants}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+            />
           </>
         )}
 
-        {/* Add/Edit Modal */}
+        {/* Modals - rendered conditionally but hooks are already called */}
         <Modal
           isOpen={showModal}
           styles={styles}
@@ -232,7 +312,6 @@ function RestaurantManagement() {
           />
         </Modal>
 
-        {/* View Details Modal */}
         <Modal
           isOpen={viewDetailsModal}
           onClose={closeDetailsModal}

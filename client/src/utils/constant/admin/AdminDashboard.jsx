@@ -6,7 +6,7 @@ export const headerContent = {
     userGreeting: "Hello, TMJK",
     searchPlaceholder: "Search here",
     navLinks: [
-        { label: "Dashboard", href: "/admin/dashboard" },
+        { label: "Dashboard", href: "/admin/" },
         { label: "Orders", href: "/admin/orders" },
         { label: "Foods", href: "/admin/foods"},
         { label: "Users", href: "/admin/users" },
@@ -52,7 +52,7 @@ export const sidebarContent = {
     {
         id: 1,
         label: "Dashboard",
-        href: "/admin/dashboard",
+        href: "/admin/",
         icon: Home,
       },
       {
@@ -882,6 +882,7 @@ export const restaurantContent = {
         "Pure Veg", "Bestseller", "Fast Delivery", "Trending", "Award Winner"
     ]
   },
+  
   restaurantData: [
     {
       id: 1, name: "Spice Garden", contactPerson: "Rajesh Kumar", phone: "+91 98765 43210",

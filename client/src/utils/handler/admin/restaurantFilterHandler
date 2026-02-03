@@ -31,14 +31,6 @@ const validationRules = {
     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     message: 'Invalid email format'
   },
-  address: {
-    required: true,
-    message: 'Address is required'
-  },
-  city: {
-    required: true,
-    message: 'City is required'
-  },
   cuisine: {
     required: true,
     minLength: 1,
@@ -62,49 +54,82 @@ export const validateForm = (formData) => {
         if (!value.length || (rules.minLength && value.length < rules.minLength)) {
           errors[field] = rules.message;
         }
-      } else if (!value?.trim()) {
+      } else if (typeof value === 'string' && !value.trim()) {
+        errors[field] = rules.messages?.required || rules.message;
+      } else if (!value) {
         errors[field] = rules.messages?.required || rules.message;
       }
     }
 
     // Check pattern validation
-    if (value && rules.pattern && !rules.pattern.test(value)) {
+    if (value && rules.pattern && typeof value === 'string' && !rules.pattern.test(value)) {
       errors[field] = rules.messages?.invalid || rules.message;
     }
   });
 
+  // Add manual validation for nested address fields
+  if (!formData.address?.city?.trim()) {
+    errors['address.city'] = 'City is required';
+  }
+  
+  if (!formData.address?.street?.trim()) {
+    errors['address.street'] = 'Street address is required';
+  }
+
   return errors;
 };
 
-// Filter helpers
+// Filter helpers with safe property access
 const matchesSearchTerm = (restaurant, term) => {
+  if (!term || !restaurant) return false;
+  
   const searchLower = term.toLowerCase();
-  return (
-    restaurant.name.toLowerCase().includes(searchLower) ||
-    restaurant.city.toLowerCase().includes(searchLower) ||
-    restaurant.cuisine.some(c => c.toLowerCase().includes(searchLower))
-  );
+  
+  // Safe search in name
+  const nameMatch = restaurant.name && 
+    typeof restaurant.name === 'string' &&
+    restaurant.name.toLowerCase().includes(searchLower);
+  
+  // Safe search in city (nested in address)
+  const cityMatch = restaurant.address?.city && 
+    typeof restaurant.address.city === 'string' &&
+    restaurant.address.city.toLowerCase().includes(searchLower);
+  
+  // Safe search in cuisine array
+  const cuisineMatch = restaurant.cuisine && 
+    Array.isArray(restaurant.cuisine) &&
+    restaurant.cuisine.some(c => 
+      c && typeof c === 'string' && 
+      c.toLowerCase().includes(searchLower)
+    );
+  
+  return nameMatch || cityMatch || cuisineMatch;
 };
 
 const matchesStatus = (restaurant, status) => {
+  if (!restaurant) return false;
   return status === 'all' || restaurant.status === status;
 };
 
 const matchesCuisine = (restaurant, cuisine) => {
+  if (!restaurant || !restaurant.cuisine) return false;
   return cuisine === 'all' || restaurant.cuisine.includes(cuisine);
 };
 
 const matchesDelivery = (restaurant, delivery) => {
+  if (!restaurant) return false;
   if (delivery === 'all') return true;
   return restaurant.deliveryAvailable === (delivery === 'yes');
 };
 
 const extractPriceFromRange = (priceRange) => {
+  if (!priceRange || typeof priceRange !== 'string') return 0;
   const match = priceRange.match(/\d+/);
   return match ? parseInt(match[0]) : 0;
 };
 
 const matchesPriceRange = (restaurant, priceRange) => {
+  if (!restaurant) return false;
   if (priceRange === 'all') return true;
   
   const price = extractPriceFromRange(restaurant.priceRange);
@@ -122,7 +147,11 @@ const matchesPriceRange = (restaurant, priceRange) => {
 };
 
 export const applyFilters = (restaurants, searchTerm, filters) => {
+  if (!Array.isArray(restaurants)) return [];
+  
   return restaurants.filter(restaurant => {
+    if (!restaurant) return false;
+    
     if (searchTerm && !matchesSearchTerm(restaurant, searchTerm)) {
       return false;
     }
@@ -147,17 +176,19 @@ export const applyFilters = (restaurants, searchTerm, filters) => {
   });
 };
 
-// Sort comparators
+// Sort comparators with safe access
 const compareByRating = (a, b, direction) => {
-  return direction === 'asc' 
-    ? a.rating - b.rating 
-    : b.rating - a.rating;
+  const ratingA = a.rating || 0;
+  const ratingB = b.rating || 0;
+  return direction === 'asc' ? ratingA - ratingB : ratingB - ratingA;
 };
 
 const compareByName = (a, b, direction) => {
+  const nameA = a.name || '';
+  const nameB = b.name || '';
   return direction === 'asc' 
-    ? a.name.localeCompare(b.name)
-    : b.name.localeCompare(a.name);
+    ? nameA.localeCompare(nameB)
+    : nameB.localeCompare(nameA);
 };
 
 const sortComparators = {
@@ -166,8 +197,8 @@ const sortComparators = {
 };
 
 export const sortRestaurants = (restaurants, sortConfig) => {
-  if (!sortConfig.key || !sortComparators[sortConfig.key]) {
-    return restaurants;
+  if (!Array.isArray(restaurants) || !sortConfig.key || !sortComparators[sortConfig.key]) {
+    return restaurants || [];
   }
   
   return [...restaurants].sort((a, b) => 

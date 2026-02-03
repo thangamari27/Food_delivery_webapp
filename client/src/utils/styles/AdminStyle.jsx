@@ -174,7 +174,7 @@ export const foodStyles = {
 
   // Modal
   modal: {
-    overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto',
+    overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50',
     container: 'bg-white rounded-lg max-w-2xl w-full my-8 max-h-[90vh] overflow-y-auto',
     header: 'sticky top-0 bg-white border-b border-gray-300 px-4 sm:px-6 py-4 flex items-center justify-between z-10',
     title: 'text-lg sm:text-xl font-bold text-gray-900',
@@ -450,7 +450,7 @@ export const restaurantStyles = {
     rowHover: 'hover:bg-gray-50'
   },
   modals: {
-    overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto',
+    overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50',
     content: 'bg-white rounded-lg w-full max-w-3xl my-8',
     header: 'flex items-center justify-between p-6 border-b border-gray-300',
     headerTitle: "text-2xl font-bold",

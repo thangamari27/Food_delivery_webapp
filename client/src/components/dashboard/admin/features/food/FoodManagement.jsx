@@ -69,7 +69,7 @@ function FoodManagement() {
     handleImageUpload,
     resetForm
   } = useFoodManagement(content);
-
+  console.log(filteredFoods)
   return (
     <div className={styles.container}>
       {/* Header */}

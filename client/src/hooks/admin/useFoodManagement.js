@@ -1,16 +1,47 @@
+/**
+ * useFoodManagement Hook 
+ */
+
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useFood } from '../../context/admin/Foodcontext';
+import { toast } from 'react-hot-toast';
+
+const getInitialFormState = () => ({
+  name: '',
+  category: '',
+  cuisine: '',
+  type: 'Regular Menu Item',
+  price: '',
+  originalPrice: '',
+  description: '',
+  status: 'Active',
+  restaurant: ''
+});
 
 export const useFoodManagement = (content) => {
-  // State management
-  const [foods, setFoods] = useState([]);
-  const [filteredFoods, setFilteredFoods] = useState([]);
+  const {
+    foods: contextFoods,
+    loading: contextLoading,
+    error: contextError,
+    fetchFoods,
+    createFood: createFoodAPI,
+    updateFood: updateFoodAPI,
+    deleteFood: deleteFoodAPI,
+    clearError
+  } = useFood();
+
+  // Track initial fetch
+  const hasFetchedRef = useRef(false);
+  const filterTimeoutRef = useRef(null);
+
+  // State
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedCuisine, setSelectedCuisine] = useState([]);
   const [selectedType, setSelectedType] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedRestaurant, setSelectedRestaurant] = useState('');
-  const [sortBy, setSortBy] = useState('');
+  const [sortBy, setSortBy] = useState('recent');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -19,84 +50,146 @@ export const useFoodManagement = (content) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedFood, setSelectedFood] = useState(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    category: '',
-    cuisine: '',
-    type: 'Regular Menu Item',
-    price: '',
-    originalPrice: '',
-    description: '',
-    status: 'Active',
-    restaurant: ''
-  });
+  const [formData, setFormData] = useState(getInitialFormState());
   const [formErrors, setFormErrors] = useState({});
   const [imagePreview, setImagePreview] = useState('');
+  const [imageFile, setImageFile] = useState(null);
 
-  // Initialize sample data
+  // Fetch from DB on mount (ONCE)
   useEffect(() => {
-    setFoods(content.sampleData);
-    setFilteredFoods(content.sampleData);
-  }, []);
+    if (!hasFetchedRef.current) {
+      hasFetchedRef.current = true;
+      console.log('Initial fetch: Loading foods from database...');
+      fetchFoods();
+    }
+  }, [fetchFoods]);
 
-  // Filter logic
-  useEffect(() => {
+  // Use ONLY context foods from DB 
+  const foods = contextFoods;
+  
+  // Client-side filtering
+  const filteredFoods = useCallback(() => {
     let result = [...foods];
     
-    // Apply search filter
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(f => 
-        f.name.toLowerCase().includes(term) ||
-        f.category.toLowerCase().includes(term) ||
-        f.cuisine.toLowerCase().includes(term) ||
-        (f.restaurant && f.restaurant.toLowerCase().includes(term))
+        f.name?.toLowerCase().includes(term) ||
+        f.category?.toLowerCase().includes(term) ||
+        f.cuisine?.toLowerCase().includes(term) ||
+        f.restaurantName?.toLowerCase().includes(term)
       );
     }
     
-    // Apply category filter
     if (selectedCategory.length > 0) {
       result = result.filter(f => selectedCategory.includes(f.category));
     }
     
-    // Apply cuisine filter
     if (selectedCuisine.length > 0) {
       result = result.filter(f => selectedCuisine.includes(f.cuisine));
     }
     
-    // Apply type filter
     if (selectedType) {
       result = result.filter(f => f.type === selectedType);
     }
     
-    // Apply status filter
     if (selectedStatus) {
       result = result.filter(f => f.status === selectedStatus);
     }
     
-    // Apply restaurant filter
     if (selectedRestaurant) {
-      result = result.filter(f => f.restaurant === selectedRestaurant);
+      result = result.filter(f => 
+        f.restaurant === selectedRestaurant || 
+        f.restaurantName === selectedRestaurant
+      );
     }
     
-    // Apply sorting
+    // Sorting
     if (sortBy === 'price-asc') {
-      result.sort((a, b) => a.price - b.price);
+      result.sort((a, b) => (a.price || 0) - (b.price || 0));
     } else if (sortBy === 'price-desc') {
-      result.sort((a, b) => b.price - a.price);
+      result.sort((a, b) => (b.price || 0) - (a.price || 0));
     } else if (sortBy === 'name-asc') {
-      result.sort((a, b) => a.name.localeCompare(b.name));
+      result.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
     } else if (sortBy === 'name-desc') {
-      result.sort((a, b) => b.name.localeCompare(a.name));
+      result.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
     } else if (sortBy === 'recent') {
-      result.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+      result.sort((a, b) => {
+        const dateA = new Date(a.create_at || a.createdDate || 0);
+        const dateB = new Date(b.create_at || b.createdDate || 0);
+        return dateB - dateA;
+      });
     }
     
-    setFilteredFoods(result);
-    setCurrentPage(1);
-  }, [searchTerm, selectedCategory, selectedCuisine, selectedType, selectedStatus, selectedRestaurant, sortBy, foods]);
+    return result;
+  }, [foods, searchTerm, selectedCategory, selectedCuisine, selectedType, selectedStatus, selectedRestaurant, sortBy]);
 
-  // Reset all filters
+  const filtered = filteredFoods();
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory, selectedCuisine, selectedType, selectedStatus, selectedRestaurant, sortBy]);
+
+  // Debounced search - re-fetch from server
+  useEffect(() => {
+    if (!hasFetchedRef.current) return; // Skip on initial mount
+    
+    if (filterTimeoutRef.current) {
+      clearTimeout(filterTimeoutRef.current);
+    }
+    
+    // Only fetch if search term exists
+    if (searchTerm) {
+      filterTimeoutRef.current = setTimeout(() => {
+        console.log('Search triggered: Fetching from server...');
+        fetchFoods({ search: searchTerm });
+      }, 500);
+    } else if (hasFetchedRef.current) {
+      // Search cleared, fetch all
+      fetchFoods();
+    }
+    
+    return () => {
+      if (filterTimeoutRef.current) {
+        clearTimeout(filterTimeoutRef.current);
+      }
+    };
+  }, [searchTerm, fetchFoods]);
+
+  // Form validation
+  const validateForm = useCallback(() => {
+    const errors = {};
+    
+    if (!formData.name?.trim()) {
+      errors.name = 'Food name is required';
+    }
+    
+    if (!formData.category) {
+      errors.category = 'Category is required';
+    }
+    
+    if (!formData.cuisine) {
+      errors.cuisine = 'Cuisine is required';
+    }
+    
+    if (!formData.restaurant) {
+      errors.restaurant = 'Restaurant is required';
+    }
+    
+    if (!formData.price || isNaN(formData.price) || parseFloat(formData.price) <= 0) {
+      errors.price = 'Valid price is required';
+    }
+    
+    if (formData.originalPrice && (isNaN(formData.originalPrice) || parseFloat(formData.originalPrice) < parseFloat(formData.price))) {
+      errors.originalPrice = 'Original price must be greater than or equal to price';
+    }
+    
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  }, [formData]);
+
+  // Reset filters
   const resetFilters = useCallback(() => {
     setSearchTerm('');
     setSelectedCategory([]);
@@ -104,151 +197,143 @@ export const useFoodManagement = (content) => {
     setSelectedType('');
     setSelectedStatus('');
     setSelectedRestaurant('');
-    setSortBy('');
+    setSortBy('recent');
+    // Fetch all after reset
+    fetchFoods();
+  }, [fetchFoods]);
+
+  // Reset form
+  const resetForm = useCallback(() => {
+    setFormData(getInitialFormState());
+    setImagePreview('');
+    setImageFile(null);
+    setFormErrors({});
   }, []);
 
-  // Form validation
-  const validateForm = useCallback(() => {
-    const errors = {};
-    
-    if (!formData.name.trim()) {
-      errors.name = `${content.form.name.label} is required`;
+  // Add food
+  const handleAddFood = useCallback(async () => {
+    if (!validateForm()) {
+      toast.error('Please fix validation errors');
+      return;
     }
     
-    if (!formData.category) {
-      errors.category = `${content.form.category.label} is required`;
-    }
-    
-    if (!formData.cuisine) {
-      errors.cuisine = `${content.form.cuisine.label} is required`;
-    }
-    
-    if (!formData.restaurant) {
-      errors.restaurant = `${content.form.restaurant.label} is required`;
-    }
-    
-    if (!formData.price || isNaN(formData.price) || formData.price <= 0) {
-      errors.price = 'Valid price is required';
-    }
-    
-    if (formData.originalPrice && (isNaN(formData.originalPrice) || formData.originalPrice <= 0)) {
-      errors.originalPrice = 'Original price must be valid';
-    }
-    
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  }, [formData]);
-
-  // Add food item
-  const handleAddFood = useCallback(() => {
-    if (!validateForm()) return;
-    
-    const newFood = {
-      id: foods.length + 1,
-      name: formData.name,
-      category: formData.category,
-      cuisine: formData.cuisine,
-      restaurant: formData.restaurant,
-      description: formData.description,
-      price: parseFloat(formData.price),
-      originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
-      image: imagePreview || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400',
-      type: formData.type,
-      status: formData.status,
-      createdDate: new Date().toISOString().split('T')[0]
-    };
-    
-    setFoods([newFood, ...foods]);
-    setShowAddModal(false);
-    resetForm();
-  }, [foods, formData, imagePreview, validateForm]);
-
-  // Edit food item
-  const handleEditFood = useCallback(() => {
-    if (!validateForm() || !selectedFood) return;
-    
-    const updatedFoods = foods.map(food => 
-      food.id === selectedFood.id ? {
-        ...food,
+    try {
+      const foodData = {
         name: formData.name,
         category: formData.category,
         cuisine: formData.cuisine,
         restaurant: formData.restaurant,
         description: formData.description,
         price: parseFloat(formData.price),
-        originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
-        image: imagePreview || food.image,
+        originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : undefined,
         type: formData.type,
         status: formData.status
-      } : food
-    );
-    
-    setFoods(updatedFoods);
-    setShowEditModal(false);
-    resetForm();
-  }, [foods, formData, imagePreview, selectedFood, validateForm]);
+      };
 
-  // Delete food item
-  const handleDeleteFood = useCallback(() => {
+      await createFoodAPI(foodData, imageFile);
+      toast.success('Food item added successfully');
+      setShowAddModal(false);
+      resetForm();
+      fetchFoods(); // Refresh list
+    } catch (error) {
+      toast.error(error.message || 'Failed to add food item');
+    }
+  }, [formData, imageFile, validateForm, createFoodAPI, resetForm, fetchFoods]);
+
+  // Edit food
+  const handleEditFood = useCallback(async () => {
+    if (!validateForm() || !selectedFood) {
+      toast.error('Please fix validation errors');
+      return;
+    }
+    
+    try {
+      const foodData = {
+        name: formData.name,
+        category: formData.category,
+        cuisine: formData.cuisine,
+        restaurant: formData.restaurant,
+        description: formData.description,
+        price: parseFloat(formData.price),
+        originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : undefined,
+        type: formData.type,
+        status: formData.status
+      };
+
+      await updateFoodAPI(selectedFood.fid, foodData, imageFile);
+      toast.success('Food item updated successfully');
+      setShowEditModal(false);
+      resetForm();
+      fetchFoods(); // Refresh list
+    } catch (error) {
+      toast.error(error.message || 'Failed to update food item');
+    }
+  }, [formData, imageFile, selectedFood, validateForm, updateFoodAPI, resetForm, fetchFoods]);
+
+  // Delete food
+  const handleDeleteFood = useCallback(async () => {
     if (!selectedFood) return;
     
-    setFoods(foods.filter(f => f.id !== selectedFood.id));
-    setShowDeleteModal(false);
-    setSelectedFood(null);
-  }, [foods, selectedFood]);
-
-  // Reset form
-  const resetForm = useCallback(() => {
-    setFormData({
-      name: '',
-      category: '',
-      cuisine: '',
-      type: 'Regular Menu Item',
-      price: '',
-      originalPrice: '',
-      description: '',
-      status: 'Active',
-      restaurant: ''
-    });
-    setImagePreview('');
-    setFormErrors({});
-  }, []);
+    try {
+      await deleteFoodAPI(selectedFood.fid, false);
+      toast.success('Food item deleted successfully');
+      setShowDeleteModal(false);
+      setSelectedFood(null);
+      fetchFoods(); // Refresh list
+    } catch (error) {
+      toast.error(error.message || 'Failed to delete food item');
+    }
+  }, [selectedFood, deleteFoodAPI, fetchFoods]);
 
   // Open edit modal
   const openEditModal = useCallback((food) => {
     setSelectedFood(food);
     setFormData({
-      name: food.name,
-      category: food.category,
-      cuisine: food.cuisine,
-      type: food.type,
-      price: food.price.toString(),
-      originalPrice: food.originalPrice ? food.originalPrice.toString() : '',
-      description: food.description,
-      status: food.status,
+      name: food.name || '',
+      category: food.category || '',
+      cuisine: food.cuisine || '',
+      type: food.type || 'Regular Menu Item',
+      price: food.price?.toString() || '',
+      originalPrice: food.originalPrice?.toString() || '',
+      description: food.description || '',
+      status: food.status || 'Active',
       restaurant: food.restaurant || ''
     });
-    setImagePreview(food.image);
+    setImagePreview(food.image?.url || '');
     setShowEditModal(true);
   }, []);
 
-  // Handle image upload
+  // Image upload
   const handleImageUpload = useCallback((e) => {
     const file = e.target.files[0];
     if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("File size should be less than 5MB");
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        toast.error("Please upload an image file");
+        return;
+      }
+
+      setImageFile(file);
+      
       const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
       reader.readAsDataURL(file);
     }
   }, []);
 
-  // Calculate paginated foods
-  const paginatedFoods = filteredFoods.slice(
+  // Pagination
+  const paginatedFoods = filtered.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
   
-  const totalPages = Math.ceil(filteredFoods.length / itemsPerPage);
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
   
   const hasFilters = searchTerm || 
     selectedCategory.length > 0 || 
@@ -257,11 +342,9 @@ export const useFoodManagement = (content) => {
     selectedStatus || 
     selectedRestaurant;
 
-  // Return all state and handlers
   return {
-    // State
-    foods,
-    filteredFoods,
+    foods: filtered,
+    filteredFoods: filtered,
     searchTerm,
     selectedCategory,
     selectedCuisine,
@@ -283,8 +366,8 @@ export const useFoodManagement = (content) => {
     paginatedFoods,
     totalPages,
     hasFilters,
-    
-    // Setters
+    loading: contextLoading,
+    error: contextError,
     setSearchTerm,
     setSelectedCategory,
     setSelectedCuisine,
@@ -303,8 +386,6 @@ export const useFoodManagement = (content) => {
     setFormData,
     setFormErrors,
     setImagePreview,
-    
-    // Handlers
     resetFilters,
     handleAddFood,
     handleEditFood,
@@ -312,7 +393,8 @@ export const useFoodManagement = (content) => {
     openEditModal,
     handleImageUpload,
     resetForm,
-    validateForm
+    validateForm,
+    clearError
   };
 };
 
