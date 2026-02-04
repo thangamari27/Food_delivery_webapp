@@ -1,8 +1,4 @@
-/**
- * Food Context
- */
-
-import React, { createContext, useContext, useReducer, useCallback, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useReducer, useCallback } from 'react';
 import foodService from '../../services/foodservice';
 
 const initialState = {
@@ -15,100 +11,90 @@ const initialState = {
     category: 'all',
     cuisine: 'all',
     type: 'all',
-    status: 'all',
-    restaurant: 'all',
-    isVeg: undefined,
-    minPrice: null,
-    maxPrice: null
+    status: 'all'
   },
   pagination: {
     currentPage: 1,
     limit: 20,
     total: 0,
-    pages: 0,
-    hasMore: false
-  },
-  stats: null
+    totalPages: 1
+  }
 };
 
 const ACTIONS = {
-  SET_LOADING: 'SET_LOADING',
-  SET_ERROR: 'SET_ERROR',
-  SET_FOODS: 'SET_FOODS',
-  SET_SELECTED_FOOD: 'SET_SELECTED_FOOD',
+  FETCH_START: 'FETCH_START',
+  FETCH_SUCCESS: 'FETCH_SUCCESS',
+  FETCH_ERROR: 'FETCH_ERROR',
+  SET_FOOD: 'SET_FOOD',
   ADD_FOOD: 'ADD_FOOD',
   UPDATE_FOOD: 'UPDATE_FOOD',
   DELETE_FOOD: 'DELETE_FOOD',
   SET_FILTERS: 'SET_FILTERS',
   RESET_FILTERS: 'RESET_FILTERS',
   SET_PAGINATION: 'SET_PAGINATION',
-  SET_STATS: 'SET_STATS',
   CLEAR_ERROR: 'CLEAR_ERROR'
 };
 
 function foodReducer(state, action) {
   switch (action.type) {
-    case ACTIONS.SET_LOADING:
-      return { ...state, loading: action.payload };
-    case ACTIONS.SET_ERROR:
-      return { ...state, error: action.payload, loading: false };
-    case ACTIONS.CLEAR_ERROR:
-      return { ...state, error: null };
-    case ACTIONS.SET_FOODS:
+    case ACTIONS.FETCH_START:
+      return { ...state, loading: true, error: null };
+
+    case ACTIONS.FETCH_SUCCESS:
       return {
         ...state,
-        foods: action.payload.data || [],
-        pagination: action.payload.pagination || state.pagination,
         loading: false,
-        error: null
+        foods: action.payload.data || [],
+        pagination: {
+          ...state.pagination,
+          total: action.payload.pagination?.total || action.payload.data?.length || 0,
+          totalPages: action.payload.pagination?.pages || 1
+        }
       };
-    case ACTIONS.SET_SELECTED_FOOD:
+
+    case ACTIONS.FETCH_ERROR:
+      return { ...state, loading: false, error: action.payload };
+
+    case ACTIONS.SET_FOOD:
       return { ...state, selectedFood: action.payload };
+
     case ACTIONS.ADD_FOOD:
       return {
         ...state,
         foods: [action.payload, ...state.foods],
-        pagination: {
-          ...state.pagination,
-          total: state.pagination.total + 1
-        }
+        pagination: { ...state.pagination, total: state.pagination.total + 1 }
       };
+
     case ACTIONS.UPDATE_FOOD:
       return {
         ...state,
-        foods: state.foods.map(f =>
+        foods: state.foods.map(f => 
           f.fid === action.payload.fid ? action.payload : f
         ),
         selectedFood: state.selectedFood?.fid === action.payload.fid 
           ? action.payload 
           : state.selectedFood
       };
+
     case ACTIONS.DELETE_FOOD:
       return {
         ...state,
         foods: state.foods.filter(f => f.fid !== action.payload),
-        pagination: {
-          ...state.pagination,
-          total: Math.max(0, state.pagination.total - 1)
-        }
+        pagination: { ...state.pagination, total: Math.max(0, state.pagination.total - 1) }
       };
+
     case ACTIONS.SET_FILTERS:
-      return {
-        ...state,
-        filters: { ...state.filters, ...action.payload }
-      };
+      return { ...state, filters: { ...state.filters, ...action.payload } };
+
     case ACTIONS.RESET_FILTERS:
-      return {
-        ...state,
-        filters: initialState.filters
-      };
+      return { ...state, filters: initialState.filters };
+
     case ACTIONS.SET_PAGINATION:
-      return {
-        ...state,
-        pagination: { ...state.pagination, ...action.payload }
-      };
-    case ACTIONS.SET_STATS:
-      return { ...state, stats: action.payload };
+      return { ...state, pagination: { ...state.pagination, ...action.payload } };
+
+    case ACTIONS.CLEAR_ERROR:
+      return { ...state, error: null };
+
     default:
       return state;
   }
@@ -118,199 +104,118 @@ const FoodContext = createContext();
 
 export function FoodProvider({ children }) {
   const [state, dispatch] = useReducer(foodReducer, initialState);
-  const isMounted = useRef(true);
 
-  useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  const buildQueryParams = useCallback((filters) => {
-    const params = {};
-    if (filters.search) params.search = filters.search;
-    if (filters.category && filters.category !== 'all') params.category = filters.category;
-    if (filters.cuisine && filters.cuisine !== 'all') params.cuisine = filters.cuisine;
-    if (filters.type && filters.type !== 'all') params.type = filters.type;
-    if (filters.status && filters.status !== 'all') params.status = filters.status;
-    if (filters.restaurant && filters.restaurant !== 'all') params.restaurant = filters.restaurant;
-    if (filters.isVeg !== undefined) params.isVeg = filters.isVeg;
-    if (filters.minPrice) params.minPrice = filters.minPrice;
-    if (filters.maxPrice) params.maxPrice = filters.maxPrice;
-    return params;
-  }, []);
-
-  // Stable reference, no dependencies that change
-  const fetchFoods = useCallback(async (customFilters = {}) => {
+  const fetchFoods = useCallback(async (customParams = {}) => {
     try {
-      if (!isMounted.current) return;
-      
-      dispatch({ type: ACTIONS.SET_LOADING, payload: true });
-      
+      dispatch({ type: ACTIONS.FETCH_START });
+
       const params = {
-        ...buildQueryParams(state.filters),
-        ...customFilters,
+        ...state.filters,
+        ...customParams,
         limit: state.pagination.limit,
-        skip: (state.pagination.currentPage - 1) * state.pagination.limit,
-        sortBy: '-create_at'
+        skip: (state.pagination.currentPage - 1) * state.pagination.limit
       };
+
+      // Remove 'all' filters
+      Object.keys(params).forEach(key => {
+        if (params[key] === 'all') delete params[key];
+      });
 
       const response = await foodService.getAll(params);
       
-      if (isMounted.current) {
-        dispatch({
-          type: ACTIONS.SET_FOODS,
-          payload: {
-            data: response.data?.data || [],
-            pagination: response.data?.pagination || {}
+      dispatch({
+        type: ACTIONS.FETCH_SUCCESS,
+        payload: {
+          data: response.data || [],
+          pagination: response.pagination || {
+            limit: state.pagination.limit,
+            skip: (state.pagination.currentPage - 1) * state.pagination.limit,
+            total: response.data?.length || 0,
+            pages: Math.ceil((response.data?.length || 0) / state.pagination.limit)
           }
-        });
-      }
-      
+        }
+      });
+
       return response;
     } catch (error) {
-      if (isMounted.current) {
-        dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
-      }
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
       throw error;
     }
-  }, []); // Empty dependencies - stable reference
+  }, [state.filters, state.pagination.limit, state.pagination.currentPage]);
 
   const fetchFood = useCallback(async (fid, incrementView = false) => {
     try {
-      if (!isMounted.current) return;
-      dispatch({ type: ACTIONS.SET_LOADING, payload: true });
+      dispatch({ type: ACTIONS.FETCH_START });
       const response = await foodService.getById(fid, incrementView);
-      if (isMounted.current) {
-        dispatch({ type: ACTIONS.SET_SELECTED_FOOD, payload: response.data?.data });
-      }
+      dispatch({ type: ACTIONS.SET_FOOD, payload: response.data });
       return response;
     } catch (error) {
-      if (isMounted.current) {
-        dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
-      }
-      throw error;
-    }
-  }, []);
-
-  const fetchFoodsByRestaurant = useCallback(async (restaurantId, params = {}) => {
-    try {
-      dispatch({ type: ACTIONS.SET_LOADING, payload: true });
-      const response = await foodService.getByRestaurant(restaurantId, params);
-      dispatch({
-        type: ACTIONS.SET_FOODS,
-        payload: {
-          data: response.data?.data || [],
-          pagination: response.data?.pagination || {}
-        }
-      });
-      return response;
-    } catch (error) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
       throw error;
     }
   }, []);
 
   const createFood = useCallback(async (data, image = null) => {
     try {
-      dispatch({ type: ACTIONS.SET_LOADING, payload: true });
-      const response = await foodService.create(data, image);
-      dispatch({ type: ACTIONS.ADD_FOOD, payload: response.data?.data });
-      dispatch({ type: ACTIONS.SET_LOADING, payload: false });
+      dispatch({ type: ACTIONS.FETCH_START });
+      const backendData = foodService.transformToBackendFormat(data);
+      const response = await foodService.create(backendData, image);
+      dispatch({ type: ACTIONS.ADD_FOOD, payload: response.data });
       return response;
     } catch (error) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
       throw error;
     }
   }, []);
 
   const updateFood = useCallback(async (fid, data, image = null) => {
     try {
-      dispatch({ type: ACTIONS.SET_LOADING, payload: true });
-      const response = await foodService.update(fid, data, image);
-      dispatch({ type: ACTIONS.UPDATE_FOOD, payload: response.data?.data });
-      dispatch({ type: ACTIONS.SET_LOADING, payload: false });
+      dispatch({ type: ACTIONS.FETCH_START });
+      const backendData = foodService.transformToBackendFormat(data);
+      const response = await foodService.update(fid, backendData, image);
+      dispatch({ type: ACTIONS.UPDATE_FOOD, payload: response.data });
       return response;
     } catch (error) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
-      throw error;
-    }
-  }, []);
-
-  const updateAvailability = useCallback(async (fid, isAvailable) => {
-    try {
-      const response = await foodService.updateAvailability(fid, isAvailable);
-      dispatch({ type: ACTIONS.UPDATE_FOOD, payload: response.data?.data });
-      return response;
-    } catch (error) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
-      throw error;
-    }
-  }, []);
-
-  const updateQuantity = useCallback(async (fid, quantity, operation = 'set') => {
-    try {
-      const response = await foodService.updateQuantity(fid, quantity, operation);
-      dispatch({ type: ACTIONS.UPDATE_FOOD, payload: response.data?.data });
-      return response;
-    } catch (error) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
       throw error;
     }
   }, []);
 
   const deleteFood = useCallback(async (fid, permanent = false) => {
     try {
-      dispatch({ type: ACTIONS.SET_LOADING, payload: true });
-      if (permanent) {
-        await foodService.deletePermanent(fid);
-      } else {
-        await foodService.deactivate(fid);
-      }
+      dispatch({ type: ACTIONS.FETCH_START });
+      await foodService.delete(fid, permanent);
       dispatch({ type: ACTIONS.DELETE_FOOD, payload: fid });
-      dispatch({ type: ACTIONS.SET_LOADING, payload: false });
-      return true;
+      return { success: true };
     } catch (error) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
       throw error;
     }
   }, []);
 
-  const fetchStats = useCallback(async (filters = {}) => {
+  const searchFoods = useCallback(async (searchTerm, additionalParams = {}) => {
     try {
-      const response = await foodService.getStats(filters);
-      dispatch({ type: ACTIONS.SET_STATS, payload: response.data?.data });
-      return response;
-    } catch (error) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
-      throw error;
-    }
-  }, []);
-
-  const searchFoods = useCallback(async (searchTerm, additionalFilters = {}) => {
-    try {
-      dispatch({ type: ACTIONS.SET_LOADING, payload: true });
+      dispatch({ type: ACTIONS.FETCH_START });
       const params = {
-        ...additionalFilters,
+        ...additionalParams,
         limit: state.pagination.limit,
         skip: (state.pagination.currentPage - 1) * state.pagination.limit
       };
       const response = await foodService.search(searchTerm, params);
       dispatch({
-        type: ACTIONS.SET_FOODS,
+        type: ACTIONS.FETCH_SUCCESS,
         payload: {
-          data: response.data?.data || [],
-          pagination: response.data?.pagination || {}
+          data: response.data || [],
+          pagination: response.pagination || state.pagination
         }
       });
       return response;
     } catch (error) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
       throw error;
     }
   }, [state.pagination]);
 
-  // No auto-fetch, just update state
   const setFilters = useCallback((newFilters) => {
     dispatch({ type: ACTIONS.SET_FILTERS, payload: newFilters });
   }, []);
@@ -323,38 +228,43 @@ export function FoodProvider({ children }) {
     dispatch({ type: ACTIONS.SET_PAGINATION, payload: { currentPage: page } });
   }, []);
 
-  const setPageSize = useCallback((limit) => {
-    dispatch({ type: ACTIONS.SET_PAGINATION, payload: { limit, currentPage: 1 } });
-  }, []);
-
   const clearError = useCallback(() => {
     dispatch({ type: ACTIONS.CLEAR_ERROR });
   }, []);
 
+  // Expose transform functions
+  const transformToBackendFormat = useCallback((data) => {
+    return foodService.transformToBackendFormat(data);
+  }, []);
+
+  const transformToFrontendFormat = useCallback((data) => {
+    return foodService.transformToFrontendFormat(data);
+  }, []);
+
   const value = {
-    state,
+    // State
     foods: state.foods,
     selectedFood: state.selectedFood,
     loading: state.loading,
     error: state.error,
     filters: state.filters,
     pagination: state.pagination,
-    stats: state.stats,
+    
+    // Actions
     fetchFoods,
     fetchFood,
-    fetchFoodsByRestaurant,
     createFood,
     updateFood,
-    updateAvailability,
-    updateQuantity,
     deleteFood,
-    fetchStats,
     searchFoods,
     setFilters,
     resetFilters,
     setPage,
-    setPageSize,
-    clearError
+    clearError,
+    
+    // Transform functions
+    transformToBackendFormat,
+    transformToFrontendFormat
   };
 
   return (
@@ -371,5 +281,3 @@ export function useFood() {
   }
   return context;
 }
-
-export default FoodContext;

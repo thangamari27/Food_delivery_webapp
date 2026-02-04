@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Phone, Mail, MapPin, Clock, DollarSign, Package, Award, Zap, Navigation, Users, CheckCircle, XCircle, Tag, Globe } from 'lucide-react';
+import { Star, Phone, Mail, MapPin, Clock, IndianRupee, Package, Award, Zap, Navigation, Users, CheckCircle, XCircle, Tag, Globe } from 'lucide-react';
 import { getStatusColor } from '../../../../../utils/handler/admin/restaurantFilterHandler';
 
 const DetailSection = ({ title, icon: Icon, children }) => (
@@ -167,7 +167,7 @@ function RestaurantDetails({ restaurant, content }) {
             <StatCard 
               label="Total Revenue" 
               value={`₹${restaurant.totalRevenue.toLocaleString()}`} 
-              icon={DollarSign}
+              icon={IndianRupee}
               color="green"
             />
           )}
@@ -175,7 +175,7 @@ function RestaurantDetails({ restaurant, content }) {
             <StatCard 
               label="Avg Order Value" 
               value={`₹${Math.round(restaurant.averageOrderValue)}`} 
-              icon={DollarSign}
+              icon={IndianRupee}
               color="orange"
             />
           )}
@@ -268,7 +268,7 @@ function RestaurantDetails({ restaurant, content }) {
       </div>
 
       {/* Pricing & Delivery */}
-      <DetailSection title="Pricing & Delivery" icon={DollarSign}>
+      <DetailSection title="Pricing & Delivery" icon={IndianRupee}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
           <InfoRow label="Price Range" value={restaurant.priceRange || 'N/A'} />
           <InfoRow label="Price for Two" value={`₹${restaurant.priceForTwo || 0}`} />

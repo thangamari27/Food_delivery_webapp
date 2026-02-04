@@ -1,6 +1,7 @@
 /**
  * useRestaurantManagement Hook 
 */
+
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useRestaurant } from '../../context/admin/Restaurantcontext'
 import { applyFilters, sortRestaurants, validateForm } from "../../utils/handler/admin/restaurantFilterHandler";
@@ -54,7 +55,11 @@ const getInitialFormState = () => ({
   isFeatured: false,
   isPremium: false,
   menuItems: [],
-  activeOffers: []
+  activeOffers: [],
+  rating: {
+    average: 0,
+    count: 0
+  }
 });
 
 export function useRestaurantManagement(content) {
@@ -196,7 +201,8 @@ export function useRestaurantManagement(content) {
         deliveryFee: restaurant.deliveryFee || 0,
         deliveryRadius: restaurant.deliveryRadius || 10,
         offers: restaurant.offers || "",
-        priceForTwo: restaurant.priceForTwo || 0
+        priceForTwo: restaurant.priceForTwo || 0,
+        rating: restaurant.rating || getInitialFormState().rating
       };
       
       setFormData(transformedData);
@@ -264,7 +270,12 @@ export function useRestaurantManagement(content) {
         minOrderAmount: parseFloat(formData.minOrderAmount) || 0,
         deliveryFee: parseFloat(formData.deliveryFee) || 0,
         deliveryRadius: parseInt(formData.deliveryRadius) || 10,
-        priceForTwo: formData.priceForTwo || 0
+        priceForTwo: formData.priceForTwo || 0,
+        // Handle rating
+        rating: {
+          average: parseFloat(formData.rating?.average) || 0,
+          count: parseInt(formData.rating?.count) || 0
+        }
       };
 
       if (modalMode === "create") {

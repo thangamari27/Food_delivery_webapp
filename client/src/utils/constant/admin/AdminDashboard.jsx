@@ -73,12 +73,12 @@ export const sidebarContent = {
         icon: ShoppingBag,
         // badge: "25",
     },
-    {
-        id: 4,
-        label: "Offers",
-        href: "/admin/offers",
-        icon: Tag,
-    },
+    // {
+    //     id: 4,
+    //     label: "Offers",
+    //     href: "/admin/offers",
+    //     icon: Tag,
+    // },
     {
         id: 5,
         label: "Restaurants",
@@ -102,18 +102,18 @@ export const sidebarContent = {
       { label: "General", href: "/admin/customers/general" },
       ],
     },
-    {
-      id: 7,
-      label: "Subscription",
-      href: "/admin/subscription",
-      icon: CreditCard,
-    },
-    {
-      id: 8,
-      label: "Enquiry",
-      href: "/admin/enquiry",
-      icon: Mail,
-    },
+    // {
+    //   id: 7,
+    //   label: "Subscription",
+    //   href: "/admin/subscription",
+    //   icon: CreditCard,
+    // },
+    // {
+    //   id: 8,
+    //   label: "Enquiry",
+    //   href: "/admin/enquiry",
+    //   icon: Mail,
+    // },
     ],
 }
 

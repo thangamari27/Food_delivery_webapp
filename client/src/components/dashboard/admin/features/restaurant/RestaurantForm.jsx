@@ -147,6 +147,18 @@ function RestaurantForm({ content, formData, setFormData, errors, setErrors, sty
     setFormData(prev => ({ ...prev, serviceAreas: areas }));
   };
 
+  // Handle rating field changes
+  const handleRatingChange = (field) => (e) => {
+    const value = parseFloat(e.target.value) || 0;
+    setFormData(prev => ({
+      ...prev,
+      rating: {
+        ...prev.rating,
+        [field]: field === 'average' ? Math.min(Math.max(value, 0), 5) : Math.max(value, 0)
+      }
+    }));
+  };
+
   // Available options
   const cuisineOptions = [
     'North Indian', 'South Indian', 'Chinese', 'Biryani', 'Punjabi', 
@@ -488,6 +500,37 @@ function RestaurantForm({ content, formData, setFormData, errors, setErrors, sty
         />
       </div>
 
+      {/* Rating Section */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-300 pb-2">
+          Rating Information
+        </h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField label="Average Rating (0-5)">
+            <Input
+              type="number"
+              step="0.1"
+              min="0"
+              max="5"
+              value={formData.rating?.average || ''}
+              onChange={handleRatingChange('average')}
+              placeholder="4.5"
+            />
+          </FormField>
+
+          <FormField label="Rating Count">
+            <Input
+              type="number"
+              min="0"
+              value={formData.rating?.count || ''}
+              onChange={handleRatingChange('count')}
+              placeholder="0"
+            />
+          </FormField>
+        </div>
+      </div>
+
       {/* Additional Information */}
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-300 pb-2">
@@ -502,7 +545,9 @@ function RestaurantForm({ content, formData, setFormData, errors, setErrors, sty
               placeholder="e.g., 20% off on first order"
             />
           </FormField>
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField label="Status">
             <Select
               value={formData.status || 'Active'}
@@ -510,9 +555,6 @@ function RestaurantForm({ content, formData, setFormData, errors, setErrors, sty
               options={statusOptions}
             />
           </FormField>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField label="Verification Status">
             <Select
               value={formData.verificationStatus || 'Pending'}

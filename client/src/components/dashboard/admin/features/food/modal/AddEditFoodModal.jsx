@@ -63,7 +63,7 @@ function AddEditFoodModal({
               >
                 <option value="">Select Restaurant</option>
                 {content.restaurants.map(rest => (
-                  <option key={rest.id} value={rest.name}>{rest.name}</option>
+                  <option key={rest.id} value={rest.id}>{rest.name}</option>
                 ))}
               </Select>
               <Select

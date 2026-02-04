@@ -6,6 +6,22 @@ import Modal from './Modal';
 function ViewFoodModal({ content, isOpen, onClose, food, onEdit, styles }) {
   if (!food) return null;
 
+  // Format price with safety check
+  const formatPrice = (price) => {
+    if (!price && price !== 0) return 'N/A';
+    return `$${parseFloat(price).toFixed(2)}`;
+  };
+
+  // Format date with safety check
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    try {
+      return new Date(dateString).toLocaleDateString();
+    } catch (e) {
+      return 'Invalid Date';
+    }
+  };
+
   return (
     <Modal
       styles={styles}
@@ -20,7 +36,11 @@ function ViewFoodModal({ content, isOpen, onClose, food, onEdit, styles }) {
       }
     >
       <div className="space-y-6">
-        <img src={food.image} alt={food.name} className="w-full h-48 sm:h-64 object-cover rounded-lg" />
+        <img 
+          src={food.image?.url || food.image || '/food-placeholder.jpg'} 
+          alt={food.name} 
+          className="w-full h-48 sm:h-64 object-cover rounded-lg" 
+        />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h3 className="text-sm font-medium text-gray-500 mb-1">{content.form.name.label}</h3>
@@ -28,7 +48,7 @@ function ViewFoodModal({ content, isOpen, onClose, food, onEdit, styles }) {
           </div>
           <div>
             <h3 className="text-sm font-medium text-gray-500 mb-1">{content.form.restaurant.label}</h3>
-            <p className="text-base sm:text-lg text-gray-900">{food.restaurant || 'N/A'}</p>
+            <p className="text-base sm:text-lg text-gray-900">{food.restaurantName || food.restaurant || 'N/A'}</p>
           </div>
           <div>
             <h3 className="text-sm font-medium text-gray-500 mb-1">{content.form.category.label}</h3>
@@ -45,23 +65,33 @@ function ViewFoodModal({ content, isOpen, onClose, food, onEdit, styles }) {
           <div>
             <h3 className="text-sm font-medium text-gray-500 mb-1">{content.form.price.label}</h3>
             <div className="flex items-center gap-2">
-              <p className="text-base sm:text-lg font-semibold text-gray-900">${food.price.toFixed(2)}</p>
-              {food.originalPrice && (
-                <p className="text-sm text-gray-500 line-through">${food.originalPrice.toFixed(2)}</p>
+              <p className="text-base sm:text-lg font-semibold text-gray-900">
+                {formatPrice(food.price)}
+              </p>
+              {food.originalPrice && food.originalPrice > food.price && (
+                <p className="text-sm text-gray-500 line-through">
+                  {formatPrice(food.originalPrice)}
+                </p>
               )}
             </div>
           </div>
           <div>
             <h3 className="text-sm font-medium text-gray-500 mb-1">{content.form.status.label}</h3>
-            <Badge type="status" styles={styles}>{food.status}</Badge>
+            <Badge type="status" styles={styles}>
+              {food.status || (food.isActive ? 'Active' : 'Inactive')}
+            </Badge>
           </div>
           <div className="md:col-span-2">
             <h3 className="text-sm font-medium text-gray-500 mb-1">{content.form.description.label}</h3>
-            <p className="text-gray-900">{food.description}</p>
+            <p className="text-gray-900">{food.description || 'No description available'}</p>
           </div>
           <div>
             <h3 className="text-sm font-medium text-gray-500 mb-1">Created Date</h3>
-            <p className="text-gray-900">{new Date(food.createdDate).toLocaleDateString()}</p>
+            <p className="text-gray-900">{formatDate(food.create_at)}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-500 mb-1">Food ID</h3>
+            <p className="text-gray-900 text-sm font-mono truncate">{food.fid}</p>
           </div>
         </div>
       </div>
@@ -69,4 +99,4 @@ function ViewFoodModal({ content, isOpen, onClose, food, onEdit, styles }) {
   )
 }
 
-export default ViewFoodModal
+export default ViewFoodModal;

@@ -8,7 +8,7 @@ function ProtectedRoute({ children, role }) {
 
   // Show loader while checking authentication
   if (loading) {
-    return <Loader />
+    return
   }
 
   // Not authenticated - redirect to login and save the attempted location
