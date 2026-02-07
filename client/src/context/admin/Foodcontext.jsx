@@ -1,3 +1,8 @@
+/**
+ * Food Context - Updated for Backend Integration
+ * Manages food state and provides actions for components
+ */
+
 import React, { createContext, useContext, useReducer, useCallback } from 'react';
 import foodService from '../../services/foodservice';
 
@@ -11,13 +16,15 @@ const initialState = {
     category: 'all',
     cuisine: 'all',
     type: 'all',
-    status: 'all'
+    status: 'all',
+    restaurant: 'all'
   },
   pagination: {
     currentPage: 1,
     limit: 20,
     total: 0,
-    totalPages: 1
+    totalPages: 1,
+    skip: 0
   }
 };
 
@@ -48,7 +55,8 @@ function foodReducer(state, action) {
         pagination: {
           ...state.pagination,
           total: action.payload.pagination?.total || action.payload.data?.length || 0,
-          totalPages: action.payload.pagination?.pages || 1
+          totalPages: action.payload.pagination?.pages || Math.ceil((action.payload.data?.length || 0) / state.pagination.limit),
+          skip: action.payload.pagination?.skip || 0
         }
       };
 
@@ -62,7 +70,11 @@ function foodReducer(state, action) {
       return {
         ...state,
         foods: [action.payload, ...state.foods],
-        pagination: { ...state.pagination, total: state.pagination.total + 1 }
+        pagination: { 
+          ...state.pagination, 
+          total: state.pagination.total + 1,
+          totalPages: Math.ceil((state.pagination.total + 1) / state.pagination.limit)
+        }
       };
 
     case ACTIONS.UPDATE_FOOD:
@@ -77,20 +89,36 @@ function foodReducer(state, action) {
       };
 
     case ACTIONS.DELETE_FOOD:
+      const remainingFoods = state.foods.filter(f => f.fid !== action.payload);
       return {
         ...state,
-        foods: state.foods.filter(f => f.fid !== action.payload),
-        pagination: { ...state.pagination, total: Math.max(0, state.pagination.total - 1) }
+        foods: remainingFoods,
+        pagination: { 
+          ...state.pagination, 
+          total: Math.max(0, state.pagination.total - 1),
+          totalPages: Math.ceil(Math.max(0, state.pagination.total - 1) / state.pagination.limit)
+        }
       };
 
     case ACTIONS.SET_FILTERS:
-      return { ...state, filters: { ...state.filters, ...action.payload } };
+      return { 
+        ...state, 
+        filters: { ...state.filters, ...action.payload },
+        pagination: { ...state.pagination, currentPage: 1, skip: 0 } // Reset to page 1 on filter change
+      };
 
     case ACTIONS.RESET_FILTERS:
-      return { ...state, filters: initialState.filters };
+      return { 
+        ...state, 
+        filters: initialState.filters,
+        pagination: { ...state.pagination, currentPage: 1, skip: 0 }
+      };
 
     case ACTIONS.SET_PAGINATION:
-      return { ...state, pagination: { ...state.pagination, ...action.payload } };
+      return { 
+        ...state, 
+        pagination: { ...state.pagination, ...action.payload }
+      };
 
     case ACTIONS.CLEAR_ERROR:
       return { ...state, error: null };
@@ -105,35 +133,33 @@ const FoodContext = createContext();
 export function FoodProvider({ children }) {
   const [state, dispatch] = useReducer(foodReducer, initialState);
 
+  /**
+   * Fetch all foods with filters and pagination
+   */
   const fetchFoods = useCallback(async (customParams = {}) => {
     try {
       dispatch({ type: ACTIONS.FETCH_START });
 
+      // Combine state filters with custom params
       const params = {
-        ...state.filters,
-        ...customParams,
         limit: state.pagination.limit,
-        skip: (state.pagination.currentPage - 1) * state.pagination.limit
+        skip: state.pagination.skip,
+        sortBy: '-create_at',
+        ...customParams
       };
 
-      // Remove 'all' filters
-      Object.keys(params).forEach(key => {
-        if (params[key] === 'all') delete params[key];
+      // Add active filters
+      Object.keys(state.filters).forEach(key => {
+        if (state.filters[key] && state.filters[key] !== 'all' && state.filters[key] !== '') {
+          params[key] = state.filters[key];
+        }
       });
 
       const response = await foodService.getAll(params);
       
       dispatch({
         type: ACTIONS.FETCH_SUCCESS,
-        payload: {
-          data: response.data || [],
-          pagination: response.pagination || {
-            limit: state.pagination.limit,
-            skip: (state.pagination.currentPage - 1) * state.pagination.limit,
-            total: response.data?.length || 0,
-            pages: Math.ceil((response.data?.length || 0) / state.pagination.limit)
-          }
-        }
+        payload: response
       });
 
       return response;
@@ -141,8 +167,11 @@ export function FoodProvider({ children }) {
       dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
       throw error;
     }
-  }, [state.filters, state.pagination.limit, state.pagination.currentPage]);
+  }, [state.filters, state.pagination.limit, state.pagination.skip]);
 
+  /**
+   * Fetch single food by ID
+   */
   const fetchFood = useCallback(async (fid, incrementView = false) => {
     try {
       dispatch({ type: ACTIONS.FETCH_START });
@@ -155,12 +184,19 @@ export function FoodProvider({ children }) {
     }
   }, []);
 
-  const createFood = useCallback(async (data, image = null) => {
+  /**
+   * Create new food item
+   */
+  const createFood = useCallback(async (data, imageFile = null) => {
     try {
       dispatch({ type: ACTIONS.FETCH_START });
+      
+      // Transform data to backend format
       const backendData = foodService.transformToBackendFormat(data);
-      const response = await foodService.create(backendData, image);
+      
+      const response = await foodService.create(backendData, imageFile);
       dispatch({ type: ACTIONS.ADD_FOOD, payload: response.data });
+      
       return response;
     } catch (error) {
       dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
@@ -168,12 +204,19 @@ export function FoodProvider({ children }) {
     }
   }, []);
 
-  const updateFood = useCallback(async (fid, data, image = null) => {
+  /**
+   * Update existing food item
+   */
+  const updateFood = useCallback(async (fid, data, imageFile = null) => {
     try {
       dispatch({ type: ACTIONS.FETCH_START });
+      
+      // Transform data to backend format
       const backendData = foodService.transformToBackendFormat(data);
-      const response = await foodService.update(fid, backendData, image);
+      
+      const response = await foodService.update(fid, backendData, imageFile);
       dispatch({ type: ACTIONS.UPDATE_FOOD, payload: response.data });
+      
       return response;
     } catch (error) {
       dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
@@ -181,6 +224,9 @@ export function FoodProvider({ children }) {
     }
   }, []);
 
+  /**
+   * Delete food item
+   */
   const deleteFood = useCallback(async (fid, permanent = false) => {
     try {
       dispatch({ type: ACTIONS.FETCH_START });
@@ -193,46 +239,108 @@ export function FoodProvider({ children }) {
     }
   }, []);
 
+  /**
+   * Search foods
+   */
   const searchFoods = useCallback(async (searchTerm, additionalParams = {}) => {
     try {
       dispatch({ type: ACTIONS.FETCH_START });
+      
       const params = {
-        ...additionalParams,
         limit: state.pagination.limit,
-        skip: (state.pagination.currentPage - 1) * state.pagination.limit
+        skip: state.pagination.skip,
+        ...additionalParams
       };
+      
       const response = await foodService.search(searchTerm, params);
+      
       dispatch({
         type: ACTIONS.FETCH_SUCCESS,
-        payload: {
-          data: response.data || [],
-          pagination: response.pagination || state.pagination
-        }
+        payload: response
       });
+      
       return response;
     } catch (error) {
       dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
       throw error;
     }
-  }, [state.pagination]);
+  }, [state.pagination.limit, state.pagination.skip]);
 
+  /**
+   * Update food availability
+   */
+  const updateAvailability = useCallback(async (fid, isAvailable) => {
+    try {
+      dispatch({ type: ACTIONS.FETCH_START });
+      const response = await foodService.updateAvailability(fid, isAvailable);
+      dispatch({ type: ACTIONS.UPDATE_FOOD, payload: response.data });
+      return response;
+    } catch (error) {
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
+      throw error;
+    }
+  }, []);
+
+  /**
+   * Update food quantity
+   */
+  const updateQuantity = useCallback(async (fid, quantity, operation = 'set') => {
+    try {
+      dispatch({ type: ACTIONS.FETCH_START });
+      const response = await foodService.updateQuantity(fid, quantity, operation);
+      dispatch({ type: ACTIONS.UPDATE_FOOD, payload: response.data });
+      return response;
+    } catch (error) {
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
+      throw error;
+    }
+  }, []);
+
+  /**
+   * Set filters
+   */
   const setFilters = useCallback((newFilters) => {
     dispatch({ type: ACTIONS.SET_FILTERS, payload: newFilters });
   }, []);
 
+  /**
+   * Reset filters
+   */
   const resetFilters = useCallback(() => {
     dispatch({ type: ACTIONS.RESET_FILTERS });
   }, []);
 
+  /**
+   * Set pagination
+   */
   const setPage = useCallback((page) => {
-    dispatch({ type: ACTIONS.SET_PAGINATION, payload: { currentPage: page } });
+    const skip = (page - 1) * state.pagination.limit;
+    dispatch({ 
+      type: ACTIONS.SET_PAGINATION, 
+      payload: { currentPage: page, skip } 
+    });
+  }, [state.pagination.limit]);
+
+  /**
+   * Set items per page
+   */
+  const setItemsPerPage = useCallback((limit) => {
+    dispatch({ 
+      type: ACTIONS.SET_PAGINATION, 
+      payload: { limit, currentPage: 1, skip: 0 } 
+    });
   }, []);
 
+  /**
+   * Clear error
+   */
   const clearError = useCallback(() => {
     dispatch({ type: ACTIONS.CLEAR_ERROR });
   }, []);
 
-  // Expose transform functions
+  /**
+   * Transform functions (exposed for components that need them)
+   */
   const transformToBackendFormat = useCallback((data) => {
     return foodService.transformToBackendFormat(data);
   }, []);
@@ -257,9 +365,12 @@ export function FoodProvider({ children }) {
     updateFood,
     deleteFood,
     searchFoods,
+    updateAvailability,
+    updateQuantity,
     setFilters,
     resetFilters,
     setPage,
+    setItemsPerPage,
     clearError,
     
     // Transform functions

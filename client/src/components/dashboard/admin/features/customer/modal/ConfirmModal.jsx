@@ -1,13 +1,13 @@
 import { AlertTriangle } from "lucide-react";
 
-function ConfirmModal({ content, type, customer, onConfirm, onClose, styles }) {
+function ConfirmModal({ content, type, customer, onConfirm, onClose, styles, loading = false }) {
   if (!customer) return null;
 
   const config = content.confirmModal[type];
   const canDelete = type !== 'delete' || customer.totalOrders === 0;
 
   return (
-    <div className={styles.modal.overlay} onClick={onClose} role="dialog" aria-modal="true">
+    <div className={styles.modal.overlay} onClick={loading ? undefined : onClose} role="dialog" aria-modal="true">
       <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-start gap-4 mb-4">
           <div className="p-3 bg-red-100 rounded-full">
@@ -28,15 +28,22 @@ function ConfirmModal({ content, type, customer, onConfirm, onClose, styles }) {
           </div>
         </div>
         <div className="flex justify-end gap-3">
-          <button onClick={onClose} className={styles.button.secondary}>
+          <button onClick={onClose} className={styles.button.secondary} disabled={loading}>
             {config.cancel}
           </button>
           <button 
             onClick={onConfirm} 
-            disabled={!canDelete}
+            disabled={!canDelete || loading}
             className={styles.button.danger}
           >
-            {config.confirm}
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                {config.confirming || "Processing..."}
+              </span>
+            ) : (
+              config.confirm
+            )}
           </button>
         </div>
       </div>

@@ -1,13 +1,14 @@
 import React from 'react'
 
-function SubmitButton({ text, bgColor, hoverColor, icon, onClick, styles }) {
+function SubmitButton({ text, bgColor, hoverColor, icon, onClick, loading, styles }) {
   return (
     <button
-        onClick={onClick}
-        className={`${styles.button} ${bgColor} ${hoverColor}`}
-      >
-        <span>{text}</span>
-        {icon}
+      disabled={loading}
+      onClick={onClick}
+      className={`${styles.button} ${bgColor} ${hoverColor} ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
+    >
+      <span>{loading ? 'Submitting...' : text}</span>
+      {!loading && icon}
     </button>
   )
 }

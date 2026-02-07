@@ -150,7 +150,7 @@ export const initialOrders = [
   }
 ];
 
-// Sample restaurant booking data (these would come from backend/state management)
+// Sample restaurant booking data for user dashboard (these would come from backend/state management)
 export const initialBookings = [
   { 
     id: 1, 

@@ -8,9 +8,9 @@ function TableHeader({ label, sortable, onSort, sortKey, currentSort, styles }) 
     >
         <div className="flex items-center gap-2">
         {label}
-        {sortable && currentSort.key === sortKey && (
+        {/* {sortable && currentSort.key === sortKey && (
             <span>{currentSort.direction === 'asc' ? '↑' : '↓'}</span>
-        )}
+        )} */}
         </div>
     </th>
   )

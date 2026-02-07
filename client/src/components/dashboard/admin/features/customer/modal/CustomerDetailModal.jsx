@@ -9,6 +9,11 @@ function CustomerDetailModal({ content, customer, onClose, onEdit, styles }) {
     day: 'numeric' 
   }) : 'Never';
 
+  const handleEdit = () => {
+    onClose(); 
+    onEdit(customer);
+  };
+
   return (
     <div className={styles.modal.overlay} onClick={onClose} role="dialog" aria-modal="true">
       <div className={styles.modal.container} onClick={(e) => e.stopPropagation()}>
@@ -100,10 +105,7 @@ function CustomerDetailModal({ content, customer, onClose, onEdit, styles }) {
         <div className={styles.modal.footer}>
           <button onClick={onClose} className={styles.button.secondary}>Close</button>
           <button 
-            onClick={() => { 
-              onClose(); 
-              onEdit(customer); 
-            }} 
+            onClick={handleEdit} 
             className={styles.button.primary}
           >
             <Edit2 className="w-4 h-4" />

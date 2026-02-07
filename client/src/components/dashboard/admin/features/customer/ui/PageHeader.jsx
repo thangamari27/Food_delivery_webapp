@@ -1,6 +1,6 @@
 import { Plus, RefreshCw } from "lucide-react"
 
-function PageHeader({ content, onAdd, onRefresh, styles }) {
+function PageHeader({ content, onAdd, onRefresh, styles, loading = false }) {
   return (
      <div className={styles.header.container}>
       <div className={styles.header.content}>
@@ -15,15 +15,20 @@ function PageHeader({ content, onAdd, onRefresh, styles }) {
               className={styles.button.secondary} 
               title={content.header.refreshButton}
               aria-label={content.header.refreshButton}
+              disabled={loading}
             >
-              <RefreshCw className="w-5 h-5" />
+              {loading ? (
+                <RefreshCw className="w-5 h-5 animate-spin" />
+              ) : (
+                <RefreshCw className="w-5 h-5" />
+              )}
               <span className="sr-only">{content.header.refreshButton}</span>
             </button>
-            <button onClick={onAdd} className={styles.button.primary}>
+            {/* <button onClick={onAdd} className={styles.button.primary} disabled={loading}>
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">{content.header.addButton}</span>
               <span className="sm:hidden">Add</span>
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

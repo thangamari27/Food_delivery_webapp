@@ -17,7 +17,7 @@ import DeleteFoodModal from './modal/DeleteFoodModal';
 
 import {
   TableSkeletonLoader,
-  CardSkeletonLoader
+  CardSkeletonLoader  
 } from '../../../../common/admin/AdminLoader';
 
 function FoodManagement() {
@@ -28,6 +28,8 @@ function FoodManagement() {
     // Data
     foods,
     paginatedFoods,
+    restaurants, 
+    loadingRestaurants,
     
     // State
     loading,
@@ -70,7 +72,8 @@ function FoodManagement() {
     resetAllFilters,
     resetForm,
     handleImageUpload,
-    clearError
+    clearError,
+    openAddModal,
   } = useFoodManagement();
 
   // Extract unique values for filters
@@ -93,11 +96,17 @@ function FoodManagement() {
   // Handle error display
   if (error && !loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="text-center max-w-md">
           <div className="text-red-500 text-xl mb-4">Error loading food items</div>
           <div className="text-gray-600 mb-6">{error}</div>
-          <Button onClick={() => { clearError(); fetchFoods(); }} styles={styles}>
+          <Button 
+            onClick={() => { 
+              clearError(); 
+              fetchFoods(); 
+            }} 
+            styles={styles}
+          >
             Try Again
           </Button>
         </div>
@@ -120,7 +129,7 @@ function FoodManagement() {
               </p>
             </div>
             <Button 
-              onClick={() => setShowAddModal(true)} 
+              onClick={openAddModal} 
               styles={styles}
               disabled={loading}
             >
@@ -170,7 +179,7 @@ function FoodManagement() {
             </div>
 
             {/* Desktop Table */}
-            <div className="hidden md:block bg-white rounded-lg shadow-sm overflow-hidden mb-6">
+            <div className="hidden xl:block bg-white rounded-lg shadow-sm overflow-hidden mb-6">
               {foods.length === 0 ? (
                 <EmptyState
                   content={content}
@@ -186,7 +195,7 @@ function FoodManagement() {
                         {content.tableHeaders.map(header => (
                           <th
                             key={header.id}
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            className="px-4 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                           >
                             {header.label}
                           </th>
@@ -217,7 +226,7 @@ function FoodManagement() {
             </div>
 
             {/* Mobile Cards */}
-            <div className="md:hidden space-y-4 mb-6">
+            <div className="xl:hidden space-y-4 mb-6">
               {foods.length === 0 ? (
                 <EmptyState
                   content={content}
@@ -279,6 +288,9 @@ function FoodManagement() {
           setFormData={setFormData}
           handleImageUpload={handleImageUpload}
           handleSubmit={showEditModal ? handleEditFood : handleAddFood}
+          resetForm={resetForm}
+          restaurants={restaurants} 
+          loadingRestaurants={loadingRestaurants} 
           styles={styles}
         />
 

@@ -14,6 +14,9 @@ const authRoutes = require('./src/routes/authRoutes');
 const testimonialRoute = require('./src/routes/testimonialRoute');
 const foodRoute = require('./src/routes/foodRoute');
 const restaurantRoute = require('./src/routes/restaurantRoute');
+const orderRoute = require('./src/routes/orderRoute');
+const bookingRoute = require('./src/routes/bookingRoute');
+const customerRoute = require('./src/routes/customerRoute');
 const errorHandler = require('./src/middleware/errorHandler');
 const { apiLimiter } = require('./src/middleware/rateLimiter');
 
@@ -81,6 +84,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/testimonials', testimonialRoute);
 app.use('/api/foods', foodRoute);
 app.use('/api/restaurants', restaurantRoute);
+app.use('/api/orders', orderRoute);
+app.use('/api/bookings', bookingRoute);
+app.use('/api/customers', customerRoute);
 
 // 404 handler
 app.use((req, res, next) => {

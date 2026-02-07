@@ -1,7 +1,7 @@
 /**
  * Restaurant Service - COMPLETE BACKEND INTEGRATION
  * Maps to all backend routes with proper data transformation
- * Updated: 2024 - Production Ready
+ * Updated: Fixed query parameter handling for search
  */
 
 import api from './api';
@@ -94,7 +94,7 @@ class RestaurantService {
         search,
         limit = 20,
         skip = 0,
-        sortBy = '-create_at',
+        sortBy = '-createdAt',
         populate = false
       } = params;
 
@@ -144,7 +144,7 @@ class RestaurantService {
       queryParams.append('skip', String(skip));
       queryParams.append('sortBy', sortBy);
 
-      // FIXED: Append query parameters to the URL
+      // Append query parameters to the URL
       const queryString = queryParams.toString();
       const url = queryString ? `/api/restaurants?${queryString}` : '/api/restaurants';
       
@@ -277,7 +277,10 @@ class RestaurantService {
       if (city) queryParams.append('city', city);
       if (cuisine) queryParams.append('cuisine', cuisine);
       
-      const response = await api.get(`/api/restaurants/stats?${queryParams.toString()}`);
+      const queryString = queryParams.toString();
+      const url = queryString ? `/api/restaurants/stats?${queryString}` : '/api/restaurants/stats';
+      
+      const response = await api.get(url);
       return response.data;
     } catch (error) {
       throw this.handleError(error);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 
-function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
+function CustomerFormModal({ content, customer, onSave, onClose, styles, loading = false }) {
   const [form, setForm] = useState(customer || {
     name: '', 
     email: '', 
@@ -15,7 +15,7 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
   });
 
   const handleSave = () => {
-    if (!form.name.trim() || !form.email.trim() || !form.phone.trim()) {
+    if (!form.name.trim() || !form.email.trim() || !form.phone.trim() || loading) {
       return;
     }
     onSave(form);
@@ -34,6 +34,7 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
             onClick={onClose} 
             className={styles.button.icon}
             aria-label="Close form"
+            disabled={loading}
           >
             <X className="w-5 h-5" />
           </button>
@@ -53,6 +54,7 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
                 onChange={(e) => updateForm('name', e.target.value)} 
                 className={styles.form.input}
                 required 
+                disabled={loading}
               />
             </div>
             <div className={styles.form.grid2}>
@@ -68,6 +70,7 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
                   onChange={(e) => updateForm('email', e.target.value)} 
                   className={styles.form.input}
                   required 
+                  disabled={loading}
                 />
               </div>
               <div className={styles.form.group}>
@@ -82,6 +85,7 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
                   onChange={(e) => updateForm('phone', e.target.value)} 
                   className={styles.form.input}
                   required 
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -96,7 +100,8 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
                 placeholder={content.form.fields.address.placeholder}
                 value={form.address} 
                 onChange={(e) => updateForm('address', e.target.value)} 
-                className={styles.form.input} 
+                className={styles.form.input}
+                disabled={loading}
               />
             </div>
             <div className={styles.form.grid2}>
@@ -107,7 +112,8 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
                   placeholder={content.form.fields.city.placeholder}
                   value={form.city} 
                   onChange={(e) => updateForm('city', e.target.value)} 
-                  className={styles.form.input} 
+                  className={styles.form.input}
+                  disabled={loading}
                 />
               </div>
               <div className={styles.form.group}>
@@ -117,7 +123,8 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
                   placeholder={content.form.fields.state.placeholder}
                   value={form.state} 
                   onChange={(e) => updateForm('state', e.target.value)} 
-                  className={styles.form.input} 
+                  className={styles.form.input}
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -128,7 +135,8 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
                 placeholder={content.form.fields.postal.placeholder}
                 value={form.postal} 
                 onChange={(e) => updateForm('postal', e.target.value)} 
-                className={styles.form.input} 
+                className={styles.form.input}
+                disabled={loading}
               />
             </div>
           </section>
@@ -141,6 +149,7 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
                 value={form.status} 
                 onChange={(e) => updateForm('status', e.target.value)} 
                 className={styles.form.input}
+                disabled={loading}
               >
                 <option value="active">Active</option>
                 <option value="blocked">Blocked</option>
@@ -153,21 +162,29 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles }) {
                 placeholder={content.form.fields.notes.placeholder}
                 value={form.notes} 
                 onChange={(e) => updateForm('notes', e.target.value)} 
-                className={styles.form.textarea} 
+                className={styles.form.textarea}
+                disabled={loading}
               />
             </div>
           </section>
         </div>
         <div className={styles.modal.footer}>
-          <button onClick={onClose} className={styles.button.secondary}>
+          <button onClick={onClose} className={styles.button.secondary} disabled={loading}>
             {content.form.buttons.cancel}
           </button>
           <button 
             onClick={handleSave} 
-            disabled={!form.name.trim() || !form.email.trim() || !form.phone.trim()}
+            disabled={!form.name.trim() || !form.email.trim() || !form.phone.trim() || loading}
             className={styles.button.primary}
           >
-            {content.form.buttons.save}
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                {content.form.buttons.saving || "Saving..."}
+              </span>
+            ) : (
+              content.form.buttons.save
+            )}
           </button>
         </div>
       </div>

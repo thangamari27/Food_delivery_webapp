@@ -6,7 +6,10 @@ import { contactFormStyles } from '@/utils/styles/ContactStyle'
 function ContactFormSection() {
   const styles = contactFormStyles;
   return (
-    <ContactForm contactForm={contactForm} styles={styles} />
+    <ContactForm 
+      contactForm={contactForm} 
+      styles={styles} 
+    />
   )
 }
 

@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+// components/admin/customer/CustomerManagement.jsx
+import { useCallback } from "react";
 import { customerContent } from "../../../../../utils/constant/admin/AdminDashboard";
 import { customerStyles } from "../../../../../utils/styles/AdminStyle";
-import { useCustomerData, usePagination, useCustomerFilters, useToast } from "../../../../../hooks/admin/useCustomerData";
+import { useCustomerData, usePagination, useCustomerFilters } from "../../../../../hooks/admin/useCustomerData";
+import AdminLoader from "../../../../common/admin/AdminLoader";
 import Toast from "./ui/Toast";
 import PageHeader from "./ui/PageHeader";
 import StatsOverview from "./ui/StatsOverview";
@@ -18,72 +20,79 @@ function CustomerManagement() {
   const content = customerContent;
   const styles = customerStyles;
 
-  const { customers, loading, addCustomer, updateCustomer, deleteCustomer } = useCustomerData();
+  // Single hook call with all state and handlers
+  const {
+    // Data state
+    customers,
+    loading,
+    error,
+    actionLoading,
+    
+    // UI state
+    viewCustomer,
+    editCustomer,
+    showForm,
+    confirmAction,
+    isMobile,
+    toast,
+    
+    // Event handlers
+    handleSave,
+    handleToggleStatus,
+    handleDelete,
+    handleConfirm,
+    handleRefresh,
+    
+    // Modal controls
+    openViewModal,
+    closeViewModal,
+    openEditModal,
+    openAddModal,
+    closeFormModal,
+    closeConfirmModal,
+    
+    // Refetch
+    refetch
+  } = useCustomerData();
+
+  // Filters and pagination
   const filters = useCustomerFilters(customers);
   const pagination = usePagination(filters.filtered, 10);
-  const { toast, showToast } = useToast();
-  
-  const [viewCustomer, setViewCustomer] = useState(null);
-  const [editCustomer, setEditCustomer] = useState(null);
-  const [showForm, setShowForm] = useState(false);
-  const [confirmAction, setConfirmAction] = useState(null);
-  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 1440);
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 1440);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  // Wrapped handlers with content
+  const wrappedHandleSave = useCallback((form) => 
+    handleSave(form, content.toast), 
+    [handleSave, content.toast]
+  );
 
-  const handleSave = useCallback((form) => {
-    if (editCustomer) {
-      updateCustomer(editCustomer.id, form);
-      showToast(content.toast.customerUpdated);
-    } else {
-      addCustomer(form);
-      showToast(content.toast.customerAdded);
-    }
-    setShowForm(false);
-    setEditCustomer(null);
-  }, [editCustomer, updateCustomer, addCustomer, showToast]);
+  const wrappedHandleConfirm = useCallback(() => 
+    handleConfirm(content.toast), 
+    [handleConfirm, content.toast]
+  );
 
-  const handleToggleStatus = useCallback((customer) => {
-    const action = customer.status === 'active' ? 'block' : 'unblock';
-    setConfirmAction({ type: action, customer });
-  }, []);
-
-  const handleDelete = useCallback((customer) => {
-    setConfirmAction({ type: 'delete', customer });
-  }, []);
-
-  const handleConfirm = useCallback(() => {
-    const { type, customer } = confirmAction;
-    
-    if (type === 'delete') {
-      deleteCustomer(customer.id);
-      showToast(content.toast.customerDeleted);
-    } else if (type === 'block') {
-      updateCustomer(customer.id, { status: 'blocked' });
-      showToast(content.toast.statusChanged);
-    } else if (type === 'unblock') {
-      updateCustomer(customer.id, { status: 'active' });
-      showToast(content.toast.statusChanged);
-    }
-    
-    setConfirmAction(null);
-  }, [confirmAction, deleteCustomer, updateCustomer, showToast]);
-
-  const handleRefresh = useCallback(() => {
-    // In a real app, this would refetch from the server
-    showToast('Data refreshed', 'success');
-  }, [showToast]);
-
+  // Show full page loader during initial load
   if (loading) {
+    return <AdminLoader loaderName="customers" />;
+  }
+
+  // Show error state if fetch fails
+  if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
-          <div className="text-gray-600">Loading customers...</div>
+          <div className="text-red-600 mb-4">
+            <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Failed to load customers</h3>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={handleRefresh}
+            className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
@@ -93,7 +102,13 @@ function CustomerManagement() {
     <div className={styles.layout.container}>
       <Toast content={content} message={toast?.message} type={toast?.type} styles={styles} />
       
-      <PageHeader content={content} onAdd={() => setShowForm(true)} onRefresh={handleRefresh} styles={styles} />
+      <PageHeader 
+        content={content} 
+        onAdd={openAddModal} 
+        onRefresh={handleRefresh} 
+        styles={styles} 
+        loading={actionLoading}
+      />
       
       <div className={styles.layout.main}>
         <StatsOverview 
@@ -109,7 +124,7 @@ function CustomerManagement() {
           <EmptyState 
             content={content}
             hasFilters={filters.activeFilterCount > 0} 
-            onAdd={() => setShowForm(true)}
+            onAdd={openAddModal}
             onReset={filters.resetFilters}
             styles={styles}
           />
@@ -119,11 +134,8 @@ function CustomerManagement() {
               <CustomerCards 
                 content={content}
                 customers={pagination.paginatedItems}
-                onView={setViewCustomer}
-                onEdit={(c) => { 
-                  setEditCustomer(c); 
-                  setShowForm(true); 
-                }}
+                onView={openViewModal}
+                onEdit={openEditModal}
                 onToggleStatus={handleToggleStatus}
                 onDelete={handleDelete}
                 styles={styles}
@@ -132,11 +144,8 @@ function CustomerManagement() {
               <CustomerTable 
                 content={content}
                 customers={pagination.paginatedItems}
-                onView={setViewCustomer}
-                onEdit={(c) => { 
-                  setEditCustomer(c); 
-                  setShowForm(true); 
-                }}
+                onView={openViewModal}
+                onEdit={openEditModal}
                 onToggleStatus={handleToggleStatus}
                 onDelete={handleDelete}
                 styles={styles}
@@ -151,11 +160,10 @@ function CustomerManagement() {
         <CustomerDetailModal 
           content={content}
           customer={viewCustomer} 
-          onClose={() => setViewCustomer(null)}
+          onClose={closeViewModal}
           onEdit={(c) => { 
-            setViewCustomer(null);
-            setEditCustomer(c); 
-            setShowForm(true); 
+            closeViewModal();
+            openEditModal(c); 
           }}
           styles={styles}
         />
@@ -165,12 +173,10 @@ function CustomerManagement() {
         <CustomerFormModal 
           content={content}
           customer={editCustomer} 
-          onSave={handleSave} 
-          onClose={() => { 
-            setShowForm(false); 
-            setEditCustomer(null); 
-          }} 
+          onSave={wrappedHandleSave} 
+          onClose={closeFormModal} 
           styles={styles}
+          loading={actionLoading}
         />
       )}
 
@@ -179,13 +185,14 @@ function CustomerManagement() {
           content={content}
           type={confirmAction.type}
           customer={confirmAction.customer}
-          onConfirm={handleConfirm}
-          onClose={() => setConfirmAction(null)}
+          onConfirm={wrappedHandleConfirm}
+          onClose={closeConfirmModal}
           styles={styles}
+          loading={actionLoading}
         />
       )}
     </div>
-  )
+  );
 }
 
-export default CustomerManagement
+export default CustomerManagement;

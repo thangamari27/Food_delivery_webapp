@@ -10,6 +10,12 @@ function CustomerTable({ content, customers, onView, onEdit, onToggleStatus, onD
     };
     return `${styles.badge.base} ${statusStyles[status] || styles.badge.inactive}`;
   };
+  
+  const handleEdit = (customer, e) => {
+    e?.stopPropagation(); // Prevent event bubbling
+    onEdit(customer);
+  };
+
   return (
     <div className={styles.table.container}>
       <div className={styles.table.wrapper}>
@@ -46,7 +52,7 @@ function CustomerTable({ content, customers, onView, onEdit, onToggleStatus, onD
                   <td className={styles.table.td} onClick={(e) => e.stopPropagation()}>
                     <div className={styles.table.actions}>
                       <button 
-                        onClick={() => onEdit(customer)} 
+                        onClick={(e) => handleEdit(customer, e)} 
                         className={styles.button.icon} 
                         title={content.table.actions.edit}
                         aria-label={`Edit ${customer.name}`}

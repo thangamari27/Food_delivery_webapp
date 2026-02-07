@@ -11,6 +11,11 @@ function CustomerCards({ content, customers, onView, onEdit, onToggleStatus, onD
     return `${styles.badge.base} ${statusStyles[status] || styles.badge.inactive}`;
   };
 
+  const handleEdit = (customer, e) => {
+    e?.stopPropagation(); 
+    onEdit(customer);
+  };
+
   return (
     <div className={styles.card.container}>
       {customers.map((customer) => (
@@ -52,7 +57,7 @@ function CustomerCards({ content, customers, onView, onEdit, onToggleStatus, onD
           <div className={styles.card.footer} onClick={(e) => e.stopPropagation()}>
             <div className="flex gap-4">
                 <button 
-                onClick={() => onEdit(customer)} 
+                onClick={(e) => handleEdit(customer, e)} 
                 className={styles.button.secondary + ' text-sm py-1.5 flex items-center gap-1'}
                 >
                 <Edit2 className="w-3 h-3" />
