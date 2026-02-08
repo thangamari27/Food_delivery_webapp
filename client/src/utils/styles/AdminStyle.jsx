@@ -24,9 +24,9 @@ export const navigationStyle = {
   notificationBadge: (color, isAlert) => `absolute -top-1 -right-1 ${
     isAlert ? 'bg-orange-500 w-5 h-5' : 'bg-amber-500 px-2 py-0.5 min-w-[20px] h-5'
   } text-white text-xs font-semibold rounded-full flex items-center justify-center`,
-  userButton: "flex items-center gap-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white px-2 py-2 md:px-5 md:py-3 rounded-full ml-4 hover:shadow-lg transition-all",
+  userButton: "cursor-pointer flex items-center gap-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white px-1 py-1 md:px-5 md:py-3 rounded-full ml-4 hover:shadow-lg transition-all",
   userName: "text-sm font-medium hidden md:block",
-  userAvatar: "w-7 h-7 md:w-10 md:h-10 text-orange-500 rounded-full bg-white overflow-hidden md:hidden",
+  userAvatar: "w-7 h-7 p-1 text-orange-500 rounded-full bg-white overflow-hidden ",
   sidebar: (isOpen) => `fixed lg:sticky top-0 left-0 h-screen bg-white border-r border-gray-100 transition-all duration-300 z-50 ${isOpen ? 'w-72' : 'w-0 lg:w-72'} overflow-hidden`,
   sidebarHeader: "flex items-center justify-between px-5 py-5 border-b border-gray-100",
   logoSection: "flex items-center gap-3",

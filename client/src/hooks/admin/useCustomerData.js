@@ -34,6 +34,50 @@ export const useCustomerData = () => {
     setTimeout(() => setToast(null), 3000);
   }, []);
 
+  // Transform helper functions
+  const transformUserToCustomer = useCallback((user) => ({
+    id: user.id || user._id || user.user_id || `user-${Math.random()}`,
+    name: user.fullname || user.name || user.username || 'Unknown',
+    email: user.email || '',
+    phone: user.phone || user.mobile || '',
+    address: user.address || '',
+    city: user.city || '',
+    state: user.state || '',
+    postal: user.postal || user.pincode || '',
+    // Map backend is_active to frontend status
+    status: user.is_active === false ? 'blocked' : 'active',
+    totalOrders: user.totalOrders || user.total_orders || 0,
+    totalSpend: user.totalSpend || user.total_spend || 0,
+    lastOrder: user.lastOrder || user.last_order || null,
+    lastActive: user.lastActive || user.last_active || user.last_login || new Date().toISOString(),
+    created: user.created || user.created_at || user.registration_date || new Date().toISOString(),
+    notes: user.notes || '',
+    // Store is_active for reference
+    is_active: user.is_active !== false,
+    // Keep original data for reference
+    originalData: user
+  }), []);
+
+  const transformCustomerForApi = useCallback((customerData) => {
+    const baseData = {
+      fullname: customerData.name,
+      email: customerData.email,
+      phone: customerData.phone,
+      address: customerData.address,
+      city: customerData.city,
+      state: customerData.state,
+      postal: customerData.postal,
+      notes: customerData.notes,
+    };
+    
+    // Handle status to is_active mapping
+    if (customerData.status !== undefined) {
+      baseData.is_active = customerData.status === 'active';
+    }
+    
+    return baseData;
+  }, []);
+
   // Fetch all customers
   const fetchCustomers = useCallback(async () => {
     try {
@@ -41,39 +85,20 @@ export const useCustomerData = () => {
       setError(null);
       
       const response = await customerService.getAllCustomers();
-      console.log("API Response:", response);
       
       // Handle API response structure
       if (response && response.data) {
-        // Your API returns: { statusCode, data: { pagination, users }, message, success }
-        // Extract users array from response.data.users
         const usersData = response.data.users || response.data.customers || response.data.data || [];
-        console.log("Extracted users:", usersData);
         
-        // Transform users to customers format if needed
-        const transformedUsers = Array.isArray(usersData) ? usersData.map(user => ({
-          id: user.id || user._id || user.customer_id || `user-${Math.random()}`,
-          name: user.fullname || user.name || user.username || 'Unknown',
-          email: user.email || '',
-          phone: user.phone || user.mobile || '',
-          address: user.address || '',
-          city: user.city || '',
-          state: user.state || '',
-          postal: user.postal || user.pincode || '',
-          status: user.status || 'active',
-          totalOrders: user.totalOrders || user.total_orders || 0,
-          totalSpend: user.totalSpend || user.total_spend || 0,
-          lastOrder: user.lastOrder || user.last_order || null,
-          lastActive: user.lastActive || user.last_active || new Date().toISOString(),
-          created: user.created || user.created_at || user.registration_date || new Date().toISOString(),
-          notes: user.notes || '',
-          // Keep original data for reference
-          originalData: user
-        })) : [];
+        // Transform users to customers format
+        const transformedUsers = Array.isArray(usersData) 
+          ? usersData.map(transformUserToCustomer)
+          : [];
         
         setCustomers(transformedUsers);
       } else if (Array.isArray(response)) {
-        setCustomers(response);
+        const transformedUsers = response.map(transformUserToCustomer);
+        setCustomers(transformedUsers);
       } else {
         console.warn("Unexpected response format:", response);
         setCustomers([]);
@@ -85,7 +110,7 @@ export const useCustomerData = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [transformUserToCustomer]);
 
   // Initial fetch
   useEffect(() => {
@@ -96,28 +121,15 @@ export const useCustomerData = () => {
   const addCustomer = useCallback(async (customerData) => {
     try {
       setActionLoading(true);
-      const response = await customerService.createCustomer(customerData);
+      
+      // Transform customer data for API (includes status->is_active mapping)
+      const apiData = transformCustomerForApi(customerData);
+      
+      const response = await customerService.createCustomer(apiData);
       const newCustomer = response.data || response;
       
-      // Transform new customer data if needed
-      const transformedCustomer = {
-        id: newCustomer.id || newCustomer._id || `user-${Math.random()}`,
-        name: newCustomer.fullname || newCustomer.name || newCustomer.username || 'Unknown',
-        email: newCustomer.email || '',
-        phone: newCustomer.phone || newCustomer.mobile || '',
-        address: newCustomer.address || '',
-        city: newCustomer.city || '',
-        state: newCustomer.state || '',
-        postal: newCustomer.postal || newCustomer.pincode || '',
-        status: newCustomer.status || 'active',
-        totalOrders: newCustomer.totalOrders || newCustomer.total_orders || 0,
-        totalSpend: newCustomer.totalSpend || newCustomer.total_spend || 0,
-        lastOrder: newCustomer.lastOrder || newCustomer.last_order || null,
-        lastActive: newCustomer.lastActive || newCustomer.last_active || new Date().toISOString(),
-        created: newCustomer.created || newCustomer.created_at || newCustomer.registration_date || new Date().toISOString(),
-        notes: newCustomer.notes || '',
-        originalData: newCustomer
-      };
+      // Transform new customer data
+      const transformedCustomer = transformUserToCustomer(newCustomer);
       
       setCustomers(prev => [transformedCustomer, ...prev]);
       
@@ -128,37 +140,24 @@ export const useCustomerData = () => {
     } finally {
       setActionLoading(false);
     }
-  }, []);
+  }, [transformCustomerForApi, transformUserToCustomer]);
 
   // Update customer
   const updateCustomer = useCallback(async (id, updateData) => {
     try {
       setActionLoading(true);
-      const response = await customerService.updateCustomer(id, updateData);
+      
+      // Transform customer data for API (includes status->is_active mapping)
+      const apiData = transformCustomerForApi(updateData);
+      
+      const response = await customerService.updateCustomer(id, apiData);
       const updatedCustomer = response.data || response;
       
       // Transform updated customer data
-      const transformedCustomer = {
-        id: updatedCustomer.id || updatedCustomer._id || id,
-        name: updatedCustomer.fullname || updatedCustomer.name || updatedCustomer.username || 'Unknown',
-        email: updatedCustomer.email || '',
-        phone: updatedCustomer.phone || updatedCustomer.mobile || '',
-        address: updatedCustomer.address || '',
-        city: updatedCustomer.city || '',
-        state: updatedCustomer.state || '',
-        postal: updatedCustomer.postal || updatedCustomer.pincode || '',
-        status: updatedCustomer.status || 'active',
-        totalOrders: updatedCustomer.totalOrders || updatedCustomer.total_orders || 0,
-        totalSpend: updatedCustomer.totalSpend || updatedCustomer.total_spend || 0,
-        lastOrder: updatedCustomer.lastOrder || updatedCustomer.last_order || null,
-        lastActive: updatedCustomer.lastActive || updatedCustomer.last_active || new Date().toISOString(),
-        created: updatedCustomer.created || updatedCustomer.created_at || updatedCustomer.registration_date || new Date().toISOString(),
-        notes: updatedCustomer.notes || '',
-        originalData: updatedCustomer
-      };
+      const transformedCustomer = transformUserToCustomer(updatedCustomer);
       
       setCustomers(prev => 
-        prev.map(c => c.id === id || c._id === id ? transformedCustomer : c)
+        prev.map(c => (c.id === id || c._id === id) ? transformedCustomer : c)
       );
       
       return transformedCustomer;
@@ -168,21 +167,36 @@ export const useCustomerData = () => {
     } finally {
       setActionLoading(false);
     }
-  }, []);
+  }, [transformCustomerForApi, transformUserToCustomer]);
 
-  // Update customer status
+  // Update customer status (specific function for status-only updates)
   const updateCustomerStatus = useCallback(async (id, status) => {
     try {
       setActionLoading(true);
-      const response = await customerService.updateCustomerStatus(id, status);
+      
+      // Map status to is_active for API
+      const is_active = status === 'active';
+      
+      // Send both status and is_active to backend
+      const statusData = { 
+        status: status,
+        is_active: is_active 
+      };
+      
+      const response = await customerService.updateCustomerStatus(id, statusData);
       const updatedCustomer = response.data || response;
       
       setCustomers(prev => 
-        prev.map(c => c.id === id || c._id === id ? { 
+        prev.map(c => (c.id === id || c._id === id) ? { 
           ...c, 
-          status,
+          status: status,
+          is_active: is_active,
           // Update original data if exists
-          originalData: c.originalData ? { ...c.originalData, status } : c.originalData
+          originalData: c.originalData ? { 
+            ...c.originalData, 
+            status: status,
+            is_active: is_active 
+          } : c.originalData
         } : c)
       );
       
@@ -214,16 +228,31 @@ export const useCustomerData = () => {
   const bulkUpdateStatus = useCallback(async (customerIds, status) => {
     try {
       setActionLoading(true);
-      await customerService.bulkUpdateStatus(customerIds, status);
+      
+      // Map status to is_active for API
+      const is_active = status === 'active';
+      
+      // Send both status and is_active to backend
+      const statusData = { 
+        status: status,
+        is_active: is_active 
+      };
+      
+      await customerService.bulkUpdateStatus(customerIds, statusData);
       
       setCustomers(prev => 
         prev.map(c => 
           customerIds.includes(c.id) || customerIds.includes(c._id) 
             ? { 
                 ...c, 
-                status,
+                status: status,
+                is_active: is_active,
                 // Update original data if exists
-                originalData: c.originalData ? { ...c.originalData, status } : c.originalData
+                originalData: c.originalData ? { 
+                  ...c.originalData, 
+                  status: status,
+                  is_active: is_active 
+                } : c.originalData
               } 
             : c
         )
@@ -269,7 +298,7 @@ export const useCustomerData = () => {
     }
   }, []);
 
-  // Component event handlers
+  // Component event handlers - UPDATED SECTION
   const handleSave = useCallback(async (form, toastContent) => {
     try {
       if (editCustomer) {
@@ -289,7 +318,12 @@ export const useCustomerData = () => {
 
   const handleToggleStatus = useCallback((customer) => {
     const action = customer.status === 'active' ? 'block' : 'unblock';
-    setConfirmAction({ type: action, customer });
+    const newStatus = action === 'block' ? 'blocked' : 'active';
+    setConfirmAction({ 
+      type: action, 
+      customer,
+      newStatus: newStatus 
+    });
   }, []);
 
   const handleDelete = useCallback((customer) => {
@@ -298,16 +332,14 @@ export const useCustomerData = () => {
 
   const handleConfirm = useCallback(async (toastContent) => {
     try {
-      const { type, customer } = confirmAction;
+      const { type, customer, newStatus } = confirmAction;
       
       if (type === 'delete') {
         await deleteCustomer(customer.id);
         showToast(toastContent?.customerDeleted || 'Customer deleted successfully');
-      } else if (type === 'block') {
-        await updateCustomer(customer.id, { status: 'blocked' });
-        showToast(toastContent?.statusChanged || 'Status changed successfully');
-      } else if (type === 'unblock') {
-        await updateCustomer(customer.id, { status: 'active' });
+      } else if (type === 'block' || type === 'unblock') {
+        // Use updateCustomer which properly handles is_active mapping through transformCustomerForApi
+        await updateCustomer(customer.id, { status: newStatus });
         showToast(toastContent?.statusChanged || 'Status changed successfully');
       }
       
@@ -387,6 +419,10 @@ export const useCustomerData = () => {
     openAddModal,
     closeFormModal,
     closeConfirmModal,
+    
+    // Transform helpers (exposed if needed)
+    transformUserToCustomer,
+    transformCustomerForApi,
     
     // Toast
     showToast

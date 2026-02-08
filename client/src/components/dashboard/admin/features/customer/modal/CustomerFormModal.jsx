@@ -153,7 +153,6 @@ function CustomerFormModal({ content, customer, onSave, onClose, styles, loading
               >
                 <option value="active">Active</option>
                 <option value="blocked">Blocked</option>
-                <option value="inactive">Inactive</option>
               </select>
             </div>
             <div className={styles.form.group}>

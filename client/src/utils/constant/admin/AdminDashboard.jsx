@@ -1,9 +1,9 @@
-import { MessageCircle, Utensils, AlertTriangle, Handshake, FileText, Mail, AlertCircle, Clock, CheckCircle, XCircle, ShoppingBag, UserCheck, UserX, UserPlus, Home, Bell, LogOut, Key, UserCircle, UtensilsCrossed, IndianRupee, ShoppingCart, Users, Package, ForkKnifeCrossedIcon, Building2, Search, CreditCard, Tag } from 'lucide-react';
+import { MessageCircle, LogOutIcon, Utensils, AlertTriangle, Handshake, FileText, Mail, AlertCircle, Clock, CheckCircle, XCircle, ShoppingBag, UserCheck, UserX, UserPlus, Home, Bell, LogOut, Key, UserCircle, UtensilsCrossed, IndianRupee, ShoppingCart, Users, Package, ForkKnifeCrossedIcon, Building2, Search, CreditCard, Tag } from 'lucide-react';
 
 // Top navbar content
 export const headerContent = {
     logo: "GoYum",
-    userGreeting: "Hello, TMJK",
+    userGreeting: "Hello,",
     searchPlaceholder: "Search here",
     navLinks: [
         { label: "Dashboard", href: "/admin/" },
