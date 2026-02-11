@@ -54,7 +54,7 @@ export function RestaurantProvider({ children }) {
       const response = await restaurantService.getAll(params);
       const raw = response?.data || {};
 
-      // ✅ SAFE NORMALIZATION (handles all backend response shapes)
+      //  SAFE NORMALIZATION (handles all backend response shapes)
       const restaurants =
         raw?.data?.data ||  // Double nested: response.data.data.data
         raw?.data ||        // Single nested: response.data.data

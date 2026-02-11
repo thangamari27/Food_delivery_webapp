@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Heart, ShoppingCart } from 'lucide-react'
+import { Heart, ShoppingCart, Lock } from 'lucide-react'
 import MenuCardImage from './MenuCardImage'
 import MenuCardContent from './MenuCardContent'
 import ViewItemModal from '@/components/common/ViewItemModal'
@@ -31,7 +31,7 @@ function DishCardSpecial({ dish, buttonText, isLiked, onLikeToggle, isFeatured =
     if (!isAuthenticated) {
       toast.error('Please login to add items to cart', {
         duration: 3000,
-        icon: '🔒'
+        icon: <Lock className='' size={25} />
       })
       return
     }

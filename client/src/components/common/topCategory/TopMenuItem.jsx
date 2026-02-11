@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from '../Image'
-import { Plus, ForkKnifeCrossed, IndianRupee, Star, ShoppingCart, Eye } from 'lucide-react'
+import { Plus, Lock, IndianRupee, Star, ShoppingCart, Eye } from 'lucide-react'
 import ViewItemModal from '../ViewItemModal';
 import { useCart } from '@/context/CartContext'
 import { useAuthContext } from '@/context/AuthContext'
@@ -37,7 +37,7 @@ function TopMenuItem({ items, buttonContent, styles, isLiked, onLikeToggle }) {
     if (!isAuthenticated) {
       toast.error('Please login to add items to cart', {
         duration: 3000,
-        icon: '🔒'
+        icon: <Lock className='' size={25} />
       })
       return
     }

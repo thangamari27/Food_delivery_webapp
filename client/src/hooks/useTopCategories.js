@@ -49,7 +49,7 @@ export const useTopCategories = (itemsPerPage = 8) => {
 
     // Transform items with MongoDB _id preservation
     const transformedItems = regularItems.map(food => ({
-      // ✅ CRITICAL: MongoDB ObjectId - Required for cart/order
+      //  CRITICAL: MongoDB ObjectId - Required for cart/order
       _id: food._id,
       
       // Frontend display ID
@@ -81,7 +81,7 @@ export const useTopCategories = (itemsPerPage = 8) => {
       prepTime: food.prepTime || food.preparationTime,
       serves: food.serves || food.servingSize,
       
-      // ✅ CRITICAL: Restaurant information (MongoDB ObjectId)
+      //  CRITICAL: Restaurant information (MongoDB ObjectId)
       restaurant: food.restaurant,
       restaurantId: food.restaurant,
       restaurantName: food.restaurantName || '',

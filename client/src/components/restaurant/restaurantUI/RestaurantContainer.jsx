@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import FilterManager from "./ui/FilterManager";
 import MainContent from "./ui/MainContent";
 import ModalManager from "./ui/ModalManager";
-import AdminLoader, { CardSkeletonLoader, InlineLoader } from "../../common/admin/AdminLoader";
+import { CardSkeletonLoader, InlineLoader } from "../../common/admin/AdminLoader";
 import ErrorDisplay from "../../common/admin/ErrorDisplay";
 import { useRestaurantFilters } from "@/hooks/useRestaurantFilters";
 import { useRestaurantPagination } from "@/hooks/useRestaurantPagination";

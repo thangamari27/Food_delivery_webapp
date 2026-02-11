@@ -77,7 +77,7 @@ export function useRestaurantManagement(content) {
     delivery: "all",
     priceRange: "all"
   });
-  // ✅ FIX: Initialize sortConfig with default object instead of null
+  //  FIX: Initialize sortConfig with default object instead of null
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
@@ -99,7 +99,7 @@ export function useRestaurantManagement(content) {
 
   const itemsPerPage = pagination?.limit || ITEMS_PER_PAGE;
 
-  // ✅ Initial fetch (ONCE)
+  //  Initial fetch (ONCE)
   useEffect(() => {
     if (!hasFetchedRef.current && typeof fetchRestaurants === 'function') {
       hasFetchedRef.current = true;
@@ -107,7 +107,7 @@ export function useRestaurantManagement(content) {
     }
   }, [fetchRestaurants]);
 
-  // ✅ Filtering
+  //  Filtering
   const filteredRestaurants = useMemo(() => {
     let data = [...(restaurants || [])];
 
@@ -162,7 +162,7 @@ export function useRestaurantManagement(content) {
     return data;
   }, [restaurants, searchTerm, filters]);
 
-  // ✅ Sorting with null-safe check
+  //  Sorting with null-safe check
   const sortedRestaurants = useMemo(() => {
     // If no sort key is selected, return unsorted
     if (!sortConfig || !sortConfig.key) return filteredRestaurants;
@@ -191,7 +191,7 @@ export function useRestaurantManagement(content) {
     });
   }, [filteredRestaurants, sortConfig]);
 
-  // ✅ Pagination
+  //  Pagination
   const totalPages = Math.max(1, Math.ceil(sortedRestaurants.length / itemsPerPage));
 
   const paginatedData = useMemo(() => {

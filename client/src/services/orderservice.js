@@ -48,7 +48,7 @@ class OrderService {
         price: price,
         quantity: quantity,
         category: item.category || 'Food',
-        subtotal: subtotal // ✅ REQUIRED by backend
+        subtotal: subtotal //  REQUIRED by backend
       };
     });
 
@@ -91,7 +91,7 @@ class OrderService {
       // Order Items with subtotals
       items: transformedItems,
 
-      // Pricing - ✅ REQUIRED by backend
+      // Pricing -  REQUIRED by backend
       pricing: {
         subtotal: parseFloat(itemsSubtotal.toFixed(2)),
         tax: parseFloat(taxAmount.toFixed(2)),

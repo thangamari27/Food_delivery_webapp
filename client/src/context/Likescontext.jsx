@@ -1,4 +1,4 @@
-import { Heart, HeartCrack, LockKeyhole } from 'lucide-react';
+import { Heart, HeartCrack, Lock } from 'lucide-react';
 import { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
 import { useAuthContext } from './AuthContext';
 import { toast } from 'react-hot-toast';
@@ -151,7 +151,7 @@ export function LikesProvider({ children }) {
     if (!isAuthenticated) {
       toast.error('Please login to like items', {
         duration: 3000,
-        icon: '🔒'
+        icon: <Lock className='' size={25} />
       });
       return false;
     }
@@ -164,7 +164,7 @@ export function LikesProvider({ children }) {
       dispatch({ type: ACTIONS.REMOVE_LIKE, payload: itemId });
       toast.success('Removed from favorites', {
         duration: 2000,
-        icon: '💔'
+        icon: <HeartCrack className='bg-red-600 p-1 rounded-full text-white' size={25} />
       });
       return false;
     } else {
@@ -173,7 +173,7 @@ export function LikesProvider({ children }) {
       dispatch({ type: ACTIONS.ADD_LIKE, payload: likedItem });
       toast.success('Added to favorites!', {
         duration: 2000,
-        icon: '❤️'
+        icon: <Heart className='bg-red-600 p-1 rounded-full text-white' size={25} />
       });
       return true;
     }
@@ -186,7 +186,7 @@ export function LikesProvider({ children }) {
     dispatch({ type: ACTIONS.REMOVE_LIKE, payload: itemId });
     toast.success('Removed from favorites', {
       duration: 2000,
-      icon: '💔'
+      icon: <HeartCrack className='bg-red-600 p-1 rounded-full text-white' size={25} />
     });
   }, []);
 

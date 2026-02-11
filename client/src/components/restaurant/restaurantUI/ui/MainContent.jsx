@@ -44,7 +44,7 @@ function MainContent({
         {/* Restaurant Grid */}
         <div className={styles.restaurantGrid}>
           <p className={styles.restaurantCount}>
-            Showing {filteredRestaurants.length} of {content.restaurants.length} restaurants
+            Showing {filteredRestaurants?.length} of {content.restaurants?.length} restaurants
           </p>
           
           {hasRestaurants ? (

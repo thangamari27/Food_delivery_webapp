@@ -49,7 +49,7 @@ function MobileOrdersCard({
                 <div className={styles.mobileCardRow}>
                   <span className={styles.mobileCardLabel}>Payment</span>
                   <span className={`${styles.statusBadge} ${paymentStatusBadge.color}`}>
-                    {PaymentStatusIcon && <PaymentStatusIcon className={styles.statusIcon} />} {/* ✅ FIXED */}
+                    {PaymentStatusIcon && <PaymentStatusIcon className={styles.statusIcon} />} {/*  FIXED */}
                     {paymentStatusBadge.label}
                   </span>
                 </div>

@@ -45,7 +45,7 @@ function MenuCardContent({
               {itemInCart ? 'In Cart' : buttonText.btntext2}
             </span>
           }
-          buttonStyle={`${styles.button2} ${itemInCart ? 'bg-green-500 hover:bg-green-600' : ''}`}
+          buttonStyle={`${styles.button2} ${itemInCart ? 'bg-orange-500 hover:bg-ornage-600 outline-none' : ''}`}
           onClick={onAddToCart}
         />
       </div>

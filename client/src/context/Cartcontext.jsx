@@ -1,3 +1,4 @@
+import { Lock, TriangleAlertIcon,ShoppingBag } from 'lucide-react'
 import { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
 import { useAuthContext } from './AuthContext';
 import { toast } from 'react-hot-toast';
@@ -216,7 +217,7 @@ export function CartProvider({ children }) {
     if (!isAuthenticated) {
       toast.error('Please login to add items to cart', {
         duration: 3000,
-        icon: '🔒'
+        icon: <Lock className='' size={18} />
       });
       return false;
     }
@@ -247,7 +248,7 @@ export function CartProvider({ children }) {
         if (existingRestaurant !== restaurantId) {
           toast.error('You can only order from one restaurant at a time. Please clear your cart first.', {
             duration: 4000,
-            icon: '⚠️'
+            icon: <TriangleAlertIcon className='text-yellow-400' size={25} />
           });
           return false;
         }
@@ -269,7 +270,7 @@ export function CartProvider({ children }) {
       if (showToast) {
         toast.success(`${foodItem.name} added to cart!`, {
           duration: 2000,
-          icon: '🛒'
+          icon: <ShoppingBag className='text-orange-500' size={18} />
         });
       }
       

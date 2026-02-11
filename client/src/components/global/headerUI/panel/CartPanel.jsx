@@ -41,7 +41,7 @@ function CartPanel({ isOpen, onClose, styles }) {
     removeFromCart, 
     clearCart,
     getCartTotal,
-    getCartRestaurantId // ✅ NOW IMPORTED
+    getCartRestaurantId //  NOW IMPORTED
   } = useCart();
 
   const { createOrder } = useOrder(); 
@@ -68,7 +68,7 @@ function CartPanel({ isOpen, onClose, styles }) {
     }
 
     // Validate restaurant before proceeding
-    const restaurantId = getCartRestaurantId(); // ✅ NOW WORKS
+    const restaurantId = getCartRestaurantId(); //  NOW WORKS
     if (!restaurantId) {
       toast.error('Unable to identify restaurant. Please clear your cart and try again.', {
         duration: 4000
@@ -98,7 +98,7 @@ function CartPanel({ isOpen, onClose, styles }) {
       setIsSubmitting(true);
       
       // Get restaurant ID from cart using the imported function
-      const restaurantId = getCartRestaurantId(); // ✅ NOW WORKS
+      const restaurantId = getCartRestaurantId(); //  NOW WORKS
       
       if (!restaurantId) {
         toast.error('Cannot determine restaurant for this order');

@@ -1397,7 +1397,7 @@ function InfoSection({ title, items, styles }) {
             <span className="text-sm text-gray-600">{item.label}</span>
             {item.badge ? (
               <span className={`${styles.statusBadge} ${item.color}`}>
-                {IconComponent && <IconComponent className={styles.statusIcon} />} {/* ✅ FIXED */}
+                {IconComponent && <IconComponent className={styles.statusIcon} />} {/*  FIXED */}
                 {item.value}
               </span>
             ) : (
