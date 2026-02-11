@@ -1,17 +1,28 @@
 import { useState } from 'react'
+import { useCart } from '@/context/CartContext'
 import Modal from './Modal';
-import { LucideForkKnifeCrossed, Heart, ShoppingCart, Star, IndianRupee  } from 'lucide-react';
+import { LucideForkKnifeCrossed, Heart, ShoppingCart, Star, IndianRupee } from 'lucide-react';
 
-function LikedItemsModal({ isOpen, onClose, items, onRemoveLike, onAddToCart, styles }) {
+function LikedItemsModal({ isOpen, onClose, items, onRemoveLike, styles }) {
   const [sortBy, setSortBy] = useState('likes');
+  const { addToCart } = useCart();
   
   const sortedItems = [...items].sort((a, b) => {
-    if (sortBy === 'likes') return b.likes - a.likes;
+    if (sortBy === 'likes') return (b.likes || 0) - (a.likes || 0);
     if (sortBy === 'rating') return b.rating - a.rating;
     if (sortBy === 'price-low') return a.price - b.price;
     if (sortBy === 'price-high') return b.price - a.price;
     return 0;
   });
+
+  const handleAddToCart = (item) => {
+    const success = addToCart(item, 1, true);
+    
+    if (success) {
+      // Remove from likes after successfully adding to cart
+      onRemoveLike(item._id || item.id);
+    }
+  };
 
   const likeModalStyles = styles.likeModal;
 
@@ -40,7 +51,7 @@ function LikedItemsModal({ isOpen, onClose, items, onRemoveLike, onAddToCart, st
               <div className={likeModalStyles.itemWrapper}>
                 <LucideForkKnifeCrossed className={likeModalStyles.knifeIcon} />
                 <button
-                  onClick={() => onRemoveLike(item.id)}
+                  onClick={() => onRemoveLike(item._id || item.id)}
                   className={likeModalStyles.likeBtn}
                   aria-label="Remove from favorites"
                 >
@@ -66,17 +77,19 @@ function LikedItemsModal({ isOpen, onClose, items, onRemoveLike, onAddToCart, st
                     {item.price.toFixed(2)}
                   </p>
                   <button
-                    onClick={() => onAddToCart(item)}
+                    onClick={() => handleAddToCart(item)}
                     className={likeModalStyles.addCartBtn}
                   >
                     <ShoppingCart className={likeModalStyles.addCartIcon} />
                     Add
                   </button>
                 </div>
-                <div className={likeModalStyles.likeCountContainer}>
-                  <Heart className={likeModalStyles.likeCountIcon} />
-                  <span>{item.likes.toLocaleString()} likes</span>
-                </div>
+                {item.likes > 0 && (
+                  <div className={likeModalStyles.likeCountContainer}>
+                    <Heart className={likeModalStyles.likeCountIcon} />
+                    <span>{item.likes.toLocaleString()} likes</span>
+                  </div>
+                )}
               </div>
             </div>
           ))}

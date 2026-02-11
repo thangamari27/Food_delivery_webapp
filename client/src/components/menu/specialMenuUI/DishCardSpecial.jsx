@@ -67,6 +67,14 @@ function DishCardSpecial({ dish, buttonText, isLiked, onLikeToggle, isFeatured =
   // Check if item is already in cart
   const itemInCart = isInCart(dish.fid || dish._id || dish.id)
 
+  // Use dish._id or dish.id for like toggle
+  const handleLikeClick = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    // Pass both dish ID and the full dish object
+    onLikeToggle(dish._id || dish.id, dish)
+  }
+
   return (
     <div
       className={`${styles.cardContainer}
@@ -75,7 +83,7 @@ function DishCardSpecial({ dish, buttonText, isLiked, onLikeToggle, isFeatured =
     >
       {/* Like Button */}
       <button
-        onClick={() => onLikeToggle(dish.id || dish.fid || dish._id)}
+        onClick={handleLikeClick}  // Changed to use handleLikeClick
         className={styles.likeButton}
         title={isLiked ? "Unlike" : "Like"}
       >

@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { useFood } from '../context/admin/Foodcontext';
+import { useLikes } from '../context/Likescontext';
 import { specialMenuContent } from '../utils/constant/admin/MenuConstant';
 
 export default function useSpecialMenu() {
@@ -8,9 +9,9 @@ export default function useSpecialMenu() {
 
   const [activeCuisine, setActiveCuisine] = useState('all');
   const [specialMenuPage, setSpecialMenuPage] = useState(1);
-  const [likedItems, setLikedItems] = useState(new Set());
   
   const { foods, loading, error, fetchFoods, setFilters } = useFood();
+  const { toggleLike, isLiked } = useLikes();
   
   const isInitialMountRef = useRef(true);
   const isFetchingRef = useRef(false);
@@ -34,7 +35,7 @@ export default function useSpecialMenu() {
     };
     
     initialFetch();
-  }, []);
+  }, [fetchFoods, setFilters]); // Added dependencies
 
   // Reset page when activeCuisine changes
   useEffect(() => {
@@ -51,8 +52,8 @@ export default function useSpecialMenu() {
       const cuisineLower = food.cuisine?.toLowerCase() || '';
       
       return {
-        // ✅ CRITICAL: MongoDB ObjectId - Required for cart/order
-        _id: food._id, // MongoDB ObjectId
+        // MongoDB ObjectId - Required for cart/order
+        _id: food._id,
         
         // Frontend display ID
         id: food.fid || food._id,
@@ -66,6 +67,7 @@ export default function useSpecialMenu() {
         description: food.description || '',
         rating: typeof food.rating === 'object' ? food.rating?.average || 4 : food.rating || 4,
         reviews: typeof food.rating === 'object' ? food.rating?.count || 0 : 0,
+        likes: food.likes || 0,
         
         // Images
         src: food.src || food.image?.url || food.image,
@@ -82,8 +84,8 @@ export default function useSpecialMenu() {
         prepTime: food.prepTime || food.preparationTime,
         serves: food.serves || food.servingSize,
         
-        // ✅ CRITICAL: Restaurant information (MongoDB ObjectId)
-        restaurant: food.restaurant, // MongoDB ObjectId
+        // Restaurant information (MongoDB ObjectId)
+        restaurant: food.restaurant,
         restaurantId: food.restaurant,
         restaurantName: food.restaurantName || '',
         
@@ -124,17 +126,9 @@ export default function useSpecialMenu() {
     }
   }, [totalPages]);
 
-  const handleLikeToggle = useCallback((dishId) => {
-    setLikedItems(prevLiked => {
-      const newLiked = new Set(prevLiked);
-      if (newLiked.has(dishId)) {
-        newLiked.delete(dishId);
-      } else {
-        newLiked.add(dishId);
-      }
-      return newLiked;
-    });
-  }, []);
+  const handleLikeToggle = useCallback((dishId, dish) => {
+    toggleLike(dish);
+  }, [toggleLike]);
 
   const handleCuisineChange = useCallback((cuisine) => {
     if (cuisine && typeof cuisine === 'string') {
@@ -150,8 +144,8 @@ export default function useSpecialMenu() {
     totalPages,
     paginatedSpecialDishes,
     handlePageChange,
-    likedItems,
     handleLikeToggle,
+    isLiked,
     ITEMS_PER_PAGE,
     loading,
     error,

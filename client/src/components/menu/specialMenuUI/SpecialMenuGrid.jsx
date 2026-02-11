@@ -1,7 +1,14 @@
 import NotFound from '@/components/common/foodMenu/NotFound';
 import DishCardSpecial from './DishCardSpecial'
 
-function SpecialMenuGrid({ paginatedSpecialDishes, content, styles, likedItems, handleLikeToggle, activeCuisine }) {
+function SpecialMenuGrid({ 
+  paginatedSpecialDishes, 
+  content, 
+  styles, 
+  isLiked, 
+  handleLikeToggle, 
+  activeCuisine 
+}) {
   return (
     <div className={styles.specialMenu.gridContainer}>
       {paginatedSpecialDishes.length > 0 ? (
@@ -10,7 +17,8 @@ function SpecialMenuGrid({ paginatedSpecialDishes, content, styles, likedItems, 
             key={dish.id}
             dish={dish}
             buttonText={content.specialMenuButton}
-            isLiked={likedItems.has(dish.id)}
+            // Call isLiked function instead of likedItems.has()
+            isLiked={isLiked(dish.id || dish._id)}  
             onLikeToggle={handleLikeToggle}  
             styles={styles.specialMenu}                  
           />

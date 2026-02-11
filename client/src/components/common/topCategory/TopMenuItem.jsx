@@ -13,6 +13,13 @@ function TopMenuItem({ items, buttonContent, styles, isLiked, onLikeToggle }) {
   const { addToCart, isInCart, setCartOpen } = useCart()
   const { isAuthenticated } = useAuthContext()
 
+  // Create a handler to pass both ID and item for like toggle
+  const handleLikeClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onLikeToggle(items._id || items.id || items.fid, items);
+  };
+
   const handleViewDetails = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -75,9 +82,9 @@ function TopMenuItem({ items, buttonContent, styles, isLiked, onLikeToggle }) {
     <>
       <div className={styles.cardContainer}>
         <div className={styles.imageContainer}>
-          {/* Like/Favorite Button */}
+          {/* Like/Favorite Button - Updated to use handleLikeClick */}
           <button
-            onClick={() => onLikeToggle(items.id || items.fid || items._id)}
+            onClick={handleLikeClick}
             className={styles.likeButton}
             title={isLiked ? "Remove from favourites" : "Add to favourites"}
           >

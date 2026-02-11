@@ -50,8 +50,8 @@ const transformToCartItem = (foodItem, quantity = 1) => {
   }
 
   return {
-    // ✅ CRITICAL: MongoDB ObjectId - Required for order creation
-    _id: foodItem._id, // MongoDB ObjectId from backend
+    // MongoDB ObjectId - Required for order creation
+    _id: foodItem._id,
     
     // Frontend display ID (UUID)
     id: foodItem.fid || foodItem.id || foodItem._id,
@@ -76,9 +76,9 @@ const transformToCartItem = (foodItem, quantity = 1) => {
     description: foodItem.description || foodItem.ingredients || '',
     ingredients: foodItem.ingredients || foodItem.description || '',
     
-    // ✅ CRITICAL: Restaurant information (MongoDB ObjectId)
-    restaurant: foodItem.restaurant || foodItem.restaurantId, // MongoDB ObjectId
-    restaurantId: foodItem.restaurant || foodItem.restaurantId, // MongoDB ObjectId
+    // Restaurant information (MongoDB ObjectId)
+    restaurant: foodItem.restaurant || foodItem.restaurantId,
+    restaurantId: foodItem.restaurant || foodItem.restaurantId,
     restaurantName: foodItem.restaurantName || '',
     
     // Additional metadata

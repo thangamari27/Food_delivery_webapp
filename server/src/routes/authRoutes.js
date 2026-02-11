@@ -46,7 +46,6 @@ router.post('/resend-verification', authenticate, authController.resendVerificat
 // Google OAuth Routes
 router.get('/google', 
   (req, res, next) => {
-    console.log('Google OAuth initiated');
     next();
   },
   passport.authenticate('google', {
@@ -59,7 +58,6 @@ router.get('/google',
 
 router.get('/google/callback',
   (req, res, next) => {
-    console.log('Google OAuth callback received');
     next();
   },
   passport.authenticate('google', {
@@ -68,14 +66,6 @@ router.get('/google/callback',
   }),
   async (req, res) => {
     try {
-      console.log('Google OAuth successful for user:', req.user);
-      console.log('User object structure:', {
-        hasId: !!req.user.id,
-        has_id: !!req.user._id,
-        role: req.user.role,
-        email: req.user.email
-      });
-      
       const userId = req.user.id;  
       const userRole = req.user.role || 'customer';
       
@@ -109,7 +99,6 @@ router.get('/google/callback',
         `&refresh=${tokens.refreshToken}` + 
         `&user=${encodeURIComponent(JSON.stringify(userForFrontend))}`;
       
-      console.log(`Redirecting to frontend: ${frontendUrl}/auth/callback`);
       res.redirect(redirectUrl);
       
     } catch (error) {

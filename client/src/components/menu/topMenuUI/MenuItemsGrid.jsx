@@ -1,6 +1,6 @@
 import TopMenuItem from '@/components/common/topCategory/TopMenuItem';
 
-function MenuItemsGrid({ items, buttonContent, styles, likedItems, handleLikeToggle }) {
+function MenuItemsGrid({ items, buttonContent, styles, isLiked, handleLikeToggle }) {
   return (
      <div className={styles.topCategoryCard.container}>
       {items.map((item) => (
@@ -9,7 +9,7 @@ function MenuItemsGrid({ items, buttonContent, styles, likedItems, handleLikeTog
           items={item}
           buttonContent={buttonContent}
           styles={styles.topCategoryCard}
-          isLiked={likedItems.has(item.id)}
+          isLiked={isLiked(item.id || item._id)}
           onLikeToggle={handleLikeToggle}
         />
       ))}

@@ -1,12 +1,13 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useFood } from '../context/admin/Foodcontext';
+import { useLikes } from '../context/LikesContext';
 
 export const useTopCategories = (itemsPerPage = 8) => {
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
-  const [likedItems, setLikedItems] = useState(new Set());
 
   const { foods, loading, error, fetchFoods, setFilters } = useFood();
+  const { toggleLike, isLiked } = useLikes();
   
   const isInitialMountRef = useRef(true);
   const isFetchingRef = useRef(false);
@@ -30,7 +31,7 @@ export const useTopCategories = (itemsPerPage = 8) => {
     };
     
     initialFetch();
-  }, []);
+  }, [fetchFoods, setFilters]);
 
   // Transform backend data to frontend format
   const menuItems = useMemo(() => {
@@ -49,7 +50,7 @@ export const useTopCategories = (itemsPerPage = 8) => {
     // Transform items with MongoDB _id preservation
     const transformedItems = regularItems.map(food => ({
       // ✅ CRITICAL: MongoDB ObjectId - Required for cart/order
-      _id: food._id, // MongoDB ObjectId
+      _id: food._id,
       
       // Frontend display ID
       id: food.fid || food._id,
@@ -63,6 +64,7 @@ export const useTopCategories = (itemsPerPage = 8) => {
       originalPrice: food.originalPrice || food.price,
       rating: typeof food.rating === 'object' ? food.rating?.average || 4 : food.rating || 4,
       reviews: typeof food.rating === 'object' ? food.rating?.count || 0 : 0,
+      likes: food.likes || 0,
       
       // Images
       src: food.src || food.image?.url || food.image,
@@ -80,7 +82,7 @@ export const useTopCategories = (itemsPerPage = 8) => {
       serves: food.serves || food.servingSize,
       
       // ✅ CRITICAL: Restaurant information (MongoDB ObjectId)
-      restaurant: food.restaurant, // MongoDB ObjectId
+      restaurant: food.restaurant,
       restaurantId: food.restaurant,
       restaurantName: food.restaurantName || '',
       
@@ -113,13 +115,9 @@ export const useTopCategories = (itemsPerPage = 8) => {
     return result;
   }, [filteredItems, currentPage, itemsPerPage]);
 
-  const handleLikeToggle = useCallback((itemId) => {
-    setLikedItems(prev => {
-      const updated = new Set(prev);
-      updated.has(itemId) ? updated.delete(itemId) : updated.add(itemId);
-      return updated;
-    });
-  }, []);
+  const handleLikeToggle = useCallback((itemId, item) => {
+    toggleLike(item);
+  }, [toggleLike]);
 
   const handleFilterChange = useCallback((category) => {
     setCategoryFilter(category);
@@ -137,8 +135,8 @@ export const useTopCategories = (itemsPerPage = 8) => {
     currentPage,
     paginatedItems,
     totalPages,
-    likedItems,
     handleLikeToggle,
+    isLiked,
     handleFilterChange,
     handlePageChange,
     loading,

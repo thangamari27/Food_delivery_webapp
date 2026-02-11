@@ -10,7 +10,17 @@ function SpecialMenuSection() {
   const styles = specialMenuStyle;
   const content = specialMenuContent;
 
-  const { activeCuisine, setActiveCuisine, specialMenuPage, totalPages, paginatedSpecialDishes, handlePageChange, likedItems, handleLikeToggle } = useSpecialMenu();
+  // Destructure isLiked instead of likedItems
+  const { 
+    activeCuisine, 
+    setActiveCuisine, 
+    specialMenuPage, 
+    totalPages, 
+    paginatedSpecialDishes, 
+    handlePageChange, 
+    isLiked,  
+    handleLikeToggle 
+  } = useSpecialMenu();
 
   return (
     <section className={styles.section}>
@@ -28,7 +38,7 @@ function SpecialMenuSection() {
           paginatedSpecialDishes={paginatedSpecialDishes}
           content={content}
           styles={styles}
-          likedItems={likedItems}
+          isLiked={isLiked} 
           handleLikeToggle={handleLikeToggle}
           activeCuisine={activeCuisine}
         />

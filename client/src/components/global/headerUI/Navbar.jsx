@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '@/context/AuthContext'
+import { useCart } from '@/context/CartContext'
+import { useLikes } from '@/context/LikesContext'
 import { toast } from 'react-hot-toast'
 import NavbarHeader from './navHeader/NavbarHeader'
 import MobileDrawer from './mobiledrawerUI/MobileDrawer'
@@ -9,11 +11,28 @@ import CartPanel from './panel/CartPanel'
 import LikedItemsModal from './modals/LikedItemsModal'
 import OrdersPanel from './panel/orderPanel'
 import BookingsPanel from './panel/BookingsPanel'
-import { createNavbarHandlers } from '@/utils/handler/navbarHandlers'
 
 function Navbar({ content, styles, navbarState }) {
   const navigate = useNavigate()
   const { user, logout: authLogout } = useAuthContext()
+  
+  // Cart and Likes contexts
+  const { 
+    items: cartItems, 
+    cartCount,
+    isCartOpen,
+    setCartOpen,
+    removeFromCart,
+    updateQuantity,
+    clearCart
+  } = useCart()
+  
+  const { 
+    items: likedItems, 
+    likesCount,
+    removeLike,
+    toggleLike
+  } = useLikes()
 
   const {
     isScrolled,
@@ -24,8 +43,6 @@ function Navbar({ content, styles, navbarState }) {
     setIsProfileOpen,
     isProfileModalOpen,
     setIsProfileModalOpen,
-    isCartOpen,
-    setIsCartOpen,
     isLikesOpen,
     setIsLikesOpen,
     isOrdersOpen,
@@ -36,8 +53,6 @@ function Navbar({ content, styles, navbarState }) {
 
   // State for user data (synced with auth context)
   const [localUserData, setLocalUserData] = useState(null)
-  const [cartItems, setCartItems] = useState(content.initialCartItems)
-  const [likedItems, setLikedItems] = useState(content.initialLikedItems)
   const [orders, setOrders] = useState(content.initialOrders)
   const [bookings, setBookings] = useState(content.initialBookings)
 
@@ -56,7 +71,7 @@ function Navbar({ content, styles, navbarState }) {
     } else {
       setLocalUserData(null);
     }
-  }, [user]);
+  }, [user, content.profiledropDown]);
 
   // Custom logout handler
   const handleLogout = async () => {
@@ -68,7 +83,7 @@ function Navbar({ content, styles, navbarState }) {
       setIsProfileOpen(false)
       setIsMobileOpen(false)
       setIsProfileModalOpen(false)
-      setIsCartOpen(false)
+      setCartOpen(false)
       setIsLikesOpen(false)
       setIsOrdersOpen(false)
       setIsBookingsOpen(false)
@@ -81,18 +96,60 @@ function Navbar({ content, styles, navbarState }) {
     }
   }
 
-  const handlers = createNavbarHandlers(
-    setCartItems,
-    setLikedItems,
-    setOrders,
-    setBookings,
-    setIsLikesOpen,
-    setIsCartOpen,
-    null,
-    setIsProfileOpen,
-    setIsMobileOpen,
-    setLocalUserData
-  )
+  // Handler functions
+  const handleUpdateProfile = (newData) => {
+    setLocalUserData(newData);
+  };
+
+  const handleUpdateQuantity = (id, delta) => {
+    updateQuantity(id, delta);
+  };
+
+  const handleRemoveFromCart = (id) => {
+    removeFromCart(id);
+  };
+
+  const handleClearCart = () => {
+    if (window.confirm('Are you sure you want to clear your cart?')) {
+      clearCart();
+    }
+  };
+
+  const handleRemoveLike = (id) => {
+    removeLike(id);
+  };
+
+  const handleAddToCart = (item) => {
+    const { addToCart } = useCart();
+    const success = addToCart(item, 1, true);
+    
+    if (success) {
+      // Remove from likes after adding to cart
+      removeLike(item._id || item.id);
+      setIsLikesOpen(false);
+      setCartOpen(true);
+    }
+  };
+
+  const handleCancelOrder = (id) => {
+    if (window.confirm('Are you sure you want to cancel this order?')) {
+      setOrders(prev =>
+        prev.map(order =>
+          order.id === id ? { ...order, status: 'cancelled', canCancel: false } : order
+        )
+      );
+    }
+  };
+
+  const handleCancelBooking = (id) => {
+    if (window.confirm('Are you sure you want to cancel this booking?')) {
+      setBookings(prev =>
+        prev.map(booking =>
+          booking.id === id ? { ...booking, status: 'cancelled', canCancel: false } : booking
+        )
+      );
+    }
+  };
 
   // Determine nav links based on login status
   const navLinks = isLoggedIn
@@ -114,7 +171,7 @@ function Navbar({ content, styles, navbarState }) {
         styles={styles}
         setIsMobileOpen={setIsMobileOpen}
         setIsLikesOpen={setIsLikesOpen}
-        setIsCartOpen={setIsCartOpen}
+        setIsCartOpen={setCartOpen}
         setIsProfileOpen={setIsProfileOpen}
         setIsProfileModalOpen={setIsProfileModalOpen}
         setIsOrdersOpen={setIsOrdersOpen}
@@ -160,17 +217,17 @@ function Navbar({ content, styles, navbarState }) {
             isOpen={isProfileModalOpen}
             onClose={() => setIsProfileModalOpen(false)}
             userData={localUserData}
-            onUpdate={handlers.handleUpdateProfile}
+            onUpdate={handleUpdateProfile}
             styles={styles.modal}
           />
 
           <CartPanel
             isOpen={isCartOpen}
-            onClose={() => setIsCartOpen(false)}
+            onClose={() => setCartOpen(false)}
             items={cartItems}
-            onUpdateQuantity={handlers.handleUpdateQuantity}
-            onRemoveItem={handlers.handleRemoveFromCart}
-            onClearCart={handlers.handleClearCart}
+            onUpdateQuantity={handleUpdateQuantity}
+            onRemoveItem={handleRemoveFromCart}
+            onClearCart={handleClearCart}
             styles={styles.slidePanel}
           />
 
@@ -178,7 +235,7 @@ function Navbar({ content, styles, navbarState }) {
             isOpen={isOrdersOpen}
             onClose={() => setIsOrdersOpen(false)}
             orders={orders}
-            onCancelOrder={handlers.handleCancelOrder}
+            onCancelOrder={handleCancelOrder}
             styles={styles.slidePanel}
           />
 
@@ -186,7 +243,7 @@ function Navbar({ content, styles, navbarState }) {
             isOpen={isBookingsOpen}
             onClose={() => setIsBookingsOpen(false)}
             bookings={bookings}
-            onCancelBooking={handlers.handleCancelBooking}
+            onCancelBooking={handleCancelBooking}
             styles={styles.slidePanel}
           />
 
@@ -194,8 +251,8 @@ function Navbar({ content, styles, navbarState }) {
             isOpen={isLikesOpen}
             onClose={() => setIsLikesOpen(false)}
             items={likedItems}
-            onRemoveLike={handlers.handleRemoveLike}
-            onAddToCart={handlers.handleAddToCart}
+            onRemoveLike={handleRemoveLike}
+            onAddToCart={handleAddToCart}
             styles={styles.modal}
           />
         </>

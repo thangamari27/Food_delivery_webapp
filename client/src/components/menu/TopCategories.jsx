@@ -8,20 +8,19 @@ function TopCategories() {
   const content = topCategoryContent;
   const styles = topCategoryStyles;
 
-  // REMOVE the arguments - they're causing issues!
   const {
       categoryFilter,
       currentPage,
       paginatedItems,
       totalPages,
-      likedItems,
+      isLiked,              
       handleLikeToggle,
       handleFilterChange,
       handlePageChange,
       hasItems,
       filteredItemsCount,
       loading
-  } = useTopCategories(); // No arguments!
+  } = useTopCategories();
 
   return (
     <TopCategoriesContainer styles={styles}>
@@ -34,7 +33,7 @@ function TopCategories() {
         totalPages={totalPages}
         handleFilterChange={handleFilterChange}
         handlePageChange={handlePageChange}
-        likedItems={likedItems}
+        isLiked={isLiked}             
         handleLikeToggle={handleLikeToggle}
         hasItems={hasItems}
         loading={loading}
