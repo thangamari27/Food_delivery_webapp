@@ -1,4 +1,5 @@
-import { User, Phone, MapPin, Clock, MessageSquare, CreditCard, Home, Navigation, Plus, Wallet, Smartphone, Globe } from "lucide-react";
+import { User, Phone, MapPin, Clock, MessageSquare, CreditCard, Home, Navigation, Plus, Wallet, Smartphone } from "lucide-react";
+import { useState } from "react";
 
 function OrderFormPanel({
   orderData,
@@ -8,25 +9,88 @@ function OrderFormPanel({
   isSubmitting,
   styles
 }) {
+  const [usesSavedAddress, setUsesSavedAddress] = useState(false);
+
   const handleInputChange = (field, value) => {
     onUpdateOrder({ ...orderData, [field]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!orderData.name?.trim()) {
+      alert('Please enter your name');
+      return;
+    }
+    if (!orderData.phone?.trim()) {
+      alert('Please enter your phone number');
+      return;
+    }
+    if (!orderData.address?.trim()) {
+      alert('Please enter delivery address');
+      return;
+    }
+    if (!orderData.city?.trim()) {
+      alert('Please select a city');
+      return;
+    }
+    if (!orderData.pincode?.trim()) {
+      alert('Please enter pincode');
+      return;
+    }
+
+    // Submit the form
     onSubmit(orderData);
   };
 
-  // Sample saved addresses
+  // Sample saved addresses (in production, fetch from user profile)
   const savedAddresses = [
-    { id: 1, type: 'Home', address: '123 Main St, Mumbai - 400001' },
-    { id: 2, type: 'Office', address: '456 Business Park, Andheri - 400053' },
+    { 
+      id: 1, 
+      type: 'Home', 
+      street: '123 Main St',
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      pincode: '400001'
+    },
+    { 
+      id: 2, 
+      type: 'Office', 
+      street: '456 Business Park, Andheri',
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      pincode: '400053'
+    },
   ];
+
+  const selectSavedAddress = (address) => {
+    setUsesSavedAddress(true);
+    onUpdateOrder({
+      ...orderData,
+      address: address.street,
+      city: address.city,
+      state: address.state || 'Maharashtra',
+      pincode: address.pincode
+    });
+  };
+
+  const clearAddress = () => {
+    setUsesSavedAddress(false);
+    onUpdateOrder({
+      ...orderData,
+      address: '',
+      city: '',
+      state: '',
+      pincode: ''
+    });
+  };
 
   return (
     <div className={styles.container}>
       <form id="order-form" onSubmit={handleSubmit} className={styles.form}>
-        {/* Saved Addresses */}
+        
+        {/* Saved Addresses Section */}
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>
             <Navigation className={styles.sectionIcon} />
@@ -38,18 +102,9 @@ function OrderFormPanel({
               <button
                 key={address.id}
                 type="button"
-                onClick={() => {
-                  // Parse address (simplified)
-                  const parts = address.address.split(', ');
-                  onUpdateOrder({
-                    ...orderData,
-                    address: parts[0],
-                    city: parts[1]?.split(' - ')[0] || '',
-                    pincode: parts[1]?.split(' - ')[1] || ''
-                  });
-                }}
+                onClick={() => selectSavedAddress(address)}
                 className={`${styles.addressCard} ${
-                  orderData.address === address.address.split(', ')[0] 
+                  orderData.address === address.street 
                     ? styles.addressCardActive 
                     : ''
                 }`}
@@ -62,21 +117,16 @@ function OrderFormPanel({
                   )}
                   <span className={styles.addressType}>{address.type}</span>
                 </div>
-                <p className={styles.addressText}>{address.address}</p>
+                <p className={styles.addressText}>
+                  {address.street}, {address.city} - {address.pincode}
+                </p>
               </button>
             ))}
             
             <button
               type="button"
               className={styles.newAddressCard}
-              onClick={() => {
-                onUpdateOrder({
-                  ...orderData,
-                  address: '',
-                  city: '',
-                  pincode: ''
-                });
-              }}
+              onClick={clearAddress}
             >
               <Plus className={styles.plusIcon} />
               <span>Add New Address</span>
@@ -84,7 +134,7 @@ function OrderFormPanel({
           </div>
         </div>
 
-        {/* Personal Details */}
+        {/* Contact Details - Maps to customer: { name, phone, email } */}
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>
             <User className={styles.sectionIcon} />
@@ -94,12 +144,12 @@ function OrderFormPanel({
           <div className={styles.inputGrid}>
             <div className={styles.inputGroup}>
               <label htmlFor="name" className={styles.label}>
-                Full Name *
+                Full Name <span className="text-red-500">*</span>
               </label>
               <input
                 id="name"
                 type="text"
-                value={orderData.name}
+                value={orderData.name || ''}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 className={styles.input}
                 placeholder="Enter your full name"
@@ -109,27 +159,42 @@ function OrderFormPanel({
 
             <div className={styles.inputGroup}>
               <label htmlFor="phone" className={styles.label}>
-                Phone Number *
+                Phone Number <span className="text-red-500">*</span>
               </label>
               <div className={styles.phoneInput}>
                 <span className={styles.phonePrefix}>+91</span>
                 <input
                   id="phone"
                   type="tel"
-                  value={orderData.phone}
+                  value={orderData.phone || ''}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   className={`${styles.input} ${styles.phoneInputField}`}
                   placeholder="9876543210"
                   pattern="[0-9]{10}"
+                  maxLength="10"
                   required
                 />
               </div>
               <p className={styles.inputHint}>10-digit mobile number</p>
             </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="email" className={styles.label}>
+                Email (Optional)
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={orderData.email || ''}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                className={styles.input}
+                placeholder="your.email@example.com"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Delivery Address */}
+        {/* Delivery Address - Maps to delivery.address: { street, city, state, zipCode, country } */}
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>
             <MapPin className={styles.sectionIcon} />
@@ -138,11 +203,11 @@ function OrderFormPanel({
           
           <div className={styles.inputGroup}>
             <label htmlFor="address" className={styles.label}>
-              Complete Address *
+              Complete Address <span className="text-red-500">*</span>
             </label>
             <textarea
               id="address"
-              value={orderData.address}
+              value={orderData.address || ''}
               onChange={(e) => handleInputChange('address', e.target.value)}
               className={styles.textarea}
               placeholder="House/Flat No, Building, Street, Landmark"
@@ -154,11 +219,11 @@ function OrderFormPanel({
           <div className={styles.inputGrid}>
             <div className={styles.inputGroup}>
               <label htmlFor="city" className={styles.label}>
-                City *
+                City <span className="text-red-500">*</span>
               </label>
               <select
                 id="city"
-                value={orderData.city}
+                value={orderData.city || ''}
                 onChange={(e) => handleInputChange('city', e.target.value)}
                 className={styles.select}
                 required
@@ -170,21 +235,38 @@ function OrderFormPanel({
                 <option value="Hyderabad">Hyderabad</option>
                 <option value="Chennai">Chennai</option>
                 <option value="Kolkata">Kolkata</option>
+                <option value="Pune">Pune</option>
+                <option value="Ahmedabad">Ahmedabad</option>
               </select>
             </div>
 
             <div className={styles.inputGroup}>
+              <label htmlFor="state" className={styles.label}>
+                State
+              </label>
+              <input
+                id="state"
+                type="text"
+                value={orderData.state || 'Maharashtra'}
+                onChange={(e) => handleInputChange('state', e.target.value)}
+                className={styles.input}
+                placeholder="State"
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
               <label htmlFor="pincode" className={styles.label}>
-                Pincode *
+                Pincode <span className="text-red-500">*</span>
               </label>
               <input
                 id="pincode"
                 type="text"
-                value={orderData.pincode}
+                value={orderData.pincode || ''}
                 onChange={(e) => handleInputChange('pincode', e.target.value)}
                 className={styles.input}
                 placeholder="400001"
                 pattern="[0-9]{6}"
+                maxLength="6"
                 required
               />
             </div>
@@ -238,7 +320,7 @@ function OrderFormPanel({
               <input
                 id="scheduledTime"
                 type="datetime-local"
-                value={orderData.scheduledTime}
+                value={orderData.scheduledTime || ''}
                 onChange={(e) => handleInputChange('scheduledTime', e.target.value)}
                 className={styles.input}
                 min={new Date().toISOString().slice(0, 16)}
@@ -247,7 +329,7 @@ function OrderFormPanel({
           )}
         </div>
 
-        {/* Special Instructions */}
+        {/* Special Instructions - Maps to notes field */}
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>
             <MessageSquare className={styles.sectionIcon} />
@@ -256,16 +338,16 @@ function OrderFormPanel({
           
           <div className={styles.inputGroup}>
             <textarea
-              value={orderData.instructions}
+              value={orderData.instructions || ''}
               onChange={(e) => handleInputChange('instructions', e.target.value)}
               className={styles.textarea}
               placeholder="Any delivery instructions, allergies, or preferences... (Optional)"
-              rows="2"
+              rows="3"
             />
           </div>
         </div>
 
-        {/* Payment Method */}
+        {/* Payment Method - Maps to payment.method */}
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>
             <CreditCard className={styles.sectionIcon} />
@@ -277,8 +359,8 @@ function OrderFormPanel({
               <input
                 type="radio"
                 name="paymentMethod"
-                value="COD"
-                checked={orderData.paymentMethod === 'COD'}
+                value="cash"
+                checked={orderData.paymentMethod === 'cash'}
                 onChange={(e) => handleInputChange('paymentMethod', e.target.value)}
                 className={styles.paymentRadio}
               />
@@ -297,8 +379,8 @@ function OrderFormPanel({
               <input
                 type="radio"
                 name="paymentMethod"
-                value="UPI"
-                checked={orderData.paymentMethod === 'UPI'}
+                value="upi"
+                checked={orderData.paymentMethod === 'upi'}
                 onChange={(e) => handleInputChange('paymentMethod', e.target.value)}
                 className={styles.paymentRadio}
               />
@@ -317,8 +399,8 @@ function OrderFormPanel({
               <input
                 type="radio"
                 name="paymentMethod"
-                value="CARD"
-                checked={orderData.paymentMethod === 'CARD'}
+                value="card"
+                checked={orderData.paymentMethod === 'card'}
                 onChange={(e) => handleInputChange('paymentMethod', e.target.value)}
                 className={styles.paymentRadio}
               />

@@ -21,7 +21,7 @@ function FoodCard({ food, onView, onEdit, onDelete, styles }) {
             </div>
             <div className="flex gap-2 flex-wrap">
                 <Badge styles={styles} type="status">{food.status}</Badge>
-                <Badge styles={styles} type="type">{food.type === 'Special Menu Item' ? 'Special' : 'Regular'}</Badge>
+                <Badge styles={styles} type="type">{food.type === 'Special Menu' ? 'Special Menu' : 'Regular Menu'}</Badge>
             </div>
             </div>
         </div>

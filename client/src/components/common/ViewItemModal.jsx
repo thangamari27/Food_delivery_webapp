@@ -66,7 +66,6 @@ function ViewItemModal({
     if (onAddToCart) {
       onAddToCart(quantity);
     } else {
-      console.log(`Added ${quantity} x ${menuItem.name} to cart`);
       onClose();
     }
   };

@@ -2,9 +2,17 @@ import Title from "@/components/common/Title"
 import Paragraph from '@/components/common/Paragraph'
 import Button from '@/components/common/Button'
 import ButtonClick from '@/components/common/ButtonClick'
-import { IndianRupee } from "lucide-react"
+import { IndianRupee, ShoppingCart, Eye } from "lucide-react"
 
-function MenuCardContent({ dish, isFeatured, buttonText, styles, onViewClick }) {
+function MenuCardContent({ 
+  dish, 
+  isFeatured, 
+  buttonText, 
+  styles, 
+  onViewClick,
+  onAddToCart,
+  itemInCart = false 
+}) {
   return (
     <div className={styles.menuContent}>
       {/* heading */}
@@ -17,16 +25,28 @@ function MenuCardContent({ dish, isFeatured, buttonText, styles, onViewClick }) 
       </span>
       
       <div className={styles.priceContainer}>
+        {/* View Details Button */}
         <ButtonClick
-          text={buttonText.btntext1}
+          text={
+            <span className="flex items-center gap-2">
+              <Eye size={16} />
+              {buttonText.btntext1}
+            </span>
+          }
           buttonStyle={styles.button1}
           onClick={onViewClick}      
         />
 
-        <Button
-          buttonText={buttonText.btntext2}
-          buttonLink={buttonText.btnlink2}
-          buttonStyle={` ${styles.button2}`}
+        {/* Add to Cart Button */}
+        <ButtonClick
+          text={
+            <span className="flex items-center gap-2">
+              <ShoppingCart size={16} />
+              {itemInCart ? 'In Cart' : buttonText.btntext2}
+            </span>
+          }
+          buttonStyle={`${styles.button2} ${itemInCart ? 'bg-green-500 hover:bg-green-600' : ''}`}
+          onClick={onAddToCart}
         />
       </div>
     </div>

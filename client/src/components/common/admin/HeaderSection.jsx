@@ -7,7 +7,7 @@ function HeaderSection({ content, styles, openModal=false }) {
         <h1 className={styles.headerTitle}>{content.header.title}</h1>
         <p className={styles.headerSubtitle}>{content.header.subtitle}</p>
         </div>
-        {openModal && (
+        {/* {openModal && (
           <button 
             onClick={() => openModal('add')} 
             className={styles.buttonPrimary}
@@ -15,7 +15,7 @@ function HeaderSection({ content, styles, openModal=false }) {
             <Plus className={styles.buttonIcon} />
             {content.header.addButtonText || 'Add New'}
           </button>
-        )}
+        )} */}
     </div>
   )
 }

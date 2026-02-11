@@ -1,13 +1,20 @@
+/**
+ * Admin Booking Handlers
+ * Updated to work with API integration
+ */
 export const createBookingHandlers = (
-  setBookings,
+  loadBookings,
   setFilters,
   setCurrentPage,
   setSelectedBooking,
   setIsDrawerOpen,
   setConfirmModal,
   setIsRefreshing,
-  bookings,
-  selectedBooking
+  confirmBooking,
+  completeBooking,
+  cancelBooking,
+  markAsNoShow,
+  updateAdminNotes
 ) => {
   const handleFilterChange = (newFilters) => {
     setFilters(prev => ({ ...prev, ...newFilters }));
@@ -45,29 +52,39 @@ export const createBookingHandlers = (
     setConfirmModal({ isOpen: true, bookingId, action });
   };
 
-  const handleConfirmAction = (confirmModal) => {
-    const { bookingId, action } = confirmModal;
+  const handleConfirmAction = async (confirmModalState) => {
+    const { bookingId, action } = confirmModalState;
     
-    setBookings(prev => prev.map(booking => {
-      if (booking.id === bookingId) {
-        if (action === 'confirm') {
-          return { ...booking, status: 'confirmed' };
-        } else if (action === 'complete') {
-          return { ...booking, status: 'completed', canCancel: false };
-        } else if (action === 'cancel') {
-          return { ...booking, status: 'cancelled', canCancel: false };
-        }
+    try {
+      switch (action) {
+        case 'confirm':
+          await confirmBooking(bookingId);
+          break;
+        case 'complete':
+          await completeBooking(bookingId);
+          break;
+        case 'cancel':
+          await cancelBooking(bookingId, 'Admin Cancellation', 'Cancelled by admin');
+          break;
+        case 'no_show':
+          await markAsNoShow(bookingId);
+          break;
+        default:
+          break;
       }
-      return booking;
-    }));
 
-    setConfirmModal({ isOpen: false, bookingId: null, action: null });
-    
-    if (selectedBooking?.id === bookingId) {
-      const updatedBooking = bookings.find(b => b.id === bookingId);
-      if (updatedBooking) {
-        setSelectedBooking({ ...updatedBooking });
+      // Close modal
+      setConfirmModal({ isOpen: false, bookingId: null, action: null });
+      
+      // Refresh the booking if drawer is open
+      if (setSelectedBooking) {
+        // The context will automatically update the booking in the list
+        // We just need to keep the drawer open with updated data
       }
+    } catch (error) {
+      console.error('Failed to perform action:', error);
+      alert(`Failed to ${action} booking: ${error.message}`);
+      setConfirmModal({ isOpen: false, bookingId: null, action: null });
     }
   };
 
@@ -76,16 +93,49 @@ export const createBookingHandlers = (
   };
 
   const handleExport = (filteredBookings) => {
-    console.log('Exporting bookings...', filteredBookings);
-    alert('Export functionality would download CSV/Excel file');
+    try {
+      // Create CSV content
+      const headers = ['Booking ID', 'Restaurant', 'Customer', 'Date', 'Time', 'Guests', 'Status'];
+      const rows = filteredBookings.map(booking => [
+        booking.id,
+        booking.restaurantName,
+        booking.customerName,
+        new Date(booking.date).toLocaleDateString(),
+        booking.time,
+        booking.guests,
+        booking.status
+      ]);
+
+      const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.join(','))
+      ].join('\n');
+
+      // Download CSV
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `bookings-export-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Export failed:', error);
+      alert('Failed to export bookings');
+    }
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setIsRefreshing(true);
-    setTimeout(() => {
-      console.log('Refreshing bookings...');
-      setIsRefreshing(false);
-    }, 1000);
+    try {
+      await loadBookings();
+    } catch (error) {
+      console.error('Refresh failed:', error);
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 1000);
+    }
   };
 
   const handlePageChange = (page) => {
@@ -93,9 +143,14 @@ export const createBookingHandlers = (
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSaveNote = (adminNote) => {
-    console.log('Saving admin note:', adminNote);
-    // Implement actual API call here
+  const handleSaveNote = async (adminNote, bookingId) => {
+    try {
+      await updateAdminNotes(bookingId, adminNote);
+      alert('Admin note saved successfully');
+    } catch (error) {
+      console.error('Failed to save note:', error);
+      alert('Failed to save admin note');
+    }
   };
 
   return {

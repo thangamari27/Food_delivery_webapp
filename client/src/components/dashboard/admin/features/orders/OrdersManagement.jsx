@@ -28,6 +28,10 @@ const OrdersManagement = ({ content, generateSampleOrders, styles }) => {
     formErrors,
     selectedFoodItems,
     
+    // Food items - FIXED: Use allFoodItems directly
+    allFoodItems,
+    foodsLoading,
+    
     // Computed values
     sortedOrders,
     paginatedOrders,
@@ -61,7 +65,7 @@ const OrdersManagement = ({ content, generateSampleOrders, styles }) => {
     handleFoodItemToggle,
     updateQuantity,
     calculateTotal
-  } = useOrdersManagement(generateSampleOrders());
+  } = useOrdersManagement();
 
   // Get pagination info
   const paginationInfo = getPaginationInfo(currentPage, rowsPerPage, sortedOrders.length);
@@ -162,6 +166,8 @@ const OrdersManagement = ({ content, generateSampleOrders, styles }) => {
           formData={formData}
           formErrors={formErrors}
           selectedFoodItems={selectedFoodItems}
+          allFoodItems={allFoodItems}
+          foodsLoading={foodsLoading}
           content={content}
           styles={styles}
           getStatusBadge={(status, type) => getStatusBadge(status, type, content)}

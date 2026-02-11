@@ -111,7 +111,7 @@ const FoodSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: {
-            values: ['Special Menu Item', 'Regular Menu Item', 'Seasonal Item', 'Limited Edition'],
+            values: ['Special Menu', 'Regular Menu', 'Seasonal Item', 'Limited Edition'],
             message: '{VALUE} is not a valid food type'
         },
         default: 'Regular Menu Item',

@@ -66,146 +66,143 @@ export const specialMenuContent = {
   itemPerPage: 4,
   cuisine: [
     { id: 'all', name: 'All' },
-    { id: 'arabic', name: 'Arabic' },
-    { id: 'thai', name: 'Thai' },
-    { id: 'pakistani', name: 'Pakistani' },
     { id: 'indian', name: 'Indian' },
   ],
-  specialMenuList: [
-    { 
-      id: 'sm1', 
-      name: 'Salmon Fry', 
-      cuisine: 'arabic', 
-      price: 150, 
-      description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
-      src: {
-        publicId: "food1_zqr8ts",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food1_zqr8ts",
-        format: "jpg",
-      }, 
-    },
-    { 
-      id: 'sm2', 
-      name: 'Thai Noodles', 
-      cuisine: 'thai', 
-      price: 130, 
-      description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
-      src: {
-        publicId: "food2_zmpm3c",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food2_zmpm3c",
-        format: "jpg",
-      },
-    },
-    { 
-      id: 'sm3', 
-      name: 'Curry Chicken', 
-      cuisine: 'indian', 
-      price: 180, 
-      description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
-      src: {
-        publicId: "food3_ifrs58",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food3_ifrs58",
-        format: "jpg",
-      },
-    },
-    { 
-      id: 'sm4', 
-      name: 'Chicken Biryani', 
-      cuisine: 'indian', 
-      price: 200, 
-      description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
-      src: {
-        publicId: "food4_wzokhp",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food4_wzokhp",
-        format: "jpg",
-      },
-    },
-    { 
-      id: 'sm5', 
-      name: 'Pakistani Kebabs', 
-      cuisine: '', 
-      price: 190, 
-      description: 'Marinated Beef · Fresh Salad · Yogurt Dip', 
-      src: {
-        publicId: "food5_ykzpnu",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food5_ykzpnu",
-        format: "jpg",
-      },
-    },
-    { 
-      id: 'sm6', 
-      name: 'Fattoush Salad', 
-      cuisine: 'arabic', 
-      price: 90, description: 'Fresh Lettuce · Tomatoes · Crispy Bread', 
-      src: {
-        publicId: "food6_ivbt39",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food6_ivbt39",
-        format: "jpg",
-      },
-    },
-    { 
-      id: 'sm7', 
-      name: 'Green Curry', 
-      cuisine: 'thai', 
-      price: 175, description: 'Spicy Coconut Milk · Bamboo Shoots', 
-      src: {
-        publicId: "food7_cumxvv",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food7_cumxvv",
-        format: "jpg",
-      },
-    },
-    { 
-      id: 'sm8', 
-      name: 'Butter Chicken', 
-      cuisine: 'indian', 
-      price: 210, 
-      description: 'Creamy Tomato Sauce · Tender Chicken', 
-      src: {
-        publicId: "food8_rln5kp",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food8_rln5kp",
-        format: "jpg",
-      },
-    },
-    { 
-      id: 'sm9', 
-      name: 'Masala Dosa', 
-      cuisine: 'indian', 
-      price: 110, 
-      description: 'Thin Rice Crepe · Potato Filling · Sambar', 
-      src: {
-        publicId: "food9_glom4a",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food9_glom4a",
-        format: "jpg",
-      },
-    },
-  ],
+  // specialMenuList: [
+  //   { 
+  //     id: 'sm1', 
+  //     name: 'Salmon Fry', 
+  //     cuisine: 'arabic', 
+  //     price: 150, 
+  //     description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
+  //     src: {
+  //       publicId: "food1_zqr8ts",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food1_zqr8ts",
+  //       format: "jpg",
+  //     }, 
+  //   },
+  //   { 
+  //     id: 'sm2', 
+  //     name: 'Thai Noodles', 
+  //     cuisine: 'thai', 
+  //     price: 130, 
+  //     description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
+  //     src: {
+  //       publicId: "food2_zmpm3c",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food2_zmpm3c",
+  //       format: "jpg",
+  //     },
+  //   },
+  //   { 
+  //     id: 'sm3', 
+  //     name: 'Curry Chicken', 
+  //     cuisine: 'indian', 
+  //     price: 180, 
+  //     description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
+  //     src: {
+  //       publicId: "food3_ifrs58",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food3_ifrs58",
+  //       format: "jpg",
+  //     },
+  //   },
+  //   { 
+  //     id: 'sm4', 
+  //     name: 'Chicken Biryani', 
+  //     cuisine: 'indian', 
+  //     price: 200, 
+  //     description: '2 Salmon Fry · Chili Sauce · Soft Drinks', 
+  //     src: {
+  //       publicId: "food4_wzokhp",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food4_wzokhp",
+  //       format: "jpg",
+  //     },
+  //   },
+  //   { 
+  //     id: 'sm5', 
+  //     name: 'Pakistani Kebabs', 
+  //     cuisine: '', 
+  //     price: 190, 
+  //     description: 'Marinated Beef · Fresh Salad · Yogurt Dip', 
+  //     src: {
+  //       publicId: "food5_ykzpnu",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food5_ykzpnu",
+  //       format: "jpg",
+  //     },
+  //   },
+  //   { 
+  //     id: 'sm6', 
+  //     name: 'Fattoush Salad', 
+  //     cuisine: 'arabic', 
+  //     price: 90, description: 'Fresh Lettuce · Tomatoes · Crispy Bread', 
+  //     src: {
+  //       publicId: "food6_ivbt39",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food6_ivbt39",
+  //       format: "jpg",
+  //     },
+  //   },
+  //   { 
+  //     id: 'sm7', 
+  //     name: 'Green Curry', 
+  //     cuisine: 'thai', 
+  //     price: 175, description: 'Spicy Coconut Milk · Bamboo Shoots', 
+  //     src: {
+  //       publicId: "food7_cumxvv",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food7_cumxvv",
+  //       format: "jpg",
+  //     },
+  //   },
+  //   { 
+  //     id: 'sm8', 
+  //     name: 'Butter Chicken', 
+  //     cuisine: 'indian', 
+  //     price: 210, 
+  //     description: 'Creamy Tomato Sauce · Tender Chicken', 
+  //     src: {
+  //       publicId: "food8_rln5kp",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food8_rln5kp",
+  //       format: "jpg",
+  //     },
+  //   },
+  //   { 
+  //     id: 'sm9', 
+  //     name: 'Masala Dosa', 
+  //     cuisine: 'indian', 
+  //     price: 110, 
+  //     description: 'Thin Rice Crepe · Potato Filling · Sambar', 
+  //     src: {
+  //       publicId: "food9_glom4a",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food9_glom4a",
+  //       format: "jpg",
+  //     },
+  //   },
+  // ],
   specialMenuButton: {
     btntext1: "View Menu",
     btnlink1: "",
@@ -231,227 +228,233 @@ export const topCategoryContent = {
     title: "Top Category",
   },
   categoryBar: [
-    'All', 'Noodle Dishes', 'Rice Dishes', 'Rolls and Wraps', 'Seafood Dishes', 'Beverages',
+    'All', 
+    'Starters',        
+    'Main Course',     
+    'Noodle Dishes',   
+    'Rice Dishes',     
+    'Desserts',        
+    'Beverages' 
   ],
 
-  menuItems: [
-    { 
-      id: 1, 
-      name: 'VEGETABLE SPRING ROLLS', 
-      category: 'Rolls and Wraps', 
-      ingredients: 'Ingredients: tomato, lettuce, capsicum', 
-      priceTitle: "Price:",
-      price: 125, 
-      originalPrice: 348, 
-      src: {
-        publicId: "food1_zqr8ts",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food1_zqr8ts",
-        format: "jpg",
-      },
-      alt: 'Vegetable spring rolls with tomato, lettuce, and capsicum'
-    },
-    { 
-      id: 2, 
-      name: 'MEXICAN TACOS WITH MEAT', 
-      category: 'Rolls and Wraps', 
-      ingredients: 'Ingredients: Meat, Spices', 
-      priceTitle: "Price:",
-      price: 325, 
-      originalPrice: 348, 
-      src: {
-        publicId: "food2_zmpm3c",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food2_zmpm3c",
-        format: "jpg",
-      },
-      alt: 'Mexican tacos with meat and spices'
-    },
-    { 
-      id: 3, 
-      name: 'SANDWICH WITH TOMATOES', 
-      category: 'Rolls and Wraps', 
-      ingredients: 'Ingredients: tomato, bun, cucumber', 
-      priceTitle: "Price:",
-      price: 125, 
-      originalPrice: 348, 
-      src: {
-        publicId: "food3_ifrs58",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food3_ifrs58",
-        format: "jpg",
-      },
-      alt: 'Sandwich with tomatoes, bun, and cucumber'
-    },
-    { 
-      id: 4, 
-      name: 'POPIAH DEEP FRIED SPRING ROLLS', 
-      category: 'Rolls and Wraps', 
-      ingredients: 'Ingredients: tomato, toffu, capsicum', 
-      priceTitle: "Price:",
-      price: 125, 
-      originalPrice: 348, 
-      src: {
-        publicId: "food4_wzokhp",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food4_wzokhp",
-        format: "jpg",
-      },
-      alt: 'Popiah deep fried spring rolls with tomato, tofu, and capsicum'
-    },
-    { 
-      id: 5, 
-      name: 'PHO GA, NOODLES, SPRING ROLLS', 
-      category: 'Noodle Dishes', 
-      ingredients: 'Ingredients: noodles, toffu, capsicum', 
-      priceTitle: "Price:",
-      price: 325, 
-      originalPrice: 348, 
-      src: {
-        publicId: "food5_ykzpnu",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food5_ykzpnu",
-        format: "jpg",
-      },
-      alt: 'Pho Ga with noodles, spring rolls, tofu, and capsicum'
-    },
-    { 
-      id: 6, 
-      name: 'SPRING ROLLS WITH CHEESE', 
-      category: 'Rolls and Wraps', 
-      ingredients: 'Ingredients: tomato, bun, capsicum', 
-      priceTitle: "Price:",
-      price: 325, 
-      originalPrice: 348, 
-      src: {
-        publicId: "food6_ivbt39",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food6_ivbt39",
-        format: "jpg",
-      },
-      alt: 'Spring rolls with cheese, tomato, and capsicum'
-    },
-    { 
-      id: 7, 
-      name: 'SHRIMP SPICY SHOUP', 
-      category: 'Seafood Dishes', 
-      ingredients: 'Ingredients: shrimp, toffu, capsicum', 
-      priceTitle: "Price:",
-      price: 325, 
-      originalPrice: 348, 
-      src: {
-        publicId: "food7_cumxvv",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food7_cumxvv",
-        format: "jpg",
-      },
-      alt: 'Spicy shrimp soup with tofu and capsicum'
-    },
-    { 
-      id: 8, 
-      name: 'NOODLES SPICY WITH SEAFOOD', 
-      category: 'Noodle Dishes', 
-      ingredients: 'Ingredients: noodles, seafood, capsicum', 
-      priceTitle: "Price:",
-      price: 325, 
-      originalPrice: 348, 
-      src: {
-        publicId: "food8_rln5kp",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food8_rln5kp",
-        format: "jpg",
-      },
-      alt: 'Spicy noodles with seafood and capsicum'
-    },
-    { 
-      id: 9, 
-      name: 'CHICKEN FRIED RICE', 
-      category: 'Rice Dishes', 
-      ingredients: 'Ingredients: rice, chicken, vegetables', 
-      priceTitle: "Price:",
-      price: 280, 
-      originalPrice: 348, 
-      src: {
-        publicId: "food9_glom4a",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food9_glom4a",
-        format: "jpg",
-      },
-      alt: 'Chicken fried rice with vegetables'
-    },
-    { 
-      id: 10, 
-      name: 'SEAFOOD PAELLA', 
-      category: 'Rice Dishes', 
-      ingredients: 'Ingredients: rice, seafood, saffron', 
-      priceTitle: "Price:",
-      price: 380, 
-      originalPrice: 448, 
-      src: {
-        publicId: "food10_mifnur",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food10_mifnur",
-        format: "jpg",
-      },
-      alt: 'Seafood paella with saffron'
-    },
-    { 
-      id: 11, 
-      name: 'GRILLED SALMON', 
-      category: 'Seafood Dishes', 
-      ingredients: 'Ingredients: salmon, lemon, herbs', 
-      priceTitle: "Price:",
-      price: 420, 
-      originalPrice: 548, 
-      src: {
-        publicId: "food1_zqr8ts",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food1_zqr8ts",
-        format: "jpg",
-      },
-      alt: 'Grilled salmon with lemon and herbs'
-    },
-    { 
-      id: 12, 
-      name: 'ICED LEMON TEA', 
-      category: '', 
-      ingredients: 'Ingredients: tea, lemon, ice', 
-      priceTitle: "Price:",
-      price: 80, 
-      originalPrice: 120, 
-      src: {
-        publicId: "food2_zmpm3c",
-        format: "webp",
-      },
-      srcFallback: {
-        publicId: "food2_zmpm3c",
-        format: "jpg",
-      },
-      alt: 'Iced lemon tea'
-    }
-  ],
+  // menuItems: [
+  //   { 
+  //     id: 1, 
+  //     name: 'VEGETABLE SPRING ROLLS', 
+  //     category: 'Rolls and Wraps', 
+  //     ingredients: 'Ingredients: tomato, lettuce, capsicum', 
+  //     priceTitle: "Price:",
+  //     price: 125, 
+  //     originalPrice: 348, 
+  //     src: {
+  //       publicId: "food1_zqr8ts",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food1_zqr8ts",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Vegetable spring rolls with tomato, lettuce, and capsicum'
+  //   },
+  //   { 
+  //     id: 2, 
+  //     name: 'MEXICAN TACOS WITH MEAT', 
+  //     category: 'Rolls and Wraps', 
+  //     ingredients: 'Ingredients: Meat, Spices', 
+  //     priceTitle: "Price:",
+  //     price: 325, 
+  //     originalPrice: 348, 
+  //     src: {
+  //       publicId: "food2_zmpm3c",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food2_zmpm3c",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Mexican tacos with meat and spices'
+  //   },
+  //   { 
+  //     id: 3, 
+  //     name: 'SANDWICH WITH TOMATOES', 
+  //     category: 'Rolls and Wraps', 
+  //     ingredients: 'Ingredients: tomato, bun, cucumber', 
+  //     priceTitle: "Price:",
+  //     price: 125, 
+  //     originalPrice: 348, 
+  //     src: {
+  //       publicId: "food3_ifrs58",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food3_ifrs58",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Sandwich with tomatoes, bun, and cucumber'
+  //   },
+  //   { 
+  //     id: 4, 
+  //     name: 'POPIAH DEEP FRIED SPRING ROLLS', 
+  //     category: 'Rolls and Wraps', 
+  //     ingredients: 'Ingredients: tomato, toffu, capsicum', 
+  //     priceTitle: "Price:",
+  //     price: 125, 
+  //     originalPrice: 348, 
+  //     src: {
+  //       publicId: "food4_wzokhp",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food4_wzokhp",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Popiah deep fried spring rolls with tomato, tofu, and capsicum'
+  //   },
+  //   { 
+  //     id: 5, 
+  //     name: 'PHO GA, NOODLES, SPRING ROLLS', 
+  //     category: 'Noodle Dishes', 
+  //     ingredients: 'Ingredients: noodles, toffu, capsicum', 
+  //     priceTitle: "Price:",
+  //     price: 325, 
+  //     originalPrice: 348, 
+  //     src: {
+  //       publicId: "food5_ykzpnu",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food5_ykzpnu",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Pho Ga with noodles, spring rolls, tofu, and capsicum'
+  //   },
+  //   { 
+  //     id: 6, 
+  //     name: 'SPRING ROLLS WITH CHEESE', 
+  //     category: 'Rolls and Wraps', 
+  //     ingredients: 'Ingredients: tomato, bun, capsicum', 
+  //     priceTitle: "Price:",
+  //     price: 325, 
+  //     originalPrice: 348, 
+  //     src: {
+  //       publicId: "food6_ivbt39",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food6_ivbt39",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Spring rolls with cheese, tomato, and capsicum'
+  //   },
+  //   { 
+  //     id: 7, 
+  //     name: 'SHRIMP SPICY SHOUP', 
+  //     category: 'Seafood Dishes', 
+  //     ingredients: 'Ingredients: shrimp, toffu, capsicum', 
+  //     priceTitle: "Price:",
+  //     price: 325, 
+  //     originalPrice: 348, 
+  //     src: {
+  //       publicId: "food7_cumxvv",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food7_cumxvv",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Spicy shrimp soup with tofu and capsicum'
+  //   },
+  //   { 
+  //     id: 8, 
+  //     name: 'NOODLES SPICY WITH SEAFOOD', 
+  //     category: 'Noodle Dishes', 
+  //     ingredients: 'Ingredients: noodles, seafood, capsicum', 
+  //     priceTitle: "Price:",
+  //     price: 325, 
+  //     originalPrice: 348, 
+  //     src: {
+  //       publicId: "food8_rln5kp",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food8_rln5kp",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Spicy noodles with seafood and capsicum'
+  //   },
+  //   { 
+  //     id: 9, 
+  //     name: 'CHICKEN FRIED RICE', 
+  //     category: 'Rice Dishes', 
+  //     ingredients: 'Ingredients: rice, chicken, vegetables', 
+  //     priceTitle: "Price:",
+  //     price: 280, 
+  //     originalPrice: 348, 
+  //     src: {
+  //       publicId: "food9_glom4a",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food9_glom4a",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Chicken fried rice with vegetables'
+  //   },
+  //   { 
+  //     id: 10, 
+  //     name: 'SEAFOOD PAELLA', 
+  //     category: 'Rice Dishes', 
+  //     ingredients: 'Ingredients: rice, seafood, saffron', 
+  //     priceTitle: "Price:",
+  //     price: 380, 
+  //     originalPrice: 448, 
+  //     src: {
+  //       publicId: "food10_mifnur",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food10_mifnur",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Seafood paella with saffron'
+  //   },
+  //   { 
+  //     id: 11, 
+  //     name: 'GRILLED SALMON', 
+  //     category: 'Seafood Dishes', 
+  //     ingredients: 'Ingredients: salmon, lemon, herbs', 
+  //     priceTitle: "Price:",
+  //     price: 420, 
+  //     originalPrice: 548, 
+  //     src: {
+  //       publicId: "food1_zqr8ts",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food1_zqr8ts",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Grilled salmon with lemon and herbs'
+  //   },
+  //   { 
+  //     id: 12, 
+  //     name: 'ICED LEMON TEA', 
+  //     category: '', 
+  //     ingredients: 'Ingredients: tea, lemon, ice', 
+  //     priceTitle: "Price:",
+  //     price: 80, 
+  //     originalPrice: 120, 
+  //     src: {
+  //       publicId: "food2_zmpm3c",
+  //       format: "webp",
+  //     },
+  //     srcFallback: {
+  //       publicId: "food2_zmpm3c",
+  //       format: "jpg",
+  //     },
+  //     alt: 'Iced lemon tea'
+  //   }
+  // ],
 
   button: {
     btnText1: "View",

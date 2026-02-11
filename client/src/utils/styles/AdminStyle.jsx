@@ -132,8 +132,8 @@ export const foodStyles = {
       Inactive: 'bg-gray-100 text-gray-800'
     },
     type: {
-      'Special Menu Item': 'bg-orange-100 text-orange-800',
-      'Regular Menu Item': 'bg-blue-100 text-blue-800'
+      'Special Menu': 'bg-orange-100 text-orange-800',
+      'Regular Menu': 'bg-blue-100 text-blue-800'
     },
     base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium'
   },

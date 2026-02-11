@@ -15,9 +15,9 @@ function TableRow({ food, onView, onEdit, onDelete, styles }) {
       <td className={styles.table.cell}>
         <div>
           <p className="font-medium text-gray-900">{food.name}</p>
-          <p className="text-sm text-gray-500 truncate max-w-xs">
+          <span className='block truncate max-w-[120px]'>
             {food.description || 'No description'}
-          </p>
+          </span>
         </div>
       </td>
       <td className={`${styles.table.cell} hidden md:table-cell`}>

@@ -12,7 +12,7 @@ const InfoGrid = ({ restaurant, styles }) => (
   <div className={styles.menuInfoGrid}>
     <InfoItem
       icon={<Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-yellow-500 fill-yellow-500 flex-shrink-0" />}
-      text={restaurant.rating}
+      text={restaurant.rating.average}
       isBold={true}
       styles={styles}
     />
@@ -28,7 +28,7 @@ const InfoGrid = ({ restaurant, styles }) => (
     />
     <InfoItem
       icon={<MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-gray-500 flex-shrink-0" />}
-      text={restaurant.address}
+      text={restaurant.address.city}
       styles={styles}
     />
   </div>

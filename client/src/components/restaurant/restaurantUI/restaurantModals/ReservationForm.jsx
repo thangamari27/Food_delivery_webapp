@@ -1,7 +1,14 @@
-import { Clock } from "lucide-react";
+import { Clock, Loader2 } from "lucide-react";
 import { useState } from "react";
 
-const ReservationForm = ({ restaurant, content, styles, onSubmit, onCancel }) => {
+const ReservationForm = ({ 
+  restaurant, 
+  content, 
+  styles, 
+  onSubmit, 
+  onCancel,
+  isSubmitting = false
+}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -9,16 +16,17 @@ const ReservationForm = ({ restaurant, content, styles, onSubmit, onCancel }) =>
     date: '',
     time: '',
     guests: '2',
-    specialRequests: ''
+    specialRequests: '',
+    occasion: 'Regular'
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    await onSubmit(formData);
   };
 
   const today = new Date().toISOString().split('T')[0];
@@ -32,18 +40,24 @@ const ReservationForm = ({ restaurant, content, styles, onSubmit, onCancel }) =>
           content={content} 
           styles={styles}
           today={today}
+          disabled={isSubmitting}
         />
         
         <ImportantInfo content={content} styles={styles} />
         
-        <FormActions onCancel={onCancel} content={content} styles={styles} />
+        <FormActions 
+          onCancel={onCancel} 
+          content={content} 
+          styles={styles}
+          isSubmitting={isSubmitting}
+        />
       </div>
     </form>
   );
 };
 
 // Sub-component: Form Fields Grid
-const FormFields = ({ formData, handleChange, content, styles, today }) => (
+const FormFields = ({ formData, handleChange, content, styles, today, disabled }) => (
   <div className={styles.formGrid}>
     <FormField
       label={content.fields.name.label}
@@ -53,6 +67,7 @@ const FormFields = ({ formData, handleChange, content, styles, today }) => (
       onChange={handleChange}
       placeholder={content.fields.name.placeholder}
       required
+      disabled={disabled}
       styles={styles}
     />
     
@@ -64,6 +79,7 @@ const FormFields = ({ formData, handleChange, content, styles, today }) => (
       onChange={handleChange}
       placeholder={content.fields.email.placeholder}
       required
+      disabled={disabled}
       styles={styles}
     />
     
@@ -75,6 +91,7 @@ const FormFields = ({ formData, handleChange, content, styles, today }) => (
       onChange={handleChange}
       placeholder={content.fields.phone.placeholder}
       required
+      disabled={disabled}
       styles={styles}
     />
     
@@ -83,6 +100,7 @@ const FormFields = ({ formData, handleChange, content, styles, today }) => (
       value={formData.guests}
       onChange={handleChange}
       options={content.guestOptions}
+      disabled={disabled}
       styles={styles}
     />
     
@@ -94,6 +112,7 @@ const FormFields = ({ formData, handleChange, content, styles, today }) => (
       onChange={handleChange}
       min={today}
       required
+      disabled={disabled}
       styles={styles}
     />
     
@@ -102,13 +121,40 @@ const FormFields = ({ formData, handleChange, content, styles, today }) => (
       value={formData.time}
       onChange={handleChange}
       options={content.timeSlots}
+      disabled={disabled}
       styles={styles}
     />
+    
+    <div className="col-span-2">
+      <label className={styles.formLabel}>
+        {content.fields.specialRequests?.label || 'Special Requests'}
+      </label>
+      <textarea
+        name="specialRequests"
+        value={formData.specialRequests}
+        onChange={handleChange}
+        className={styles.formInput}
+        placeholder={content.fields.specialRequests?.placeholder || 'Any special requests?'}
+        rows={3}
+        disabled={disabled}
+      />
+    </div>
   </div>
 );
 
 // Sub-component: Individual Form Field
-const FormField = ({ label, name, type, value, onChange, placeholder, required, min, styles }) => (
+const FormField = ({ 
+  label, 
+  name, 
+  type, 
+  value, 
+  onChange, 
+  placeholder, 
+  required, 
+  min, 
+  disabled,
+  styles 
+}) => (
   <div>
     <label className={styles.formLabel}>
       {label} {required && '*'}
@@ -119,6 +165,7 @@ const FormField = ({ label, name, type, value, onChange, placeholder, required, 
       value={value}
       onChange={onChange}
       required={required}
+      disabled={disabled}
       className={styles.formInput}
       placeholder={placeholder}
       min={min}
@@ -127,7 +174,7 @@ const FormField = ({ label, name, type, value, onChange, placeholder, required, 
 );
 
 // Sub-component: Guest Select
-const GuestSelect = ({ label, value, onChange, options, styles }) => (
+const GuestSelect = ({ label, value, onChange, options, disabled, styles }) => (
   <div>
     <label className={styles.formLabel}>
       {label} *
@@ -137,6 +184,7 @@ const GuestSelect = ({ label, value, onChange, options, styles }) => (
       value={value}
       onChange={onChange}
       required
+      disabled={disabled}
       className={styles.formSelect}
     >
       {options.map(num => (
@@ -149,7 +197,7 @@ const GuestSelect = ({ label, value, onChange, options, styles }) => (
 );
 
 // Sub-component: Time Select
-const TimeSelect = ({ label, value, onChange, options, styles }) => (
+const TimeSelect = ({ label, value, onChange, options, disabled, styles }) => (
   <div>
     <label className={styles.formLabel}>
       {label} *
@@ -159,6 +207,7 @@ const TimeSelect = ({ label, value, onChange, options, styles }) => (
       value={value}
       onChange={onChange}
       required
+      disabled={disabled}
       className={styles.formSelect}
     >
       <option value="">Select time</option>
@@ -191,20 +240,29 @@ const ImportantInfo = ({ content, styles }) => (
 );
 
 // Sub-component: Form Actions
-const FormActions = ({ onCancel, content, styles }) => (
+const FormActions = ({ onCancel, content, styles, isSubmitting }) => (
   <div className={styles.formActions}>
     <button
       type="button"
       onClick={onCancel}
-      className={styles.formButtonSecondary}
+      disabled={isSubmitting}
+      className={`${styles.formButtonSecondary} ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
     >
       {content.buttons.cancel}
     </button>
     <button
       type="submit"
-      className={styles.formButtonPrimary}
+      disabled={isSubmitting}
+      className={`${styles.formButtonPrimary} ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
     >
-      {content.buttons.confirm}
+      {isSubmitting ? (
+        <span className="flex items-center gap-2">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          Booking...
+        </span>
+      ) : (
+        content.buttons.confirm
+      )}
     </button>
   </div>
 );

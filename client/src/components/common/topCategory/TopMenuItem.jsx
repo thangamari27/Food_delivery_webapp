@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import Image from '../Image'
-import { Plus, ForkKnifeCrossed, IndianRupee, Heart, Star } from 'lucide-react'
+import { Plus, ForkKnifeCrossed, IndianRupee, Star, ShoppingCart, Eye } from 'lucide-react'
 import ViewItemModal from '../ViewItemModal';
+import { useCart } from '@/context/CartContext'
+import { useAuthContext } from '@/context/AuthContext'
+import { toast } from 'react-hot-toast'
 
 function TopMenuItem({ items, buttonContent, styles, isLiked, onLikeToggle }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Get cart and auth context
+  const { addToCart, isInCart, setCartOpen } = useCart()
+  const { isAuthenticated } = useAuthContext()
 
   const handleViewDetails = (e) => {
     e.preventDefault();
@@ -12,23 +19,65 @@ function TopMenuItem({ items, buttonContent, styles, isLiked, onLikeToggle }) {
     setIsModalOpen(true);
   };
 
-  const handleAddToCart = (quantity) => {
-    console.log(`Added ${quantity} x ${items.name} to cart`)
-    setIsModalOpen(false)
-    // Call your existing cart logic here
+  /**
+   * Handle Quick Add to Cart - with authentication check
+   */
+  const handleQuickAdd = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    // Check authentication first
+    if (!isAuthenticated) {
+      toast.error('Please login to add items to cart', {
+        duration: 3000,
+        icon: '🔒'
+      })
+      return
+    }
+
+    // Add to cart
+    const success = addToCart(items, 1, true)
+    
+    if (success) {
+      // Optional: Open cart panel after adding
+      // setTimeout(() => setCartOpen(true), 300)
+    }
   }
 
-  const handleQuickAdd = () => {
-    console.log(`Quick add: ${items.name}`)
-    // Call your existing quick add logic here
+  /**
+   * Handle Add to Cart from Modal
+   */
+  const handleAddToCartFromModal = (quantity) => {
+    if (!isAuthenticated) {
+      toast.error('Please login to add items to cart')
+      setIsModalOpen(false)
+      return
+    }
+
+    const success = addToCart(items, quantity, true)
+    
+    if (success) {
+      setIsModalOpen(false)
+      // Optional: Open cart panel
+      setTimeout(() => setCartOpen(true), 300)
+    }
   }
+
+  // Check if item is already in cart
+  const itemInCart = isInCart(items.fid || items._id || items.id)
+
+  // Get rating value - handle both object and number
+  const ratingValue = typeof items.rating === 'object' 
+    ? items.rating?.average || 4 
+    : items.rating || 4;
 
   return (
     <>
       <div className={styles.cardContainer}>
         <div className={styles.imageContainer}>
+          {/* Like/Favorite Button */}
           <button
-            onClick={() => onLikeToggle(items.id)}
+            onClick={() => onLikeToggle(items.id || items.fid || items._id)}
             className={styles.likeButton}
             title={isLiked ? "Remove from favourites" : "Add to favourites"}
           >
@@ -37,6 +86,13 @@ function TopMenuItem({ items, buttonContent, styles, isLiked, onLikeToggle }) {
               className={isLiked ? styles.likeActive : styles.likeInactive}
             />
           </button>
+
+          {/* Cart Badge - Show if item is in cart */}
+          {itemInCart && (
+            <div className="absolute top-2 right-2 bg-orange-500 text-white rounded-full p-2 shadow-lg z-10">
+              <ShoppingCart size={16} />
+            </div>
+          )}
 
           <Image 
             src={items.src}
@@ -57,25 +113,43 @@ function TopMenuItem({ items, buttonContent, styles, isLiked, onLikeToggle }) {
                 <IndianRupee className={`${styles.priceIcon}`} />
                 {items.price}
               </span>
-              <span className={styles.originalPrice}>
-                <IndianRupee className={`${styles.priceIcon} ${styles.originalPriceIcon}`} />
-                {items.originalPrice}
-              </span>
+              {items.originalPrice && items.originalPrice > items.price && (
+                <span className={styles.originalPrice}>
+                  <IndianRupee className={`${styles.priceIcon} ${styles.originalPriceIcon}`} />
+                  {items.originalPrice}
+                </span>
+              )}
             </div>
           </div>
           
           <div className={styles.buttonContainer}>
-            <button className={styles.addButton1} onClick={handleViewDetails}>
-              <ForkKnifeCrossed className={styles.buttonIcon1} />
+            {/* View Details Button */}
+            <button 
+              className={styles.addButton1} 
+              onClick={handleViewDetails}
+              title="View details"
+            >
+              <Eye className={styles.buttonIcon1} />
               <span className={styles.buttonText}>{buttonContent.btnText1}</span>
             </button>
             
+            {/* Quick Add to Cart Button */}
             <button 
-              className={styles.addButton2}
+              className={`${styles.addButton2} ${itemInCart ? 'bg-green-500 hover:bg-green-600' : ''}`}
               onClick={handleQuickAdd}
+              title={itemInCart ? 'Already in cart' : 'Quick add to cart'}
             >
-              <Plus className={styles.buttonIcon2} />
-              <span className={styles.buttonText}>{buttonContent.btnText2}</span>
+              {itemInCart ? (
+                <>
+                  <ShoppingCart className={styles.buttonIcon2} />
+                  <span className={styles.buttonText}>In Cart</span>
+                </>
+              ) : (
+                <>
+                  <Plus className={styles.buttonIcon2} />
+                  <span className={styles.buttonText}>{buttonContent.btnText2}</span>
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -87,7 +161,7 @@ function TopMenuItem({ items, buttonContent, styles, isLiked, onLikeToggle }) {
         onClose={() => setIsModalOpen(false)}
         item={items}
         buttonContent={buttonContent}
-        onAddToCart={handleAddToCart}
+        onAddToCart={handleAddToCartFromModal}
         type="topCategory"
       />
     </>

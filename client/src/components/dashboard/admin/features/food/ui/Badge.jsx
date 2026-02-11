@@ -8,7 +8,7 @@ function Badge({ children, type = 'default', styles }) {
       : children === 'Out of Stock' || children === 'Inactive'
       ? 'bg-red-100 text-red-800'
       : 'bg-yellow-100 text-yellow-800',
-    type: children === 'Special Menu Item'
+    type: children === 'Special Menu'
       ? 'bg-purple-100 text-purple-800'
       : 'bg-blue-100 text-blue-800',
     category: 'bg-orange-100 text-orange-800',

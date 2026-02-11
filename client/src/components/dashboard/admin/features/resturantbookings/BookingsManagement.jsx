@@ -1,17 +1,24 @@
-import React from "react"
-import { bookingContent } from "../../../../../utils/constant/admin/AdminDashboard"
-import { bookingStyles } from "../../../../../utils/styles/AdminStyle"
-import BookingHeader from "./BookingHeader"
-import BookingStats from "./BookingStats"
-import BookingFilters from "./BookingFilters"
-import BookingCard from "./BookingCard"
-import BookingTable from "./BookingTable"
-import Pagination from "./Pagination"
-import BookingDetailsDrawer from "./BookingDetailsDrawer"
-import ConfirmationModal from "./ConfirmationModal"
-import EmptyState from "./EmptyState"
-import { useBookingManagement, useBookingFilters, useBookingStats, useModalContent } from "../../../../../hooks/admin/useBookingManagement"
-import { createBookingHandlers } from "../../../../../utils/handler/admin/bookingHandlers"
+import React from "react";
+import { bookingContent } from "../../../../../utils/constant/admin/AdminDashboard";
+import { bookingStyles } from "../../../../../utils/styles/AdminStyle";
+import BookingHeader from "./BookingHeader";
+import BookingStats from "./BookingStats";
+import BookingFilters from "./BookingFilters";
+import BookingCard from "./BookingCard";
+import BookingTable from "./BookingTable";
+import Pagination from "./Pagination";
+import BookingDetailsDrawer from "./BookingDetailsDrawer";
+import ConfirmationModal from "./ConfirmationModal";
+import EmptyState from "./EmptyState";
+import AdminLoader, { TableSkeletonLoader, InlineLoader, CardSkeletonLoader } from "../../../../common/admin/AdminLoader";
+import ErrorDisplay from "../../../../common/admin/ErrorDisplay";
+import { 
+  useBookingManagement, 
+  useBookingFilters, 
+  useBookingStats, 
+  useModalContent 
+} from "../../../../../hooks/admin/useBookingManagement";
+import { createBookingHandlers } from "../../../../../utils/handler/admin/bookingHandlers";
 
 function BookingsManagement() {
   const content = bookingContent;
@@ -19,47 +26,105 @@ function BookingsManagement() {
 
   // Initialize hooks
   const bookingManagement = useBookingManagement();
-  const { bookings, setBookings } = bookingManagement;
-  
-  // Initialize with mock data
-  React.useEffect(() => {
-    setBookings(content.mock_bookings);
-  }, [setBookings]);
+  const { 
+    bookings, 
+    loading,
+    error,
+    filters,
+    setFilters,
+    selectedBooking,
+    setSelectedBooking,
+    isDrawerOpen,
+    setIsDrawerOpen,
+    confirmModal,
+    setConfirmModal,
+    isRefreshing,
+    setIsRefreshing,
+    currentPage,
+    setCurrentPage,
+    loadBookings,
+    confirmBooking,
+    completeBooking,
+    cancelBooking,
+    markAsNoShow,
+    updateAdminNotes,
+    clearError
+  } = bookingManagement;
 
   // Use custom hooks
   const stats = useBookingStats(bookings);
   const { filteredBookings, paginatedBookings, totalPages } = useBookingFilters(
     bookings, 
-    bookingManagement.filters, 
-    bookingManagement.currentPage
+    filters, 
+    currentPage
   );
-  const modalContent = useModalContent(bookingManagement.confirmModal.action);
+  const modalContent = useModalContent(confirmModal.action);
 
   // Create handlers
   const handlers = createBookingHandlers(
-    bookingManagement.setBookings,
-    bookingManagement.setFilters,
-    bookingManagement.setCurrentPage,
-    bookingManagement.setSelectedBooking,
-    bookingManagement.setIsDrawerOpen,
-    bookingManagement.setConfirmModal,
-    bookingManagement.setIsRefreshing,
-    bookings,
-    bookingManagement.selectedBooking
+    loadBookings,
+    setFilters,
+    setCurrentPage,
+    setSelectedBooking,
+    setIsDrawerOpen,
+    setConfirmModal,
+    setIsRefreshing,
+    confirmBooking,
+    completeBooking,
+    cancelBooking,
+    markAsNoShow,
+    updateAdminNotes
   );
 
-  // Get selected restaurant
-  const selectedRestaurant = bookingManagement.selectedBooking 
-  ? content.mock_restaurants[bookingManagement.selectedBooking.restaurantId] 
-  : null;
+  // Get selected restaurant data (if needed from backend)
+  // For now, we'll use the restaurant data from the booking itself
+  const selectedRestaurant = selectedBooking ? {
+    name: selectedBooking.restaurantName,
+    cuisine: selectedBooking.cuisine,
+    phone: selectedBooking.restaurantPhone,
+    address: selectedBooking.restaurantAddress
+  } : null;
+
+  // Handle loading state
+  if (loading && bookings.length === 0) {
+    return (
+      <div className={styles.layout.page}>
+        <AdminLoader loaderName="bookings" />
+      </div>
+    );
+  }
+
+  // Handle error state
+  if (error && bookings.length === 0) {
+    return (
+      <div className={styles.layout.page}>
+        <ErrorDisplay 
+          message={error} 
+          onRetry={loadBookings}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.layout.page}>
+      {/* Show inline loader for refresh */}
+      {isRefreshing && (
+        <div className="fixed top-4 right-4 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-4 border border-gray-200">
+            <InlineLoader 
+              size="small" 
+              text="Refreshing..." 
+            />
+          </div>
+        </div>
+      )}
+
       <BookingHeader 
         content={content}
         onExport={() => handlers.handleExport(filteredBookings)} 
         onRefresh={handlers.handleRefresh}
-        isRefreshing={bookingManagement.isRefreshing}
+        isRefreshing={isRefreshing}
         styles={styles}
       />
 
@@ -67,49 +132,74 @@ function BookingsManagement() {
         content={content}
         stats={stats}
         onStatClick={handlers.handleStatClick}
-        activeFilter={bookingManagement.filters.status}
+        activeFilter={filters.status}
         styles={styles}
       />
 
       <BookingFilters
         content={content}
-        filters={bookingManagement.filters}
+        filters={filters}
         onFilterChange={handlers.handleFilterChange}
         onClearFilters={handlers.handleClearFilters}
         styles={styles}
       />
 
       <div className={styles.layout.content_container}>
-        {filteredBookings.length === 0 ? (
+        {/* Show loading skeleton when refreshing with existing data */}
+        {loading && bookings.length > 0 ? (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden p-6">
+            <TableSkeletonLoader rows={5} columns={7} />
+            <div className="mt-6">
+              <CardSkeletonLoader count={3} />
+            </div>
+          </div>
+        ) : filteredBookings.length === 0 ? (
           <EmptyState content={content} type="no_results" styles={styles} />
         ) : (
           <React.Fragment>
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-              <BookingTable
-                content={content}
-                bookings={paginatedBookings}
-                onBookingClick={handlers.handleBookingClick}
-                onAction={handlers.handleAction}
-                styles={styles}
-              />
-              
-              <div className={styles.layout.mobile_cards}>
-                {paginatedBookings.map(booking => (
-                  <BookingCard
+              {/* Desktop table view */}
+              <div className="hidden md:block">
+                {loading ? (
+                  <div className="p-6">
+                    <TableSkeletonLoader rows={5} columns={7} />
+                  </div>
+                ) : (
+                  <BookingTable
                     content={content}
-                    key={booking.id}
-                    booking={booking}
+                    bookings={paginatedBookings}
                     onBookingClick={handlers.handleBookingClick}
                     onAction={handlers.handleAction}
                     styles={styles}
                   />
-                ))}
+                )}
+              </div>
+              
+              {/* Mobile cards view */}
+              <div className={styles.layout.mobile_cards}>
+                {loading ? (
+                  <div className="p-4">
+                    <CardSkeletonLoader count={3} />
+                  </div>
+                ) : (
+                  paginatedBookings.map(booking => (
+                    
+                    <BookingCard
+                      content={content}
+                      key={booking.id || booking._id || booking.bookingId}
+                      booking={booking}
+                      onBookingClick={handlers.handleBookingClick}
+                      onAction={handlers.handleAction}
+                      styles={styles}
+                    />
+                  ))
+                )}
               </div>
 
               {totalPages > 1 && (
                 <Pagination
                   content={content}
-                  currentPage={bookingManagement.currentPage}
+                  currentPage={currentPage}
                   totalPages={totalPages}
                   onPageChange={handlers.handlePageChange}
                   itemsPerPage={5}
@@ -124,27 +214,27 @@ function BookingsManagement() {
 
       <BookingDetailsDrawer
         content={content}
-        booking={bookingManagement.selectedBooking}
+        booking={selectedBooking}
         restaurant={selectedRestaurant}
-        isOpen={bookingManagement.isDrawerOpen}
+        isOpen={isDrawerOpen}
         onClose={handlers.handleCloseDrawer}
         onAction={handlers.handleAction}
-        onSaveNote={handlers.handleSaveNote}
+        onSaveNote={(note) => handlers.handleSaveNote(note, selectedBooking?.id)}
         styles={styles}
       />
 
       <ConfirmationModal
         content={content}
-        isOpen={bookingManagement.confirmModal.isOpen}
+        isOpen={confirmModal.isOpen}
         title={modalContent.title}
         message={modalContent.message}
-        actionType={bookingManagement.confirmModal.action}
-        onConfirm={() => handlers.handleConfirmAction(bookingManagement.confirmModal)}
+        actionType={confirmModal.action}
+        onConfirm={() => handlers.handleConfirmAction(confirmModal)}
         onCancel={handlers.handleCancelAction}
         styles={styles}
       />
     </div>
-  )
+  );
 }
 
-export default BookingsManagement
+export default BookingsManagement;

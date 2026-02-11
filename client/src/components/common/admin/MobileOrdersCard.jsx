@@ -1,4 +1,4 @@
-import { Eye, Edit, Trash2 } from "lucide-react";
+import { Eye, IndianRupee, Edit, Trash2 } from "lucide-react";
 import MobilePagination from "./MobilePagination";
 
 function MobileOrdersCard({ 
@@ -25,8 +25,8 @@ function MobileOrdersCard({
             <div key={order.id} className={styles.mobileCardWrapper}>
               <div className={styles.mobileCardHeader}>
                 <span className={styles.orderIdLink}>{order.id}</span>
-                <span className={styles.statusBadge + ' ' + orderStatusBadge.color}>
-                  <OrderStatusIcon className={styles.statusIcon} />
+                 <span className={`${styles.statusBadge} ${orderStatusBadge.color}`}>
+                  {OrderStatusIcon && <OrderStatusIcon className={styles.statusIcon} />}
                   {orderStatusBadge.label}
                 </span>
               </div>
@@ -41,12 +41,15 @@ function MobileOrdersCard({
                 </div>
                 <div className={styles.mobileCardRow}>
                   <span className={styles.mobileCardLabel}>Amount</span>
-                  <span className={styles.mobileCardValue}>${order.total.toFixed(2)}</span>
+                  <span className={styles.mobileCardValue}>
+                    <IndianRupee className="inline-block w-4 h-4" />
+                    {order.total.toFixed(2)}
+                  </span>
                 </div>
                 <div className={styles.mobileCardRow}>
                   <span className={styles.mobileCardLabel}>Payment</span>
                   <span className={`${styles.statusBadge} ${paymentStatusBadge.color}`}>
-                    <PaymentStatusIcon className={styles.statusIcon} />
+                    {PaymentStatusIcon && <PaymentStatusIcon className={styles.statusIcon} />} {/* ✅ FIXED */}
                     {paymentStatusBadge.label}
                   </span>
                 </div>

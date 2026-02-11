@@ -3,6 +3,7 @@ import CategoryFilter from '@/components/common/topCategory/CategoryFilter';
 import MenuItemsGrid from './MenuItemsGrid';
 import Pagination from '@/components/common/topCategory/Pagination';
 import NotFound from '@/components/common/topCategory/NotFound';
+// import LoadingSpinner from '@/components/common/LoadingSpinner'; // Add if you have one
 
 function TopCategoriesContent({
   content,
@@ -14,9 +15,19 @@ function TopCategoriesContent({
   handleFilterChange,
   handlePageChange,
   likedItems, 
-  handleLikeToggle
+  handleLikeToggle,
+  hasItems,
+  loading
 }) {
-  const hasItems = paginatedItems.length > 0;
+  // Show loading state
+  // if (loading) {
+  //   return (
+  //     <div className="flex justify-center items-center min-h-[400px]">
+  //       <LoadingSpinner />
+  //       <span className="ml-2">Loading menu items...</span>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -44,17 +55,20 @@ function TopCategoriesContent({
             handleLikeToggle={handleLikeToggle}
           />
           
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            styles={styles.pagination}
-          />
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              styles={styles.pagination}
+            />
+          )}
         </>
       ) : (
         <NotFound 
           content={content.notFound} 
           styles={styles.notFound}
+          filter={categoryFilter}
         />
       )}
     </>

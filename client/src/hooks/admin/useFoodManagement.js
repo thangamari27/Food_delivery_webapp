@@ -12,7 +12,7 @@ const getInitialFormState = () => ({
   category: '',
   cuisine: '',
   restaurant: '',
-  type: 'Regular Menu Item',
+  type: 'Regular Menu',
   price: '',
   originalPrice: '',
   description: '',

@@ -177,8 +177,8 @@ function FilterPanel({
                   <option key={type.value} value={type.value}>{type.label}</option>
                 )) || (
                   <>
-                    <option value="Special Menu Item">Special Menu</option>
-                    <option value="Regular Menu Item">Regular Menu</option>
+                    <option value="Special Menu">Special Menu</option>
+                    <option value="Regular Menu">Regular Menu</option>
                     <option value="Seasonal Item">Seasonal</option>
                     <option value="Limited Edition">Limited Edition</option>
                   </>

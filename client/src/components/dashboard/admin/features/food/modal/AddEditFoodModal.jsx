@@ -31,8 +31,8 @@ const BACKEND_ENUMS = {
     'Japanese', 'Healthy', 'Street Food', 'Cafe'
   ],
   foodTypes: [
-    { value: 'Special Menu Item', label: 'Special Menu' },
-    { value: 'Regular Menu Item', label: 'Regular Menu' },
+    { value: 'Special Menu', label: 'Special Menu' },
+    { value: 'Regular Menu', label: 'Regular Menu' },
     { value: 'Seasonal Item', label: 'Seasonal' },
     { value: 'Limited Edition', label: 'Limited Edition' }
   ],

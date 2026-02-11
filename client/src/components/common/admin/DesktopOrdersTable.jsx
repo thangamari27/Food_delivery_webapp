@@ -1,4 +1,4 @@
-import { Eye, Edit, Trash2, ChevronUp, ChevronDown } from "lucide-react";
+import { Eye, Edit, IndianRupee,Trash2, ChevronUp, ChevronDown } from "lucide-react";
 
 function DesktopOrdersTable({ 
   orders, 
@@ -121,7 +121,9 @@ function TableBody({
       {orders.map(order => {
         const orderStatusBadge = getStatusBadge(order.orderStatus, 'order');
         const paymentStatusBadge = getStatusBadge(order.paymentStatus, 'payment');
-        const OrderStatusIcon = orderStatusBadge.icon;
+        
+        // These are component references, not elements
+        const OrderStatusIcon = orderStatusBadge.icon; 
         const PaymentStatusIcon = paymentStatusBadge.icon;
         
         return (
@@ -184,17 +186,19 @@ function TableRow({
         {formatDate(order.orderDate)}
       </td>
       <td className={styles.tableCell}>
-        ${order.total.toFixed(2)}
+        <IndianRupee className="inline-block w-4 h-4" /> {order.total.toFixed(2)}
       </td>
       <td className={styles.tableCell}>
         <span className={`${styles.statusBadge} ${orderStatusBadge.color}`}>
-          <OrderStatusIcon className={styles.statusIcon} />
+          {/*  Check if icon exists before rendering */}
+          {OrderStatusIcon && <OrderStatusIcon className={styles.statusIcon} />}
           {orderStatusBadge.label}
         </span>
       </td>
       <td className={styles.tableCell}>
         <span className={`${styles.statusBadge} ${paymentStatusBadge.color}`}>
-          <PaymentStatusIcon className={styles.statusIcon} />
+          {/*  Check if icon exists before rendering */}
+          {PaymentStatusIcon && <PaymentStatusIcon className={styles.statusIcon} />}
           {paymentStatusBadge.label}
         </span>
       </td>

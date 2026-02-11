@@ -1,4 +1,4 @@
-import { MessageCircle, LogOutIcon, Utensils, AlertTriangle, Handshake, FileText, Mail, AlertCircle, Clock, CheckCircle, XCircle, ShoppingBag, UserCheck, UserX, UserPlus, Home, Bell, LogOut, Key, UserCircle, UtensilsCrossed, IndianRupee, ShoppingCart, Users, Package, ForkKnifeCrossedIcon, Building2, Search, CreditCard, Tag } from 'lucide-react';
+import { MessageCircle, ChefHat, Bike, RefreshCw, LogOutIcon, Utensils, AlertTriangle, Handshake, FileText, Mail, AlertCircle, Clock, CheckCircle, XCircle, ShoppingBag, UserCheck, UserX, UserPlus, Home, Bell, LogOut, Key, UserCircle, UtensilsCrossed, IndianRupee, ShoppingCart, Users, Package, ForkKnifeCrossedIcon, Building2, Search, CreditCard, Tag } from 'lucide-react';
 
 // Top navbar content
 export const headerContent = {
@@ -275,8 +275,8 @@ export const foodContent = {
   ],
 
   foodTypes: [
-    { value: 'Regular Menu Item', label: 'Regular Menu' },
-    { value: 'Special Menu Item', label: 'Special Menu' }
+    { value: 'Regular Menu', label: 'Regular Menu' },
+    { value: 'Special Menu', label: 'Special Menu' }
   ],
 
   statuses: [
@@ -423,16 +423,23 @@ export const ordersContent = {
   ],
 
   orderStatuses: [
-    { value: 'success', label: 'Success', color: 'bg-green-100 text-green-700', icon: CheckCircle },
     { value: 'pending', label: 'Pending', color: 'bg-yellow-100 text-yellow-700', icon: Clock },
-    { value: 'onHold', label: 'On Hold', color: 'bg-orange-100 text-orange-700', icon: AlertCircle },
-    { value: 'cancelled', label: 'Cancelled', color: 'bg-red-100 text-red-700', icon: XCircle }
+    { value: 'confirmed', label: 'Confirmed', color: 'bg-blue-100 text-blue-700', icon: CheckCircle },
+    { value: 'preparing', label: 'Preparing', color: 'bg-orange-100 text-orange-700', icon: ChefHat },
+    { value: 'ready', label: 'Ready', color: 'bg-purple-100 text-purple-700', icon: Package },
+    { value: 'picked_up', label: 'Picked Up', color: 'bg-indigo-100 text-indigo-700', icon: Bike },
+    { value: 'on_the_way', label: 'On the Way', color: 'bg-cyan-100 text-cyan-700', icon: Navigation },
+    { value: 'delivered', label: 'Delivered', color: 'bg-green-100 text-green-700', icon: CheckCircle },
+    { value: 'cancelled', label: 'Cancelled', color: 'bg-red-100 text-red-700', icon: XCircle },
+    { value: 'failed', label: 'Failed', color: 'bg-gray-100 text-gray-700', icon: AlertCircle }
   ],
 
   paymentStatuses: [
-    { value: 'paid', label: 'Paid', color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle },
-    { value: 'unpaid', label: 'Unpaid', color: 'bg-gray-100 text-gray-700', icon: Clock },
-    { value: 'refunded', label: 'Refunded', color: 'bg-blue-100 text-blue-700', icon: IndianRupee }
+    { value: 'pending', label: 'Pending', color: 'bg-yellow-100 text-yellow-700', icon: Clock },
+    { value: 'paid', label: 'Paid', color: 'bg-green-100 text-green-700', icon: CheckCircle },
+    { value: 'failed', label: 'Failed', color: 'bg-red-100 text-red-700', icon: XCircle },
+    { value: 'refunded', label: 'Refunded', color: 'bg-blue-100 text-blue-700', icon: RefreshCw },
+    { value: 'partially_refunded', label: 'Partially Refunded', color: 'bg-blue-50 text-blue-600', icon: RefreshCw }
   ],
 
   foodItems: [
@@ -453,19 +460,26 @@ export const ordersContent = {
       label: 'Order Status',
       options: [
         { value: 'all', label: 'All Statuses' },
-        { value: 'success', label: 'Success' },
         { value: 'pending', label: 'Pending' },
-        { value: 'onHold', label: 'On Hold' },
-        { value: 'cancelled', label: 'Cancelled' }
+        { value: 'confirmed', label: 'Confirmed' },
+        { value: 'preparing', label: 'Preparing' },
+        { value: 'ready', label: 'Ready' },
+        { value: 'picked_up', label: 'Picked Up' },
+        { value: 'on_the_way', label: 'On the Way' },
+        { value: 'delivered', label: 'Delivered' },
+        { value: 'cancelled', label: 'Cancelled' },
+        { value: 'failed', label: 'Failed' }
       ]
     },
     paymentStatus: {
       label: 'Payment Status',
       options: [
         { value: 'all', label: 'All Payments' },
+        { value: 'pending', label: 'Pending' },
         { value: 'paid', label: 'Paid' },
-        { value: 'unpaid', label: 'Unpaid' },
-        { value: 'refunded', label: 'Refunded' }
+        { value: 'failed', label: 'Failed' },
+        { value: 'refunded', label: 'Refunded' },
+        { value: 'partially_refunded', label: 'Partially Refunded' }
       ]
     },
     dateRange: {
@@ -475,6 +489,7 @@ export const ordersContent = {
         { value: 'today', label: 'Today' },
         { value: 'week', label: 'This Week' },
         { value: 'month', label: 'This Month' },
+        { value: 'year', label: 'This Year' }
       ]
     }
   },
