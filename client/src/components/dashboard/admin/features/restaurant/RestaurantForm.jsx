@@ -605,32 +605,39 @@ function RestaurantForm({ content, formData, setFormData, errors, setErrors, sty
 
         <div className="space-y-4">
           {imagePreview && (
-            <div className="relative w-full h-48 rounded-lg overflow-hidden">
+            <div className="relative w-full h-48 rounded-lg overflow-hidden border border-gray-200">
               <img
                 src={imagePreview}
                 alt="Restaurant preview"
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "https://placehold.co/400x400/FF4F00/white?text=Preview+Error";
+                }}
               />
               <button
                 type="button"
                 onClick={() => {
-                  setFormData(prev => ({ ...prev, image: null }));
-                  if (onImageChange) {
-                    onImageChange({ target: { files: [] } });
-                  }
+                  // Clear image preview and file
+                  const fileInput = document.querySelector('input[type="file"]');
+                  if (fileInput) fileInput.value = '';
+                  
+                  // Trigger the change handler with empty event
+                  onImageChange({ target: { files: [] } });
                 }}
-                className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+                className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-lg"
+                aria-label="Remove image"
               >
                 <X size={16} />
               </button>
             </div>
           )}
 
-          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <Upload className="w-8 h-8 text-gray-400 mb-2" />
               <p className="text-sm text-gray-600">
-                Click to upload or drag and drop
+                {imagePreview ? 'Change image' : 'Click to upload or drag and drop'}
               </p>
               <p className="text-xs text-gray-500 mt-1">
                 PNG, JPG, WEBP up to 5MB

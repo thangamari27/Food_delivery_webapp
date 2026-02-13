@@ -1,6 +1,6 @@
 const foodService = require('../services/foodService');
 const ApiResponse = require('../utils/ApiResponse');
-const ApiError = require('../utils/ApiError');
+const cloudinaryService = require('../services/cloudinaryservice');
 
 class FoodController {
     /**
@@ -18,8 +18,6 @@ class FoodController {
                 ingredients,
                 price,
                 originalPrice,
-                image,
-                imageFallback,
                 type,
                 isVeg,
                 isVegan,
@@ -32,7 +30,13 @@ class FoodController {
                 availableQuantity,
                 minOrderQuantity,
                 maxOrderQuantity,
-                tags
+                tags,
+                status,
+                isActive,
+                isAvailable,
+                isFeatured,
+                isBestseller,
+                isNewArrival
             } = req.body;
 
             // Validation
@@ -43,6 +47,7 @@ class FoodController {
                 });
             }
 
+            // Build food data
             const foodData = {
                 name,
                 category,
@@ -52,24 +57,56 @@ class FoodController {
                 price: parseFloat(price)
             };
 
+            // Handle image from middleware (processUploadedImage)
+            if (req.body.uploadedImage) {
+                foodData.image = {
+                    publicId: req.body.uploadedImage.publicId,
+                    url: req.body.uploadedImage.url,
+                    format: req.body.uploadedImage.format
+                };
+            }
+
             // Optional fields
             if (ingredients) foodData.ingredients = ingredients;
             if (originalPrice) foodData.originalPrice = parseFloat(originalPrice);
-            if (image) foodData.image = image;
-            if (imageFallback) foodData.imageFallback = imageFallback;
             if (type) foodData.type = type;
-            if (isVeg !== undefined) foodData.isVeg = isVeg;
-            if (isVegan !== undefined) foodData.isVegan = isVegan;
-            if (isGlutenFree !== undefined) foodData.isGlutenFree = isGlutenFree;
+            if (isVeg !== undefined) foodData.isVeg = isVeg === 'true' || isVeg === true;
+            if (isVegan !== undefined) foodData.isVegan = isVegan === 'true' || isVegan === true;
+            if (isGlutenFree !== undefined) foodData.isGlutenFree = isGlutenFree === 'true' || isGlutenFree === true;
             if (spiceLevel) foodData.spiceLevel = spiceLevel;
-            if (allergens) foodData.allergens = allergens;
-            if (nutritionalInfo) foodData.nutritionalInfo = nutritionalInfo;
+            
+            // Handle arrays (from FormData they come as strings)
+            if (allergens) {
+                foodData.allergens = typeof allergens === 'string' 
+                    ? JSON.parse(allergens) 
+                    : allergens;
+            }
+            if (tags) {
+                foodData.tags = typeof tags === 'string' 
+                    ? JSON.parse(tags) 
+                    : tags;
+            }
+            
+            // Handle nested nutritionalInfo (from FormData it's a string)
+            if (nutritionalInfo) {
+                foodData.nutritionalInfo = typeof nutritionalInfo === 'string'
+                    ? JSON.parse(nutritionalInfo)
+                    : nutritionalInfo;
+            }
+
             if (preparationTime) foodData.preparationTime = parseInt(preparationTime);
             if (servingSize) foodData.servingSize = servingSize;
             if (availableQuantity !== undefined) foodData.availableQuantity = parseInt(availableQuantity);
             if (minOrderQuantity) foodData.minOrderQuantity = parseInt(minOrderQuantity);
             if (maxOrderQuantity) foodData.maxOrderQuantity = parseInt(maxOrderQuantity);
-            if (tags) foodData.tags = tags;
+
+            // Status fields
+            if (status) foodData.status = status;
+            if (isActive !== undefined) foodData.isActive = isActive === 'true' || isActive === true;
+            if (isAvailable !== undefined) foodData.isAvailable = isAvailable === 'true' || isAvailable === true;
+            if (isFeatured !== undefined) foodData.isFeatured = isFeatured === 'true' || isFeatured === true;
+            if (isBestseller !== undefined) foodData.isBestseller = isBestseller === 'true' || isBestseller === true;
+            if (isNewArrival !== undefined) foodData.isNewArrival = isNewArrival === 'true' || isNewArrival === true;
 
             // Add user ID if authenticated
             if (req.user) {
@@ -86,7 +123,92 @@ class FoodController {
                 })
             );
         } catch (error) {
+            console.error('Food creation error:', error);
             return res.status(error.statusCode || 500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+    /**
+     * Update food item
+     * PUT /api/foods/:fid
+     */
+    async update(req, res) {
+        try {
+            const { fid } = req.params;
+            const updateData = { ...req.body };
+
+            // Handle image update from middleware
+            if (req.body.uploadedImage) {
+                // Get old food to delete old image
+                const oldFood = await foodService.getFoodById(fid);
+                
+                // Delete old image if it exists and is not a placeholder
+                if (oldFood.image?.publicId && 
+                    oldFood.image.publicId !== 'food_placeholder') {
+                    try {
+                        await cloudinaryService.deleteImage(oldFood.image.publicId);
+                    } catch (err) {
+                        console.error('Error deleting old image:', err);
+                    }
+                }
+
+                // Set new image
+                updateData.image = {
+                    publicId: req.body.uploadedImage.publicId,
+                    url: req.body.uploadedImage.url,
+                    format: req.body.uploadedImage.format
+                };
+            }
+
+            // Handle FormData string conversions for booleans
+            ['isVeg', 'isVegan', 'isGlutenFree', 'isActive', 'isAvailable', 
+             'isFeatured', 'isBestseller', 'isNewArrival'].forEach(field => {
+                if (updateData[field] !== undefined) {
+                    updateData[field] = updateData[field] === 'true' || updateData[field] === true;
+                }
+            });
+
+            // Handle arrays from FormData
+            if (updateData.allergens && typeof updateData.allergens === 'string') {
+                updateData.allergens = JSON.parse(updateData.allergens);
+            }
+            if (updateData.tags && typeof updateData.tags === 'string') {
+                updateData.tags = JSON.parse(updateData.tags);
+            }
+
+            // Handle nested nutritionalInfo from FormData
+            if (updateData.nutritionalInfo && typeof updateData.nutritionalInfo === 'string') {
+                updateData.nutritionalInfo = JSON.parse(updateData.nutritionalInfo);
+            }
+
+            // Parse numeric fields from FormData
+            ['price', 'originalPrice'].forEach(field => {
+                if (updateData[field]) updateData[field] = parseFloat(updateData[field]);
+            });
+            
+            ['preparationTime', 'availableQuantity', 'minOrderQuantity', 'maxOrderQuantity'].forEach(field => {
+                if (updateData[field]) updateData[field] = parseInt(updateData[field]);
+            });
+
+            // Add user ID if authenticated
+            const userId = req.user ? req.user._id : null;
+
+            const food = await foodService.updateFood(fid, updateData, userId);
+
+            return res.status(200).json(
+                new ApiResponse(200, {
+                    success: true,
+                    message: 'Food item updated successfully',
+                    data: food
+                })
+            );
+        } catch (error) {
+            console.error('Food update error:', error);
+            const statusCode = error.message.includes('not found') ? 404 : 500;
+            return res.status(statusCode).json({
                 success: false,
                 message: error.message
             });
@@ -194,36 +316,6 @@ class FoodController {
             );
         } catch (error) {
             return res.status(500).json({
-                success: false,
-                message: error.message
-            });
-        }
-    }
-
-    /**
-     * Update food item
-     * PUT /api/foods/:fid
-     */
-    async update(req, res) {
-        try {
-            const { fid } = req.params;
-            const updateData = req.body;
-
-            // Add user ID if authenticated
-            const userId = req.user ? req.user._id : null;
-
-            const food = await foodService.updateFood(fid, updateData, userId);
-
-            return res.status(200).json(
-                new ApiResponse(200, {
-                    success: true,
-                    message: 'Food item updated successfully',
-                    data: food
-                })
-            );
-        } catch (error) {
-            const statusCode = error.message.includes('not found') ? 404 : 500;
-            return res.status(statusCode).json({
                 success: false,
                 message: error.message
             });
@@ -373,6 +465,18 @@ class FoodController {
     async delete(req, res) {
         try {
             const { fid } = req.params;
+
+            // Get food to delete image
+            const food = await foodService.getFoodById(fid);
+            
+            // Delete from Cloudinary if not placeholder
+            if (food.image?.publicId && food.image.publicId !== 'food_placeholder') {
+                try {
+                    await cloudinaryService.deleteImage(food.image.publicId);
+                } catch (err) {
+                    console.error('Error deleting image from Cloudinary:', err);
+                }
+            }
 
             const result = await foodService.deleteFood(fid);
 

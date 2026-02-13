@@ -1,41 +1,53 @@
-/**
- * Restaurant Table Component - UPDATED FOR BACKEND DATA
- * Properly displays data from backend with correct field mappings
- */
-
 import { Eye, Edit2, Trash2, Check, X, Star } from 'lucide-react';
 import { getStatusColor } from '../../../../../utils/handler/admin/restaurantFilterHandler';
 import TableHeader from './TableHeader';
 
-const RestaurantImage = ({ image, name }) => {
-  // Backend returns image as { publicId, url, format }
-  const imageUrl = image?.url || null;
+/**
+ * UNIFIED IMAGE URL HELPER
+ * Handles all possible data structures from backend
+ */
+const getRestaurantImageUrl = (restaurant) => {
+  // Priority 1: Structured image object with URL
+  if (restaurant?.image?.url) {
+    return restaurant.image.url;
+  }
   
-  return imageUrl ? (
+  // Priority 2: Direct image string
+  if (typeof restaurant?.image === 'string') {
+    return restaurant.image;
+  }
+  
+  // Priority 3: Alternative imageUrl field
+  if (restaurant?.imageUrl) {
+    return restaurant.imageUrl;
+  }
+  
+  // Fallback: Placeholder
+  return "https://placehold.co/400x400/FF4F00/white?text=No+Image";
+};
+
+const RestaurantImage = ({ restaurant }) => {
+  const imageUrl = getRestaurantImageUrl(restaurant);
+  
+  return (
     <img
       src={imageUrl}
-      alt={name}
-      className="w-12 h-12 rounded-lg object-cover"
+      alt={restaurant.name}
+      className="w-20 h-20 rounded-lg object-cover"
       onError={(e) => {
         e.target.onerror = null;
-        e.target.src = "https://via.placeholder.com/80x80/dddddd/999999?text=R";
+        e.target.src = "https://placehold.co/400x400/FF4F00/white?text=No+Image";
       }}
     />
-  ) : (
-    <div className="w-12 h-12 rounded-lg bg-gray-200 flex items-center justify-center">
-      <img 
-        src="https://via.placeholder.com/80x80/dddddd/999999?text=R" 
-        alt="No image" 
-        className="w-full h-full rounded-lg object-cover"
-      />
-    </div>
   );
 };
 
 const RestaurantInfo = ({ restaurant }) => (
   <div className="flex items-center gap-3">
-    <RestaurantImage image={restaurant.image} name={restaurant.name} />
     <div>
+    </div>
+      <RestaurantImage restaurant={restaurant} />
+    <div className='w-40'>
       <div className="font-medium text-gray-900">{restaurant.name}</div>
       <div className="text-sm text-gray-500">{restaurant.contactPerson}</div>
     </div>
@@ -191,3 +203,4 @@ function RestaurantTable({
 }
 
 export default RestaurantTable;
+export { getRestaurantImageUrl };

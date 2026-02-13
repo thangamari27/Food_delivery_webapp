@@ -1,23 +1,34 @@
+import React from 'react';
 import { Eye, Edit, Trash2 } from 'lucide-react';
 import Button from './Button';
 import Badge from './Badge';
+import { getFoodImageUrl } from './FoodCard';
 
+/**
+ * Table Row Component - Desktop View
+ */
 function TableRow({ food, onView, onEdit, onDelete, styles }) {
+  const imageUrl = getFoodImageUrl(food);
+
   return (
-    <tr key={food.fid} className={styles.table.row}>
+    <tr className={styles.table.row}>
       <td className={styles.table.cell}>
         <img 
-          src={food.image?.url || food.image || '/food-placeholder.jpg'} 
+          src={imageUrl}
           alt={food.name} 
-          className={styles.table.image} 
+          className={styles.table.image}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://placehold.co/400x400/FF4F00/white?text=No+Image';
+          }}
         />
       </td>
       <td className={styles.table.cell}>
         <div>
           <p className="font-medium text-gray-900">{food.name}</p>
-          <span className='block truncate max-w-[120px]'>
+          <p className="text-sm text-gray-500 truncate max-w-[200px]">
             {food.description || 'No description'}
-          </span>
+          </p>
         </div>
       </td>
       <td className={`${styles.table.cell} hidden md:table-cell`}>
@@ -28,10 +39,10 @@ function TableRow({ food, onView, onEdit, onDelete, styles }) {
       </td>
       <td className={styles.table.cell}>
         <div className="flex items-center gap-2">
-          <span className="font-semibold">${food.price?.toFixed(2)}</span>
+          <span className="font-semibold">₹{food.price?.toFixed(2) || '0.00'}</span>
           {food.originalPrice && food.originalPrice > food.price && (
             <span className="text-sm text-gray-500 line-through">
-              ${food.originalPrice?.toFixed(2)}
+              ₹{food.originalPrice?.toFixed(2)}
             </span>
           )}
         </div>

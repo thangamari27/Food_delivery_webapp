@@ -154,7 +154,8 @@ export const foodStyles = {
     header: 'bg-gray-50 border-b border-gray-300',
     headerCell: 'px-4 sm:px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase',
     row: 'hover:bg-gray-50 transition-colors',
-    cell: 'px-4 sm:px-6 py-4 text-sm text-gray-700'
+    cell: 'px-4 sm:px-6 py-4 text-sm text-gray-700',
+    image: "w-24 h-20 object-cover rounded-lg flex-shrink-0"
   },
 
   // Mobile Cards

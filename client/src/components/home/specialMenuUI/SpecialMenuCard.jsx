@@ -3,7 +3,6 @@ import Image from "@/components/common/Image";
 
 export default function SpecialMenuCard({ item, styles }) {
   const foodItems = item || {};
-
   return (
     <div className={styles.specialMenuCard.container}>
       {/* Image container */}

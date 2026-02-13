@@ -2,8 +2,8 @@
  * AddEditFoodModal - UPDATED FOR RESTAURANT INTEGRATION
  */
 
-import React, { useMemo, useEffect } from 'react';
-import { Save } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Save, Loader2 } from 'lucide-react';
 import Button from '../ui/Button';
 import Modal from './Modal';
 import FormSection from '../ui/FormSection';
@@ -57,6 +57,7 @@ const BACKEND_ENUMS = {
 
 function AddEditFoodModal({
   content,
+  loading,
   isOpen,
   onClose,
   isEdit,
@@ -71,8 +72,9 @@ function AddEditFoodModal({
   loadingRestaurants = false, // From RestaurantContext via useFoodManagement
   styles
 }) {
+  const [imageUploading, setImageUploading] = useState(false);
+  
   const modalContent = isEdit ? content?.modal?.edit : content?.modal?.add;
-  console.log(restaurants);
   // Use backend enums or fallback to content
   const categories = content?.categories || BACKEND_ENUMS.categories;
   const cuisines = content?.cuisines || BACKEND_ENUMS.cuisines;
@@ -122,6 +124,31 @@ function AddEditFoodModal({
     setFormData(prev => ({ ...prev, restaurant: restaurantId }));
   };
 
+  // Custom image upload handler with loading state
+  const handleImageUploadWithLoading = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setImageUploading(true);
+    try {
+      // Pass the event to the parent handler
+      await handleImageUpload(e);
+    } catch (error) {
+      console.error('Image upload error:', error);
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
+  // Handle form submission with loading state
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    await handleSubmit(e);
+  };
+
+  // Determine if form is submitting (overall loading or image uploading)
+  const isSubmitting = loading || imageUploading;
+
   return (
     <Modal
       styles={styles}
@@ -130,17 +157,31 @@ function AddEditFoodModal({
       title={modalContent?.title || (isEdit ? 'Edit Food Item' : 'Add New Food Item')}
       size="lg"
       footer={
-        <>
+         <>
           <Button 
             variant="secondary" 
             onClick={() => { onClose(); resetForm(); }} 
             styles={styles}
+            disabled={isSubmitting}
           >
             {modalContent?.cancelButton || 'Cancel'}
           </Button>
-          <Button onClick={handleSubmit} styles={styles}>
-            <Save size={18} />
-            {modalContent?.submitButton || (isEdit ? 'Update' : 'Add')}
+          <Button 
+            onClick={handleFormSubmit} 
+            styles={styles}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 size={18} className="animate-spin" />
+                {imageUploading ? 'Uploading Image...' : (isEdit ? 'Updating...' : 'Adding...')}
+              </>
+            ) : (
+              <>
+                <Save size={18} />
+                {modalContent?.submitButton || (isEdit ? 'Update' : 'Add')}
+              </>
+            )}
           </Button>
         </>
       }

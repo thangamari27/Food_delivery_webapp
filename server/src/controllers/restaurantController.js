@@ -1,6 +1,7 @@
 const restaurantService = require('../services/restaurantService');
 const ApiResponse = require('../utils/ApiResponse');
 const ApiError = require('../utils/ApiError');
+const cloudinaryService = require('../services/cloudinaryservice');
 
 class RestaurantController {
     /**
@@ -29,11 +30,13 @@ class RestaurantController {
                 deliveryRadius,
                 serviceAreas,
                 paymentMethods,
-                image,
-                imageFallback,
-                logo,
                 minOrderAmount,
-                deliveryFee
+                deliveryFee,
+                status,
+                verificationStatus,
+                isActive,
+                isFeatured,
+                isPremium
             } = req.body;
 
             // Validation
@@ -41,15 +44,45 @@ class RestaurantController {
                 throw new ApiError(400, 'Name, contact person, phone, email, description, cuisine, address, operating hours, and price range are required');
             }
 
-            if (!cuisine || !Array.isArray(cuisine) || cuisine.length === 0) {
+            // Parse cuisine (from FormData it might be a string)
+            let parsedCuisine = cuisine;
+            if (typeof cuisine === 'string') {
+                try {
+                    parsedCuisine = JSON.parse(cuisine);
+                } catch (e) {
+                    parsedCuisine = [cuisine];
+                }
+            }
+
+            if (!parsedCuisine || !Array.isArray(parsedCuisine) || parsedCuisine.length === 0) {
                 throw new ApiError(400, 'At least one cuisine type is required');
             }
 
-            if (!address.street || !address.city) {
+            // Parse address (from FormData it might be a string)
+            let parsedAddress = address;
+            if (typeof address === 'string') {
+                try {
+                    parsedAddress = JSON.parse(address);
+                } catch (e) {
+                    throw new ApiError(400, 'Invalid address format');
+                }
+            }
+
+            if (!parsedAddress.street || !parsedAddress.city) {
                 throw new ApiError(400, 'Street and city are required in address');
             }
 
-            if (!operatingHours.openingTime || !operatingHours.closingTime) {
+            // Parse operating hours (from FormData it might be a string)
+            let parsedOperatingHours = operatingHours;
+            if (typeof operatingHours === 'string') {
+                try {
+                    parsedOperatingHours = JSON.parse(operatingHours);
+                } catch (e) {
+                    throw new ApiError(400, 'Invalid operating hours format');
+                }
+            }
+
+            if (!parsedOperatingHours.openingTime || !parsedOperatingHours.closingTime) {
                 throw new ApiError(400, 'Opening time and closing time are required');
             }
 
@@ -59,28 +92,67 @@ class RestaurantController {
                 phone,
                 email,
                 description,
-                cuisine,
-                address,
-                operatingHours,
+                cuisine: parsedCuisine,
+                address: parsedAddress,
+                operatingHours: parsedOperatingHours,
                 priceRange
             };
 
-            // Optional fields
+            // Handle image from middleware (processUploadedImage)
+            if (req.body.uploadedImage) {
+                restaurantData.image = {
+                    publicId: req.body.uploadedImage.publicId,
+                    url: req.body.uploadedImage.url,
+                    format: req.body.uploadedImage.format
+                };
+            }
+
+            // Optional fields with FormData parsing
             if (deliveryTime) restaurantData.deliveryTime = deliveryTime;
             if (offers) restaurantData.offers = offers;
-            if (badges) restaurantData.badges = badges;
-            if (features) restaurantData.features = features;
-            if (deliveryAvailable !== undefined) restaurantData.deliveryAvailable = deliveryAvailable;
-            if (takeawayAvailable !== undefined) restaurantData.takeawayAvailable = takeawayAvailable;
-            if (dineInAvailable !== undefined) restaurantData.dineInAvailable = dineInAvailable;
+            
+            // Parse arrays from FormData
+            if (badges) {
+                restaurantData.badges = typeof badges === 'string' ? JSON.parse(badges) : badges;
+            }
+            if (features) {
+                restaurantData.features = typeof features === 'string' ? JSON.parse(features) : features;
+            }
+            if (serviceAreas) {
+                restaurantData.serviceAreas = typeof serviceAreas === 'string' ? JSON.parse(serviceAreas) : serviceAreas;
+            }
+            if (paymentMethods) {
+                restaurantData.paymentMethods = typeof paymentMethods === 'string' ? JSON.parse(paymentMethods) : paymentMethods;
+            }
+
+            // Convert FormData booleans
+            if (deliveryAvailable !== undefined) {
+                restaurantData.deliveryAvailable = deliveryAvailable === 'true' || deliveryAvailable === true;
+            }
+            if (takeawayAvailable !== undefined) {
+                restaurantData.takeawayAvailable = takeawayAvailable === 'true' || takeawayAvailable === true;
+            }
+            if (dineInAvailable !== undefined) {
+                restaurantData.dineInAvailable = dineInAvailable === 'true' || dineInAvailable === true;
+            }
+            if (isActive !== undefined) {
+                restaurantData.isActive = isActive === 'true' || isActive === true;
+            }
+            if (isFeatured !== undefined) {
+                restaurantData.isFeatured = isFeatured === 'true' || isFeatured === true;
+            }
+            if (isPremium !== undefined) {
+                restaurantData.isPremium = isPremium === 'true' || isPremium === true;
+            }
+
+            // Numeric fields
             if (deliveryRadius) restaurantData.deliveryRadius = parseInt(deliveryRadius);
-            if (serviceAreas) restaurantData.serviceAreas = serviceAreas;
-            if (paymentMethods) restaurantData.paymentMethods = paymentMethods;
-            if (image) restaurantData.image = image;
-            if (imageFallback) restaurantData.imageFallback = imageFallback;
-            if (logo) restaurantData.logo = logo;
             if (minOrderAmount !== undefined) restaurantData.minOrderAmount = parseFloat(minOrderAmount);
             if (deliveryFee !== undefined) restaurantData.deliveryFee = parseFloat(deliveryFee);
+
+            // Status fields
+            if (status) restaurantData.status = status;
+            if (verificationStatus) restaurantData.verificationStatus = verificationStatus;
 
             // Add user ID if authenticated
             const userId = req.user ? req.user._id : null;
@@ -95,6 +167,150 @@ class RestaurantController {
                 })
             );
         } catch (error) {
+            console.error('Restaurant creation error:', error);
+            next(error);
+        }
+    }
+
+    /**
+     * Update restaurant
+     * PUT /api/restaurants/:rid
+     */
+    async update(req, res, next) {
+        try {
+            const { rid } = req.params;
+            const updateData = { ...req.body };
+
+            // Handle image update from middleware
+            if (req.body.uploadedImage) {
+                // Get old restaurant to delete old image
+                const oldRestaurant = await restaurantService.getRestaurantById(rid);
+                
+                // Delete old image if it exists and is not a placeholder
+                if (oldRestaurant.image?.publicId && 
+                    oldRestaurant.image.publicId !== 'restaurant_placeholder') {
+                    try {
+                        await cloudinaryService.deleteImage(oldRestaurant.image.publicId);
+                    } catch (err) {
+                        console.error('Error deleting old image:', err);
+                    }
+                }
+
+                // Set new image
+                updateData.image = {
+                    publicId: req.body.uploadedImage.publicId,
+                    url: req.body.uploadedImage.url,
+                    format: req.body.uploadedImage.format
+                };
+            }
+
+            // Parse nested objects from FormData
+            if (updateData.address && typeof updateData.address === 'string') {
+                updateData.address = JSON.parse(updateData.address);
+            }
+            if (updateData.operatingHours && typeof updateData.operatingHours === 'string') {
+                updateData.operatingHours = JSON.parse(updateData.operatingHours);
+            }
+
+            // Parse arrays from FormData
+            ['cuisine', 'badges', 'features', 'serviceAreas', 'paymentMethods'].forEach(field => {
+                if (updateData[field] && typeof updateData[field] === 'string') {
+                    updateData[field] = JSON.parse(updateData[field]);
+                }
+            });
+
+            // Convert FormData booleans
+            ['deliveryAvailable', 'takeawayAvailable', 'dineInAvailable', 
+             'isActive', 'isFeatured', 'isPremium'].forEach(field => {
+                if (updateData[field] !== undefined) {
+                    updateData[field] = updateData[field] === 'true' || updateData[field] === true;
+                }
+            });
+
+            // Parse numeric fields from FormData
+            if (updateData.deliveryRadius) updateData.deliveryRadius = parseInt(updateData.deliveryRadius);
+            if (updateData.minOrderAmount !== undefined) updateData.minOrderAmount = parseFloat(updateData.minOrderAmount);
+            if (updateData.deliveryFee !== undefined) updateData.deliveryFee = parseFloat(updateData.deliveryFee);
+            if (updateData.priceForTwo) updateData.priceForTwo = parseFloat(updateData.priceForTwo);
+
+            // Parse rating object
+            if (updateData.rating && typeof updateData.rating === 'string') {
+                updateData.rating = JSON.parse(updateData.rating);
+            }
+
+            // Add user ID if authenticated
+            const userId = req.user ? req.user._id : null;
+
+            const restaurant = await restaurantService.updateRestaurant(rid, updateData, userId);
+
+            return res.status(200).json(
+                new ApiResponse(200, {
+                    success: true,
+                    message: 'Restaurant updated successfully',
+                    data: restaurant
+                })
+            );
+        } catch (error) {
+            console.error('Restaurant update error:', error);
+            next(error);
+        }
+    }
+
+    /**
+     * Delete restaurant permanently
+     * DELETE /api/restaurants/:rid/permanent
+     */
+    async delete(req, res, next) {
+        try {
+            const { rid } = req.params;
+
+            // Get restaurant to delete image
+            const restaurant = await restaurantService.getRestaurantById(rid);
+            
+            // Delete image from Cloudinary if not placeholder
+            if (restaurant.image?.publicId && restaurant.image.publicId !== 'restaurant_placeholder') {
+                try {
+                    await cloudinaryService.deleteImage(restaurant.image.publicId);
+                } catch (err) {
+                    console.error('Error deleting image from Cloudinary:', err);
+                }
+            }
+
+            // Delete gallery images if they exist
+            if (restaurant.gallery && restaurant.gallery.length > 0) {
+                const galleryPublicIds = restaurant.gallery
+                    .map(img => img.publicId)
+                    .filter(id => id && id !== 'restaurant_placeholder');
+                
+                if (galleryPublicIds.length > 0) {
+                    try {
+                        await cloudinaryService.deleteMultipleImages(galleryPublicIds);
+                    } catch (err) {
+                        console.error('Error deleting gallery images:', err);
+                    }
+                }
+            }
+
+            // Delete logo if it exists
+            if (restaurant.logo?.publicId && restaurant.logo.publicId !== 'restaurant_placeholder') {
+                try {
+                    await cloudinaryService.deleteImage(restaurant.logo.publicId);
+                } catch (err) {
+                    console.error('Error deleting logo:', err);
+                }
+            }
+
+            const result = await restaurantService.deleteRestaurant(rid);
+
+            return res.status(200).json(
+                new ApiResponse(200, {
+                    success: true,
+                    message: result.message,
+                    data: result.data
+                })
+            );
+        } catch (error) {
+            console.error('Restaurant delete error:', error);
             next(error);
         }
     }
@@ -188,32 +404,6 @@ class RestaurantController {
     }
 
     /**
-     * Update restaurant
-     * PUT /api/restaurants/:rid
-     */
-    async update(req, res, next) {
-        try {
-            const { rid } = req.params;
-            const updateData = req.body;
-
-            // Add user ID if authenticated
-            const userId = req.user ? req.user._id : null;
-
-            const restaurant = await restaurantService.updateRestaurant(rid, updateData, userId);
-
-            return res.status(200).json(
-                new ApiResponse(200, {
-                    success: true,
-                    message: 'Restaurant updated successfully',
-                    data: restaurant
-                })
-            );
-        } catch (error) {
-            next(error);
-        }
-    }
-
-    /**
      * Update restaurant status
      * PATCH /api/restaurants/:rid/status
      */
@@ -249,28 +439,6 @@ class RestaurantController {
             const { rid } = req.params;
 
             const result = await restaurantService.deactivateRestaurant(rid);
-
-            return res.status(200).json(
-                new ApiResponse(200, {
-                    success: true,
-                    message: result.message,
-                    data: result.data
-                })
-            );
-        } catch (error) {
-            next(error);
-        }
-    }
-
-    /**
-     * Delete restaurant permanently
-     * DELETE /api/restaurants/:rid/permanent
-     */
-    async delete(req, res, next) {
-        try {
-            const { rid } = req.params;
-
-            const result = await restaurantService.deleteRestaurant(rid);
 
             return res.status(200).json(
                 new ApiResponse(200, {

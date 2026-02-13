@@ -25,7 +25,7 @@ function RestaurantInfoPanel({ content, restaurant, styles }) {
   const image = restaurant.image || 
                 restaurant.imageUrl || 
                 restaurant.imageSrc || 
-                '/placeholder-restaurant.jpg';
+                'https://placehold.co/400x400/FF4F00/white?text=No+Image';
 
   return (
     <div className="space-y-4">

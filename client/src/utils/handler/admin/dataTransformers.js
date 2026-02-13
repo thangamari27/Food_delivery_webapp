@@ -161,10 +161,10 @@ export const transformRestaurantFromBackend = (backendRestaurant) => {
     isPremium: backendRestaurant.isPremium,
     src: backendRestaurant.image?.publicId 
       ? `https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/${backendRestaurant.image.publicId}.${backendRestaurant.image.format}`
-      : '/placeholder-restaurant.jpg',
+      : 'https://placehold.co/400x400/FF4F00/white?text=No+Image',
     srcFallback: backendRestaurant.imageFallback?.publicId
       ? `https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/${backendRestaurant.imageFallback.publicId}.${backendRestaurant.imageFallback.format}`
-      : '/placeholder-restaurant.jpg',
+      : 'https://placehold.co/400x400/FF4F00/white?text=No+Image',
     gallery: backendRestaurant.gallery || [],
     menuItems: backendRestaurant.menuItems || [],
     deliveryAvailable: backendRestaurant.deliveryAvailable,

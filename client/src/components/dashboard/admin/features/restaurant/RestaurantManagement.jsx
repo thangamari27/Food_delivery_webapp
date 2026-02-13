@@ -133,7 +133,8 @@ function RestaurantManagement() {
     handleSearchSubmit,
     dataLoading,
     handleImageChange,
-    getCuisineOptions
+    imagePreview,
+    getCuisineOptions,
   } = useRestaurantManagement(content);
 
   const handleToggleFilters = () => {
@@ -270,8 +271,8 @@ function RestaurantManagement() {
             errors={errors}
             setErrors={setErrors}
             styles={styles}
-            handleImageChange={handleImageChange}
-            imagePreview={formData.image?.url || null}
+            onImageChange={handleImageChange}
+            imagePreview={imagePreview}
             cuisineOptions={getCuisineOptions}
           />
         </Modal>

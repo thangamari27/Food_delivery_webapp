@@ -1,5 +1,5 @@
 /**
- * useFoodManagement Hook - UPDATED FOR RESTAURANT INTEGRATION
+ * useFoodManagement Hook
  */
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
@@ -98,11 +98,11 @@ export const useFoodManagement = () => {
    * Process restaurant data from context for dropdown
    */
   const restaurants = useMemo(() => {
-    console.log('Input restaurantContextData:', restaurantContextData);
+    
     if (!restaurantContextData || !Array.isArray(restaurantContextData)) {
       return [];
     }
-    console.log('Input restaurantContextData:', restaurantContextData);
+    
     // Transform restaurant data for dropdown
     return restaurantContextData
       .filter(rest => rest.isActive !== false) // Only show active restaurants
@@ -124,7 +124,7 @@ export const useFoodManagement = () => {
     const restaurant = restaurants.find(rest => 
       rest._id === restaurantId || rest.id === restaurantId
     );
-    console.log(restaurant)
+    
     return restaurant?.name || 'Unknown Restaurant';
   }, [restaurants]);
 
@@ -150,7 +150,7 @@ export const useFoodManagement = () => {
 
     searchTimeoutRef.current = setTimeout(() => {
       if (searchTerm) {
-        // console.log('Searching for:', searchTerm);
+        
       }
     }, 500);
 
@@ -302,7 +302,7 @@ export const useFoodManagement = () => {
     return Array.from(restaurantMap.values()).sort((a, b) => 
       a.name.localeCompare(b.name)
     );
-    console.log("restaurants Data: ",restaurants)
+    
   }, [restaurants, foods]);
 
   /**
@@ -550,7 +550,7 @@ export const useFoodManagement = () => {
    * Open add modal and ensure restaurants are loaded
    */
   const openAddModal = useCallback(() => {
-    console.log("open modal:",restaurants)
+    
     // Refresh restaurants list if needed
     if (restaurants.length === 0 && !loadingRestaurants) {
       fetchRestaurants({ limit: 100, page: 1, isActive: true });

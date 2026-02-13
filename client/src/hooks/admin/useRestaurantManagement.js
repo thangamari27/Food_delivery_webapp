@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
-import { useRestaurantContext } from '../../context/admin/RestaurantContext';
+import { useRestaurantContext } from '../../context/admin/Restaurantcontext';
 import { toast } from 'react-hot-toast';
 import restaurantService from '../../services/restaurantService';
 
@@ -22,11 +22,10 @@ const getInitialFormState = () => ({
       longitude: ""
     }
   },
-  cuisine: [],
+  cuisine: [], // Empty array, not null
   operatingHours: {
     openingTime: "09:00",
-    closingTime: "22:00",
-    weeklySchedule: []
+    closingTime: "22:00"
   },
   deliveryAvailable: true,
   takeawayAvailable: true,
@@ -36,22 +35,18 @@ const getInitialFormState = () => ({
   status: "Active",
   description: "",
   deliveryTime: "30-40 mins",
-  deliveryTimeMin: 30,
-  deliveryTimeMax: 40,
   minOrderAmount: 0,
   deliveryFee: 0,
   deliveryRadius: 10,
   offers: "",
-  badges: [],
-  features: [],
-  serviceAreas: [],
-  paymentMethods: ["Cash", "Card", "UPI"],
+  badges: [], // Empty array
+  features: [], // Empty array
+  serviceAreas: [], // Empty array
+  paymentMethods: ["Cash", "Card", "UPI"], // Default array with values
   verificationStatus: "Pending",
   isActive: true,
   isFeatured: false,
   isPremium: false,
-  menuItems: [],
-  activeOffers: [],
   rating: {
     average: 0,
     count: 0
@@ -77,7 +72,6 @@ export function useRestaurantManagement(content) {
     delivery: "all",
     priceRange: "all"
   });
-  //  FIX: Initialize sortConfig with default object instead of null
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
@@ -99,7 +93,7 @@ export function useRestaurantManagement(content) {
 
   const itemsPerPage = pagination?.limit || ITEMS_PER_PAGE;
 
-  //  Initial fetch (ONCE)
+  // Initial fetch (ONCE)
   useEffect(() => {
     if (!hasFetchedRef.current && typeof fetchRestaurants === 'function') {
       hasFetchedRef.current = true;
@@ -107,7 +101,7 @@ export function useRestaurantManagement(content) {
     }
   }, [fetchRestaurants]);
 
-  //  Filtering
+  // Filtering
   const filteredRestaurants = useMemo(() => {
     let data = [...(restaurants || [])];
 
@@ -162,9 +156,8 @@ export function useRestaurantManagement(content) {
     return data;
   }, [restaurants, searchTerm, filters]);
 
-  //  Sorting with null-safe check
+  // Sorting
   const sortedRestaurants = useMemo(() => {
-    // If no sort key is selected, return unsorted
     if (!sortConfig || !sortConfig.key) return filteredRestaurants;
 
     const { key, direction } = sortConfig;
@@ -172,26 +165,23 @@ export function useRestaurantManagement(content) {
       const aValue = a[key];
       const bValue = b[key];
       
-      // Handle undefined/null values
       if (aValue == null && bValue == null) return 0;
       if (aValue == null) return direction === 'asc' ? 1 : -1;
       if (bValue == null) return direction === 'asc' ? -1 : 1;
       
-      // Handle different data types
       if (typeof aValue === 'string' && typeof bValue === 'string') {
         return direction === 'asc' 
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
       }
       
-      // Numeric comparison
       if (aValue < bValue) return direction === 'asc' ? -1 : 1;
       if (aValue > bValue) return direction === 'asc' ? 1 : -1;
       return 0;
     });
   }, [filteredRestaurants, sortConfig]);
 
-  //  Pagination
+  // Pagination
   const totalPages = Math.max(1, Math.ceil(sortedRestaurants.length / itemsPerPage));
 
   const paginatedData = useMemo(() => {
@@ -207,18 +197,15 @@ export function useRestaurantManagement(content) {
   // Handlers
   const handleSort = useCallback((key) => {
     setSortConfig(prev => {
-      // If clicking same column, toggle direction
       if (prev?.key === key) {
         return { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
       }
-      // If clicking new column, start with ascending
       return { key, direction: 'asc' };
     });
   }, []);
 
   const handleSearchSubmit = useCallback(async () => {
     if (!searchTerm || !searchTerm.trim()) {
-      // If search is empty, fetch all
       setDataLoading(true);
       try {
         await fetchRestaurants();
@@ -250,36 +237,79 @@ export function useRestaurantManagement(content) {
   const openModal = useCallback((mode, restaurant = null) => {
     setModalMode(mode);
     if (mode === "edit" && restaurant) {
-      // Transform backend data to form format
+      // Transform restaurant data to form format
       const transformedData = {
-        ...restaurant,
-        address: restaurant.address || getInitialFormState().address,
-        operatingHours: restaurant.operatingHours || getInitialFormState().operatingHours,
-        cuisine: restaurant.cuisine || [],
-        badges: restaurant.badges || [],
-        features: restaurant.features || [],
-        serviceAreas: restaurant.serviceAreas || [],
-        paymentMethods: restaurant.paymentMethods || ["Cash", "Card", "UPI"],
-        verificationStatus: restaurant.verificationStatus || "Pending",
-        isActive: restaurant.isActive ?? true,
-        isFeatured: restaurant.isFeatured ?? false,
-        isPremium: restaurant.isPremium ?? false,
+        name: restaurant.name || "",
+        contactPerson: restaurant.contactPerson || "",
+        phone: restaurant.phone || "",
+        email: restaurant.email || "",
+        description: restaurant.description || "",
+        
+        // Address - ensure all fields exist
+        address: {
+          street: restaurant.address?.street || "",
+          area: restaurant.address?.area || "",
+          city: restaurant.address?.city || "",
+          state: restaurant.address?.state || "",
+          pincode: restaurant.address?.pincode || "",
+          country: restaurant.address?.country || "India",
+          coordinates: {
+            latitude: restaurant.address?.coordinates?.latitude || "",
+            longitude: restaurant.address?.coordinates?.longitude || ""
+          }
+        },
+        
+        // Arrays - ensure they're arrays
+        cuisine: Array.isArray(restaurant.cuisine) ? restaurant.cuisine : [],
+        badges: Array.isArray(restaurant.badges) ? restaurant.badges : [],
+        features: Array.isArray(restaurant.features) ? restaurant.features : [],
+        serviceAreas: Array.isArray(restaurant.serviceAreas) ? restaurant.serviceAreas : [],
+        paymentMethods: Array.isArray(restaurant.paymentMethods) ? restaurant.paymentMethods : ["Cash", "Card", "UPI"],
+        
+        // Operating hours
+        operatingHours: {
+          openingTime: restaurant.operatingHours?.openingTime || "09:00",
+          closingTime: restaurant.operatingHours?.closingTime || "22:00"
+        },
+        
+        // Boolean fields
         deliveryAvailable: restaurant.deliveryAvailable ?? true,
         takeawayAvailable: restaurant.takeawayAvailable ?? true,
         dineInAvailable: restaurant.dineInAvailable ?? true,
+        isActive: restaurant.isActive ?? true,
+        isFeatured: restaurant.isFeatured ?? false,
+        isPremium: restaurant.isPremium ?? false,
+        
+        // Numeric fields
         minOrderAmount: restaurant.minOrderAmount || 0,
         deliveryFee: restaurant.deliveryFee || 0,
         deliveryRadius: restaurant.deliveryRadius || 10,
-        offers: restaurant.offers || "",
         priceForTwo: restaurant.priceForTwo || 0,
-        rating: restaurant.rating || getInitialFormState().rating
+        
+        // String fields
+        priceRange: restaurant.priceRange || "",
+        deliveryTime: restaurant.deliveryTime || "30-40 mins",
+        offers: restaurant.offers || "",
+        status: restaurant.status || "Active",
+        verificationStatus: restaurant.verificationStatus || "Pending",
+        
+        // Rating
+        rating: {
+          average: restaurant.rating?.average || 0,
+          count: restaurant.rating?.count || 0
+        }
       };
       
       setFormData(transformedData);
       setSelectedRestaurant(restaurant);
+      
+      // Set image preview if exists
       if (restaurant.image?.url) {
         setImagePreview(restaurant.image.url);
+      } else {
+        setImagePreview(null);
       }
+      setImageFile(null);
     } else {
       resetForm();
       setSelectedRestaurant(null);
@@ -329,41 +359,105 @@ export function useRestaurantManagement(content) {
     );
 
     try {
+      // Prepare restaurant data with proper formatting
       const restaurantData = {
-        ...formData,
-        cuisine: Array.isArray(formData.cuisine) ? formData.cuisine : [formData.cuisine],
+        // Basic fields
+        name: formData.name?.trim(),
+        contactPerson: formData.contactPerson?.trim(),
+        phone: formData.phone?.trim(),
+        email: formData.email?.trim(),
+        description: formData.description?.trim(),
+        
+        // Cuisine - ensure it's an array
+        cuisine: Array.isArray(formData.cuisine) ? formData.cuisine : [],
+        
+        // Address - ensure proper structure
         address: {
-          ...formData.address,
-          coordinates: formData.address.coordinates?.latitude && formData.address.coordinates?.longitude
-            ? formData.address.coordinates
+          street: formData.address?.street?.trim() || '',
+          area: formData.address?.area?.trim() || '',
+          city: formData.address?.city?.trim() || '',
+          state: formData.address?.state?.trim() || '',
+          pincode: formData.address?.pincode?.trim() || '',
+          country: 'India',
+          coordinates: (formData.address?.coordinates?.latitude && formData.address?.coordinates?.longitude)
+            ? {
+                latitude: parseFloat(formData.address.coordinates.latitude) || 0,
+                longitude: parseFloat(formData.address.coordinates.longitude) || 0
+              }
             : undefined
         },
+        
+        // Operating hours
+        operatingHours: {
+          openingTime: formData.operatingHours?.openingTime || '09:00',
+          closingTime: formData.operatingHours?.closingTime || '22:00'
+        },
+        
+        // Arrays - ensure they're arrays, not strings
+        badges: Array.isArray(formData.badges) ? formData.badges : [],
+        features: Array.isArray(formData.features) ? formData.features : [],
+        serviceAreas: Array.isArray(formData.serviceAreas) ? formData.serviceAreas : [],
+        paymentMethods: Array.isArray(formData.paymentMethods) ? formData.paymentMethods : [],
+        
+        // Numeric fields
         minOrderAmount: parseFloat(formData.minOrderAmount) || 0,
         deliveryFee: parseFloat(formData.deliveryFee) || 0,
         deliveryRadius: parseInt(formData.deliveryRadius) || 10,
         priceForTwo: formData.priceForTwo || 0,
+        
+        // Boolean fields
+        deliveryAvailable: !!formData.deliveryAvailable,
+        takeawayAvailable: !!formData.takeawayAvailable,
+        dineInAvailable: !!formData.dineInAvailable,
+        isActive: formData.isActive !== undefined ? !!formData.isActive : true,
+        isFeatured: !!formData.isFeatured,
+        isPremium: !!formData.isPremium,
+        
+        // String fields
+        priceRange: formData.priceRange || '',
+        deliveryTime: formData.deliveryTime || '30-40 mins',
+        offers: formData.offers || '',
+        status: formData.status || 'Active',
+        verificationStatus: formData.verificationStatus || 'Pending',
+        
+        // Rating object
         rating: {
           average: parseFloat(formData.rating?.average) || 0,
           count: parseInt(formData.rating?.count) || 0
         }
       };
 
+      // Remove undefined coordinates if not provided
+      if (!restaurantData.address.coordinates) {
+        delete restaurantData.address.coordinates;
+      }
+
+      // Log the data being sent (for debugging)
+      console.log('Submitting restaurant data:', restaurantData);
+
       if (modalMode === "create") {
         await restaurantService.create(restaurantData, imageFile);
         toast.success("Restaurant created successfully", { id: loadingToast });
       } else {
-        await restaurantService.update(selectedRestaurant.rid, restaurantData, imageFile);
+        // For update, ensure we have the correct ID
+        const restaurantId = selectedRestaurant?.rid || selectedRestaurant?._id || selectedRestaurant?.id;
+        if (!restaurantId) {
+          throw new Error("Restaurant ID not found");
+        }
+        
+        await restaurantService.update(restaurantId, restaurantData, imageFile);
         toast.success("Restaurant updated successfully", { id: loadingToast });
       }
       
       closeModal();
-      // Refresh the list
       await fetchRestaurants();
       
     } catch (error) {
+      console.error('Submission error:', error);
       toast.error(error.message || "Operation failed", { id: loadingToast });
     }
   }, [formData, modalMode, selectedRestaurant, imageFile, validateForm, closeModal, fetchRestaurants]);
+
 
   const handleDelete = useCallback(async (idOrRid) => {
     if (window.confirm(content.confirmations?.delete || "Are you sure you want to delete this restaurant?")) {
@@ -376,7 +470,6 @@ export function useRestaurantManagement(content) {
         await restaurantService.deactivate(ridToDelete);
         toast.success("Restaurant deleted successfully", { id: loadingToast });
         
-        // Refresh the list
         await fetchRestaurants();
       } catch (error) {
         toast.error(error.message || "Delete failed", { id: loadingToast });
@@ -394,27 +487,37 @@ export function useRestaurantManagement(content) {
     setSelectedRestaurant(null);
   }, []);
 
+  // image change handler
   const handleImageChange = useCallback((e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error("File size should be less than 5MB");
-        return;
-      }
-
-      if (!file.type.startsWith('image/')) {
-        toast.error("Please upload an image file");
-        return;
-      }
-
-      setImageFile(file);
-      
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+    const file = e.target.files?.[0];
+    
+    if (!file) {
+      // Clear image if no file selected
+      setImageFile(null);
+      setImagePreview(null);
+      return;
     }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error("Please upload an image file");
+      return;
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image size should be less than 5MB");
+      return;
+    }
+
+    setImageFile(file);
+    
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
   }, []);
 
   const getCuisineOptions = useMemo(() => {

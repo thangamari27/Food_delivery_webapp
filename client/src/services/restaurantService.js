@@ -1,7 +1,6 @@
 /**
- * Restaurant Service - COMPLETE BACKEND INTEGRATION
- * Maps to all backend routes with proper data transformation
- * Updated: Fixed query parameter handling for search
+ * Restaurant Service
+ * Handles all API communications for restaurant operations
  */
 
 import api from './api';
@@ -14,48 +13,50 @@ class RestaurantService {
    */
 
   /**
-   * Create new restaurant with image upload
-   * Backend: POST /api/restaurants
-   * Requires: admin authentication
+   * Create new restaurant
+   * @param {Object} data - Restaurant data
+   * @param {File|null} imageFile - Optional image file
    */
-  async create(data, image = null) {
+  async create(data, imageFile = null) {
     try {
       let payload;
-      let headers = {};
+      const headers = {};
 
-      if (image) {
-        // Use FormData for image upload
+      // Use FormData for image upload or complex nested data
+      if (imageFile || data.address || data.operatingHours || data.cuisine) {
         payload = new FormData();
         
-        // Add all restaurant fields
+        // Append all fields to FormData
         Object.keys(data).forEach(key => {
           const value = data[key];
           
           if (value !== null && value !== undefined) {
-            if (key === 'address' || key === 'operatingHours') {
-              // Nested objects - send as JSON string
-              payload.append(key, JSON.stringify(value));
-            } else if (Array.isArray(value)) {
-              // Arrays - send as JSON string
+            if (typeof value === 'object' && !(value instanceof File)) {
+              // Convert objects/arrays to JSON strings
               payload.append(key, JSON.stringify(value));
             } else {
-              // Primitives - send directly
+              // Primitive values
               payload.append(key, value);
             }
           }
         });
         
-        // Add image file
-        payload.append('image', image);
-        headers['Content-Type'] = 'multipart/form-data';
+        // Add image if provided
+        if (imageFile) {
+          payload.append('image', imageFile);
+        }
       } else {
-        // No image - send as JSON
+        // Simple data - send as JSON
         payload = data;
         headers['Content-Type'] = 'application/json';
       }
 
       const response = await api.post('/api/restaurants', payload, { headers });
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -68,88 +69,31 @@ class RestaurantService {
    */
 
   /**
-   * Get all restaurants with advanced filtering
-   * Backend: GET /api/restaurants
-   * Query params: isActive, status, city, cuisine, deliveryAvailable, minRating, maxRating,
-   *               minPrice, maxPrice, features, badges, isFeatured, isPremium,
-   *               verificationStatus, search, limit, skip, sortBy, populate
+   * Get all restaurants with filtering and pagination
+   * @param {Object} params - Query parameters
    */
   async getAll(params = {}) {
     try {
-      const {
-        isActive = true,
-        status,
-        city,
-        cuisine,
-        deliveryAvailable,
-        minRating,
-        maxRating,
-        minPrice,
-        maxPrice,
-        features,
-        badges,
-        isFeatured,
-        isPremium,
-        verificationStatus,
-        search,
-        limit = 20,
-        skip = 0,
-        sortBy = '-createdAt',
-        populate = false
-      } = params;
-
-      // Build query parameters
       const queryParams = new URLSearchParams();
       
-      // Boolean params - send as string
-      if (isActive !== undefined) queryParams.append('isActive', String(isActive));
-      if (deliveryAvailable !== undefined) queryParams.append('deliveryAvailable', String(deliveryAvailable));
-      if (isFeatured !== undefined) queryParams.append('isFeatured', String(isFeatured));
-      if (isPremium !== undefined) queryParams.append('isPremium', String(isPremium));
-      if (populate) queryParams.append('populate', 'true');
-      
-      // String params
-      if (status) queryParams.append('status', status);
-      if (city) queryParams.append('city', city);
-      if (cuisine) queryParams.append('cuisine', cuisine);
-      if (verificationStatus) queryParams.append('verificationStatus', verificationStatus);
-      if (search) queryParams.append('search', search);
-      
-      // Number params
-      if (minRating) queryParams.append('minRating', String(minRating));
-      if (maxRating) queryParams.append('maxRating', String(maxRating));
-      if (minPrice) queryParams.append('minPrice', String(minPrice));
-      if (maxPrice) queryParams.append('maxPrice', String(maxPrice));
-      
-      // Array params - send as comma-separated or multiple params
-      if (features) {
-        if (Array.isArray(features)) {
-          // Send as multiple query params
-          features.forEach(f => queryParams.append('features', f));
-        } else {
-          queryParams.append('features', features);
+      // Build query string from params
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          queryParams.append(key, value);
         }
-      }
-      
-      if (badges) {
-        if (Array.isArray(badges)) {
-          badges.forEach(b => queryParams.append('badges', b));
-        } else {
-          queryParams.append('badges', badges);
-        }
-      }
-      
-      // Pagination & sorting
-      queryParams.append('limit', String(limit));
-      queryParams.append('skip', String(skip));
-      queryParams.append('sortBy', sortBy);
+      });
 
-      // Append query parameters to the URL
-      const queryString = queryParams.toString();
-      const url = queryString ? `/api/restaurants?${queryString}` : '/api/restaurants';
+      const url = queryParams.toString() 
+        ? `/api/restaurants?${queryParams.toString()}` 
+        : '/api/restaurants';
       
       const response = await api.get(url);
-      return response.data;
+      
+      // Handle all possible response structures
+      return {
+        success: true,
+        data: response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -157,14 +101,21 @@ class RestaurantService {
 
   /**
    * Get restaurant by ID
-   * Backend: GET /api/restaurants/:rid
-   * Query params: view (boolean to increment view count)
+   * @param {string} rid - Restaurant ID
+   * @param {boolean} incrementView - Whether to increment view count
    */
   async getById(rid, incrementView = false) {
     try {
-      const queryParams = incrementView ? '?view=true' : '';
-      const response = await api.get(`/api/restaurants/${rid}${queryParams}`);
-      return response.data;
+      const url = incrementView 
+        ? `/api/restaurants/${rid}?view=true`
+        : `/api/restaurants/${rid}`;
+      
+      const response = await api.get(url);
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -172,12 +123,16 @@ class RestaurantService {
 
   /**
    * Get restaurant by email
-   * Backend: GET /api/restaurants/email/:email
+   * @param {string} email - Restaurant email
    */
   async getByEmail(email) {
     try {
       const response = await api.get(`/api/restaurants/email/${encodeURIComponent(email)}`);
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -185,21 +140,22 @@ class RestaurantService {
 
   /**
    * Get restaurants by city
-   * Backend: GET /api/restaurants/city/:city
+   * @param {string} city - City name
+   * @param {Object} params - Pagination params
    */
   async getByCity(city, params = {}) {
     try {
       const { limit = 20, skip = 0, isActive = true } = params;
-      const queryParams = new URLSearchParams({ 
-        limit: String(limit), 
-        skip: String(skip), 
-        isActive: String(isActive) 
-      });
+      const queryParams = new URLSearchParams({ limit, skip, isActive });
       
       const response = await api.get(
         `/api/restaurants/city/${encodeURIComponent(city)}?${queryParams.toString()}`
       );
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -207,21 +163,22 @@ class RestaurantService {
 
   /**
    * Get restaurants by cuisine
-   * Backend: GET /api/restaurants/cuisine/:cuisine
+   * @param {string} cuisine - Cuisine type
+   * @param {Object} params - Pagination params
    */
   async getByCuisine(cuisine, params = {}) {
     try {
       const { limit = 20, skip = 0, isActive = true } = params;
-      const queryParams = new URLSearchParams({ 
-        limit: String(limit), 
-        skip: String(skip), 
-        isActive: String(isActive) 
-      });
+      const queryParams = new URLSearchParams({ limit, skip, isActive });
       
       const response = await api.get(
         `/api/restaurants/cuisine/${encodeURIComponent(cuisine)}?${queryParams.toString()}`
       );
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -229,22 +186,23 @@ class RestaurantService {
 
   /**
    * Search restaurants
-   * Backend: GET /api/restaurants/search
-   * Query params: q (search term), limit, skip, city
+   * @param {string} searchTerm - Search query
+   * @param {Object} params - Additional params
    */
   async search(searchTerm, params = {}) {
     try {
-      const { limit = 20, skip = 0, city } = params;
-      const queryParams = new URLSearchParams({ 
-        q: searchTerm, 
-        limit: String(limit), 
-        skip: String(skip) 
+      const queryParams = new URLSearchParams({ q: searchTerm });
+      
+      Object.entries(params).forEach(([key, value]) => {
+        if (value) queryParams.append(key, value);
       });
-      
-      if (city) queryParams.append('city', city);
-      
+
       const response = await api.get(`/api/restaurants/search?${queryParams.toString()}`);
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -252,7 +210,8 @@ class RestaurantService {
 
   /**
    * Get popular restaurants
-   * Backend: GET /api/restaurants/popular
+   * @param {number} limit - Number of restaurants
+   * @param {string|null} city - Optional city filter
    */
   async getPopular(limit = 10, city = null) {
     try {
@@ -260,7 +219,11 @@ class RestaurantService {
       if (city) queryParams.append('city', city);
       
       const response = await api.get(`/api/restaurants/popular?${queryParams.toString()}`);
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -268,20 +231,26 @@ class RestaurantService {
 
   /**
    * Get restaurant statistics
-   * Backend: GET /api/restaurants/stats
+   * @param {Object} params - Filter params
    */
   async getStats(params = {}) {
     try {
-      const { city, cuisine } = params;
       const queryParams = new URLSearchParams();
-      if (city) queryParams.append('city', city);
-      if (cuisine) queryParams.append('cuisine', cuisine);
       
-      const queryString = queryParams.toString();
-      const url = queryString ? `/api/restaurants/stats?${queryString}` : '/api/restaurants/stats';
+      Object.entries(params).forEach(([key, value]) => {
+        if (value) queryParams.append(key, value);
+      });
+
+      const url = queryParams.toString() 
+        ? `/api/restaurants/stats?${queryParams.toString()}` 
+        : '/api/restaurants/stats';
       
       const response = await api.get(url);
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -289,24 +258,24 @@ class RestaurantService {
 
   /**
    * Get nearby restaurants
-   * Backend: POST /api/restaurants/nearby
-   * Body: { latitude, longitude }
-   * Query params: maxDistance, limit, skip
+   * @param {number} latitude - Latitude coordinate
+   * @param {number} longitude - Longitude coordinate
+   * @param {Object} params - Additional params
    */
   async getNearby(latitude, longitude, params = {}) {
     try {
       const { maxDistance = 10, limit = 20, skip = 0 } = params;
-      const queryParams = new URLSearchParams({ 
-        maxDistance: String(maxDistance),
-        limit: String(limit), 
-        skip: String(skip) 
-      });
+      const queryParams = new URLSearchParams({ maxDistance, limit, skip });
       
       const response = await api.post(
         `/api/restaurants/nearby?${queryParams.toString()}`,
         { latitude, longitude }
       );
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -320,56 +289,80 @@ class RestaurantService {
 
   /**
    * Update restaurant
-   * Backend: PUT /api/restaurants/:rid
-   * Requires: admin authentication
+   * @param {string} rid - Restaurant ID
+   * @param {Object} data - Update data
+   * @param {File|null} imageFile - Optional new image
    */
-  async update(rid, data, image = null) {
+  async update(rid, data, imageFile = null) {
     try {
       let payload;
-      let headers = {};
+      const headers = {};
 
-      if (image) {
-        // Use FormData for image upload
+      // Log the data being sent (for debugging)
+      console.log('Update data:', { rid, data, hasImage: !!imageFile });
+
+      // Use FormData for image upload or complex nested data
+      if (imageFile || data.address || data.operatingHours) {
         payload = new FormData();
         
+        // Append all fields to FormData
         Object.keys(data).forEach(key => {
           const value = data[key];
           
           if (value !== null && value !== undefined) {
-            if (key === 'address' || key === 'operatingHours') {
-              payload.append(key, JSON.stringify(value));
-            } else if (Array.isArray(value)) {
+            if (Array.isArray(value)) {
+              // For arrays, send as JSON string
+              if (value.length > 0) {
+                payload.append(key, JSON.stringify(value));
+              } else {
+                // Send empty array as JSON string
+                payload.append(key, JSON.stringify([]));
+              }
+            } else if (typeof value === 'object' && !(value instanceof File)) {
+              // For objects, send as JSON string
               payload.append(key, JSON.stringify(value));
             } else {
+              // For primitives, send directly
               payload.append(key, value);
             }
           }
         });
         
-        payload.append('image', image);
-        headers['Content-Type'] = 'multipart/form-data';
+        // Add image if provided
+        if (imageFile) {
+          payload.append('image', imageFile);
+        }
       } else {
-        // No image - send as JSON
+        // Simple data - send as JSON
         payload = data;
         headers['Content-Type'] = 'application/json';
       }
 
       const response = await api.put(`/api/restaurants/${rid}`, payload, { headers });
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
+      console.error('Update service error:', error);
       throw this.handleError(error);
     }
   }
 
   /**
    * Update restaurant status
-   * Backend: PATCH /api/restaurants/:rid/status
-   * Body: { status: 'Active' | 'Inactive' | 'Suspended' | 'Closed' }
+   * @param {string} rid - Restaurant ID
+   * @param {string} status - New status
    */
   async updateStatus(rid, status) {
     try {
       const response = await api.patch(`/api/restaurants/${rid}/status`, { status });
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -377,13 +370,17 @@ class RestaurantService {
 
   /**
    * Update operating hours
-   * Backend: PATCH /api/restaurants/:rid/hours
-   * Body: { operatingHours: {...} }
+   * @param {string} rid - Restaurant ID
+   * @param {Object} operatingHours - Operating hours object
    */
   async updateOperatingHours(rid, operatingHours) {
     try {
       const response = await api.patch(`/api/restaurants/${rid}/hours`, { operatingHours });
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -391,8 +388,8 @@ class RestaurantService {
 
   /**
    * Bulk update restaurants
-   * Backend: PATCH /api/restaurants/bulk
-   * Body: { restaurantIds: [...], updateData: {...} }
+   * @param {Array} restaurantIds - Array of restaurant IDs
+   * @param {Object} updateData - Data to update
    */
   async bulkUpdate(restaurantIds, updateData) {
     try {
@@ -400,7 +397,11 @@ class RestaurantService {
         restaurantIds,
         updateData
       });
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -414,12 +415,16 @@ class RestaurantService {
 
   /**
    * Deactivate restaurant (soft delete)
-   * Backend: DELETE /api/restaurants/:rid
+   * @param {string} rid - Restaurant ID
    */
   async deactivate(rid) {
     try {
       const response = await api.delete(`/api/restaurants/${rid}`);
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -427,13 +432,16 @@ class RestaurantService {
 
   /**
    * Delete restaurant permanently
-   * Backend: DELETE /api/restaurants/:rid/permanent
-   * Requires: admin authentication
+   * @param {string} rid - Restaurant ID
    */
   async deletePermanent(rid) {
     try {
       const response = await api.delete(`/api/restaurants/${rid}/permanent`);
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -447,13 +455,17 @@ class RestaurantService {
 
   /**
    * Add menu item to restaurant
-   * Backend: POST /api/restaurants/:rid/menu
-   * Body: { foodId: string }
+   * @param {string} rid - Restaurant ID
+   * @param {string} foodId - Food item ID
    */
   async addMenuItem(rid, foodId) {
     try {
       const response = await api.post(`/api/restaurants/${rid}/menu`, { foodId });
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -461,12 +473,17 @@ class RestaurantService {
 
   /**
    * Remove menu item from restaurant
-   * Backend: DELETE /api/restaurants/:rid/menu/:foodId
+   * @param {string} rid - Restaurant ID
+   * @param {string} foodId - Food item ID
    */
   async removeMenuItem(rid, foodId) {
     try {
       const response = await api.delete(`/api/restaurants/${rid}/menu/${foodId}`);
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -480,13 +497,17 @@ class RestaurantService {
 
   /**
    * Add offer to restaurant
-   * Backend: POST /api/restaurants/:rid/offers
-   * Body: { title, description, discountPercentage, maxDiscount, minOrder, validFrom, validUntil }
+   * @param {string} rid - Restaurant ID
+   * @param {Object} offerData - Offer details
    */
   async addOffer(rid, offerData) {
     try {
       const response = await api.post(`/api/restaurants/${rid}/offers`, offerData);
-      return response.data;
+      
+      return {
+        success: true,
+        data: response.data?.data?.data || response.data?.data || response.data
+      };
     } catch (error) {
       throw this.handleError(error);
     }
@@ -500,7 +521,7 @@ class RestaurantService {
 
   /**
    * Transform frontend data to backend format
-   * Handles nested objects and data normalization
+   * @param {Object} data - Frontend form data
    */
   transformToBackendFormat(data) {
     const transformed = { ...data };
@@ -511,27 +532,14 @@ class RestaurantService {
     }
     
     // Ensure address is properly formatted
-    if (transformed.address) {
-      if (typeof transformed.address === 'string') {
-        // If address is string, parse it
-        transformed.address = {
-          street: transformed.address,
-          city: transformed.city || '',
-          state: '',
-          pincode: '',
-          country: 'India'
-        };
-      }
-    }
-    
-    // Ensure operatingHours exists
-    if (!transformed.operatingHours && (transformed.openingTime || transformed.closingTime)) {
-      transformed.operatingHours = {
-        openingTime: transformed.openingTime || '09:00',
-        closingTime: transformed.closingTime || '22:00'
+    if (transformed.address && typeof transformed.address === 'string') {
+      transformed.address = {
+        street: transformed.address,
+        city: transformed.city || '',
+        state: '',
+        pincode: '',
+        country: 'India'
       };
-      delete transformed.openingTime;
-      delete transformed.closingTime;
     }
     
     // Convert numeric strings to numbers
@@ -547,14 +555,20 @@ class RestaurantService {
       transformed.deliveryFee = parseFloat(transformed.deliveryFee);
     }
     
+    if (transformed.priceForTwo) {
+      transformed.priceForTwo = parseFloat(transformed.priceForTwo);
+    }
+    
     return transformed;
   }
 
   /**
    * Transform backend data to frontend format
-   * Flattens nested objects for easier form handling
+   * @param {Object} data - Backend response data
    */
   transformToFrontendFormat(data) {
+    if (!data) return {};
+    
     const transformed = { ...data };
     
     // Flatten address
@@ -572,15 +586,15 @@ class RestaurantService {
       transformed.closingTime = transformed.operatingHours.closingTime;
     }
     
-    // Flatten rating
-    if (transformed.rating) {
-      transformed.rating = transformed.rating.average || 0;
-      transformed.ratingCount = transformed.rating.count || 0;
-    }
-    
-    // Flatten image
-    if (transformed.image && transformed.image.url) {
-      transformed.imageUrl = transformed.image.url;
+    // Handle image
+    if (transformed.image) {
+      if (typeof transformed.image === 'object' && transformed.image.url) {
+        transformed.imageUrl = transformed.image.url;
+        transformed.imagePreview = transformed.image.url;
+      } else if (typeof transformed.image === 'string') {
+        transformed.imageUrl = transformed.image;
+        transformed.imagePreview = transformed.image;
+      }
     }
     
     return transformed;
@@ -588,26 +602,23 @@ class RestaurantService {
 
   /**
    * Handle API errors uniformly
+   * @param {Error} error - Error object
    */
   handleError(error) {
     if (error.response) {
       // Server responded with error
-      const message = error.response.data?.message || 'An error occurred';
-      const statusCode = error.response.status;
-      const errors = error.response.data?.errors || null;
+      const message = error.response.data?.message || 
+                     error.response.data?.error || 
+                     error.response.statusText ||
+                     'Server error occurred';
       
-      // Create an Error object with the message
-      const errorObj = new Error(message);
-      errorObj.statusCode = statusCode;
-      errorObj.errors = errors;
-      
-      // Add original response data for debugging
-      errorObj.responseData = error.response.data;
-      
-      return errorObj;
+      const err = new Error(message);
+      err.status = error.response.status;
+      err.data = error.response.data;
+      return err;
     } else if (error.request) {
       // Request made but no response
-      return new Error('No response from server. Please check your connection.');
+      return new Error('Network error. Please check your connection.');
     } else {
       // Error in request setup
       return new Error(error.message || 'An unexpected error occurred');

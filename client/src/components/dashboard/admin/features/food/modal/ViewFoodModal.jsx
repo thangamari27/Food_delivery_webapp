@@ -35,7 +35,7 @@ function ViewFoodModal({ content, isOpen, onClose, food, onEdit, styles }) {
   const getImageUrl = () => {
     if (food.image?.url) return food.image.url;
     if (food.imageUrl) return food.imageUrl;
-    return '/food-placeholder.jpg';
+    return 'https://placehold.co/400x400/FF4F00/white?text=No+Image';
   };
 
   const getRating = () => {
@@ -90,7 +90,7 @@ function ViewFoodModal({ content, isOpen, onClose, food, onEdit, styles }) {
             alt={food.name} 
             className="w-full h-64 object-cover rounded-lg" 
             onError={(e) => {
-              e.target.src = '/food-placeholder.jpg';
+              e.target.src = 'https://placehold.co/400x400/FF4F00/white?text=No+Image';
             }}
           />
           {food.isFeatured && (

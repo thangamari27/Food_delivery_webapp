@@ -275,6 +275,7 @@ function FoodManagement() {
         {/* Modals */}
         <AddEditFoodModal
           content={content}
+          loading={loading}
           isOpen={showAddModal || showEditModal}
           onClose={() => {
             if (showAddModal) setShowAddModal(false);

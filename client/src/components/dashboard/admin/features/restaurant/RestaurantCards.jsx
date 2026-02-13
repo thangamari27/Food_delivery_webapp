@@ -1,12 +1,8 @@
-/**
- * Restaurant Cards Component - UPDATED FOR BACKEND DATA
- * Mobile-friendly card view with proper backend data handling
- */
-
 import { Eye, Edit2, Trash2, Check, Star, MapPin, Clock, X } from 'lucide-react';
 import { getStatusColor } from '../../../../../utils/handler/admin/restaurantFilterHandler';
+import { getRestaurantImageUrl } from './RestaurantTable';
 
-const RestaurantImage = ({ image, name, size = "md" }) => {
+const RestaurantImage = ({ restaurant, size = "md" }) => {
   const sizeClasses = {
     sm: "w-12 h-12",
     md: "w-16 h-16",
@@ -14,27 +10,18 @@ const RestaurantImage = ({ image, name, size = "md" }) => {
     xl: "w-32 h-32"
   };
 
-  // Backend returns image as { publicId, url, format }
-  const imageUrl = image?.url || null;
+  const imageUrl = getRestaurantImageUrl(restaurant);
 
-  return imageUrl ? (
+  return (
     <img
       src={imageUrl}
-      alt={name}
+      alt={restaurant.name}
       className={`${sizeClasses[size]} rounded-lg object-cover border border-gray-200`}
       onError={(e) => {
         e.target.onerror = null;
-        e.target.src = "https://via.placeholder.com/150x150/dddddd/999999?text=R";
+        e.target.src = "https://placehold.co/400x400/FF4F00/white?text=No+Image";
       }}
     />
-  ) : (
-    <div className={`${sizeClasses[size]} rounded-lg bg-gray-100 flex items-center justify-center border border-gray-200`}>
-      <img 
-        src="https://via.placeholder.com/150x150/dddddd/999999?text=R" 
-        alt={`${name} placeholder`} 
-        className="w-full h-full rounded-lg object-cover"
-      />
-    </div>
   );
 };
 
@@ -75,7 +62,7 @@ const RestaurantCard = ({ restaurant, onView, onEdit, onDelete, content }) => {
     <div className="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow duration-200 border border-gray-100">
       <div className="flex gap-3 mb-4">
         {/* Restaurant Image */}
-        <RestaurantImage image={restaurant.image} name={restaurant.name} size="lg" />
+        <RestaurantImage restaurant={restaurant} size="lg" />
         
         <div className="flex-1 min-w-0">
           {/* Header with Name and Status */}
