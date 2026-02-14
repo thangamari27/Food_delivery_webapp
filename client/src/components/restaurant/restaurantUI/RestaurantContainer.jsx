@@ -33,7 +33,8 @@ function RestaurantContainer({ content, styles }) {
     restaurants,
     restaurantsLoading,
     restaurantsError,
-    loadRestaurants
+    loadRestaurants,
+    isAuthenticated
   } = useRestaurantContainerState();
 
   // Custom Hooks for filtering
@@ -149,6 +150,7 @@ function RestaurantContainer({ content, styles }) {
           endIndex={endIndex}
           onViewMenu={handleViewMenu}
           onBookNow={handleBookNow}
+          isAuthenticated={isAuthenticated}
         />
       )}
 

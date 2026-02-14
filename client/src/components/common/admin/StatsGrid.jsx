@@ -1,9 +1,10 @@
 import { TrendingUp, TrendingDown } from "lucide-react";
 
-function StatsGrid({ content, styles }) {
+function StatsGrid({ content, stats, statsLoading, styles }) {
+  
   return (
     <div className={styles.statsGrid}>
-        {content.stats.map((stat, idx) => {
+        {stats.map((stat, idx) => {
         const Icon = stat.icon;
         return (
         <div key={idx} className={styles.statCard}>

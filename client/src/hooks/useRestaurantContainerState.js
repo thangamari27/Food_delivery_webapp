@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { useRestaurantContext } from '../context/admin/Restaurantcontext';
 import { useBooking } from '../context/admin/Bookingcontext';
 import { useFood } from '../context/admin/Foodcontext';
-
+import { useAuthContext } from '../context/AuthContext';
+import toast from 'react-hot-toast';
+import { Lock } from 'lucide-react';
 /**
  * Custom hook to manage restaurant container state
  * Integrates with Restaurant, Booking, and Food contexts
@@ -37,6 +39,8 @@ function useRestaurantContainerState() {
     loading: foodsLoading
   } = useFood();
 
+  const { isAuthenticated } = useAuthContext();
+
   // Load restaurants on mount
   useEffect(() => {
     loadRestaurants();
@@ -58,10 +62,24 @@ function useRestaurantContainerState() {
     }
   };
 
+  const checkAuthentication = (action = 'perform this action') => {
+    if (!isAuthenticated) {
+      toast.error(`Please login to ${action}`, {
+        icon: '🔒',
+      });
+      return false;
+    }
+    return true;
+  };
+
   /**
    * Handle Book Now button click
    */
   const handleBookNow = (restaurant) => {
+    if (!checkAuthentication('book a table')) {
+      return;
+    }
+
     // Normalize restaurant data
     const normalizedRestaurant = {
       ...restaurant,
@@ -82,6 +100,11 @@ function useRestaurantContainerState() {
    * Handle View Menu button click
    */
   const handleViewMenu = async (restaurant) => {
+    // Check authentication first
+    if (!checkAuthentication('view the menu')) {
+      return;
+    }
+  
     // Normalize restaurant data
     const normalizedRestaurant = {
       ...restaurant,
@@ -134,6 +157,10 @@ function useRestaurantContainerState() {
     try {
       setBookingError(null);
       
+      if (!isAuthenticated) {
+        throw new Error('You must be logged in to book a table');
+      }
+
       // Validate required restaurant data
       if (!bookingData.restaurant?.restaurantId) {
         throw new Error('Restaurant information is missing');
@@ -206,7 +233,10 @@ function useRestaurantContainerState() {
     restaurants,
     restaurantsLoading: restaurantsLoading || foodsLoading,
     restaurantsError,
-    loadRestaurants
+    loadRestaurants,
+
+    // Authentication
+    isAuthenticated
   };
 }
 

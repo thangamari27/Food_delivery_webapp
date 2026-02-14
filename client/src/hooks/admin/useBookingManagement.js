@@ -18,7 +18,7 @@ export const useBookingManagement = () => {
     updateAdminNotes,
     clearError
   } = useBooking();
-  console.log(bookings)
+  
   const [filters, setFilters] = useState({
     search: '',
     status: null,

@@ -34,8 +34,7 @@ export const BookingProvider = ({ children }) => {
     
     try {
       const response = await bookingService.getAllBookings(filters);
-      console.log('API Response:', response);
-      
+    
       // Ensure we're accessing the correct data structure
       const bookingsData = response.data?.data || response.data || [];
       
@@ -59,8 +58,6 @@ export const BookingProvider = ({ children }) => {
         
         return base;
       });
-      
-      console.log('Transformed bookings:', transformedBookings);
       
       setBookings(transformedBookings);
       setPagination(response.data?.pagination || {

@@ -685,6 +685,28 @@ export function OrderProvider({ children }) {
     }
   }, []);
 
+  const getStats = useCallback(async (params = {}) => {
+    try {
+      dispatch({ type: ACTIONS.FETCH_START });
+      const response = await orderService.getStats(params);
+      return response;
+    } catch (error) {
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
+      throw error;
+    }
+  }, []);
+  
+  const getRevenue = useCallback(async (params = {}) => {
+    try {
+      dispatch({ type: ACTIONS.FETCH_START });
+      const response = await orderService.getRevenue(params);
+      return response;
+    } catch (error) {
+      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
+      throw error;
+    }
+  }, []);
+
   /**
    * ========================================
    * FILTER & PAGINATION
@@ -743,6 +765,8 @@ export function OrderProvider({ children }) {
     setPage,
     setItemsPerPage,
     clearError,
+    getStats,
+    getRevenue,
 
     // Utilities
     transformToBackend: DataTransformer.toBackend,

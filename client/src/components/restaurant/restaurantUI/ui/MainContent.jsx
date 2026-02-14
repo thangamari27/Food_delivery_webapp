@@ -18,7 +18,8 @@ function MainContent({
   startIndex,
   endIndex,
   onViewMenu,
-  onBookNow
+  onBookNow,
+  isAuthenticated
 }) {
   const hasRestaurants = filteredRestaurants.length > 0;
    
@@ -60,6 +61,7 @@ function MainContent({
               endIndex={endIndex}
               onViewMenu={onViewMenu}
               onBookNow={onBookNow}
+              isAuthenticated={isAuthenticated}
             />
           ) : (
             <NoRestaurantsFound onClearFilters={handleClearAllFilters} />

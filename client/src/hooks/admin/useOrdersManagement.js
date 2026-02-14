@@ -3,6 +3,7 @@ import { useOrder } from '../../context/admin/Ordercontext';
 import { useFood } from '../../context/admin/Foodcontext';
 import { useRestaurantContext } from '../../context/admin/Restaurantcontext'; 
 import { useAuthContext } from '../../context/AuthContext';
+import { transformBackendStats, getLoadingStats } from '../../utils/handler/admin/orderStatsTransformer';
 import { toast } from 'react-hot-toast';
 
 export function useOrdersManagement() {
@@ -14,6 +15,8 @@ export function useOrdersManagement() {
     updateOrderStatus,
     deleteOrder: deleteOrderContext,
     createOrder,
+    getStats,
+    getRevenue ,
     transformToBackend,
     calculatePricing
   } = useOrder();
@@ -52,6 +55,9 @@ export function useOrdersManagement() {
   const [formErrors, setFormErrors] = useState({});
   const [selectedFoodItems, setSelectedFoodItems] = useState([]);
 
+  const [stats, setStats] = useState(getLoadingStats());
+  const [statsLoading, setStatsLoading] = useState(false);
+
   // Combined loading state
   const loading = ordersLoading || foodsLoading || restaurantsLoading;
 
@@ -73,15 +79,57 @@ export function useOrdersManagement() {
     }
   }, [contextOrders]);
 
+  useEffect(() => {
+    // Build filter params from current filters
+    const filterParams = {};
+    
+    if (filters.orderStatus !== 'all') {
+      filterParams.orderStatus = filters.orderStatus;
+    }
+    
+    if (filters.dateRange !== 'all') {
+      filterParams.dateRange = filters.dateRange;
+    }
+    
+    loadStats(filterParams);
+  }, [filters.orderStatus, filters.dateRange]);
+
   /**
    * Load orders from API
    */
   const loadOrders = async () => {
     try {
       await fetchOrders();
+      await loadStats();
     } catch (error) {
       console.error('Error loading orders:', error);
       toast.error('Failed to load orders');
+    }
+  };
+
+  const loadStats = async (filterParams = {}) => {
+    try {
+      setStatsLoading(true);
+      
+      // Fetch stats and revenue in parallel
+      const [statsResponse, revenueResponse] = await Promise.all([
+        getStats(filterParams),
+        getRevenue(filterParams)
+      ]);
+
+      const backendStats = statsResponse.data || {};
+      const revenueData = revenueResponse.data || {};
+
+      // Transform backend data to stats format
+      const transformedStats = transformBackendStats(backendStats, revenueData);
+      setStats(transformedStats);
+    } catch (error) {
+      console.error('Error loading stats:', error);
+      toast.error('Failed to load statistics');
+      // Keep loading stats on error
+      setStats(getLoadingStats());
+    } finally {
+      setStatsLoading(false);
     }
   };
 
@@ -779,6 +827,8 @@ export function useOrdersManagement() {
 
   return {
     // State
+    stats,
+    statsLoading,
     orders,
     loading,
     searchQuery,
@@ -840,5 +890,6 @@ export function useOrdersManagement() {
     loadOrders,
     loadFoodItems,
     loadRestaurants,
+    loadStats,
   };
 }

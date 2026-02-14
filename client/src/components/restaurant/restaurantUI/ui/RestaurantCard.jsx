@@ -1,7 +1,7 @@
 import { Leaf, Award, Flame, Clock, MapPin, Star, IndianRupee, Phone } from "lucide-react";
 import Image from "@/components/common/Image";
 
-function RestaurantCard({ restaurant, styles, onViewMenu, onBookNow }) {
+function RestaurantCard({ restaurant, styles, onViewMenu, onBookNow, isAuthenticated }) {
   
   // Helper: Format cuisine display
   const formatCuisine = (cuisine) => {
@@ -300,14 +300,14 @@ function RestaurantCard({ restaurant, styles, onViewMenu, onBookNow }) {
         <button 
           className={styles.viewMenuButton}
           onClick={() => onViewMenu && onViewMenu(restaurant)}
-          disabled={!restaurant.isActive || restaurant.status !== 'Active'}
+          disabled={ !restaurant.isActive || restaurant.status !== 'Active'}
         >
           View Menu
         </button>
         <button 
           className={styles.bookButton}
           onClick={() => onBookNow && onBookNow(restaurant)}
-          disabled={!restaurant.isActive || restaurant.status !== 'Active'}
+          disabled={ !restaurant.isActive || restaurant.status !== 'Active'}
         >
           Book Now
         </button>

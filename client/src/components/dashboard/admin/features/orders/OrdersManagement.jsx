@@ -10,9 +10,11 @@ import { getPaginationInfo } from '@/utils/handler/admin/paginationHandler';
 import SelectedOrdersBanner from '@/components/common/admin/SelectedOrdersBanner';
 import EmptyState from '@/components/common/admin/EmptyState';
 
-const OrdersManagement = ({ content, generateSampleOrders, styles }) => {
+const OrdersManagement = ({ content, styles }) => {
   const {
     // State
+    stats, 
+    statsLoading,
     orders,
     searchQuery,
     searchTerm,
@@ -28,7 +30,7 @@ const OrdersManagement = ({ content, generateSampleOrders, styles }) => {
     formErrors,
     selectedFoodItems,
     
-    // Food items - FIXED: Use allFoodItems directly
+    // Food items 
     allFoodItems,
     foodsLoading,
     
@@ -90,7 +92,7 @@ const OrdersManagement = ({ content, generateSampleOrders, styles }) => {
           openModal={openModal} 
           styles={styles} 
         />
-        <StatsGrid content={content} styles={styles} />
+        <StatsGrid content={content} stats={stats} statsLoading={statsLoading} styles={styles} />
         <ActionBar 
           content={content}
           searchQuery={searchQuery}

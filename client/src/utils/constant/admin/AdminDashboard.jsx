@@ -124,10 +124,10 @@ export const dashboardContent = {
     highlightText: "Admin Dashboard",
   },
   stats: [
-    { label: 'Total Menus', value: '2,947', change: '+12.5%', isPositive: true, icon: UtensilsCrossed, gradient: 'bg-amber-400' },
-    { label: 'Total Orders', value: '1,432', change: '-3.1%', isPositive: false, icon: ShoppingCart, gradient: 'bg-blue-400' },
-    { label: 'Total Customers', value: '3,892', change: '+15.3%', isPositive: true, icon: Users, gradient: 'bg-pink-400' },
-    { label: 'Total Revenue', value: '$45.2K', change: '+8.2%', isPositive: true, icon: IndianRupee, gradient: 'bg-emerald-400' },
+    { label: 'Total Orders', value: '0', change: '+0%', isPositive: true, icon: 'Package', gradient: 'bg-blue-400', description: 'Loading...' },
+    { label: 'Active Orders', value: '0', change: '0 completed', isPositive: true, icon: 'ShoppingBag', gradient: 'bg-amber-400', description: 'Loading...' },
+    { label: 'Total Customers', value: '0', change: '+0%', isPositive: true, icon: 'Users', gradient: 'bg-pink-400', description: 'Loading...' },
+    { label: 'Total Revenue', value: '₹0', change: '+0%', isPositive: true, icon: 'IndianRupee', gradient: 'bg-emerald-400', description: 'Loading...' },
   ],
   performanceMetrics: {
     staticContent: {
@@ -140,25 +140,13 @@ export const dashboardContent = {
       ], 
     },
     daily: [
-      { label: 'Total Orders', percentage: 75, color: '#f59e0b', indicator: "bg-orange-300" },
-      { label: 'Customer Growth', percentage: 60, color: '#10b981', indicator: "bg-emerald-400" },
-      { label: 'Total Revenue', percentage: 85, color: '#3b82f6', indicator: "bg-blue-600" }
+      { label: 'Total Orders', percentage: 0, color: '#f59e0b', indicator: "bg-orange-300" },
+      { label: 'Customer Growth', percentage: 0, color: '#10b981', indicator: "bg-emerald-400" },
+      { label: 'Total Revenue', percentage: 0, color: '#3b82f6', indicator: "bg-blue-600" }
     ],
-    weekly: [
-      { label: 'Total Orders', percentage: 82, color: '#f59e0b' },
-      { label: 'Customer Growth', percentage: 68, color: '#10b981' },
-      { label: 'Total Revenue', percentage: 90, color: '#3b82f6' }
-    ],
-    monthly: [
-      { label: 'Total Orders', percentage: 88, color: '#f59e0b' },
-      { label: 'Customer Growth', percentage: 75, color: '#10b981' },
-      { label: 'Total Revenue', percentage: 92, color: '#3b82f6' }
-    ],
-    yearly: [
-      { label: 'Total Orders', percentage: 95, color: '#f59e0b' },
-      { label: 'Customer Growth', percentage: 85, color: '#10b981' },
-      { label: 'Total Revenue', percentage: 98, color: '#3b82f6' }
-    ]
+    weekly: [],
+    monthly: [],
+    yearly: []
   },
   weeklyOrders: {
     staticContent: {
@@ -170,22 +158,10 @@ export const dashboardContent = {
         { id: 4, optionValue: 'yearly', option: 'Yearly'},
       ], 
     },
-    daily: [
-      { day: 'Mon', orders: 15 }, { day: 'Tue', orders: 18 }, { day: 'Wed', orders: 22 },
-      { day: 'Thu', orders: 19 }, { day: 'Fri', orders: 25 }, { day: 'Sat', orders: 28 }, { day: 'Sun', orders: 20 }
-    ],
-    weekly: [
-      { day: 'Week 1', orders: 145 }, { day: 'Week 2', orders: 178 }, { day: 'Week 3', orders: 165 },
-      { day: 'Week 4', orders: 192 }
-    ],
-    monthly: [
-      { day: 'Jan', orders: 645 }, { day: 'Feb', orders: 578 }, { day: 'Mar', orders: 720 },
-      { day: 'Apr', orders: 692 }, { day: 'May', orders: 810 }, { day: 'Jun', orders: 765 }
-    ],
-    yearly: [
-      { day: '2021', orders: 7845 }, { day: '2022', orders: 8920 }, { day: '2023', orders: 9650 },
-      { day: '2024', orders: 10240 }
-    ]
+    daily: [{ day: 'Mon', orders: 0 }],
+    weekly: [],
+    monthly: [],
+    yearly: []
   },
   revenueComparison: {
     staticContent: {
@@ -196,22 +172,9 @@ export const dashboardContent = {
         { id: 3, optionValue: 'yearly', option: 'Yearly'},
       ], 
     },
-    monthly: [
-      { month: 'Jan', year2020: 4000, year2021: 2400 }, { month: 'Feb', year2020: 3000, year2021: 1398 },
-      { month: 'Mar', year2020: 2000, year2021: 9800 }, { month: 'Apr', year2020: 2780, year2021: 3908 },
-      { month: 'May', year2020: 1890, year2021: 4800 }, { month: 'Jun', year2020: 2390, year2021: 3800 },
-      { month: 'Jul', year2020: 3490, year2021: 4300 }, { month: 'Aug', year2020: 3490, year2021: 5200 },
-      { month: 'Sep', year2020: 2000, year2021: 4100 }, { month: 'Oct', year2020: 3200, year2021: 4800 },
-      { month: 'Nov', year2020: 4100, year2021: 5300 }, { month: 'Dec', year2020: 4500, year2021: 6000 }
-    ],
-    quarterly: [
-      { month: 'Q1', year2020: 9000, year2021: 13598 }, { month: 'Q2', year2020: 7060, year2021: 12508 },
-      { month: 'Q3', year2020: 8980, year2021: 13600 }, { month: 'Q4', year2020: 11800, year2021: 16100 }
-    ],
-    yearly: [
-      { month: '2018', year2020: 32000, year2021: 28000 }, { month: '2019', year2020: 35000, year2021: 38000 },
-      { month: '2020', year2020: 36840, year2021: 42000 }, { month: '2021', year2020: 40000, year2021: 55806 }
-    ]
+    monthly: [{ month: 'Jan', year2025: 0, year2026: 0 }],
+    quarterly: [],
+    yearly: []
   },
   customerMap: {
     staticContent: {
@@ -222,20 +185,11 @@ export const dashboardContent = {
         { id: 3, optionValue: 'yearly', option: 'Yearly'},
       ], 
     },
-    weekly: [
-      { week: 'Week 1', customers: 420 }, { week: 'Week 2', customers: 380 },
-      { week: 'Week 3', customers: 550 }, { week: 'Week 4', customers: 490 }
-    ],
-    monthly: [
-      { week: 'Jan', customers: 1820 }, { week: 'Feb', customers: 1680 }, { week: 'Mar', customers: 2150 },
-      { week: 'Apr', customers: 1990 }, { week: 'May', customers: 2340 }, { week: 'Jun', customers: 2180 }
-    ],
-    yearly: [
-      { week: '2021', customers: 18420 }, { week: '2022', customers: 22380 },
-      { week: '2023', customers: 25550 }, { week: '2024', customers: 28490 }
-    ]
+    weekly: [{ week: 'Week 1', customers: 0 }],
+    monthly: [],
+    yearly: []
   }
-}
+};
 
 // Food page content
 export const foodContent = {

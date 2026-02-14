@@ -12,7 +12,8 @@ function RestaurantGrid({
   startIndex,
   endIndex,
   onViewMenu,
-  onBookNow
+  onBookNow,
+  isAuthenticated
 }) {
   if (filteredRestaurants.length === 0) {
     return (
@@ -44,6 +45,7 @@ function RestaurantGrid({
             styles={styles}
             onViewMenu={onViewMenu}
             onBookNow={onBookNow}
+            isAuthenticated={isAuthenticated}
           />
         ))}
       </div>

@@ -298,9 +298,6 @@ class RestaurantService {
       let payload;
       const headers = {};
 
-      // Log the data being sent (for debugging)
-      console.log('Update data:', { rid, data, hasImage: !!imageFile });
-
       // Use FormData for image upload or complex nested data
       if (imageFile || data.address || data.operatingHours) {
         payload = new FormData();
