@@ -380,9 +380,6 @@ export const ordersContent = {
     { value: 'pending', label: 'Pending', color: 'bg-yellow-100 text-yellow-700', icon: Clock },
     { value: 'confirmed', label: 'Confirmed', color: 'bg-blue-100 text-blue-700', icon: CheckCircle },
     { value: 'preparing', label: 'Preparing', color: 'bg-orange-100 text-orange-700', icon: ChefHat },
-    { value: 'ready', label: 'Ready', color: 'bg-purple-100 text-purple-700', icon: Package },
-    { value: 'picked_up', label: 'Picked Up', color: 'bg-indigo-100 text-indigo-700', icon: Bike },
-    { value: 'on_the_way', label: 'On the Way', color: 'bg-cyan-100 text-cyan-700', icon: Navigation },
     { value: 'delivered', label: 'Delivered', color: 'bg-green-100 text-green-700', icon: CheckCircle },
     { value: 'cancelled', label: 'Cancelled', color: 'bg-red-100 text-red-700', icon: XCircle },
     { value: 'failed', label: 'Failed', color: 'bg-gray-100 text-gray-700', icon: AlertCircle }

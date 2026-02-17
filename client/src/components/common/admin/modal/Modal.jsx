@@ -1174,9 +1174,6 @@ function PricingPaymentSection({ formData, formErrors, selectedFoodItems, total,
             <option value="pending">Pending</option>
             <option value="confirmed">Confirmed</option>
             <option value="preparing">Preparing</option>
-            <option value="ready">Ready for Pickup</option>
-            <option value="picked_up">Picked Up</option>
-            <option value="on_the_way">On the Way</option>
             <option value="delivered">Delivered</option>
             <option value="cancelled">Cancelled</option>
             <option value="failed">Failed</option>

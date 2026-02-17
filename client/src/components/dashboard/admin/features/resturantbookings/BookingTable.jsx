@@ -70,7 +70,7 @@ function BookingTable({ content, bookings, onBookingClick, onAction, styles }) {
                     {booking.restaurantName || 'N/A'}
                   </div>
                   <div className={styles.text.body.muted}>
-                    {booking.cuisine || 'N/A'}
+                    {booking.restaurant.cuisine || 'N/A'}
                   </div>
                 </td>
                 <td className={styles.layout.table_cell + ' ' + styles.text.body.regular}>

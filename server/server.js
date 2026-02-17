@@ -103,11 +103,10 @@ const startServer = async () => {
   try {
     await connectDB();
   
+    const HOST = '0.0.0.0';
     // Start server
-    const server = app.listen(PORT, () => {
+    const server = app.listen(PORT, HOST, () => {
       console.log(`Server running on port ${PORT} (${NODE_ENV})`);
-      console.log(`API: http://localhost:${PORT}/api`);
-      console.log(`Health: http://localhost:${PORT}/health`);
       
       // Only show OAuth status if configured
       if (GOOGLE_CLIENT_ID) {

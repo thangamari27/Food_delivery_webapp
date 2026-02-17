@@ -2,7 +2,7 @@ require('dotenv').config();
 
 module.exports = {
     FRONTEND_URL: process.env.FRONTEND_URL,
-    PORT: process.env.PORT,
+    PORT: process.env.X_ZOHO_CATALYST_LISTEN_PORT || process.env.PORT,
     NODE_ENV: process.env.NODE_ENV || 'development',
     
     MONGO_URI: process.env.MONGO_URI,
