@@ -432,9 +432,6 @@ export function useRestaurantManagement(content) {
         delete restaurantData.address.coordinates;
       }
 
-      // Log the data being sent (for debugging)
-      console.log('Submitting restaurant data:', restaurantData);
-
       if (modalMode === "create") {
         await restaurantService.create(restaurantData, imageFile);
         toast.success("Restaurant created successfully", { id: loadingToast });

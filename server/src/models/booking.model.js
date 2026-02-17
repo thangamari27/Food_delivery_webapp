@@ -185,7 +185,7 @@ const BookingSchema = new mongoose.Schema({
 
     cancellationReason: {
         type: String,
-        enum: ['Customer Request', 'Restaurant Closed', 'Overbooking', 'Emergency', 'Weather', 'No Show', 'Other'],
+        enum: ['Customer Request', 'Restaurant Closed', 'Overbooking', 'Emergency', 'Weather', 'No Show', 'Other','Admin Cancellation', 'Cancelled by admin'],
         trim: true
     },
 

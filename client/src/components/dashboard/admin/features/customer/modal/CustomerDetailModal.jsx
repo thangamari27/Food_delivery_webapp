@@ -81,7 +81,7 @@ function CustomerDetailModal({ content, customer, onClose, onEdit, styles }) {
               </div>
             </section>
 
-            <section>
+            {/* <section>
               <h3 className="text-sm font-semibold text-gray-900 mb-3 pb-2 border-b border-gray-400">
                 {content.viewModal.sections.activity}
               </h3>
@@ -99,7 +99,7 @@ function CustomerDetailModal({ content, customer, onClose, onEdit, styles }) {
                   <div className="text-sm font-medium">{formatDate(customer.lastOrder)}</div>
                 </div>
               </div>
-            </section>
+            </section> */}
           </div>
         </div>
         <div className={styles.modal.footer}>

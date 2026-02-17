@@ -67,6 +67,11 @@ export const specialMenuContent = {
   cuisine: [
     { id: 'all', name: 'All' },
     { id: 'indian', name: 'Indian' },
+    { id: 'thai', name: 'Thai' },
+    { id: 'italian', name: 'Italian' },
+    { id: 'chinese', name: 'Chinese' },
+    { id: 'pakistani', name: 'Pakistani' },
+    
   ],
   // specialMenuList: [
   //   { 

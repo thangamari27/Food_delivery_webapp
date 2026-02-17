@@ -12,6 +12,7 @@ function ForgotPasswordForm({
     formData,
     errors,
     loading,
+    setFormData,
     setLoading,
     handleChange,
     validate,
@@ -27,6 +28,7 @@ function ForgotPasswordForm({
       console.error("Reset password error:", error);
     } finally {
       setLoading(false);
+      setFormData({ email: "" })
     }
   };
 

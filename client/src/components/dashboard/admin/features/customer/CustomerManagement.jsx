@@ -72,7 +72,7 @@ function CustomerManagement() {
 
   // Show full page loader during initial load
   if (loading) {
-    return <AdminLoader loaderName="customers" />;
+    return <AdminLoader />;
   }
 
   // Show error state if fetch fails

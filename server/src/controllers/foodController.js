@@ -147,7 +147,7 @@ class FoodController {
                 
                 // Delete old image if it exists and is not a placeholder
                 if (oldFood.image?.publicId && 
-                    oldFood.image.publicId !== 'food_placeholder') {
+                    oldFood.image.publicId !== 'https://placehold.co/400x400/FF4F00/white?text=No+Image') {
                     try {
                         await cloudinaryService.deleteImage(oldFood.image.publicId);
                     } catch (err) {
@@ -470,7 +470,7 @@ class FoodController {
             const food = await foodService.getFoodById(fid);
             
             // Delete from Cloudinary if not placeholder
-            if (food.image?.publicId && food.image.publicId !== 'food_placeholder') {
+            if (food.image?.publicId && food.image.publicId !== 'https://placehold.co/400x400/FF4F00/white?text=No+Image') {
                 try {
                     await cloudinaryService.deleteImage(food.image.publicId);
                 } catch (err) {

@@ -42,7 +42,7 @@ export const useSubscriptionManagement = ({subscriptionContent, modalTypes }) =>
 
   const handleRefresh = useCallback(() => {
     setPricingData(subscriptionContent);
-    console.log('Data refreshed to initial state');
+    
   }, []);
 
   const handleView = useCallback((plan) => {
@@ -84,12 +84,10 @@ export const useSubscriptionManagement = ({subscriptionContent, modalTypes }) =>
       
       if (modalState.mode === modalTypes.CREATE) {
         periodPlans.push(formData);
-        console.log('Plan created:', formData);
       } else if (modalState.mode === modalTypes.EDIT) {
         const index = periodPlans.findIndex(p => p.id === formData.id);
         if (index !== -1) {
           periodPlans[index] = formData;
-          console.log('Plan updated:', formData);
         }
       }
       
@@ -116,7 +114,6 @@ export const useSubscriptionManagement = ({subscriptionContent, modalTypes }) =>
       if (action === 'delete') {
         const filteredPlans = periodPlans.filter(p => p.id !== plan.id);
         updatedPlans[targetPeriod] = filteredPlans;
-        console.log('Plan deleted:', plan.id);
       } else if (action === 'toggle') {
         const index = periodPlans.findIndex(p => p.id === plan.id);
         if (index !== -1) {
@@ -125,7 +122,6 @@ export const useSubscriptionManagement = ({subscriptionContent, modalTypes }) =>
             status: periodPlans[index].status === 'active' ? 'inactive' : 'active'
           };
           updatedPlans[targetPeriod] = periodPlans;
-          console.log('Plan status toggled:', plan.id, periodPlans[index].status);
         }
       }
       
@@ -151,7 +147,6 @@ export const useSubscriptionManagement = ({subscriptionContent, modalTypes }) =>
       }
       
       updatedComparison[planType] = planData;
-      console.log('Comparison updated:', planType, rowIndex, value);
       
       return { ...prev, comparison: updatedComparison };
     });

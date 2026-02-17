@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '@/context/AuthContext'
 import { useCart } from '@/context/CartContext'
 import { useLikes } from '@/context/LikesContext'
+import { useBooking } from '@/context/admin/Bookingcontext'
 import { toast } from 'react-hot-toast'
 import NavbarHeader from './navHeader/NavbarHeader'
 import MobileDrawer from './mobiledrawerUI/MobileDrawer'
@@ -14,7 +15,7 @@ import BookingsPanel from './panel/BookingsPanel'
 
 function Navbar({ content, styles, navbarState }) {
   const navigate = useNavigate()
-  const { user, logout: authLogout } = useAuthContext()
+  const { user, isAuthenticated, logout: authLogout } = useAuthContext()
   
   // Cart and Likes contexts
   const { 
@@ -34,6 +35,15 @@ function Navbar({ content, styles, navbarState }) {
     toggleLike
   } = useLikes()
 
+  // Booking Context
+  const {
+    bookings: userBookings,
+    loading: bookingsLoading,
+    fetchMyBookings,
+    cancelBooking,
+    clearBookings
+  } = useBooking()
+
   const {
     isScrolled,
     isLoggedIn,
@@ -51,17 +61,62 @@ function Navbar({ content, styles, navbarState }) {
     setIsBookingsOpen,
   } = navbarState
 
-  // State for user data (synced with auth context)
+  // Local state
   const [localUserData, setLocalUserData] = useState(null)
   const [orders, setOrders] = useState(content.initialOrders)
-  const [bookings, setBookings] = useState(content.initialBookings)
 
-  // Sync localUserData with auth context user
+  /**
+   * Load user bookings - Following OrderPanel pattern
+   */
+  const loadUserBookings = useCallback(async () => {
+    if (!user || !user._id) {
+      return;
+    }
+    
+    try {
+      
+      await fetchMyBookings({
+        limit: 50,
+        status: 'all',
+        upcoming: false
+      });
+    } catch (error) {
+      console.error('Failed to load bookings:', error);
+      toast.error('Could not load your bookings');
+    }
+  }, [user, fetchMyBookings]);
+
+  // Fixed: Single useEffect for panel open with proper dependency
+  useEffect(() => {
+    if (isBookingsOpen) {
+      // Small delay to ensure user is available
+      const timer = setTimeout(() => {
+        if (user && user._id) {
+          loadUserBookings();
+        }
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isBookingsOpen, user, loadUserBookings]);
+
+  /**
+   * Single useEffect for panel open - like OrderPanel
+   */
+  useEffect(() => {
+    if (isBookingsOpen && user) {
+      loadUserBookings();
+    }
+  }, [isBookingsOpen, user, loadUserBookings]);
+
+  /**
+   * Sync localUserData with auth context
+   */
   useEffect(() => {
     if (user) {
       const transformedUserData = {
-        name: user.fullname || user.username,
-        email: user.email,
+        name: user.fullname || user.username || 'User',
+        email: user.email || '',
         phone: user.phone || '',
         address: user.address || '',
         avatar: user.profile_image || null,
@@ -73,30 +128,48 @@ function Navbar({ content, styles, navbarState }) {
     }
   }, [user, content.profiledropDown]);
 
-  // Custom logout handler
+  /**
+   * Handle logout
+   */
   const handleLogout = async () => {
     try {
-      await authLogout()
-      toast.success('Logged out successfully')
+      // Clear bookings before logout
+      if (clearBookings) {
+        clearBookings();
+      }
+      
+      await authLogout();
+      toast.success('Logged out successfully');
       
       // Close all modals/panels
-      setIsProfileOpen(false)
-      setIsMobileOpen(false)
-      setIsProfileModalOpen(false)
-      setCartOpen(false)
-      setIsLikesOpen(false)
-      setIsOrdersOpen(false)
-      setIsBookingsOpen(false)
+      setIsProfileOpen(false);
+      setIsMobileOpen(false);
+      setIsProfileModalOpen(false);
+      setCartOpen(false);
+      setIsLikesOpen(false);
+      setIsOrdersOpen(false);
+      setIsBookingsOpen(false);
       
-      // Navigate to home
-      navigate('/', { replace: true })
+      navigate('/', { replace: true });
     } catch (error) {
-      console.error('Logout error:', error)
-      toast.error('Logout failed')
+      console.error('Logout error:', error);
+      toast.error('Logout failed');
     }
-  }
+  };
 
-  // Handler functions
+  /**
+   * Handle booking refresh
+   */
+  const handleRefreshBookings = useCallback(async () => {
+    if (!user) {
+      toast.error('Please log in to view bookings');
+      return;
+    }
+    await loadUserBookings();
+  }, [user, loadUserBookings]);
+
+  
+  // Other handler functions
   const handleUpdateProfile = (newData) => {
     setLocalUserData(newData);
   };
@@ -124,7 +197,6 @@ function Navbar({ content, styles, navbarState }) {
     const success = addToCart(item, 1, true);
     
     if (success) {
-      // Remove from likes after adding to cart
       removeLike(item._id || item.id);
       setIsLikesOpen(false);
       setCartOpen(true);
@@ -141,20 +213,10 @@ function Navbar({ content, styles, navbarState }) {
     }
   };
 
-  const handleCancelBooking = (id) => {
-    if (window.confirm('Are you sure you want to cancel this booking?')) {
-      setBookings(prev =>
-        prev.map(booking =>
-          booking.id === id ? { ...booking, status: 'cancelled', canCancel: false } : booking
-        )
-      );
-    }
-  };
-
-  // Determine nav links based on login status
+  // Determine nav links
   const navLinks = isLoggedIn
     ? content.headerNavLinks.loggedIn
-    : content.headerNavLinks.loggedOut
+    : content.headerNavLinks.loggedOut;
 
   return (
     <>
@@ -179,7 +241,7 @@ function Navbar({ content, styles, navbarState }) {
         handleLogout={handleLogout}
       />
 
-      {/* Mobile Drawer - Show different versions based on auth */}
+      {/* Mobile Drawer */}
       {isLoggedIn && localUserData ? (
         <MobileDrawer
           drawerNavLink={localUserData.profiledropDown}
@@ -210,7 +272,7 @@ function Navbar({ content, styles, navbarState }) {
         />
       )}
 
-      {/* Modals & Panels - Only show when logged in */}
+      {/* Modals & Panels */}
       {isLoggedIn && localUserData && (
         <>
           <ProfileModal
@@ -239,11 +301,10 @@ function Navbar({ content, styles, navbarState }) {
             styles={styles.slidePanel}
           />
 
+          {/* BOOKINGS PANEL */}
           <BookingsPanel
             isOpen={isBookingsOpen}
             onClose={() => setIsBookingsOpen(false)}
-            bookings={bookings}
-            onCancelBooking={handleCancelBooking}
             styles={styles.slidePanel}
           />
 
@@ -258,7 +319,7 @@ function Navbar({ content, styles, navbarState }) {
         </>
       )}
     </>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

@@ -22,10 +22,6 @@ const ACTIONS = {
   LOAD_CART: 'LOAD_CART'
 };
 
-/**
- * Transform food item to cart item format
- * CRITICAL: Preserve MongoDB _id for order creation
- */
 const transformToCartItem = (foodItem, quantity = 1) => {
   // Validate critical fields
   if (!foodItem._id) {

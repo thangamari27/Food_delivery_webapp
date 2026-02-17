@@ -110,7 +110,7 @@ function BookingsManagement() {
     <div className={styles.layout.page}>
       {/* Show inline loader for refresh */}
       {isRefreshing && (
-        <div className="fixed top-4 right-4 z-50">
+        <div className="">
           <div className="bg-white rounded-lg shadow-lg p-4 border border-gray-200">
             <InlineLoader 
               size="small" 

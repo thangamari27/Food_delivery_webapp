@@ -236,42 +236,85 @@ class BookingService {
         try {
             const { limit = 20, skip = 0, status, upcoming = false } = filters;
 
-            const query = {
-                'customer.userId': customerId,
-                isActive: true
+            // Validate customerId
+            if (!customerId) {
+            console.error('Customer ID is required but was:', customerId);
+            return {
+                data: [],
+                pagination: {
+                limit: parseInt(limit),
+                skip: parseInt(skip),
+                total: 0,
+                pages: 0
+                }
             };
+            }
 
-            if (status) {
+            // Build query
+            let query = { isActive: true };
+
+            // Handle customer ID - could be ObjectId or string
+            try {
+            // Check if it's a valid ObjectId
+            if (mongoose.Types.ObjectId.isValid(String(customerId))) {
+                query['customer.userId'] = new mongoose.Types.ObjectId(String(customerId));
+            } else {
+                // If not valid ObjectId, try as string (for user_id field)
+                query['customer.userId'] = String(customerId);
+            }
+            } catch (err) {
+            
+            query['customer.userId'] = String(customerId);
+            }
+
+            // Add status filter
+            if (status && status !== 'all') {
+            if (Array.isArray(status)) {
+                query.status = { $in: status };
+            } else {
                 query.status = status;
             }
-
-            if (upcoming) {
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                query.bookingDate = { $gte: today };
-                query.status = { $in: ['pending', 'confirmed'] };
             }
 
+            // Add upcoming filter
+            if (upcoming) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            query.bookingDate = { $gte: today };
+            if (!query.status) {
+                query.status = { $in: ['pending', 'confirmed'] };
+            }
+            }
             const bookings = await Booking.find(query)
-                .sort('-bookingDate -bookingTime')
-                .limit(parseInt(limit))
-                .skip(parseInt(skip))
-                .populate('restaurant.restaurantId', 'name cuisine address rating image')
-                .select('-__v');
+            .sort('-bookingDate -bookingTime')
+            .limit(parseInt(limit))
+            .skip(parseInt(skip))
+            .populate('restaurant.restaurantId', 'name cuisine address rating image')
+            .select('-__v');
 
             const total = await Booking.countDocuments(query);
 
             return {
-                data: bookings,
-                pagination: {
-                    limit: parseInt(limit),
-                    skip: parseInt(skip),
-                    total: total,
-                    pages: Math.ceil(total / limit)
-                }
+            data: bookings,
+            pagination: {
+                limit: parseInt(limit),
+                skip: parseInt(skip),
+                total: total,
+                pages: Math.ceil(total / limit)
+            }
             };
         } catch (error) {
-            throw new Error(`Error fetching customer bookings: ${error.message}`);
+            console.error('Error fetching customer bookings:', error);
+            // Return empty result instead of throwing
+            return {
+            data: [],
+            pagination: {
+                limit: parseInt(filters.limit || 20),
+                skip: parseInt(filters.skip || 0),
+                total: 0,
+                pages: 0
+            }
+            };
         }
     }
 

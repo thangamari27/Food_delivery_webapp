@@ -8,85 +8,55 @@
  * @param {Object} backendBooking - Booking from backend
  * @returns {Object} Transformed booking
  */
-export const transformBookingFromBackend = (backendBooking) => {
-  if (!backendBooking) return null;
-
-  // Handle nested structure
-  const restaurant = backendBooking.restaurant || {};
-  const customer = backendBooking.customer || {};
-  const deposit = backendBooking.deposit || {};
+export const transformBookingFromBackend = (booking) => {
+  if (!booking) return null;
 
   return {
-    // Booking identifiers
-    id: backendBooking.bookingId || backendBooking.id || backendBooking._id,
-    _id: backendBooking._id,
-    bookingId: backendBooking.bookingId,
-    
-    // Restaurant information (flattened from nested)
-    restaurantId: restaurant.restaurantId || '',
-    restaurantName: restaurant.restaurantName || '',
-    cuisine: restaurant.cuisine || '',
-    restaurantPhone: restaurant.phone || '',
-    restaurantAddress: restaurant.address || '',
-    
-    // Customer information (flattened from nested)
-    customerName: customer.name || '',
-    customerEmail: customer.email || '',
-    customerPhone: customer.phone || '',
-    customerId: customer.userId || customer.customerId,
-    
-    // Booking details
-    date: backendBooking.bookingDate,
-    time: backendBooking.bookingTime,
-    guests: backendBooking.numberOfGuests,
-    tableNumber: backendBooking.tableNumber,
-    tableType: backendBooking.tableType || 'Standard',
-    specialRequests: backendBooking.specialRequests || '',
-    dietaryRestrictions: backendBooking.dietaryRestrictions || [],
-    occasion: backendBooking.occasion || 'Regular',
-    
-    // Status
-    status: backendBooking.status || 'pending',
-    canCancel: backendBooking.canCancel !== undefined ? backendBooking.canCancel : true,
-    isCancelled: backendBooking.isCancelled || false,
-    cancelledAt: backendBooking.cancelledAt,
-    cancellationReason: backendBooking.cancellationReason,
-    cancellationNotes: backendBooking.cancellationNotes,
-    
-    // Admin fields
-    adminNotes: backendBooking.adminNotes || '',
-    internalNotes: backendBooking.internalNotes || '',
-    confirmedAt: backendBooking.confirmedAt,
-    confirmedBy: backendBooking.confirmedBy,
-    
-    // Deposit
-    deposit: {
-      required: deposit.required || false,
-      amount: deposit.amount || 0,
-      paid: deposit.paid || false,
-      refunded: deposit.refunded || false
-    },
-    
-    // Notifications
-    reminderSent: backendBooking.reminderSent || false,
-    confirmationEmailSent: backendBooking.confirmationEmailSent || false,
-    
-    // Metadata
-    source: backendBooking.source || 'Web',
-    createdAt: backendBooking.createdAt,
-    updatedAt: backendBooking.updatedAt,
-    
-    // Virtual fields from backend
-    cancellationDeadline: backendBooking.cancellationDeadline,
-    hoursUntilBooking: backendBooking.hoursUntilBooking,
-    isUpcoming: backendBooking.isUpcoming,
-    isPast: backendBooking.isPast,
-    
-    // Rating and visit info
-    rating: backendBooking.rating,
-    arrivedAt: backendBooking.arrivedAt,
-    departedAt: backendBooking.departedAt,
-    actualGuests: backendBooking.actualGuests,
+    // IDs
+    _id: booking._id,
+    id: booking._id,
+    bookingId: booking.bookingId,
+
+    // Restaurant Info
+    restaurantId: booking.restaurant?.restaurantId || booking.restaurantId,
+    restaurantName: booking.restaurant?.restaurantName || booking.restaurantName,
+    restaurant: booking.restaurant,
+
+    // Customer Info
+    customerId: booking.customer?.userId || booking.customerId,
+    customerName: booking.customer?.name || booking.customerName,
+    customerEmail: booking.customer?.email || booking.customerEmail,
+    customerPhone: booking.customer?.phone || booking.customerPhone,
+    customer: booking.customer,
+
+    // Booking Details
+    date: booking.bookingDate,
+    bookingDate: booking.bookingDate,
+    time: booking.bookingTime,
+    bookingTime: booking.bookingTime,
+    guests: booking.numberOfGuests,
+    numberOfGuests: booking.numberOfGuests,
+    tableType: booking.tableType,
+    tableNumber: booking.tableNumber,
+    status: booking.status,
+    occasion: booking.occasion,
+    specialRequests: booking.specialRequests,
+    dietaryRestrictions: booking.dietaryRestrictions || [],
+
+    // Flags
+    canCancel: booking.canCancel,
+    isCancelled: booking.isCancelled,
+    isActive: booking.isActive,
+
+    // Timestamps
+    createdAt: booking.createdAt,
+    updatedAt: booking.updatedAt,
+
+    // Source
+    source: booking.source,
+
+    // Keep original
+    _original: booking
   };
 };
 

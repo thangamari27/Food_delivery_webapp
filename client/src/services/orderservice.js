@@ -9,8 +9,9 @@ class OrderService {
 
   /**
    * Transform frontend cart/form data to backend order format
+   * FIXED: Properly handle user ID from authenticated user object
    */
-  transformToBackendFormat(cartItems, orderFormData, user, restaurantId) {
+  transformToBackendFormat(cartItems, orderFormData, authenticatedUser, restaurantId) {
     // Validate inputs
     if (!cartItems || cartItems.length === 0) {
       throw new Error('Cart items are required');
@@ -48,7 +49,7 @@ class OrderService {
         price: price,
         quantity: quantity,
         category: item.category || 'Food',
-        subtotal: subtotal //  REQUIRED by backend
+        subtotal: subtotal
       };
     });
 
@@ -62,11 +63,12 @@ class OrderService {
 
     return {
       // Customer Information
+      // FIXED: Properly extract user ID from authenticated user object
       customer: {
-        userId: user?._id || null,
-        name: orderFormData.name || user?.fullname || user?.username || '',
-        phone: orderFormData.phone || user?.phone || '',
-        email: orderFormData.email || user?.email || ''
+        userId: authenticatedUser?.id || authenticatedUser?._id || null,
+        name: orderFormData.name || authenticatedUser?.fullname || authenticatedUser?.username || '',
+        phone: orderFormData.phone || authenticatedUser?.phone || '',
+        email: orderFormData.email || authenticatedUser?.email || ''
       },
 
       // Delivery Information
@@ -91,7 +93,7 @@ class OrderService {
       // Order Items with subtotals
       items: transformedItems,
 
-      // Pricing -  REQUIRED by backend
+      // Pricing - REQUIRED by backend
       pricing: {
         subtotal: parseFloat(itemsSubtotal.toFixed(2)),
         tax: parseFloat(taxAmount.toFixed(2)),
@@ -131,6 +133,7 @@ class OrderService {
       orderNumber: orderData.orderId,
       
       // Customer
+      userId: orderData.customer?.userId,
       customerName: orderData.customer?.name || '',
       phone: orderData.customer?.phone || '',
       email: orderData.customer?.email || '',
@@ -182,8 +185,9 @@ class OrderService {
   /**
    * Create new order (User & Admin)
    * POST /api/orders
+   * FIXED: Pass authenticated user for proper userId extraction
    */
-  async createOrder(cartItems, orderFormData, user, restaurantId = null) {
+  async createOrder(cartItems, orderFormData, authenticatedUser, restaurantId = null) {
     try {
       // Validate cart items have MongoDB _id
       const missingIds = cartItems.filter(item => !item._id);
@@ -192,13 +196,19 @@ class OrderService {
         throw new Error('Some cart items are missing required database IDs. Please refresh and try again.');
       }
 
-      // Transform data
+      // FIXED: Pass authenticated user for proper userId extraction
       const backendData = this.transformToBackendFormat(
         cartItems, 
         orderFormData, 
-        user, 
+        authenticatedUser, // Now properly passed
         restaurantId
       );
+
+      // Validate userId was set
+      if (!backendData.customer.userId) {
+        console.warn('Order created without userId. User:', authenticatedUser);
+        throw new Error('User authentication required. Please login and try again.');
+      }
 
       const response = await api.post('/api/orders', backendData);
       
@@ -294,26 +304,47 @@ class OrderService {
 
   async getMyOrders(params = {}) {
     try {
-      const queryParams = new URLSearchParams();
-      
-      if (params.limit) queryParams.append('limit', params.limit);
-      if (params.skip) queryParams.append('skip', params.skip);
-      if (params.orderStatus) queryParams.append('orderStatus', params.orderStatus);
+        const queryParams = new URLSearchParams();
+        
+        if (params.limit) queryParams.append('limit', params.limit);
+        if (params.skip) queryParams.append('skip', params.skip);
+        if (params.orderStatus && params.orderStatus !== 'all') {
+            queryParams.append('orderStatus', params.orderStatus);
+        }
 
-      const response = await api.get(`/api/orders/my-orders?${queryParams.toString()}`);
-      
-      const orders = response.data?.data?.data || response.data?.data || response.data || [];
-      const pagination = response.data?.data?.pagination || response.data?.pagination;
-      
-      return {
-        success: true,
-        data: Array.isArray(orders) ? orders.map(this.transformToFrontendFormat) : [],
-        pagination
-      };
+        const response = await api.get(`/api/orders/my-orders?${queryParams.toString()}`);
+        
+        // Handle different response structures
+        let orders = [];
+        let pagination = {};
+        
+        if (response.data?.data?.data) {
+            // Structure: { success: true, data: { data: [], pagination: {} } }
+            orders = response.data.data.data || [];
+            pagination = response.data.data.pagination || {};
+        } else if (response.data?.data) {
+            // Structure: { success: true, data: [] }
+            orders = Array.isArray(response.data.data) ? response.data.data : [];
+        } else if (Array.isArray(response.data)) {
+            // Structure: []
+            orders = response.data;
+        }
+        
+        return {
+            success: true,
+            data: Array.isArray(orders) ? orders.map(this.transformToFrontendFormat) : [],
+            pagination: pagination || {
+                total: orders.length,
+                limit: parseInt(params.limit) || 20,
+                skip: parseInt(params.skip) || 0,
+                pages: Math.ceil(orders.length / (parseInt(params.limit) || 20))
+            }
+        };
     } catch (error) {
-      throw this.handleError(error);
+        console.error('Error fetching my orders:', error);
+        throw this.handleError(error);
     }
-  }
+}
 
   async getByRestaurant(restaurantId, params = {}) {
     try {

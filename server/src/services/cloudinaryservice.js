@@ -52,7 +52,7 @@ class CloudinaryService {
    */
   async deleteImage(publicId) {
     try {
-      if (!publicId || publicId === 'restaurant_placeholder' || publicId === 'food_placeholder') {
+      if (!publicId || publicId === 'restaurant_placeholder' || publicId === 'https://placehold.co/400x400/FF4F00/white?text=No+Image') {
         return { success: true, message: 'Placeholder image, no deletion needed' };
       }
 
@@ -76,7 +76,7 @@ class CloudinaryService {
   async deleteMultipleImages(publicIds) {
     try {
       const validIds = publicIds.filter(
-        id => id && id !== 'restaurant_placeholder' && id !== 'food_placeholder'
+        id => id && id !== 'restaurant_placeholder' && id !== 'https://placehold.co/400x400/FF4F00/white?text=No+Image'
       );
 
       if (validIds.length === 0) {
@@ -108,7 +108,7 @@ class CloudinaryService {
   async updateImage(oldPublicId, newFilePath, folder = 'uploads') {
     try {
       // Delete old image if exists
-      if (oldPublicId && oldPublicId !== 'restaurant_placeholder' && oldPublicId !== 'food_placeholder') {
+      if (oldPublicId && oldPublicId !== 'restaurant_placeholder' && oldPublicId !== 'https://placehold.co/400x400/FF4F00/white?text=No+Image') {
         await this.deleteImage(oldPublicId);
       }
 

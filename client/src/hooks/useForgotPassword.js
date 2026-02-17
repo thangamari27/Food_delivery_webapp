@@ -7,7 +7,6 @@ export function useForgotPassword() {
     // Changed parameter from formData to email
     try {
       const response = await authService.forgotPassword(email);
-      console.log(response);
       
       // Backend returns: { success, data, message }
       const message = response.data?.message || 'Password reset email sent!';

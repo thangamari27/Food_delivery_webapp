@@ -42,7 +42,6 @@ function VerifyEmailPage() {
                 }
               }, 1500);
             } catch (err) {
-              console.log('Failed to update user, redirecting to login');
               setTimeout(() => {
                 navigate('/login', { replace: true });
               }, 2000);

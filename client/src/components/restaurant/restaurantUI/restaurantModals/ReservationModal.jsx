@@ -3,6 +3,7 @@ import ModalBase from "./ModalBase";
 import ReservationForm from "./ReservationForm";
 import { CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import { transformToBackendFormat } from '../../../../utils/handler/bookingHandler';
+import { useAuthContext } from '../../../../context/AuthContext';
 
 const ReservationModal = ({ 
   isOpen, 
@@ -16,6 +17,7 @@ const ReservationModal = ({
   bookingLoading
 }) => {
   const [localError, setLocalError] = useState(null);
+  const { user } = useAuthContext(); // FIXED: Get authenticated user
 
   // Reset local error when modal opens
   useEffect(() => {
@@ -28,8 +30,13 @@ const ReservationModal = ({
     try {
       setLocalError(null);
       
-      // Transform data to backend format
-      const bookingData = transformToBackendFormat(validatedFormData, restaurant);
+      // FIXED: Pass authenticated user to backend transformer
+      const bookingData = transformToBackendFormat(validatedFormData, restaurant, user);
+      
+      // Validate userId was set
+      if (!bookingData.customer.userId) {
+        throw new Error('User authentication required. Please login and try again.');
+      }
       
       // Submit through parent handler
       await onSubmitBooking(bookingData);

@@ -1,7 +1,18 @@
 /**
  * Admin Booking Handlers
- * Updated to work with API integration
+ * Fixed to use correct bookingId field for backend API calls
  */
+
+/**
+ * Extract booking ID from booking object
+ * Backend expects the bookingId field (UUID format like BK123...)
+ */
+const getBookingId = (booking) => {
+  if (!booking) return null;
+  // Backend routes expect bookingId (UUID format), not MongoDB _id
+  return booking.bookingId || booking.id || booking._id;
+};
+
 export const createBookingHandlers = (
   loadBookings,
   setFilters,
@@ -48,7 +59,18 @@ export const createBookingHandlers = (
     setTimeout(() => setSelectedBooking(null), 300);
   };
 
-  const handleAction = (bookingId, action) => {
+  const handleAction = (bookingOrId, action) => {
+    // Extract the correct booking ID
+    const bookingId = typeof bookingOrId === 'string' 
+      ? bookingOrId 
+      : getBookingId(bookingOrId);
+    
+    if (!bookingId) {
+      console.error('Invalid booking ID:', bookingOrId);
+      alert('Invalid booking ID');
+      return;
+    }
+    
     setConfirmModal({ isOpen: true, bookingId, action });
   };
 
@@ -56,31 +78,34 @@ export const createBookingHandlers = (
     const { bookingId, action } = confirmModalState;
     
     try {
+      let result;
+      
       switch (action) {
         case 'confirm':
-          await confirmBooking(bookingId);
+          result = await confirmBooking(bookingId);
           break;
         case 'complete':
-          await completeBooking(bookingId);
+          result = await completeBooking(bookingId);
           break;
         case 'cancel':
-          await cancelBooking(bookingId, 'Admin Cancellation', 'Cancelled by admin');
+          result = await cancelBooking(bookingId, 'Admin Cancellation', 'Cancelled by admin');
           break;
         case 'no_show':
-          await markAsNoShow(bookingId);
+          result = await markAsNoShow(bookingId);
           break;
         default:
+          console.error('Unknown action:', action);
           break;
       }
 
       // Close modal
       setConfirmModal({ isOpen: false, bookingId: null, action: null });
       
-      // Refresh the booking if drawer is open
-      if (setSelectedBooking) {
-        // The context will automatically update the booking in the list
-        // We just need to keep the drawer open with updated data
+      // Check if operation was successful
+      if (result && !result.success) {
+        console.error(`Failed to ${action} booking:`, result.error);
       }
+      
     } catch (error) {
       console.error('Failed to perform action:', error);
       alert(`Failed to ${action} booking: ${error.message}`);
@@ -97,7 +122,7 @@ export const createBookingHandlers = (
       // Create CSV content
       const headers = ['Booking ID', 'Restaurant', 'Customer', 'Date', 'Time', 'Guests', 'Status'];
       const rows = filteredBookings.map(booking => [
-        booking.id,
+        getBookingId(booking),
         booking.restaurantName,
         booking.customerName,
         new Date(booking.date).toLocaleDateString(),
@@ -143,13 +168,25 @@ export const createBookingHandlers = (
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSaveNote = async (adminNote, bookingId) => {
+  const handleSaveNote = async (adminNote, bookingOrId) => {
     try {
-      await updateAdminNotes(bookingId, adminNote);
-      alert('Admin note saved successfully');
+      // Extract the correct booking ID
+      const bookingId = typeof bookingOrId === 'string' 
+        ? bookingOrId 
+        : getBookingId(bookingOrId);
+      
+      if (!bookingId) {
+        throw new Error('Invalid booking ID');
+      }
+      
+      const result = await updateAdminNotes(bookingId, adminNote);
+      
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to save note');
+      }
     } catch (error) {
       console.error('Failed to save note:', error);
-      alert('Failed to save admin note');
+      alert(`Failed to save admin note: ${error.message}`);
     }
   };
 

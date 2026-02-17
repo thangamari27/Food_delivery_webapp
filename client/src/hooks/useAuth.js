@@ -8,7 +8,7 @@ export const useAuth = (initialValues = {}) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
+    
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -50,6 +50,7 @@ export const useAuth = (initialValues = {}) => {
     formData,
     errors,
     loading,
+    setFormData,
     setLoading,
     handleChange,
     validate,

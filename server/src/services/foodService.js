@@ -19,7 +19,7 @@ class FoodService {
             // Set default image if not provided
             if (!data.image) {
                 data.image = {
-                    publicId: 'food_placeholder',
+                    publicId: 'https://placehold.co/400x400/FF4F00/white?text=No+Image',
                     format: 'webp',
                     url: null
                 };

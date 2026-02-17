@@ -90,7 +90,7 @@ const FoodSchema = new mongoose.Schema({
     image: {
         publicId: {
             type: String,
-            default: 'food_placeholder'
+            default: 'https://placehold.co/400x400/FF4F00/white?text=No+Image'
         },
         format: {
             type: String,

@@ -30,7 +30,7 @@ function DeleteFoodModal({ content, isOpen, onClose, food, onDelete, styles }) {
           {content.messages.deleteConfirm} "{food.name}"? {content.modal.delete.message}
         </p>
         <div className="flex items-center gap-4 mb-4 p-4 bg-gray-50 rounded-lg">
-          <img src={food.image} alt={food.name} className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg" />
+          {/* <img src={food.image} alt={food.name} className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg" /> */}
           <div className="text-left">
             <p className="font-medium text-gray-900">{food.name}</p>
             <p className="text-sm text-gray-600">{food.category}</p>

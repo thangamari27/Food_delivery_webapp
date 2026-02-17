@@ -107,20 +107,61 @@ class BookingService {
    * @param {Object} filters - Filter parameters
    * @returns {Promise}
    */
-  async getMyBookings(filters = {}) {
+    async getMyBookings(filters = {}) {
     try {
       const params = new URLSearchParams();
       
+      // Ensure we don't send undefined values
       Object.keys(filters).forEach(key => {
-        if (filters[key] !== null && filters[key] !== undefined && filters[key] !== '') {
-          params.append(key, filters[key]);
+        const value = filters[key];
+        if (value !== null && value !== undefined && value !== '') {
+          if (Array.isArray(value)) {
+            value.forEach(v => {
+              if (v !== null && v !== undefined && v !== '') {
+                params.append(key, v);
+              }
+            });
+          } else {
+            params.append(key, value);
+          }
         }
       });
 
       const response = await api.get(`/api/bookings/my-bookings?${params.toString()}`);
-      return response.data;
+      
+      // Handle different response structures
+      let bookingsData = [];
+      let paginationData = {};
+      
+      // Check response structure
+      if (response.data?.data?.data) {
+        // Structure: { success: true, data: { data: [], pagination: {} } }
+        bookingsData = response.data.data.data || [];
+        paginationData = response.data.data.pagination || {};
+      } else if (response.data?.data) {
+        // Structure: { success: true, data: [] }
+        bookingsData = Array.isArray(response.data.data) ? response.data.data : [];
+      } else if (Array.isArray(response.data)) {
+        // Structure: []
+        bookingsData = response.data;
+      } else if (response.data?.bookings) {
+        bookingsData = response.data.bookings;
+      }
+      
+      return {
+        success: true,
+        data: bookingsData,
+        pagination: paginationData
+      };
     } catch (error) {
-      throw error;
+      console.error('BookingService.getMyBookings error:', error);
+      // Return empty array instead of throwing to prevent UI crash
+      return {
+        success: false,
+        data: [],
+        pagination: {},
+        error: error.message
+      };
     }
   }
 

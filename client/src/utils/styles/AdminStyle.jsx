@@ -536,7 +536,7 @@ export const bookingStyles = {
     content_container: 'px-4 sm:px-6 pb-6',
     
     // Drawer styles
-    drawer_overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm bg-opacity-50 z-40 xl:hidden',
+    drawer_overlay: 'fixed inset-0 bg-black/40 backdrop-blur-sm bg-opacity-50 z-50',
     drawer_container: 'fixed top-0 right-0 h-full bg-white shadow-xl z-50 overflow-y-auto w-full sm:w-96 xl:w-1/3 transform transition-transform duration-300',
     drawer_header: 'sticky top-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-4 flex items-center justify-between z-10',
     drawer_content: 'p-4 sm:p-6 space-y-6',
@@ -629,7 +629,7 @@ export const customerStyles = {
   },
   header: {
     container: 'mx-6 border-1 bg-white border-b border-gray-200 shadow-sm',
-    content: 'max-w-7xl px-4 sm:px-6 py-6',
+    content: 'max-w-7xl px-4 sm:px-6 py-8',
     top: 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3',
     titleGroup: 'flex-1',
     title: 'text-2xl font-semibold text-gray-900',

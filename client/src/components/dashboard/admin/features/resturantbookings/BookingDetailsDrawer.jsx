@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { AlertCircle, X,  } from 'lucide-react';
+import { AlertCircle, X } from 'lucide-react';
 import RestaurantInfoPanel from './RestaurantInfoPanel';
 import BookingActions from './BookingActions';
+
+/**
+ * Extract booking ID from booking object
+ * Backend expects bookingId field (UUID format)
+ */
+const getBookingId = (booking) => {
+  if (!booking) return null;
+  return booking.bookingId || booking.id || booking._id;
+};
 
 function BookingDetailsDrawer({ content, booking, restaurant, isOpen, onClose, onAction, onSaveNote, styles }) {
   const [adminNote, setAdminNote] = useState('');
@@ -13,10 +22,13 @@ function BookingDetailsDrawer({ content, booking, restaurant, isOpen, onClose, o
   }, [booking]);
 
   const handleSaveNote = () => {
-    onSaveNote(adminNote);
+    const bookingId = getBookingId(booking);
+    onSaveNote(adminNote, bookingId);
   };
 
   if (!isOpen || !booking) return null;
+
+  const bookingId = getBookingId(booking);
 
   return (
     <React.Fragment>
@@ -32,7 +44,7 @@ function BookingDetailsDrawer({ content, booking, restaurant, isOpen, onClose, o
               {content.drawer.title}
             </h2>
             <p className={styles.text.body.small_muted}>
-              ID: {booking.id}
+              ID: {bookingId}
             </p>
           </div>
           <button onClick={onClose} className={styles.buttons.icon}>
@@ -225,7 +237,13 @@ function BookingDetailsDrawer({ content, booking, restaurant, isOpen, onClose, o
             <h3 className={styles.text.heading.h3 + ' mb-3'}>
               {content.drawer.actions}
             </h3>
-            <BookingActions content={content} booking={booking} onAction={onAction} onViewDetails={() => {}} styles={styles}  />
+            <BookingActions 
+              content={content} 
+              booking={booking} 
+              onAction={onAction} 
+              onViewDetails={() => {}} 
+              styles={styles}  
+            />
           </section>
         </div>
       </div>
@@ -233,4 +251,4 @@ function BookingDetailsDrawer({ content, booking, restaurant, isOpen, onClose, o
   )
 }
 
-export default BookingDetailsDrawer
+export default BookingDetailsDrawer;

@@ -1,10 +1,22 @@
 import { Eye, Check, CheckCircle, Ban } from "lucide-react";
 
+/**
+ * Extract booking ID from booking object
+ * Backend expects bookingId field (UUID format)
+ */
+const getBookingId = (booking) => {
+  if (!booking) return null;
+  return booking.bookingId || booking.id || booking._id;
+};
+
 function BookingActions({ content, booking, onAction, onViewDetails, compact = false, styles }) {
   const canConfirm = booking.status === 'pending';
   const canComplete = booking.status === 'confirmed';
   const canCancel = (booking.status === 'pending' || booking.status === 'confirmed') && booking.canCancel;
   const isReadOnly = booking.status === 'completed' || booking.status === 'cancelled';
+
+  // Get the correct booking ID for API calls
+  const bookingId = getBookingId(booking);
 
   if (compact) {
     return (
@@ -23,7 +35,7 @@ function BookingActions({ content, booking, onAction, onViewDetails, compact = f
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onAction(booking.id, 'confirm');
+              onAction(bookingId, 'confirm');
             }}
             className={`${styles.icon_colors.orange} p-1`}
             title={content.tooltips.confirm}
@@ -35,7 +47,7 @@ function BookingActions({ content, booking, onAction, onViewDetails, compact = f
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onAction(booking.id, 'complete');
+              onAction(bookingId, 'complete');
             }}
             className={styles.icon_colors.check_circle + ' p-1'}
             title={content.tooltips.complete}
@@ -47,7 +59,7 @@ function BookingActions({ content, booking, onAction, onViewDetails, compact = f
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onAction(booking.id, 'cancel');
+              onAction(bookingId, 'cancel');
             }}
             className={styles.icon_colors.x_circle + ' p-1'}
             title={content.tooltips.cancel}
@@ -58,11 +70,12 @@ function BookingActions({ content, booking, onAction, onViewDetails, compact = f
       </div>
     );
   }
+  
   return (
     <div className="flex flex-col gap-2">
       {canConfirm && (
         <button
-          onClick={() => onAction(booking.id, 'confirm')}
+          onClick={() => onAction(bookingId, 'confirm')}
           className={styles.buttons.success}
         >
           <Check className="w-4 h-4" />
@@ -71,7 +84,7 @@ function BookingActions({ content, booking, onAction, onViewDetails, compact = f
       )}
       {canComplete && (
         <button
-          onClick={() => onAction(booking.id, 'complete')}
+          onClick={() => onAction(bookingId, 'complete')}
           className={styles.buttons.success}
         >
           <CheckCircle className="w-4 h-4" />
@@ -80,7 +93,7 @@ function BookingActions({ content, booking, onAction, onViewDetails, compact = f
       )}
       {canCancel && (
         <button
-          onClick={() => onAction(booking.id, 'cancel')}
+          onClick={() => onAction(bookingId, 'cancel')}
           className={styles.buttons.danger}
         >
           <Ban className="w-4 h-4" />
@@ -96,4 +109,4 @@ function BookingActions({ content, booking, onAction, onViewDetails, compact = f
   )
 }
 
-export default BookingActions
+export default BookingActions;

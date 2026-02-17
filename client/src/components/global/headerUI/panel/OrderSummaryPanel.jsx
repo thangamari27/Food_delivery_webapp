@@ -615,10 +615,6 @@ function OrderSummaryPanel({
         </button>
         {/* {!order.isCancelled && order.orderStatus !== 'delivered' && (
           <button
-            onClick={() => {
-              // You could implement order tracking or refresh here
-              console.log('Refresh order status:', order.orderId);
-            }}
             className="px-4 py-2 text-sm font-medium text-orange-600 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100"
           >
             <RefreshCw className="inline w-4 h-4 mr-1" />

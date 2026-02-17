@@ -128,30 +128,60 @@ export const validateBookingForm = (data) => {
 };
 
 /**
- * Partial validation for individual fields (for real-time validation)
+ * FIXED: Partial validation for individual fields (for real-time validation)
+ * Added proper null checks and error handling
  */
 export const validateBookingField = (fieldPath, value, formData = {}) => {
   try {
     const fullData = { ...bookingFormDefaults, ...formData };
     
-    // Set the field value in the full data
+    // Handle nested field paths (e.g., 'customer.name')
     const pathParts = fieldPath.split('.');
     let target = fullData;
+    
+    // Navigate to the parent object
     for (let i = 0; i < pathParts.length - 1; i++) {
-      target = target[pathParts[i]];
+      const part = pathParts[i];
+      if (!target[part]) {
+        target[part] = {}; // Create nested object if it doesn't exist
+      }
+      target = target[part];
     }
-    target[pathParts[pathParts.length - 1]] = value;
+    
+    // Set the field value
+    const lastPart = pathParts[pathParts.length - 1];
+    target[lastPart] = value;
 
     // Validate the full schema
     bookingFormSchema.parse(fullData);
     return { valid: true, error: null };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const fieldError = error.errors.find(err => 
-        err.path.join('.') === fieldPath
-      );
+      // FIXED: Safely find the error for this specific field
+      const fieldError = error.errors.find(err => {
+        // Check if err.path exists and is an array
+        if (!err || !err.path || !Array.isArray(err.path)) {
+          return false;
+        }
+        // Compare the paths
+        return err.path.join('.') === fieldPath;
+      });
+      
       if (fieldError) {
         return { valid: false, error: fieldError.message };
+      }
+      
+      // If no specific field error, check if this is a general error
+      // that might affect this field (like a refinement error)
+      const generalError = error.errors.find(err => {
+        if (!err || !err.path) return false;
+        // Check if this error is related to the field path
+        return err.path.length === 0 || 
+               (err.path[0] === pathParts[0] && !err.path[1]);
+      });
+      
+      if (generalError) {
+        return { valid: false, error: generalError.message };
       }
     }
     return { valid: true, error: null };
@@ -160,8 +190,9 @@ export const validateBookingField = (fieldPath, value, formData = {}) => {
 
 /**
  * Transform form data to backend API format
+ * FIXED: Properly include userId from authenticated user
  */
-export const transformToBackendFormat = (formData, restaurantData) => {
+export const transformToBackendFormat = (formData, restaurantData, authenticatedUser = null) => {
   return {
     restaurant: {
       restaurantId: restaurantData.id || restaurantData._id,
@@ -174,7 +205,13 @@ export const transformToBackendFormat = (formData, restaurantData) => {
         ? restaurantData.address 
         : restaurantData.address?.street || ''
     },
-    customer: formData.customer,
+    // FIXED: Include userId in customer object
+    customer: {
+      userId: authenticatedUser?.id || authenticatedUser?._id || null,
+      name: formData.customer.name,
+      email: formData.customer.email,
+      phone: formData.customer.phone
+    },
     bookingDate: formData.bookingDate,
     bookingTime: formData.bookingTime,
     numberOfGuests: formData.numberOfGuests,

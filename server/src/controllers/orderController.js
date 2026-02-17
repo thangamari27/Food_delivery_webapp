@@ -6,6 +6,7 @@ class OrderController {
     /**
      * Create a new order
      * POST /api/orders
+     * FIXED: Ensure userId is set from authenticated user
      */
     async create(req, res) {
         try {
@@ -71,8 +72,15 @@ class OrderController {
             if (specialRequests) orderData.specialRequests = specialRequests;
             if (source) orderData.source = source;
 
-            // Add user ID if authenticated
+            // FIXED: Ensure userId is set from authenticated user
             const userId = req.user ? req.user._id : null;
+            
+            // SAFETY CHECK: If userId not in customer object but user is authenticated, set it
+            if (userId && !orderData.customer.userId) {
+                orderData.customer.userId = userId;
+            } else if (!orderData.customer.userId) {
+                console.warn('Order created without userId. User authenticated:', !!req.user);
+            }
 
             const order = await orderService.createOrder(orderData, userId);
 
@@ -84,6 +92,7 @@ class OrderController {
                 })
             );
         } catch (error) {
+            console.error('Order creation error:', error);
             return res.status(error.statusCode || 500).json({
                 success: false,
                 message: error.message
@@ -144,6 +153,16 @@ class OrderController {
 
             const order = await orderService.getOrderById(orderId, populate);
 
+            // SECURITY: Check if user owns this order (for non-admin users)
+            if (req.user && req.user.role !== 'admin' && req.user.role !== 'restaurant') {
+                if (order.customer.userId && order.customer.userId.toString() !== req.user._id.toString()) {
+                    return res.status(403).json({
+                        success: false,
+                        message: 'You do not have permission to view this order'
+                    });
+                }
+            }
+
             return res.status(200).json(
                 new ApiResponse(200, {
                     success: true,
@@ -167,6 +186,17 @@ class OrderController {
     async getByCustomer(req, res) {
         try {
             const { customerId } = req.params;
+            
+            // SECURITY: Check if user is requesting their own orders
+            if (req.user && req.user.role !== 'admin' && req.user.role !== 'restaurant') {
+                if (customerId !== req.user._id.toString()) {
+                    return res.status(403).json({
+                        success: false,
+                        message: 'You can only view your own orders'
+                    });
+                }
+            }
+            
             const filters = {
                 limit: req.query.limit || 20,
                 skip: req.query.skip || 0,
@@ -617,20 +647,41 @@ class OrderController {
      */
     async getMyOrders(req, res) {
         try {
+            // More robust user authentication check
             if (!req.user) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Authentication required'
+                return res.status(401).json({ 
+                    success: false, 
+                    message: 'Authentication required' 
+                });
+            }
+
+            // Extract user ID - handle different possible formats
+            const userId = req.user._id || req.user.id || req.user.userId;
+            
+            if (!userId) {
+                return res.status(401).json({ 
+                    success: false, 
+                    message: 'User ID not found in authentication token' 
+                });
+            }
+
+            // Validate ObjectId format
+            const mongoose = require('mongoose');
+            if (!mongoose.Types.ObjectId.isValid(String(userId))) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: 'Invalid user ID format in token' 
                 });
             }
 
             const filters = {
-                limit: req.query.limit || 20,
-                skip: req.query.skip || 0,
-                orderStatus: req.query.orderStatus
+                limit: parseInt(req.query.limit) || 20,
+                skip: parseInt(req.query.skip) || 0,
+                orderStatus: req.query.orderStatus !== 'all' ? req.query.orderStatus : undefined
             };
 
-            const result = await orderService.getOrdersByCustomer(req.user._id, filters);
+            // Use the userId directly - service will handle conversion
+            const result = await orderService.getOrdersByCustomer(userId, filters);
 
             return res.status(200).json(
                 new ApiResponse(200, {
@@ -641,9 +692,10 @@ class OrderController {
                 })
             );
         } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: error.message
+            console.error('getMyOrders error:', error);
+            return res.status(500).json({ 
+                success: false, 
+                message: error.message || 'Failed to fetch orders'
             });
         }
     }

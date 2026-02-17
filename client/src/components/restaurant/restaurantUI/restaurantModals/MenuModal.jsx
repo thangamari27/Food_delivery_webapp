@@ -254,7 +254,7 @@ const MenuItem = ({ food, styles }) => {
           {/* Dietary Info */}
           {food.allergens && food.allergens.length > 0 && (
             <p className="text-xs text-amber-600 mt-2">
-              ⚠️ Contains: {food.allergens.join(', ')}
+              Contains: {food.allergens.join(', ')}
             </p>
           )}
         </div>

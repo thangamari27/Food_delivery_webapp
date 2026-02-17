@@ -111,7 +111,7 @@ const OrdersManagement = ({ content, styles }) => {
           onClear={() => setSelectedOrders([])}
         />
       )}
-
+      
       {/* Mobile Cards View */}
       {sortedOrders.length > 0 && (
         <MobileOrdersCard 

@@ -424,7 +424,7 @@ export function OrderProvider({ children }) {
   const [state, dispatch] = useReducer(orderReducer, initialState);
   const { user } = useAuthContext();
   const { clearCart } = useCart();
-
+  
   /**
    * ========================================
    * CREATE OPERATIONS
@@ -511,27 +511,39 @@ export function OrderProvider({ children }) {
    * Fetch my orders (User)
    */
   const fetchMyOrders = useCallback(async (params = {}) => {
-    try {
-      dispatch({ type: ACTIONS.FETCH_START });
+      try {
+          dispatch({ type: ACTIONS.FETCH_START });
 
-      const queryParams = {
-        limit: params.limit || state.pagination.limit,
-        skip: params.skip || state.pagination.skip,
-        ...params
-      };
+          // Build query parameters
+          const queryParams = {
+              limit: params.limit || state.pagination.limit,
+              skip: params.skip || state.pagination.skip,
+              ...params
+          };
 
-      const response = await orderService.getMyOrders(queryParams);
-      
-      dispatch({
-        type: ACTIONS.FETCH_SUCCESS,
-        payload: response
-      });
+          // Remove undefined/null values
+          Object.keys(queryParams).forEach(key => 
+              queryParams[key] === undefined && delete queryParams[key]
+          );
 
-      return response;
-    } catch (error) {
-      dispatch({ type: ACTIONS.FETCH_ERROR, payload: error.message });
-      throw error;
-    }
+          const response = await orderService.getMyOrders(queryParams);
+          
+          if (response.success) {
+              dispatch({
+                  type: ACTIONS.FETCH_SUCCESS,
+                  payload: response
+              });
+          }
+          
+          return response;
+      } catch (error) {
+          console.error('Error in fetchMyOrders:', error);
+          dispatch({ 
+              type: ACTIONS.FETCH_ERROR, 
+              payload: error.message || 'Failed to fetch orders' 
+          });
+          throw error;
+      }
   }, [state.pagination.limit, state.pagination.skip]);
 
   /**

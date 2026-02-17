@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Order = require('../models/order.model');
 const Food = require('../models/food.model');
 const Restaurant = require('../models/restaurant.model');
@@ -248,12 +249,74 @@ class OrderService {
         try {
             const { limit = 20, skip = 0, orderStatus } = filters;
 
+            // Convert string ID to ObjectId if valid
+            let customerObjectId;
+            try {
+                // Check if it's already an ObjectId or needs conversion
+                if (mongoose.Types.ObjectId.isValid(String(customerId))) {
+                    customerObjectId = new mongoose.Types.ObjectId(String(customerId));
+                } else {
+                    // If not valid, try to find by string ID
+                    const query = {
+                        'customer.userId': customerId,
+                        isActive: true
+                    };
+                    
+                    const orders = await Order.find(query)
+                        .sort('-orderDate')
+                        .limit(parseInt(limit))
+                        .skip(parseInt(skip))
+                        .select('-__v');
+
+                    const total = await Order.countDocuments(query);
+
+                    return {
+                        data: orders,
+                        pagination: {
+                            limit: parseInt(limit),
+                            skip: parseInt(skip),
+                            total: total,
+                            pages: Math.ceil(total / limit)
+                        }
+                    };
+                }
+            } catch (castError) {
+                // If conversion fails, try as string
+                const query = {
+                    'customer.userId': String(customerId),
+                    isActive: true
+                };
+
+                if (orderStatus && orderStatus !== 'all') {
+                    query.orderStatus = orderStatus;
+                }
+
+                const orders = await Order.find(query)
+                    .sort('-orderDate')
+                    .limit(parseInt(limit))
+                    .skip(parseInt(skip))
+                    .select('-__v');
+
+                const total = await Order.countDocuments(query);
+
+                return {
+                    data: orders,
+                    pagination: {
+                        limit: parseInt(limit),
+                        skip: parseInt(skip),
+                        total: total,
+                        pages: Math.ceil(total / limit)
+                    }
+                };
+            }
+
+            // If we have a valid ObjectId, use it
             const query = {
-                'customer.userId': customerId,
+                'customer.userId': customerObjectId,
                 isActive: true
             };
 
-            if (orderStatus) {
+            if (orderStatus && orderStatus !== 'all') {
                 query.orderStatus = orderStatus;
             }
 
@@ -261,7 +324,6 @@ class OrderService {
                 .sort('-orderDate')
                 .limit(parseInt(limit))
                 .skip(parseInt(skip))
-                .populate('restaurant.restaurantId', 'name address')
                 .select('-__v');
 
             const total = await Order.countDocuments(query);
@@ -276,6 +338,7 @@ class OrderService {
                 }
             };
         } catch (error) {
+            console.error('Error fetching customer orders:', error);
             throw new Error(`Error fetching customer orders: ${error.message}`);
         }
     }

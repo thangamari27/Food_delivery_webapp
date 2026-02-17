@@ -6,6 +6,7 @@ class BookingController {
     /**
      * Create a new booking
      * POST /api/bookings
+     * FIXED: Ensure userId is set from authenticated user
      */
     async create(req, res) {
         try {
@@ -63,8 +64,16 @@ class BookingController {
             if (deposit) bookingData.deposit = deposit;
             if (source) bookingData.source = source;
 
-            // Add user ID if authenticated
+            // FIXED: Ensure userId is set from authenticated user
             const userId = req.user ? req.user._id : null;
+            
+            // SAFETY CHECK: If userId not in customer object but user is authenticated, set it
+            if (userId && !bookingData.customer.userId) {
+                bookingData.customer.userId = userId;
+                
+            } else if (!bookingData.customer.userId) {
+                console.warn('Booking created without userId. User authenticated:', !!req.user);
+            }
 
             const booking = await bookingService.createBooking(bookingData, userId);
 
@@ -76,6 +85,7 @@ class BookingController {
                 })
             );
         } catch (error) {
+            console.error('Booking creation error:', error);
             return res.status(error.statusCode || 500).json({
                 success: false,
                 message: error.message
@@ -138,6 +148,16 @@ class BookingController {
 
             const booking = await bookingService.getBookingById(bookingId, populate);
 
+            // SECURITY: Check if user owns this booking (for non-admin users)
+            if (req.user && req.user.role !== 'admin' && req.user.role !== 'restaurant') {
+                if (booking.customer.userId && booking.customer.userId.toString() !== req.user._id.toString()) {
+                    return res.status(403).json({
+                        success: false,
+                        message: 'You do not have permission to view this booking'
+                    });
+                }
+            }
+
             return res.status(200).json(
                 new ApiResponse(200, {
                     success: true,
@@ -161,6 +181,17 @@ class BookingController {
     async getByCustomer(req, res) {
         try {
             const { customerId } = req.params;
+            
+            // SECURITY: Check if user is requesting their own bookings
+            if (req.user && req.user.role !== 'admin' && req.user.role !== 'restaurant') {
+                if (customerId !== req.user._id.toString()) {
+                    return res.status(403).json({
+                        success: false,
+                        message: 'You can only view your own bookings'
+                    });
+                }
+            }
+            
             const filters = {
                 limit: req.query.limit || 20,
                 skip: req.query.skip || 0,
@@ -652,37 +683,60 @@ class BookingController {
     /**
      * Get my bookings (for authenticated users)
      * GET /api/bookings/my-bookings
+     * FIXED: Uses authenticated user's ID automatically
      */
     async getMyBookings(req, res) {
         try {
+            // Check if user is authenticated
             if (!req.user) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Authentication required'
-                });
+            return res.status(401).json({
+                success: false,
+                message: 'Authentication required'
+            });
             }
 
+            // Extract user ID - handle different possible formats
+            const userId = req.user._id || req.user.id || req.user.userId;
+            
+            if (!userId) {
+            return res.status(401).json({
+                success: false,
+                message: 'User ID not found in authentication token'
+            });
+            }
+
+            
+
             const filters = {
-                limit: req.query.limit || 20,
-                skip: req.query.skip || 0,
-                status: req.query.status,
-                upcoming: req.query.upcoming === 'true'
+            limit: req.query.limit ? parseInt(req.query.limit) : 20,
+            skip: req.query.skip ? parseInt(req.query.skip) : 0,
+            status: req.query.status,
+            upcoming: req.query.upcoming === 'true'
             };
 
-            const result = await bookingService.getBookingsByCustomer(req.user._id, filters);
+            // Pass the user ID as string to service
+            const result = await bookingService.getBookingsByCustomer(userId.toString(), filters);
 
             return res.status(200).json(
-                new ApiResponse(200, {
-                    success: true,
-                    message: 'Your bookings fetched successfully',
-                    data: result.data,
-                    pagination: result.pagination
-                })
+            new ApiResponse(200, {
+                success: true,
+                message: 'Your bookings fetched successfully',
+                data: result.data,
+                pagination: result.pagination
+            })
             );
         } catch (error) {
+            console.error('Error in getMyBookings:', error);
             return res.status(500).json({
-                success: false,
-                message: error.message
+            success: false,
+            message: error.message || 'Failed to fetch bookings',
+            data: [],
+            pagination: {
+                limit: parseInt(req.query.limit || 20),
+                skip: parseInt(req.query.skip || 0),
+                total: 0,
+                pages: 0
+            }
             });
         }
     }
