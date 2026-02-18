@@ -1,5 +1,5 @@
 import HeroSection from '@/components/contact/HeroSection'
-import FaqSection from '@/components/contact/FAQSection'
+import FaqSection from '@/components/contact/FaqSection'
 import ContactFormSection from '@/components/contact/ContactFormSection'
 import PageLoaderWrapper from '@/components/common/PageLoaderWrapper'
 
