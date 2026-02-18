@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Image from '../Image'
 import { Plus, Lock, IndianRupee, Star, ShoppingCart, Eye } from 'lucide-react'
 import ViewItemModal from '../ViewItemModal';
-import { useCart } from '@/context/CartContext'
+import { useCart } from '@/context/Cartcontext'
 import { useAuthContext } from '@/context/AuthContext'
 import { toast } from 'react-hot-toast'
 

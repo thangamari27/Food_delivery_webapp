@@ -1,5 +1,5 @@
 import OfferBadge from './OfferBadge';
-import TimerBox from './TimerBox ';
+import TimerBox from './TimerBox';
 import Title from '@/components/common/Title'
 import Paragraph from '@/components/common/Paragraph'
 import Button from '@/components/common/Button'

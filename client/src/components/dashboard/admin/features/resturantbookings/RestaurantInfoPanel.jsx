@@ -10,7 +10,7 @@ function RestaurantInfoPanel({ content, restaurant, styles }) {
       if (publicId && format) {
         // Construct Cloudinary URL
         // Replace with your actual Cloudinary cloud name
-        const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME || 'your_cloud_name';
+        const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'your_cloud_name';
         return `https://res.cloudinary.com/${cloudName}/image/upload/${publicId}.${format}`;
       }
     }

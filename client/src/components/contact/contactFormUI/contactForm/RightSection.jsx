@@ -1,5 +1,5 @@
 import FormHeader from './FormHeader';
-import FormFields from './FormFields ';
+import FormFields from './FormFields';
 import SubmitButton from './SubmitButton';
 
 function RightSection({ sectionRight, formData, handleChange, handleSubmit, loading, styles }) {

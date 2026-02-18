@@ -33,23 +33,24 @@ function Dashboard() {
     lastUpdated
   } = useSelector(state => state.dashboard);
 
+  
+  /**
+   * Load all dashboard data
+  */
+ const loadDashboardData = () => {
+   dispatch(fetchDashboardStats());
+   dispatch(fetchPerformanceMetrics('daily'));
+   dispatch(fetchWeeklyOrders('daily'));
+   dispatch(fetchRevenueComparison('monthly'));
+   dispatch(fetchCustomerMap('weekly'));
+  };
+  
   /**
    * Load dashboard data on mount
    */
   useEffect(() => {
     loadDashboardData();
   }, []);
-
-  /**
-   * Load all dashboard data
-   */
-  const loadDashboardData = () => {
-    dispatch(fetchDashboardStats());
-    dispatch(fetchPerformanceMetrics('daily'));
-    dispatch(fetchWeeklyOrders('daily'));
-    dispatch(fetchRevenueComparison('monthly'));
-    dispatch(fetchCustomerMap('weekly'));
-  };
 
   /**
    * Refresh dashboard manually

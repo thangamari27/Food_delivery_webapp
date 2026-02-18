@@ -11,13 +11,6 @@ const MenuModal = ({ isOpen, onClose, restaurant, content, styles }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [restaurantFoods, setRestaurantFoods] = useState([]);
 
-  // Fetch foods when modal opens
-  useEffect(() => {
-    if (isOpen && restaurant?.id) {
-      loadRestaurantMenu();
-    }
-  }, [isOpen, restaurant?.id]);
-
   const loadRestaurantMenu = async () => {
     try {
       // Fetch foods for this specific restaurant
@@ -31,6 +24,13 @@ const MenuModal = ({ isOpen, onClose, restaurant, content, styles }) => {
       console.error('Error loading menu:', err);
     }
   };
+
+  // Fetch foods when modal opens
+  useEffect(() => {
+    if (isOpen && restaurant?.id) {
+      loadRestaurantMenu();
+    }
+  }, [isOpen, restaurant?.id]);
 
   // Filter foods based on search and category
   const filteredFoods = restaurantFoods.filter(food => {

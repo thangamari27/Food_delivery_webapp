@@ -5,15 +5,6 @@ export function useVerifyEmail({ token, updateUser, navigate }) {
   const [status, setStatus] = useState('verifying');
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if (!token) {
-      setStatus('error');
-      setMessage('Invalid verification link');
-      return;
-    }
-    verify(token);
-  }, [token]);
-
   const verify = async (token) => {
     try {
       // Call verify email API
@@ -45,6 +36,15 @@ export function useVerifyEmail({ token, updateUser, navigate }) {
       }, 5000);
     }
   };
+
+  useEffect(() => {
+    if (!token) {
+      setStatus('error');
+      setMessage('Invalid verification link');
+      return;
+    }
+    verify(token);
+  }, [token]);
 
   return { status, message };
 }

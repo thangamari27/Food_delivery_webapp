@@ -3,7 +3,7 @@ import { Heart, ShoppingCart, Lock } from 'lucide-react'
 import MenuCardImage from './MenuCardImage'
 import MenuCardContent from './MenuCardContent'
 import ViewItemModal from '@/components/common/ViewItemModal'
-import { useCart } from '@/context/CartContext'
+import { useCart } from '@/context/Cartcontext'
 import { useAuthContext } from '@/context/AuthContext'
 import { toast } from 'react-hot-toast'
 

@@ -16,14 +16,6 @@ function OrderSummaryPanel({
   const [currentStep, setCurrentStep] = useState(0);
   const [steps, setSteps] = useState([]);
   const [loadingSteps, setLoadingSteps] = useState(false);
-  
-  // Initialize steps based on order data
-  useEffect(() => {
-    if (order) {
-      initializeSteps();
-      updateCurrentStep();
-    }
-  }, [order]);
 
   // Initialize steps dynamically based on order data
   const initializeSteps = () => {
@@ -101,6 +93,14 @@ function OrderSummaryPanel({
     const step = statusMap[order.orderStatus] || 0;
     setCurrentStep(step);
   };
+
+  // Initialize steps based on order data
+  useEffect(() => {
+    if (order) {
+      initializeSteps();
+      updateCurrentStep();
+    }
+  }, [order]);
 
   // Helper functions for dynamic step data
   const getOrderTime = (step) => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { calculateTimeLeft } from '@/components/common/activeOffer/ActiveOfferUI/calculateTimeLeft ';
+import { calculateTimeLeft } from '@/components/common/activeOffer/ActiveOfferUI/calculateTimeLeft';
 
 export default function useCountdown(endDate, interval = 1000) {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endDate));

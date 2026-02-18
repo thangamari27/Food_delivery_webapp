@@ -3,7 +3,7 @@
  */
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { useFood } from '../../context/admin/FoodContext';
+import { useFood } from '../../context/admin/Foodcontext';
 import { useRestaurantContext } from '../../context/admin/Restaurantcontext';
 import { toast } from 'react-hot-toast';
 

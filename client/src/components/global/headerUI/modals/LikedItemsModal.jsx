@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useCart } from '@/context/CartContext'
+import { useCart } from '../../../../context/Cartcontext'
 import Modal from './Modal';
 import { LucideForkKnifeCrossed, Heart, ShoppingCart, Star, IndianRupee } from 'lucide-react';
 

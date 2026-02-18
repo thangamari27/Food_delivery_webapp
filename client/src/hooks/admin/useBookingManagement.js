@@ -37,11 +37,6 @@ export const useBookingManagement = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Load bookings on mount and when filters change
-  useEffect(() => {
-    loadBookings();
-  }, [filters]);
-
   const loadBookings = async () => {
     try {
       await fetchBookings({
@@ -54,6 +49,11 @@ export const useBookingManagement = () => {
       console.error('Failed to load bookings:', error);
     }
   };
+
+  // Load bookings on mount and when filters change
+  useEffect(() => {
+    loadBookings();
+  }, [filters]);
 
   return {
     bookings,
