@@ -1,4 +1,4 @@
-import HeroSection from '@/components/Home/HeroSection';
+import HeroSection from '@/components/home/HeroSection';
 import HowItWorkSection from '@/components/home/HowItWorkSection';
 import SpecialMenuSection from '@/components/home/SpecialMenuSection';
 import PopularMenuSection from '@/components/home/PopularMenuSection';
